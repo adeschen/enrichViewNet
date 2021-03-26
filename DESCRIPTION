@@ -2,7 +2,7 @@ Package: gprofiler2cytoscape
 Type: Package
 Version: 0.0.1
 Date: 2021-03-25
-Title: From gprofiler2 to cytoscape network
+Title: From gprofiler2 to Cytoscape network
 Description: TODO.
 Authors@R: c(person("Astrid", "Deschênes", email = "adeschen@hotmail.com",
     role = c("aut", "cre"),
