@@ -31,7 +31,7 @@ package is required.
      ## Load required package
      library(devtools)
 
-     ## Install the latest version of CNVMetrics
+     ## Install the latest version of gprofiler2cytoscape
      devtools::install_github('adeschen/gprofiler2cytoscape')
 
 ## Bugs/Feature requests ##
