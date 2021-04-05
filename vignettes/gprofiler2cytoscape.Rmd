@@ -1,0 +1,57 @@
+---
+title: "From gprofiler2 to Cytoscape network"
+author: Astrid Deschênes and Pascal Belleau
+output:
+  BiocStyle::html_document:
+    toc: true
+bibliography: gprofiler2cytoscape.bibtex
+vignette: >
+  %\VignetteIndexEntry{From gprofiler2 to Cytoscape network}
+  %\VignettePackage{gprofiler2cytoscape}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r style, echo = FALSE, results = 'hide', warning=FALSE, message=FALSE}
+BiocStyle::markdown()
+
+suppressPackageStartupMessages({
+  library(knitr)
+  library(gprofiler2cytoscape)
+})
+
+set.seed(1214)
+```
+
+<br />
+**Package**: `r Rpackage("gprofiler2cytoscape")`<br />
+**Authors**: `r packageDescription("gprofiler2cytoscape")[["Author"]]`<br />
+**Version**: `r packageDescription("gprofiler2cytoscape")$Version`<br />
+**Compiled date**: `r Sys.Date()`<br />
+**License**: `r packageDescription("gprofiler2cytoscape")[["License"]]`<br />
+
+
+# Licensing 
+
+The `r Githubpkg("adeschen/gprofiler2cytoscape")` package and the underlying 
+`r Githubpkg("adeschen/gprofiler2cytoscape")` code are distributed under the 
+Artistic license 2.0. You are free to use and redistribute this software. 
+
+# Introduction
+
+TODO
+
+
+# Session info
+
+Here is the output of sessionInfo() on the system on which this document 
+was compiled:
+
+```{r sessionInfo, echo=FALSE}
+sessionInfo()
+```
+
+
+# References
+
+
