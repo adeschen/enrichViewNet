@@ -16,10 +16,12 @@ Depends: R (>= 4.0)
 Imports: gprofiler2,
     strex,
     RCy3
-Suggests: BiocStyle, 
-    knitr, 
-    rmarkdown, 
-    testthat
+Suggests: 
+    BiocStyle,
+    knitr,
+    rmarkdown,
+    testthat,
+    covr
 biocViews: BiologicalQuestion, 
     Software,
     Network
