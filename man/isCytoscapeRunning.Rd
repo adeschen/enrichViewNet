@@ -17,6 +17,8 @@ Verifying that Cytoscape is running
 
 ## TODO
 
+gprofiler2cytoscape:::isCytoscapeRunning()
+
 }
 \author{
 Astrid Deschênes

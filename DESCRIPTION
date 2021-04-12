@@ -13,7 +13,8 @@ Authors@R: c(person("Astrid", "Deschênes", email = "adeschen@hotmail.com",
 Encoding: UTF-8
 License: Artistic-2.0
 Depends: R (>= 4.0)
-Imports: gprofiler2, 
+Imports: gprofiler2,
+    strex,
     RCy3
 Suggests: BiocStyle, 
     knitr, 

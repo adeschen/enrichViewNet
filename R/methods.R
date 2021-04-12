@@ -16,7 +16,7 @@
 #' miRTarBase, "CORUM" for CORUM database, "HP" for Human phenotype ontology
 #' and "WP" for WikiPathways.  Default: "TERM_ID".
 #' 
-#' @param termIDs a \code{array} of \code{character} strings that contains the
+#' @param termIDs a \code{vector} of \code{character} strings that contains the
 #' term IDS retained for the creation of the network. Default: \code{NULL}.
 #' 
 #' @param title a \code{character} string TODO
@@ -28,24 +28,32 @@
 #' 
 #' @examples
 #'
-#' ## TODO
+#' ## Loading dataset containing result from an enrichment analysis done with
+#' ## gprofiler2
+#' data(demoGOST)
+#'
+#' \donttest{
+#' 
+#' ## Create network for Gene Ontology - Molecular Function related results
+#' createNetwork(gostObject = demoGOST, source="GO:MF")
+#' 
+#' }
 #' 
 #' @author Astrid Deschênes
 #' @importFrom gprofiler2 gconvert
 #' @importFrom RCy3 cytoscapePing 
+#' @importFrom strex match_arg
 #' @encoding UTF-8
 #' @export
 createNetwork <- function(gostObject, source=c("TERM_ID", "GO:MF", "GO:CC",
     "GO:BP", "KEGG", "REAC", "TF", "MIRNA", "HPA", "CORUM", "HP","WP"), 
     termIDs=NULL, title="gprofiler network", collection="enrichment results") {
     
-    ## Test that gostObject is a gprofiler2 result 
-    if (!("list" %in% class(gostObject) && "result" %in% names(gostObject) &&
-          "meta" %in% names(gostObject)))   {
-        stop(paste0("The gostObject object should be a list with meta ", 
-                        "and result as entries corresponding to gprofiler2 ", 
-                        "enrichment output."))
-    } 
+    ## Validate source is among the possible choices
+    source <- match_arg(source, ignore_case=TRUE)
+    
+    validateCreateNetworkArguments(gostObject=gostObject, source=source,
+                                    termIDs=termIDs)
     
     ## Test that Cytoscape is running
     isRunning <- isCytoscapeRunning()
