@@ -3,7 +3,8 @@
 \encoding{UTF-8}
 \name{createNetwork}
 \alias{createNetwork}
-\title{TODO}
+\title{Using functional enrichment results from gprofiler2 to create a 
+Cytoscape network}
 \usage{
 createNetwork(
   gostObject,

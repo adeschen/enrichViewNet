@@ -5,12 +5,12 @@
 \name{gprofiler2cytoscape-package}
 \alias{gprofiler2cytoscape-package}
 \alias{gprofiler2cytoscape}
-\title{gprofiler2cytoscape: From gprofiler2 to Cytoscape network}
+\title{From gprofiler2 to Cytoscape network}
 \description{
-The gprofiler2cytoscape package enables the visualization 
-of enrichment results obtained by 
-\link[gprofiler2](https://cran.r-project.org/web/packages/gprofiler2/index.html) 
-under the form of Cytoscape network.
+The \code{gprofiler2cytoscape} package enables the visualization 
+of enrichment results obtained by \code{gprofiler2} 
+(\url{https://cran.r-project.org/web/packages/gprofiler2/index.html})  
+under the form of \code{Cytoscape} network (\url{https://cytoscape.org/}).
 }
 \details{
 In those networks, both gene datasets (GO terms/pathways/protein complexes)

@@ -1,5 +1,6 @@
 
-#' @title TODO
+#' @title Using functional enrichment results from gprofiler2 to create a 
+#' Cytoscape network
 #' 
 #' @description TODO
 #' 
@@ -52,6 +53,7 @@ createNetwork <- function(gostObject, source=c("TERM_ID", "GO:MF", "GO:CC",
     ## Validate source is among the possible choices
     source <- match_arg(source, ignore_case=TRUE)
     
+    ## Validate parameters
     validateCreateNetworkArguments(gostObject=gostObject, source=source,
                                     termIDs=termIDs)
     

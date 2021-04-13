@@ -3,15 +3,13 @@
 \docType{data}
 \name{demoGOST}
 \alias{demoGOST}
-\title{The result of an functional enrichment analysis done with 
-\link[gprofiler2](https://cran.r-project.org/web/packages/gprofiler2/index.html).}
+\title{The result of a functional enrichment analysis done with \code{gprofiler2} 
+(\url{https://cran.r-project.org/web/packages/gprofiler2/vignettes/gprofiler2.html}).}
 \format{
-A \code{list} containing two entries. The \code{result} entry 
+The \code{list} contains two entries. The \code{result} entry 
 contains a \code{data.frame} with the significant results obtained by
-an enrichment analysis done with 
-\link[gprofiler2](https://cran.r-project.org/web/packages/gprofiler2/index.html). 
-The \code{meta} entry contains a named list with all the 
-metadata for the query.
+an enrichment analysis done with \code{gprofiler2}. The \code{meta} entry 
+contains a named list with all the metadata for the query.
 }
 \usage{
 data(demoGOST)
@@ -19,8 +17,7 @@ data(demoGOST)
 \value{
 A \code{list} containing two entries. The \code{result} entry 
 contains a \code{data.frame} with the significant results obtained by
-an enrichment analysis done with 
-\link[gprofiler2](https://cran.r-project.org/web/packages/gprofiler2/index.html). 
+an enrichment analysis done with \code{gprofiler2}. 
 The \code{meta} entry contains a named list with all the 
 metadata for the query.
 }
@@ -30,7 +27,7 @@ enrichment analysis as well as the metadata related to the analysis.
 }
 \details{
 This dataset can be
-used to test the \code{createNetwork} function.
+used to test the \code{\link{createNetwork}} function.
 }
 \examples{
 
