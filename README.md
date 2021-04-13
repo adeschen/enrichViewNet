@@ -5,7 +5,12 @@
 <!-- badges: end -->
 
 
-The **_gprofiler2cytoscape_** package TODO
+The **_gprofiler2cytoscape_** package enables the transformation of 
+functional enrichment results obtained by [gprofiler2](https://cran.r-project.org/web/packages/gprofiler2/vignettes/gprofiler2.html) 
+into a 
+[Cytoscape](https://cytoscape.org/) network where significant terms and 
+genes are nodes. In this network, edges links genes that were part of the
+enrichment request to their terms. 
 
 ## Authors ##
 
