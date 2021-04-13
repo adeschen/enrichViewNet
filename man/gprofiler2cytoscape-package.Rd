@@ -5,13 +5,23 @@
 \name{gprofiler2cytoscape-package}
 \alias{gprofiler2cytoscape-package}
 \alias{gprofiler2cytoscape}
-\title{gprofiler2cytoscape: TODO}
+\title{gprofiler2cytoscape: From gprofiler2 to Cytoscape network}
 \description{
-The gprofiler2cytoscape package TODO
+The gprofiler2cytoscape package enables the visualization 
+of enrichment results obtained by 
+\link[gprofiler2](https://cran.r-project.org/web/packages/gprofiler2/index.html) 
+under the form of Cytoscape network.
+}
+\details{
+In those networks, both gene datasets (GO terms/pathways/protein complexes)
+and genes are represented as nodes. A edge connect a gene to its datasets.
+In the current version, only genes present in at least one gene dataset 
+are retained.
 }
 \seealso{
 \itemize{
-    \item \code{\link{createNetwork}} {TODO}
+    \item \code{\link{createNetwork}} {for transforming functional 
+    enrichment results from gprofiler2 into a Cytoscape network}
 }
 }
 \author{

@@ -3,35 +3,34 @@
 \docType{data}
 \name{demoGOST}
 \alias{demoGOST}
-\title{All samples information, formated by \code{methylKit}, in a
-\code{methylRawList} format (for demo purpose).}
+\title{The result of an functional enrichment analysis done with 
+\link[gprofiler2](https://cran.r-project.org/web/packages/gprofiler2/index.html).}
 \format{
-A \code{list} containing three \code{methylRawList} objects. Each
-\code{methylRawList} contains the information for one generation
-(first entry = first generation, etc..). Each sample information is
-stored in a \code{methylRaw} object. There is \code{methylRaw} objects
-(6 controls and 6 cases) in each generation.
+A \code{list} containing two entries. The \code{result} entry 
+contains a \code{data.frame} with the significant results obtained by
+an enrichment analysis done with 
+\link[gprofiler2](https://cran.r-project.org/web/packages/gprofiler2/index.html). 
+The \code{meta} entry contains a named list with all the 
+metadata for the query.
 }
 \usage{
 data(demoGOST)
 }
 \value{
-A \code{list} containing three \code{methylRawList} objects. Each
-\code{methylRawList} contains the information for one generation
-(first entry = first generation, etc..). Each sample information is
-stored in a \code{methylRaw} object. There is \code{methylRaw} objects
-(6 controls and 6 cases) in each generation.
+A \code{list} containing two entries. The \code{result} entry 
+contains a \code{data.frame} with the significant results obtained by
+an enrichment analysis done with 
+\link[gprofiler2](https://cran.r-project.org/web/packages/gprofiler2/index.html). 
+The \code{meta} entry contains a named list with all the 
+metadata for the query.
 }
 \description{
-The object is a \code{list} with 3 entries. Each entry corresponds to the
-information for one generation (first entry = first generation, etc..)
-stored in a \code{methylRawList}.
-There are 12 samples (6 controls and 6 cases) for each generation. Each
-sample information is stored in a \code{methylRaw} object.
+The object is a \code{list} with 2 entries. It contains the results of the
+enrichment analysis as well as the metadata related to the analysis.
 }
 \details{
 This dataset can be
-used to test the \code{runPermutation} function.
+used to test the \code{createNetwork} function.
 }
 \examples{
 
@@ -50,7 +49,8 @@ createNetwork(gostObject = demoGOST, source="WP")
 }
 \seealso{
 \itemize{
-    \item \code{\link{createNetwork}} {for TODO}
+    \item \code{\link{createNetwork}} {for transforming functional 
+    enrichment results from gprofiler2 into a Cytoscape network}
 }
 }
 \keyword{datasets}
