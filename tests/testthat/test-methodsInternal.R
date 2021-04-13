@@ -64,4 +64,33 @@ test_that("validateCreateNetworkArguments() must return error when source is TER
     
 })
 
+test_that("validateCreateNetworkArguments() must return error when not all term IDS exist", {
+    
+    gostObj <- list()
+    gostObj[["result"]] <- data.frame(source=c(rep("GO:BP"),2), 
+                                      term_id=c("GO:0051171","GO:0010604"))
+    gostObj[["meta"]] <- list()
+    
+    source <- "TERM_ID"
+    
+    error_message <- paste0("Not all listed terms are present in the  ",
+                                "enrichment results.")
+    
+    expect_error(gprofiler2cytoscape:::validateCreateNetworkArguments(gostObject=gostObj, 
+        source=source, termIDs=c("GO:0051171","GO:0010999")), error_message)
+    
+})
+
+test_that("validateCreateNetworkArguments() must return term IDs are good", {
+    
+    gostObj <- list()
+    gostObj[["result"]] <- data.frame(source=c(rep("GO:BP"), 2), 
+                                      term_id=c("GO:0051171", "GO:0010604"))
+    gostObj[["meta"]] <- list()
+    
+    result <- gprofiler2cytoscape:::validateCreateNetworkArguments(gostObject=gostObj, 
+                 source="TERM_ID", termIDs=c("GO:0051171", "GO:0010604"))
+    
+    expect_true(result)
+})
 

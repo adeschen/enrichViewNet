@@ -183,7 +183,12 @@ validateCreateNetworkArguments <- function(gostObject, source, termIDs) {
             stop(paste0("A vector of terms should be given through the ",
                     "\'termIDs\' parameter when source is \'TERM_ID\'."))  
         }
-        
+        else {
+            if(!all(termIDs %in% gostObject$result$term_id)) {
+                stop(paste0("Not all listed terms are present in the  ",
+                                "enrichment results.")) 
+            }
+        }
     }
     
     return(TRUE)   
