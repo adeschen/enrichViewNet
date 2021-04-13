@@ -35,7 +35,8 @@ createCytoscapeNetwork <- function(gostResults, gostObject, title, collection) {
         term <- gostResults$term_id[i]
         query <- gostResults$query[i]
         termName <- gostResults$term_name[i]
-        #termShort <- str_replace(selectedTF[i, "term_name"], pattern="Factor: ", "")
+        #termShort <- str_replace(selectedTF[i, "term_name"], 
+        #                    pattern="Factor: ", "")
         #termShort <- str_replace(termShort, pattern="; motif:.+$", "")
         nodes[[length(nodes) + 1]] <- data.frame(id=c(term),
                                             group=c("TERM"),
@@ -56,9 +57,9 @@ createCytoscapeNetwork <- function(gostResults, gostObject, title, collection) {
                     done <- c(done, g)
                 }
                 edges[[length(edges) + 1]] <- data.frame(source=c(term),
-                                                        target=c(g),
-                                                        interaction=c("contains"),  # optional
-                                                        stringsAsFactors=FALSE)
+                                                    target=c(g),
+                                                    interaction=c("contains"), 
+                                                    stringsAsFactors=FALSE)
             }
         }
     }
@@ -78,7 +79,7 @@ createCytoscapeNetwork <- function(gostResults, gostObject, title, collection) {
     setNodeLabelBypass(node.names=nodeInfo$id, new.labels=nodeInfo$alias)
     
     setNodeWidthMapping(table.column=column, 
-        table.column.values=control.points, widths = c(100, 75),
+        table.column.values=control.points, widths=c(100, 75),
         mapping.type="discrete", style.name="default")
 }
 
@@ -91,8 +92,7 @@ createCytoscapeNetwork <- function(gostResults, gostObject, title, collection) {
 #' 
 #' @examples
 #'
-#' ## TODO
-#' 
+#' ## Test if Cytoscape is running
 #' gprofiler2cytoscape:::isCytoscapeRunning()
 #' 
 #' @author Astrid Deschênes
@@ -123,11 +123,16 @@ isCytoscapeRunning <- function() {
 }
 
 
-#' @title TODO
+#' @title Validate arguments passed to creatNetwork() function
 #' 
-#' @description TODO
+#' @description Validate the arguments passed to creatNetwork() function.
+#' First, the object containing the enrichment results must correspond to a 
+#' object created by  \code{gprofiler2} software. Second, the selected 
+#' source must at least have one enriched term in the results. Then, if the
+#' source is 'TERM_ID', the listed terms must be present in the enrichment
+#' results.
 #' 
-#' @param gostObject a \code{list} created by grofiler2 that contains
+#' @param gostObject a \code{list} created by \code{gprofiler2} that contains
 #' the results from an enrichment analysis.
 #' 
 #' @param source a \code{character} string representing the selected source 
@@ -140,21 +145,20 @@ isCytoscapeRunning <- function() {
 #' miRTarBase, "CORUM" for CORUM database, "HP" for Human phenotype ontology
 #' and "WP" for WikiPathways. 
 #' 
-#' @param termIDs a \code{vector} of \code{character} strings that contains the
-#' term IDS retained for the creation of the network. 
+#' @param termIDs a \code{vector} of \code{character} strings that contains 
+#' the term IDs retained for the creation of the network. This parameter is 
+#' only used when \code{source} is set to "TERM_ID".
 #' 
-#' @return TRUE
+#' @return \code{TRUE} when all arguments are valid
 #' 
 #' @examples
 #'
-#' ## TODO
+#' ## Load the result of an enrichment analysis done with gprofiler2
+#' data(demoGOST)
 #' 
-#' gostObject <- list()
-#' gostObject[["meta"]] <- list()
-#' gostObject[["result"]] <- list()
-#' 
-#' gprofiler2cytoscape:::validateCreateNetworkArguments(gostObject=gostObject,
-#'     source="GO:MF", termIDs=NULL)
+#' ## Check that all arguments are valid
+#' gprofiler2cytoscape:::validateCreateNetworkArguments(gostObject=demoGOST,
+#'     source="GO:BP", termIDs=NULL)
 #' 
 #' @author Astrid Deschênes
 #' @encoding UTF-8
@@ -168,6 +172,19 @@ validateCreateNetworkArguments <- function(gostObject, source, termIDs) {
                     "and result as entries corresponding to gprofiler2 ", 
                     "enrichment output."))
     } 
+    
+    if (source != "TERM_ID") {
+        if (sum(gostObject$result$source == source) < 1) {
+            stop(paste0("There is no enriched term for the selected ", 
+                    "source \'", source, "\'."))    
+        }
+    } else {
+        if (is.null(termIDs)) {
+            stop(paste0("A vector of terms should be given through the ",
+                    "\'termIDs\' parameter when source is \'TERM_ID\'."))  
+        }
+        
+    }
     
     return(TRUE)   
 }

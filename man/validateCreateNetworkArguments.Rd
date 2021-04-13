@@ -3,12 +3,12 @@
 \encoding{UTF-8}
 \name{validateCreateNetworkArguments}
 \alias{validateCreateNetworkArguments}
-\title{TODO}
+\title{Validate arguments passed to creatNetwork() function}
 \usage{
 validateCreateNetworkArguments(gostObject, source, termIDs)
 }
 \arguments{
-\item{gostObject}{a \code{list} created by grofiler2 that contains
+\item{gostObject}{a \code{list} created by \code{gprofiler2} that contains
 the results from an enrichment analysis.}
 
 \item{source}{a \code{character} string representing the selected source 
@@ -21,25 +21,29 @@ Cellular Component, "GO:MF" for Gene Ontology Molecular Function,
 miRTarBase, "CORUM" for CORUM database, "HP" for Human phenotype ontology
 and "WP" for WikiPathways.}
 
-\item{termIDs}{a \code{vector} of \code{character} strings that contains the
-term IDS retained for the creation of the network.}
+\item{termIDs}{a \code{vector} of \code{character} strings that contains 
+the term IDs retained for the creation of the network. This parameter is 
+only used when \code{source} is set to "TERM_ID".}
 }
 \value{
-TRUE
+\code{TRUE} when all arguments are valid
 }
 \description{
-TODO
+Validate the arguments passed to creatNetwork() function.
+First, the object containing the enrichment results must correspond to a 
+object created by  \code{gprofiler2} software. Second, the selected 
+source must at least have one enriched term in the results. Then, if the
+source is 'TERM_ID', the listed terms must be present in the enrichment
+results.
 }
 \examples{
 
-## TODO
+## Load the result of an enrichment analysis done with gprofiler2
+data(demoGOST)
 
-gostObject <- list()
-gostObject[["meta"]] <- list()
-gostObject[["result"]] <- list()
-
-gprofiler2cytoscape:::validateCreateNetworkArguments(gostObject=gostObject,
-    source="GO:MF", termIDs=NULL)
+## Check that all arguments are valid
+gprofiler2cytoscape:::validateCreateNetworkArguments(gostObject=demoGOST,
+    source="GO:BP", termIDs=NULL)
 
 }
 \author{

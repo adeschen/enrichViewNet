@@ -15,8 +15,7 @@ Verifying that Cytoscape is running
 }
 \examples{
 
-## TODO
-
+## Test if Cytoscape is running
 gprofiler2cytoscape:::isCytoscapeRunning()
 
 }
