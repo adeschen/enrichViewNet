@@ -2,7 +2,7 @@
 
 library(gprofiler2cytoscape)
 
-### Tests prepareInformation() results
+### Tests createNetwork() results
 
 context("createNetwork() results")
 
