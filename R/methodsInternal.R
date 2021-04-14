@@ -4,20 +4,38 @@
 #' @description Create network from gprofiler2 results and load it 
 #' into Cytoscape
 #' 
-#' @param gostResults a \code{GRangesList} TODO
+#' @param gostResults a \code{data.frame} containing the terms retained
+#' for the creation of the network.
 #' 
-#' @param gostObject TODO
+#' @param gostObject a \code{list} created by gprofiler2 that contains
+#' the results from an enrichment analysis.
 #' 
-#' @param title a \code{GRangesList} TODO
+#' @param title a \code{character} string representing the name assigned to 
+#' the network.
 #' 
-#' @param collection a \code{character} string representing the  TODO
+#' @param collection a \code{character} string representing the collection 
+#' name assigned to the network.
 #' 
-#' 
-#' @return TODO
+#' @return \code{TRUE}
 #' 
 #' @examples
 #'
-#' ## TODO
+#' ## Loading dataset containing result from an enrichment analysis done with
+#' ## gprofiler2
+#' data(demoGOST)
+#' 
+#' ## Only retained the GO - Molecular Function results
+#' results <- demoGOST$result[demoGOST$result$source == "GO:MF", ]
+#'
+#' ## The creation of the network can only be done when Cytoscape 
+#' ## is up and running
+#' ## A network using GO - Molecular Function enriched terms will be 
+#' ## generated and loaded into Cytoscape
+#' if (gprofiler2cytoscape:::isCytoscapeRunning()) {
+#'     gprofiler2cytoscape:::createCytoscapeNetwork(gostResults=results, 
+#'         gostObject=demoGOST, title="Test", collection="Test Collection")
+#' }
+#' 
 #' 
 #' @author Astrid Deschênes
 #' @importFrom gprofiler2 gconvert
@@ -31,7 +49,8 @@ createCytoscapeNetwork <- function(gostResults, gostObject, title, collection) {
     nodes <- list()
     edges <- list()
     
-    for(i in seq_len(nrow(gostResults))) {
+    ## Create the list of genes and terms that will be included in the network
+    for (i in seq_len(nrow(gostResults))) {
         term <- gostResults$term_id[i]
         query <- gostResults$query[i]
         termName <- gostResults$term_name[i]
@@ -43,7 +62,7 @@ createCytoscapeNetwork <- function(gostResults, gostObject, title, collection) {
                                             alias=c(termName),
                                             stringsAsFactors=FALSE)
         
-        res <- gconvert(query = c(term))
+        res <- gconvert(query=c(term))
         genes <- gostObject$meta$query_metadata$queries[[query]]
         
         for (g in genes) {
@@ -67,20 +86,26 @@ createCytoscapeNetwork <- function(gostResults, gostObject, title, collection) {
     nodeInfo <- do.call(rbind, nodes)
     edgeInfo <- do.call(rbind, edges)
     
+    ## Create the network using JSON data format and posting it to Cytoscape
     createNetworkFromDataFrames(nodes=nodeInfo, edges=edgeInfo, 
                                 title=title, collection=collection)
     
+    ## Assign different colors to terms and genes
     column <- 'group'
     control.points <- c("TERM", "GENE")
     setNodeColorMapping(table.column=column, 
         table.column.values=control.points, colors=c('#ffba42', '#99CCFF'), 
         mapping.type="discrete", style.name="default")
     
+    ## Override the node labels to use the term descriptions and gene names
     setNodeLabelBypass(node.names=nodeInfo$id, new.labels=nodeInfo$alias)
     
+    ## Assign larger node widths to terms and smaller ones to genes
     setNodeWidthMapping(table.column=column, 
         table.column.values=control.points, widths=c(100, 75),
         mapping.type="discrete", style.name="default")
+    
+    return(TRUE)
 }
 
 

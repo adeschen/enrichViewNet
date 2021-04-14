@@ -4,8 +4,8 @@
 #' 
 #' @description TODO
 #' 
-#' @param gostObject a \code{list} created by grofiler2 that contains
-#' the results from an enrichment analysis
+#' @param gostObject a \code{list} created by gprofiler2 that contains
+#' the results from an enrichment analysis.
 #' 
 #' @param source a \code{character} string representing the selected source 
 #' that will be used to generate the network. To hand-pick the terms to be 
@@ -20,9 +20,11 @@
 #' @param termIDs a \code{vector} of \code{character} strings that contains the
 #' term IDS retained for the creation of the network. Default: \code{NULL}.
 #' 
-#' @param title a \code{character} string TODO
+#' @param title a \code{character} string representing the name assigned to 
+#' the network. Default: "gprofiler network".
 #' 
-#' @param collection a \code{character} string representing the  TODO
+#' @param collection a \code{character} string representing the collection 
+#' name assigned to the network. Default: "enrichment results".
 #' 
 #' 
 #' @return TODO
