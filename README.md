@@ -8,9 +8,11 @@
 The **_gprofiler2cytoscape_** package enables the transformation of 
 functional enrichment results obtained by [gprofiler2](https://cran.r-project.org/web/packages/gprofiler2/vignettes/gprofiler2.html) 
 into a 
-[Cytoscape](https://cytoscape.org/) network where significant terms and 
-genes are nodes. In this network, edges links genes that are part of the
-enrichment request to their terms. 
+[Cytoscape](https://cytoscape.org/) network where significant terms (Gene Ontology/Reactome/Kegg/Transcription Factor/etc..) and 
+genes are nodes. In this network, edges connect genes that are part of the
+enrichment request to their terms. The **_gprofiler2cytoscape_** package 
+offers the option to subselection a portion of the significant terms by
+selecting the source or by providing a specific list of terms.
 
 ## Authors ##
 
