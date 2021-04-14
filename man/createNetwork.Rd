@@ -39,10 +39,15 @@ the network. Default: "gprofiler network".}
 name assigned to the network. Default: "enrichment results".}
 }
 \value{
-TODO
+\code{TRUE}
 }
 \description{
-TODO
+User selected enrichment terms are used to create a Cytoscape 
+network where the selected terms and the genes that where part of the 
+enrichment analysis are all represented as nodes. Edges are linking the 
+genes to their terms. The selection of the term can by specifying  the 
+source of the terms (GO:MF, REAC, TF, etc...) or by listing the selected 
+term IDs.
 }
 \examples{
 

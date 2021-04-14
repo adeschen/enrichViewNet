@@ -2,7 +2,12 @@
 #' @title Using functional enrichment results from gprofiler2 to create a 
 #' Cytoscape network
 #' 
-#' @description TODO
+#' @description User selected enrichment terms are used to create a Cytoscape 
+#' network where the selected terms and the genes that where part of the 
+#' enrichment analysis are all represented as nodes. Edges are linking the 
+#' genes to their terms. The selection of the term can by specifying  the 
+#' source of the terms (GO:MF, REAC, TF, etc...) or by listing the selected 
+#' term IDs.
 #' 
 #' @param gostObject a \code{list} created by gprofiler2 that contains
 #' the results from an enrichment analysis.
@@ -27,7 +32,7 @@
 #' name assigned to the network. Default: "enrichment results".
 #' 
 #' 
-#' @return TODO
+#' @return \code{TRUE}
 #' 
 #' @examples
 #'
@@ -77,5 +82,7 @@ createNetwork <- function(gostObject, source=c("TERM_ID", "GO:MF", "GO:CC",
         createCytoscapeNetwork(gostResults=gostResults, gostObject=gostObject,
                                 title=title, collection=collection)
     }
+    
+    return(TRUE)
 }
         
