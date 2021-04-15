@@ -75,10 +75,10 @@ NULL
 #' ## gprofiler2
 #' data(demoGOST)
 #'
-#' \donttest{
+#' \dontrun{
 #' 
 #' ## Create network for WikiPathways results
-#' createNetwork(gostObject = demoGOST, source="WP")
+#' createNetwork(gostObject = demoGOST, source="WP", title="Wikipathways")
 #' 
 #' }
 #'

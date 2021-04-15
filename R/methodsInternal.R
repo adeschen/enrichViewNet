@@ -26,16 +26,19 @@
 #' 
 #' ## Only retained the GO - Molecular Function results
 #' results <- demoGOST$result[demoGOST$result$source == "GO:MF", ]
-#'
+#' 
+#' \dontrun{
+#' 
 #' ## The creation of the network can only be done when Cytoscape 
 #' ## is up and running
 #' ## A network using GO - Molecular Function enriched terms will be 
 #' ## generated and loaded into Cytoscape
 #' if (gprofiler2cytoscape:::isCytoscapeRunning()) {
 #'     gprofiler2cytoscape:::createCytoscapeNetwork(gostResults=results, 
-#'         gostObject=demoGOST, title="Test", collection="Test Collection")
+#'         gostObject=demoGOST, title="Test", collection="New Collection")
 #' }
 #' 
+#' }
 #' 
 #' @author Astrid Deschênes
 #' @importFrom gprofiler2 gconvert

@@ -51,7 +51,8 @@ network where the selected terms and the genes that where part of the
 enrichment analysis are all represented as nodes. Edges are linking the 
 genes to their terms. The selection of the term can by specifying  the 
 source of the terms (GO:MF, REAC, TF, etc...) or by listing the selected 
-term IDs.
+term IDs. The network is only generated when there is at least on 
+significant term to graph.
 }
 \examples{
 
@@ -59,10 +60,11 @@ term IDs.
 ## gprofiler2
 data(demoGOST)
 
-\donttest{
+\dontrun{
 
 ## Create network for Gene Ontology - Molecular Function related results
-createNetwork(gostObject = demoGOST, source="GO:MF", removeRoot=FALSE)
+createNetwork(gostObject = demoGOST, source="GO:MF", removeRoot=FALSE,
+    title="GO Molecular Function Graph")
 
 }
 

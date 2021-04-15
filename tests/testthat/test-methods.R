@@ -2,6 +2,8 @@
 
 library(gprofiler2cytoscape)
 
+data("demoGOST")
+
 ### Tests createNetwork() results
 
 context("createNetwork() results")
@@ -54,4 +56,17 @@ test_that("createNetwork() must return error when source is GO", {
     gostObject[["result"]] <- list()
     
     expect_error(createNetwork(gostObject=gostObject, source="GO"))
+})
+
+
+test_that("createNetwork() must return error when removeRoot remove last enriched term", {
+    
+    gostTerm <- demoGOST
+    gostTerm$result <- demoGOST$result[54,]
+    
+    error_message <- paste0("With removal of the root term, there is no ", 
+                                "enrichment term left")
+    
+    expect_error(createNetwork(gostObject=gostTerm, source="WP", 
+                    removeRoot = TRUE), error_message)
 })
