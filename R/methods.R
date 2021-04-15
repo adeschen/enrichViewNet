@@ -22,6 +22,9 @@
 #' miRTarBase, "CORUM" for CORUM database, "HP" for Human phenotype ontology
 #' and "WP" for WikiPathways.  Default: "TERM_ID".
 #' 
+#' @param removeRoot a \code{logical} that specified if the root terms of 
+#' the selected source should be removed (when present). Default: \code{TRUE}.
+#' 
 #' @param termIDs a \code{vector} of \code{character} strings that contains the
 #' term IDS retained for the creation of the network. Default: \code{NULL}.
 #' 
@@ -43,7 +46,7 @@
 #' \donttest{
 #' 
 #' ## Create network for Gene Ontology - Molecular Function related results
-#' createNetwork(gostObject = demoGOST, source="GO:MF")
+#' createNetwork(gostObject = demoGOST, source="GO:MF", removeRoot=FALSE)
 #' 
 #' }
 #' 
@@ -55,14 +58,15 @@
 #' @export
 createNetwork <- function(gostObject, source=c("TERM_ID", "GO:MF", "GO:CC",
     "GO:BP", "KEGG", "REAC", "TF", "MIRNA", "HPA", "CORUM", "HP","WP"), 
-    termIDs=NULL, title="gprofiler network", collection="enrichment results") {
+    termIDs=NULL, removeRoot=TRUE, title="gprofiler network", 
+    collection="enrichment results") {
     
     ## Validate source is among the possible choices
     source <- match_arg(source, ignore_case=TRUE)
     
     ## Validate parameters
     validateCreateNetworkArguments(gostObject=gostObject, source=source,
-                                    termIDs=termIDs)
+                                    termIDs=termIDs, removeRoot=removeRoot)
     
     ## Test that Cytoscape is running
     isRunning <- isCytoscapeRunning()
@@ -77,6 +81,10 @@ createNetwork <- function(gostObject, source=c("TERM_ID", "GO:MF", "GO:CC",
         gostResults <- gostResults[gostResults$source == source,]
     }
     
+    ## Remove root term if required
+    if (removeRoot) {
+        gostResults <- removeRootTerm(gostResults)
+    }
     
     if (isRunning) {
         createCytoscapeNetwork(gostResults=gostResults, gostObject=gostObject,

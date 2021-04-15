@@ -174,6 +174,9 @@ isCytoscapeRunning <- function() {
 #' the term IDs retained for the creation of the network. This parameter is 
 #' only used when \code{source} is set to "TERM_ID".
 #' 
+#' @param removeRoot a \code{logical} that specified if the root terms of 
+#' the selected source should be removed (when present). 
+#' 
 #' @return \code{TRUE} when all arguments are valid
 #' 
 #' @examples
@@ -183,12 +186,14 @@ isCytoscapeRunning <- function() {
 #' 
 #' ## Check that all arguments are valid
 #' gprofiler2cytoscape:::validateCreateNetworkArguments(gostObject=demoGOST,
-#'     source="GO:BP", termIDs=NULL)
+#'     source="GO:BP", termIDs=NULL, removeRoot=FALSE)
 #' 
 #' @author Astrid Deschênes
 #' @encoding UTF-8
+#' @importFrom methods is
 #' @keywords internal
-validateCreateNetworkArguments <- function(gostObject, source, termIDs) {
+validateCreateNetworkArguments <- function(gostObject, source, termIDs,
+                                                removeRoot) {
     
     ## Test that gostObject is a gprofiler2 result 
     if (!("list" %in% class(gostObject) && "result" %in% names(gostObject) &&
@@ -216,6 +221,61 @@ validateCreateNetworkArguments <- function(gostObject, source, termIDs) {
         }
     }
     
+    if (!is(removeRoot, "logical")) {
+        stop(paste0("The \'removeRoot\' parameter must be the logical ", 
+                        "value TRUE or FALSE."))
+    }
+    
     return(TRUE)   
 }
 
+
+#' @title Remove root term if present in the list of selected terms
+#' 
+#' @description Remove root term if present in the list of selected terms
+#' 
+#' @param gostResults a \code{data.frame} containing the terms retained
+#' for the creation of the network.
+#' 
+#' @return a \code{data.frame} of selected terms without the root term.
+#' 
+#' @examples
+#'
+#' ## Loading dataset containing result from an enrichment analysis done with
+#' ## gprofiler2
+#' data(demoGOST)
+#' 
+#' ## Only retained the GO - Molecular Function results
+#' results <- demoGOST$result[demoGOST$result$source == "WP", ]
+#'
+#' ## Remove WIKIPATHWAYS root term 
+#' gprofiler2cytoscape:::removeRootTerm(gostResult=results)
+#' 
+#' 
+#' @author Astrid Deschênes
+#' @importFrom gprofiler2 gconvert
+#' @importFrom RCy3 createNetworkFromDataFrames setNodeColorMapping
+#' @importFrom RCy3 setNodeLabelBypass setNodeWidthMapping 
+#' @encoding UTF-8
+#' @keywords internal
+removeRootTerm <- function(gostResult) {
+    
+    source <- c("WP", "KEGG", "REAC", "CORUM", "TF", 
+                    "MIRNA", "HPA", "GO:BP", "GO:CC", "GO:MF")
+    term_id <- c("WP:000000", "KEGG:00000", "REAC:0000000", 
+                    "CORUM:0000000", "TF:M00000", "MIRNA:000000",
+                    "HPA:0000000", "GO:0008150", "GO:0005575", "GO:0003674")
+    
+    for (i in seq_len(10)) {
+        test <- which(gostResult$source == source[i] & 
+                        gostResult$term_id == term_id[i])
+    
+        if (length(test) > 0) {
+            gostResult <- gostResult[-c(test), ]
+        }
+    }
+    
+    rownames(gostResult) <- NULL
+    
+    return(gostResult)
+}

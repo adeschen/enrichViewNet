@@ -11,6 +11,7 @@ createNetwork(
   source = c("TERM_ID", "GO:MF", "GO:CC", "GO:BP", "KEGG", "REAC", "TF", "MIRNA",
     "HPA", "CORUM", "HP", "WP"),
   termIDs = NULL,
+  removeRoot = TRUE,
   title = "gprofiler network",
   collection = "enrichment results"
 )
@@ -31,6 +32,9 @@ and "WP" for WikiPathways.  Default: "TERM_ID".}
 
 \item{termIDs}{a \code{vector} of \code{character} strings that contains the
 term IDS retained for the creation of the network. Default: \code{NULL}.}
+
+\item{removeRoot}{a \code{logical} that specified if the root terms of 
+the selected source should be removed (when present). Default: \code{TRUE}.}
 
 \item{title}{a \code{character} string representing the name assigned to 
 the network. Default: "gprofiler network".}
@@ -58,7 +62,7 @@ data(demoGOST)
 \donttest{
 
 ## Create network for Gene Ontology - Molecular Function related results
-createNetwork(gostObject = demoGOST, source="GO:MF")
+createNetwork(gostObject = demoGOST, source="GO:MF", removeRoot=FALSE)
 
 }
 

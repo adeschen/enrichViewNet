@@ -5,7 +5,7 @@
 \alias{validateCreateNetworkArguments}
 \title{Validate arguments passed to creatNetwork() function}
 \usage{
-validateCreateNetworkArguments(gostObject, source, termIDs)
+validateCreateNetworkArguments(gostObject, source, termIDs, removeRoot)
 }
 \arguments{
 \item{gostObject}{a \code{list} created by \code{gprofiler2} that contains
@@ -24,6 +24,9 @@ and "WP" for WikiPathways.}
 \item{termIDs}{a \code{vector} of \code{character} strings that contains 
 the term IDs retained for the creation of the network. This parameter is 
 only used when \code{source} is set to "TERM_ID".}
+
+\item{removeRoot}{a \code{logical} that specified if the root terms of 
+the selected source should be removed (when present).}
 }
 \value{
 \code{TRUE} when all arguments are valid
@@ -43,7 +46,7 @@ data(demoGOST)
 
 ## Check that all arguments are valid
 gprofiler2cytoscape:::validateCreateNetworkArguments(gostObject=demoGOST,
-    source="GO:BP", termIDs=NULL)
+    source="GO:BP", termIDs=NULL, removeRoot=FALSE)
 
 }
 \author{
