@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Validate arguments passed to creatNetwork() function — validateCreateNetworkArguments • gprofiler2cytoscape</title>
+<title>Remove root term if present in the list of selected terms — removeRootTerm • gprofiler2cytoscape</title>
 
 
 <!-- jquery -->
@@ -39,13 +39,8 @@
 
 
 
-<meta property="og:title" content="Validate arguments passed to creatNetwork() function — validateCreateNetworkArguments" />
-<meta property="og:description" content="Validate the arguments passed to creatNetwork() function.
-First, the object containing the enrichment results must correspond to a 
-object created by  gprofiler2 software. Second, the selected 
-source must at least have one enriched term in the results. Then, if the
-source is 'TERM_ID', the listed terms must be present in the enrichment
-results." />
+<meta property="og:title" content="Remove root term if present in the list of selected terms — removeRootTerm" />
+<meta property="og:description" content="Remove root term if present in the list of selected terms" />
 
 
 
@@ -116,71 +111,62 @@ results." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Validate arguments passed to creatNetwork() function</h1>
+    <h1>Remove root term if present in the list of selected terms</h1>
     <small class="dont-index">Source: <a href='https://github.com/adeschen/gprofiler2cytoscape/blob/master/R/methodsInternal.R'><code>R/methodsInternal.R</code></a></small>
-    <div class="hidden name"><code>validateCreateNetworkArguments.Rd</code></div>
+    <div class="hidden name"><code>removeRootTerm.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Validate the arguments passed to creatNetwork() function.
-First, the object containing the enrichment results must correspond to a 
-object created by  <code>gprofiler2</code> software. Second, the selected 
-source must at least have one enriched term in the results. Then, if the
-source is 'TERM_ID', the listed terms must be present in the enrichment
-results.</p>
+    <p>Remove root term if present in the list of selected terms</p>
     </div>
 
-    <pre class="usage"><span class='fu'>validateCreateNetworkArguments</span><span class='op'>(</span><span class='va'>gostObject</span>, <span class='va'>source</span>, <span class='va'>termIDs</span>, <span class='va'>removeRoot</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>removeRootTerm</span><span class='op'>(</span><span class='va'>gostResult</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>gostObject</th>
-      <td><p>a <code>list</code> created by <code>gprofiler2</code> that contains
-the results from an enrichment analysis.</p></td>
-    </tr>
-    <tr>
-      <th>source</th>
-      <td><p>a <code>character</code> string representing the selected source 
-that will be used to generate the network. To hand-pick the terms to be 
-used, "TERM_ID" should be used and the list of selected term IDs should
-be passed through the <code>termIDs</code> parameter. The possible sources are 
-"GO:BP" for Gene Ontology Biological Process, "GO:CC" for Gene Ontology  
-Cellular Component, "GO:MF" for Gene Ontology Molecular Function, 
-"KEGG" for Kegg, "REAC" for Reactome, "TF" for TRANSFAC, "MIRNA" for 
-miRTarBase, "CORUM" for CORUM database, "HP" for Human phenotype ontology
-and "WP" for WikiPathways.</p></td>
-    </tr>
-    <tr>
-      <th>termIDs</th>
-      <td><p>a <code>vector</code> of <code>character</code> strings that contains 
-the term IDs retained for the creation of the network. This parameter is 
-only used when <code>source</code> is set to "TERM_ID".</p></td>
-    </tr>
-    <tr>
-      <th>removeRoot</th>
-      <td><p>a <code>logical</code> that specified if the root terms of 
-the selected source should be removed (when present).</p></td>
+      <th>gostResults</th>
+      <td><p>a <code>data.frame</code> containing the terms retained
+for the creation of the network.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>TRUE</code> when all arguments are valid</p>
+    <p>a <code>data.frame</code> of selected terms without the root term.</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Astrid Deschênes</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='co'>## Load the result of an enrichment analysis done with gprofiler2</span>
+<span class='co'>## Loading dataset containing result from an enrichment analysis done with</span>
+<span class='co'>## gprofiler2</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>demoGOST</span><span class='op'>)</span>
 
-<span class='co'>## Check that all arguments are valid</span>
-<span class='fu'>gprofiler2cytoscape</span><span class='fu'>:::</span><span class='fu'>validateCreateNetworkArguments</span><span class='op'>(</span>gostObject<span class='op'>=</span><span class='va'>demoGOST</span>,
-    source<span class='op'>=</span><span class='st'>"GO:BP"</span>, termIDs<span class='op'>=</span><span class='cn'>NULL</span>, removeRoot<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='co'>## Only retained the GO - Molecular Function results</span>
+<span class='va'>results</span> <span class='op'>&lt;-</span> <span class='va'>demoGOST</span><span class='op'>$</span><span class='va'>result</span><span class='op'>[</span><span class='va'>demoGOST</span><span class='op'>$</span><span class='va'>result</span><span class='op'>$</span><span class='va'>source</span> <span class='op'>==</span> <span class='st'>"WP"</span>, <span class='op'>]</span>
+
+<span class='co'>## Remove WIKIPATHWAYS root term </span>
+<span class='fu'>gprofiler2cytoscape</span><span class='fu'>:::</span><span class='fu'>removeRootTerm</span><span class='op'>(</span>gostResult<span class='op'>=</span><span class='va'>results</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;     query significant     p_value term_size query_size intersection_size
+#&gt; 1 query_1        TRUE 0.007158877        24         15                 2
+#&gt; 2 query_1        TRUE 0.007778592        25         15                 2
+#&gt; 3 query_1        TRUE 0.029002400       239         15                 3
+#&gt;   precision     recall   term_id source
+#&gt; 1 0.1333333 0.08333333 WP:WP4925     WP
+#&gt; 2 0.1333333 0.08000000 WP:WP3613     WP
+#&gt; 3 0.2000000 0.01255230 WP:WP2882     WP
+#&gt;                                                term_name effective_domain_size
+#&gt; 1                              Unfolded protein response                 24109
+#&gt; 2 Photodynamic therapy-induced unfolded protein response                 24109
+#&gt; 3                         Nuclear Receptors Meta-Pathway                 24109
+#&gt;   source_order   parents
+#&gt; 1          570 WP:000000
+#&gt; 2          233 WP:000000
+#&gt; 3          184 WP:000000</div><div class='input'>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
