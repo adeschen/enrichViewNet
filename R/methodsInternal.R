@@ -260,13 +260,15 @@ validateCreateNetworkArguments <- function(gostObject, source, termIDs,
 #' @keywords internal
 removeRootTerm <- function(gostResult) {
     
+    ## Root terms that should be removed
     source <- c("WP", "KEGG", "REAC", "CORUM", "TF", 
                     "MIRNA", "HPA", "GO:BP", "GO:CC", "GO:MF")
     term_id <- c("WP:000000", "KEGG:00000", "REAC:0000000", 
                     "CORUM:0000000", "TF:M00000", "MIRNA:000000",
                     "HPA:0000000", "GO:0008150", "GO:0005575", "GO:0003674")
     
-    for (i in seq_len(10)) {
+    ## When a root term is present, remove it from the data.frame
+    for (i in seq_len(length(source))) {
         test <- which(gostResult$source == source[i] & 
                         gostResult$term_id == term_id[i])
     
@@ -275,6 +277,7 @@ removeRootTerm <- function(gostResult) {
         }
     }
     
+    ## Reset row names
     rownames(gostResult) <- NULL
     
     return(gostResult)
