@@ -24,7 +24,9 @@ Suggests:
     testthat
 biocViews: BiologicalQuestion, 
     Software,
-    Network
+    Network,
+    NetworkEnrichment,
+    GO
 VignetteBuilder: knitr
 URL: https://github.com/adeschen/gprofiler2cytoscape, https://adeschen.github.io/gprofiler2cytoscape/
 BugReports: https://github.com/adeschen/gprofiler2cytoscape/issues
