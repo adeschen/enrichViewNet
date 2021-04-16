@@ -15,6 +15,7 @@ offers the option to generate a network for only a portion of the
 significant terms by selecting the source or by providing a 
 specific list of terms.
 
+
 ## Authors ##
 
 [Astrid Desch&ecirc;nes](http://ca.linkedin.com/in/astriddeschenes "Astrid Desch&ecirc;nes") and
@@ -29,9 +30,13 @@ the Artistic license 2.0. You are free to use and redistribute this software.
 For more information on Artistic 2.0 License see
 [http://opensource.org/licenses/Artistic-2.0](http://opensource.org/licenses/Artistic-2.0)
 
+
 ## Documentation ##
 
-TODO
+[gprofiler2cytoscape Website](https://adeschen.github.io/gprofiler2cytoscape/)
+
+[gprofiler2cytoscape Get Started](https://adeschen.github.io/gprofiler2cytoscape/articles/gprofiler2cytoscape.html)
+
 
 ## Installation ##
 
@@ -43,6 +48,7 @@ package is required.
 
      ## Install the latest version of gprofiler2cytoscape
      devtools::install_github('adeschen/gprofiler2cytoscape')
+
 
 ## Bugs/Feature requests ##
 
