@@ -89,7 +89,7 @@ createNetwork <- function(gostObject, source=c("TERM_ID", "GO:MF", "GO:CC",
         
         if (nrow(gostResults) == 0) {
             stop(paste0("With removal of the root term, there is no ", 
-                 "enrichment term left"))
+                    "enrichment term left"))
         }
     }
     
