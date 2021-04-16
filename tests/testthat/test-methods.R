@@ -70,3 +70,18 @@ test_that("createNetwork() must return error when removeRoot remove last enriche
     expect_error(createNetwork(gostObject=gostTerm, source="WP", 
                     removeRoot = TRUE), error_message)
 })
+
+
+test_that("createNetwork() must return error when removeRoot remove last enriched term from term list", {
+    
+    gostTerm <- demoGOST
+    gostTerm$result <- demoGOST$result[54,]
+    
+    error_message <- paste0("With removal of the root term, there is no ", 
+                            "enrichment term left")
+    
+    expect_error(createNetwork(gostObject=gostTerm, source="TERM_ID",
+                               termIDs = c("WP:000000"),
+                               removeRoot = TRUE), error_message)
+})
+
