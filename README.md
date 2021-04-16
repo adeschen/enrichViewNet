@@ -11,8 +11,9 @@ into a
 [Cytoscape](https://cytoscape.org/) network where significant terms (Gene Ontology/Reactome/Kegg/Transcription Factor/etc..) and 
 genes are nodes. In this network, edges connect genes that are part of the
 enrichment request to their terms. The **_gprofiler2cytoscape_** package 
-offers the option to subselection a portion of the significant terms by
-selecting the source or by providing a specific list of terms.
+offers the option to generate a network for only a portion of the 
+significant terms by selecting the source or by providing a 
+specific list of terms.
 
 ## Authors ##
 
