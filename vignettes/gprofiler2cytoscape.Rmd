@@ -100,6 +100,10 @@ enrichment analysis are shown.
 knitr::include_graphics("demo01.jpeg")
 ```
 
+The **_gprofiler2cytoscape_** package 
+offers the option to generate a network for only a portion of the 
+significant terms by selecting the source or by providing a 
+specific list of terms.
 
 Once the network is created, the user can personalize the visual attributes 
 and integrate external information such as expression profiles, phenotypes 
@@ -114,6 +118,7 @@ To install the latest version accessible on the
 ```{r installDemo01, eval=FALSE}
 ## Load required package
 library(devtools)
+
 ## Install the latest version of gprofiler2cytoscape
 devtools::install_github('adeschen/gprofiler2cytoscape')
 ```
@@ -124,6 +129,7 @@ releases is posted on the [gprofiler2cytoscape Release Website](https://github.c
 ```{r installDemo02, eval=FALSE}
 ## Load required package
 library(devtools)
+
 ## Install the version v0.1 of gprofiler2cytoscape
 ## using 'ref' parameter
 devtools::install_github('adeschen/gprofiler2cytoscape', ref = "v0.1")
