@@ -81,7 +81,7 @@
 
     
     
-<p><br><strong>Package</strong>: <em>gprofiler2cytoscape</em><br><strong>Authors</strong>: Astrid Deschênes [aut, cre] (<a href="https://orcid.org/0000-0001-7846-6749" class="uri">https://orcid.org/0000-0001-7846-6749</a>), Pascal Belleau [aut] (<a href="https://orcid.org/0000-0002-0802-1071" class="uri">https://orcid.org/0000-0002-0802-1071</a>)<br><strong>Version</strong>: 0.0.1<br><strong>Compiled date</strong>: 2021-04-16<br><strong>License</strong>: Artistic-2.0<br></p>
+<p><br><strong>Package</strong>: <em>gprofiler2cytoscape</em><br><strong>Authors</strong>: Astrid Deschênes [aut, cre] (<a href="https://orcid.org/0000-0001-7846-6749" class="uri">https://orcid.org/0000-0001-7846-6749</a>), Pascal Belleau [aut] (<a href="https://orcid.org/0000-0002-0802-1071" class="uri">https://orcid.org/0000-0002-0802-1071</a>)<br><strong>Version</strong>: 0.0.1<br><strong>Compiled date</strong>: 2021-04-19<br><strong>License</strong>: Artistic-2.0<br></p>
 <div id="licensing" class="section level1">
 <h1 class="hasAnchor">
 <a href="#licensing" class="anchor"></a>Licensing</h1>
@@ -108,6 +108,7 @@
 Demo a biologocial network where GO terms and genes are presented as nodes while edges connect each gene to its dataset(s).
 </p>
 </div>
+<p>The <strong><em>gprofiler2cytoscape</em></strong> package offers the option to generate a network for only a portion of the significant terms by selecting the source or by providing a specific list of terms.</p>
 <p>Once the network is created, the user can personalize the visual attributes and integrate external information such as expression profiles, phenotypes and other molecular states. The user can also peforms network analysis.</p>
 </div>
 <div id="installation" class="section level1">
@@ -117,12 +118,14 @@ Demo a biologocial network where GO terms and genes are presented as nodes while
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Load required package</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/">devtools</a></span><span class="op">)</span>
+
 <span class="co">## Install the latest version of gprofiler2cytoscape</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">'adeschen/gprofiler2cytoscape'</span><span class="op">)</span></code></pre></div>
 <p>It is also possible to install an official release. The list of available releases is posted on the <a href="https://github.com/adeschen/gprofiler2cytoscape/releases" title="gprofiler2cytoscape Release Site">gprofiler2cytoscape Release Website</a>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Load required package</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/">devtools</a></span><span class="op">)</span>
+
 <span class="co">## Install the version v0.1 of gprofiler2cytoscape</span>
 <span class="co">## using 'ref' parameter</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">'adeschen/gprofiler2cytoscape'</span>, ref <span class="op">=</span> <span class="st">"v0.1"</span><span class="op">)</span></code></pre></div>
@@ -173,7 +176,7 @@ From an enrichment list to a Cytoscape network
 ## [19] textshaping_0.3.0   desc_1.2.0          stringr_1.4.0      
 ## [22] htmlwidgets_1.5.3   igraph_1.2.6        munsell_0.5.0      
 ## [25] compiler_4.0.3      gprofiler2_0.2.0    xfun_0.21          
-## [28] pkgconfig_2.0.3     systemfonts_1.0.1   BiocGenerics_0.36.0
+## [28] pkgconfig_2.0.3     systemfonts_1.0.1   BiocGenerics_0.36.1
 ## [31] htmltools_0.5.1.1   tidyselect_1.1.0    tibble_3.0.6       
 ## [34] bookdown_0.21       XML_3.99-0.5        viridisLite_0.3.0  
 ## [37] crayon_1.4.1        dplyr_1.0.4         R.methodsS3_1.8.1  
