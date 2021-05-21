@@ -33,8 +33,8 @@ into Cytoscape
 ## gprofiler2
 data(demoGOST)
 
-## Only retained the GO - Molecular Function results
-results <- demoGOST$result[demoGOST$result$source == "GO:MF", ]
+## Only retained the WikiPathways results
+results <- demoGOST$result[demoGOST$result$source == "WP", ]
 
 \dontrun{
 

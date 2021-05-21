@@ -24,8 +24,8 @@
 #' ## gprofiler2
 #' data(demoGOST)
 #' 
-#' ## Only retained the GO - Molecular Function results
-#' results <- demoGOST$result[demoGOST$result$source == "GO:MF", ]
+#' ## Only retained the WikiPathways results
+#' results <- demoGOST$result[demoGOST$result$source == "WP", ]
 #' 
 #' \dontrun{
 #' 
@@ -284,4 +284,202 @@ removeRootTerm <- function(gostResult) {
     rownames(gostResult) <- NULL
     
     return(gostResult)
+}
+
+#' @title Create CX JSON text representing the network
+#' 
+#' @description Create TODO
+#' 
+#' @param gostResults a \code{data.frame} containing the terms retained
+#' for the creation of the network.
+#' 
+#' @param gostObject a \code{list} created by gprofiler2 that contains
+#' the results from an enrichment analysis.
+#' 
+#' @param title a \code{character} string representing the name assigned to 
+#' the network.
+#' 
+#' @return \code{TRUE} TODO
+#' 
+#' @examples
+#'
+#' ## Loading dataset containing result from an enrichment analysis done with
+#' ## gprofiler2
+#' data(demoGOST)
+#' 
+#' ## Only retained the WikiPathways results
+#' results <- demoGOST$result[demoGOST$result$source == "WP", ]
+#' 
+#' jsonFormat <- gprofiler2cytoscape:::createCytoscapeCXJSON(
+#'                 gostResults = results, gostObject = demoGOST, 
+#'                 title = "WikiPathways")
+#' 
+#' @author Astrid Deschênes
+#' @importFrom gprofiler2 gconvert
+#' @importFrom jsonlite toJSON
+#' @encoding UTF-8
+#' @keywords internal
+createCytoscapeCXJSON <- function(gostResults, gostObject, title) {
+    
+    entriesL <- createNodesAndEdgesCXJSON(gostResults = gostResults,
+        gostObject = gostObject)
+    
+    networkAttributes <- data.frame(n = c("name"), v = c(title), 
+        stringsAsFactors = FALSE)
+    
+    cyHiddenAttributes <- data.frame(n = c("layoutAlgorithm"),
+        y = c("yFiles Circular Layout"), stringsAsFactors = FALSE)
+    
+    metaData <- createMetaDataSectionCXJSON()
+    
+    ## Create the network using JSON data format and posting it to Cytoscape
+    result <- paste0(toJSON(list(networkAttributes = networkAttributes)), ",", 
+            toJSON(list(nodes = entriesL$nodes)), ",", 
+            toJSON(list(edges = entriesL$edges)), ",",
+            toJSON(list(nodeAttributes = entriesL$nodeAttributes)), ",",
+            toJSON(list(edgeAttributes = entriesL$edgeAttributes)), ",",
+            toJSON(list(cyHiddenAttributes=cyHiddenAttributes)))
+    
+    return(paste0("[", metaData, ",", result, ",", metaData, 
+                ",{\"status\":[{\"error\":\"\",\"success\":true}]}]"))
+}
+
+
+
+#' @title Create meta data section for the CX JSON file
+#' 
+#' @description Create meta data section for the CX JSON file that contains
+#' the network information
+#' 
+#' @return TODO
+#' 
+#' @examples
+#' 
+#' ## TODO
+#' gprofiler2cytoscape:::createMetaDataSectionCXJSON()
+#' 
+#' @author Astrid Deschênes
+#' @importFrom jsonlite toJSON
+#' @encoding UTF-8
+#' @keywords internal
+createMetaDataSectionCXJSON <- function() {
+    
+    name <- c("nodes", "edges", "edgeAttributes", "nodeAttributes", 
+                "cyHiddenAttributes", "cyNetworkRelations", "cyGroups",
+                "networkAttributes", "cyTableColumn", "cySubNetworks")
+    
+    metaData <- data.frame(name = name, version = rep("1.0", length(name)), 
+                            stringsAsFactors = FALSE)
+    
+    return(toJSON(list(metaData=metaData)))    
+}
+
+#' @title Create CX JSON text representing the network
+#' 
+#' @description Create TODO
+#' 
+#' @param gostResults a \code{data.frame} containing the terms retained
+#' for the creation of the network.
+#' 
+#' @param gostObject a \code{list} created by gprofiler2 that contains
+#' the results from an enrichment analysis.
+#' 
+#' @return \code{TRUE} TODO
+#' 
+#' @examples
+#'
+#' ## Loading dataset containing result from an enrichment analysis done with
+#' ## gprofiler2
+#' data(demoGOST)
+#' 
+#' ## Only retained the WikiPathways results
+#' results <- demoGOST$result[demoGOST$result$source == "WP", ]
+#' 
+#' jsonFormat <- gprofiler2cytoscape:::createCytoscapeCXJSON(
+#'                 gostResults = results, gostObject = demoGOST, 
+#'                 title = "WikiPathways")
+#' 
+#' @author Astrid Deschênes
+#' @importFrom gprofiler2 gconvert
+#' @importFrom jsonlite toJSON
+#' @encoding UTF-8
+#' @keywords internal
+createNodesAndEdgesCXJSON <- function(gostResults, gostObject) {
+    
+    done <- list()   
+    nodes <- list()
+    edges <- list()
+    nodeAttributes <- list()
+    edgeAttributes <- list()
+    
+    id <- 0
+    
+    ## Create entries for genes and terms that will be included in the network
+    for (i in seq_len(nrow(gostResults))) {
+        term <- gostResults$term_id[i]
+        termName <- gostResults$term_name[i]
+        query <- gostResults$query[i]
+        
+        id <- id + 1
+        term_id <- id
+        
+        ## Create a node entry for the term
+        nodes[[length(nodes) + 1]] <- data.frame('@id' = term_id,
+            n = c(term), stringsAsFactors = FALSE, check.names = FALSE)
+        
+        ## Create a node attribute entry for the term alias and the term group
+        nodeAttributes[[length(nodeAttributes) + 1]] <- data.frame(
+            po = rep(term_id, 2), n = c("alias", "group"),
+            v = c(termName, "TERM"), stringsAsFactors = FALSE)
+        
+        ## Get list of genes associated to the term
+        res <- gconvert(query=c(term))
+        genes <- gostObject$meta$query_metadata$queries[[query]]
+        
+        ## Create entries for genes that will be associated with this term
+        for (g in genes[genes %in% res$target]) {
+            geneName <- res[res$target == g, c("name")]
+            ## No need to create node if already created for this gene
+            gene_id <- NULL
+            if (! g %in% names(done)) {
+                id <- id + 1
+                gene_id <- id
+                
+                ## Create a node entry for the gene
+                nodes[[length(nodes) + 1]] <- data.frame('@id' = gene_id,
+                    n = c(g), stringsAsFactors = FALSE, check.names = FALSE)
+                
+                ## Create a node attribute entry for the gene alias and group
+                nodeAttributes[[length(nodeAttributes) + 1]] <- data.frame(
+                    po = rep(gene_id, 2), n = c("alias", "group"),
+                    v = c(geneName, "GENE"), stringsAsFactors = FALSE)
+                
+                done[[geneName]] <- gene_id
+            } else {
+                gene_id <- done[[geneName]] 
+            }
+            
+            id <- id + 1
+            
+            ## Create an edge connecting term to gene
+            edges[[length(edges) + 1]] <- data.frame('@id' = id, s = term_id,
+                t = gene_id, i = c("contains"), stringsAsFactors = FALSE, 
+                check.names = FALSE)
+            
+            ## Create edge attributes
+            edgeAttributes[[length(edgeAttributes) + 1]] <- data.frame(
+                po = rep(id, 3), n = c("name", "source", "target"),
+                v = c(paste0(term, " (contains) ", g), term, g),
+                stringsAsFactors = FALSE)
+        }
+    }
+    
+    ## Transform results into data.frame
+    nodeInfo <- do.call(rbind, nodes)
+    edgeInfo <- do.call(rbind, edges)
+    nodeAttributesInfo <- do.call(rbind, nodeAttributes)
+    edgeAttributesInfo <- do.call(rbind, edgeAttributes)
+    
+    return(list(nodes=nodeInfo, edges=edgeInfo, 
+        nodeAttributes=nodeAttributesInfo, edgeAttributes=edgeAttributesInfo))
 }

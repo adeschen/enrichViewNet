@@ -59,7 +59,7 @@
 #' @encoding UTF-8
 #' @export
 createNetwork <- function(gostObject, source=c("TERM_ID", "GO:MF", "GO:CC",
-    "GO:BP", "KEGG", "REAC", "TF", "MIRNA", "HPA", "CORUM", "HP","WP"), 
+    "GO:BP", "KEGG", "REAC", "TF", "MIRNA", "HPA", "CORUM", "HP", "WP"), 
     termIDs=NULL, removeRoot=TRUE, title="gprofiler network", 
     collection="enrichment results") {
     
@@ -67,11 +67,8 @@ createNetwork <- function(gostObject, source=c("TERM_ID", "GO:MF", "GO:CC",
     source <- match_arg(source, ignore_case=TRUE)
     
     ## Validate parameters
-    validateCreateNetworkArguments(gostObject=gostObject, source=source,
-                                    termIDs=termIDs, removeRoot=removeRoot)
-    
-    ## Test that Cytoscape is running
-    isRunning <- isCytoscapeRunning()
+    validateCreateNetworkArguments(gostObject = gostObject, source = source,
+        termIDs = termIDs, removeRoot = removeRoot)
     
     ## Extract results
     gostResults <- gostObject$result
@@ -86,18 +83,26 @@ createNetwork <- function(gostObject, source=c("TERM_ID", "GO:MF", "GO:CC",
     ## Remove root term if required
     if (removeRoot) {
         gostResults <- removeRootTerm(gostResults)
-        
         if (nrow(gostResults) == 0) {
             stop(paste0("With removal of the root term, there is no ", 
                     "enrichment term left"))
         }
     }
     
+    ## Test that Cytoscape is running
+    isRunning <- isCytoscapeRunning()
+    
+    ## If cytoscape is running, publish network in Cytoscape
+    ## Otherwise, create CX JSON file
+    final <- FALSE
     if (isRunning) {
-        createCytoscapeNetwork(gostResults=gostResults, gostObject=gostObject,
-                                title=title, collection=collection)
+        final <- createCytoscapeNetwork(gostResults = gostResults, 
+            gostObject = gostObject, title = title, collection = collection)
+    } else {
+        final <- createCytoscapeCXJSON(gostResults = gostResults, 
+            gostObject = gostObject, title = title) 
     }
     
-    return(TRUE)
+    return(final)
 }
         
