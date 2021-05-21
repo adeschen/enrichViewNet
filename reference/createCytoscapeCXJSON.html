@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create network and load it into Cytoscape — createCytoscapeNetwork • gprofiler2cytoscape</title>
+<title>Create CX JSON text representing the network — createCytoscapeCXJSON • gprofiler2cytoscape</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,8 @@
 
 
 
-<meta property="og:title" content="Create network and load it into Cytoscape — createCytoscapeNetwork" />
-<meta property="og:description" content="Create network from gprofiler2 results and load it 
-into Cytoscape" />
+<meta property="og:title" content="Create CX JSON text representing the network — createCytoscapeCXJSON" />
+<meta property="og:description" content="Create TODO" />
 
 
 
@@ -112,17 +111,16 @@ into Cytoscape" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create network and load it into Cytoscape</h1>
+    <h1>Create CX JSON text representing the network</h1>
     <small class="dont-index">Source: <a href='https://github.com/adeschen/gprofiler2cytoscape/blob/master/R/methodsInternal.R'><code>R/methodsInternal.R</code></a></small>
-    <div class="hidden name"><code>createCytoscapeNetwork.Rd</code></div>
+    <div class="hidden name"><code>createCytoscapeCXJSON.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Create network from gprofiler2 results and load it 
-into Cytoscape</p>
+    <p>Create TODO</p>
     </div>
 
-    <pre class="usage"><span class='fu'>createCytoscapeNetwork</span><span class='op'>(</span><span class='va'>gostResults</span>, <span class='va'>gostObject</span>, <span class='va'>title</span>, <span class='va'>collection</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>createCytoscapeCXJSON</span><span class='op'>(</span><span class='va'>gostResults</span>, <span class='va'>gostObject</span>, <span class='va'>title</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -142,16 +140,11 @@ the results from an enrichment analysis.</p></td>
       <td><p>a <code>character</code> string representing the name assigned to 
 the network.</p></td>
     </tr>
-    <tr>
-      <th>collection</th>
-      <td><p>a <code>character</code> string representing the collection 
-name assigned to the network.</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>TRUE</code></p>
+    <p><code>TRUE</code> TODO</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Astrid Deschênes</p>
@@ -165,18 +158,9 @@ name assigned to the network.</p></td>
 <span class='co'>## Only retained the WikiPathways results</span>
 <span class='va'>results</span> <span class='op'>&lt;-</span> <span class='va'>demoGOST</span><span class='op'>$</span><span class='va'>result</span><span class='op'>[</span><span class='va'>demoGOST</span><span class='op'>$</span><span class='va'>result</span><span class='op'>$</span><span class='va'>source</span> <span class='op'>==</span> <span class='st'>"WP"</span>, <span class='op'>]</span>
 
-<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-
-<span class='co'>## The creation of the network can only be done when Cytoscape </span>
-<span class='co'>## is up and running</span>
-<span class='co'>## A network using GO - Molecular Function enriched terms will be </span>
-<span class='co'>## generated and loaded into Cytoscape</span>
-<span class='kw'>if</span> <span class='op'>(</span><span class='fu'>gprofiler2cytoscape</span><span class='fu'>:::</span><span class='fu'><a href='isCytoscapeRunning.html'>isCytoscapeRunning</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-    <span class='fu'>gprofiler2cytoscape</span><span class='fu'>:::</span><span class='fu'>createCytoscapeNetwork</span><span class='op'>(</span>gostResults<span class='op'>=</span><span class='va'>results</span>, 
-        gostObject<span class='op'>=</span><span class='va'>demoGOST</span>, title<span class='op'>=</span><span class='st'>"Test"</span>, collection<span class='op'>=</span><span class='st'>"New Collection"</span><span class='op'>)</span>
-<span class='op'>}</span>
-
-<span class='op'>}</span>
+<span class='va'>jsonFormat</span> <span class='op'>&lt;-</span> <span class='fu'>gprofiler2cytoscape</span><span class='fu'>:::</span><span class='fu'>createCytoscapeCXJSON</span><span class='op'>(</span>
+                gostResults <span class='op'>=</span> <span class='va'>results</span>, gostObject <span class='op'>=</span> <span class='va'>demoGOST</span>, 
+                title <span class='op'>=</span> <span class='st'>"WikiPathways"</span><span class='op'>)</span>
 
 </div></pre>
   </div>
