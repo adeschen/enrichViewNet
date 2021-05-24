@@ -216,7 +216,7 @@ test_that("createCytoscapeCXJSON() must return expected text", {
     result <- gprofiler2cytoscape:::createCytoscapeCXJSON(
                          gostResults = mirnaData, gostObject = mirnaDemo, 
                          title = "MIRNA")
-                         
+    
     expected <- paste0(
         "[{\"metaData\":[{\"name\":\"nodes\",\"version\":\"1.0\"},", 
         "{\"name\":\"edges\",\"version\":\"1.0\"},",
@@ -232,10 +232,9 @@ test_that("createCytoscapeCXJSON() must return expected text", {
         "{\"nodes\":[{\"@id\":1,\"n\":\"MIRNA:hsa-miR-335-5p\"},",
         "{\"@id\":2,\"n\":\"ENSG00000051108\"},",
         "{\"@id\":4,\"n\":\"MIRNA:hsa-miR-3180-5p\"},",
-        "{\"@id\":5,\"n\":\"MIRNA:hsa-miR-759\"},",
-        "{\"@id\":6,\"n\":\"ENSG00000051108\"}]},",
+        "{\"@id\":5,\"n\":\"MIRNA:hsa-miR-759\"}]},",
         "{\"edges\":[{\"@id\":3,\"s\":1,\"t\":2,\"i\":\"contains\"},",
-        "{\"@id\":7,\"s\":5,\"t\":6,\"i\":\"contains\"}]},",
+        "{\"@id\":6,\"s\":5,\"t\":2,\"i\":\"contains\"}]},",
         "{\"nodeAttributes\":[{\"po\":1,\"n\":\"alias\",\"v\":\"hsa-miR-335-5p\"},",
         "{\"po\":1,\"n\":\"group\",\"v\":\"TERM\"},",
         "{\"po\":2,\"n\":\"alias\",\"v\":\"HERPUD1\"},",
@@ -243,15 +242,13 @@ test_that("createCytoscapeCXJSON() must return expected text", {
         "{\"po\":4,\"n\":\"alias\",\"v\":\"hsa-miR-3180-5p\"},",
         "{\"po\":4,\"n\":\"group\",\"v\":\"TERM\"},",
         "{\"po\":5,\"n\":\"alias\",\"v\":\"hsa-miR-759\"},",
-        "{\"po\":5,\"n\":\"group\",\"v\":\"TERM\"},",
-        "{\"po\":6,\"n\":\"alias\",\"v\":\"HERPUD1\"},",
-        "{\"po\":6,\"n\":\"group\",\"v\":\"GENE\"}]},",
+        "{\"po\":5,\"n\":\"group\",\"v\":\"TERM\"}]},",
         "{\"edgeAttributes\":[{\"po\":3,\"n\":\"name\",\"v\":\"MIRNA:hsa-miR-335-5p (contains) ENSG00000051108\"},",
         "{\"po\":3,\"n\":\"source\",\"v\":\"MIRNA:hsa-miR-335-5p\"},",
         "{\"po\":3,\"n\":\"target\",\"v\":\"ENSG00000051108\"},",
-        "{\"po\":7,\"n\":\"name\",\"v\":\"MIRNA:hsa-miR-759 (contains) ENSG00000051108\"},",
-        "{\"po\":7,\"n\":\"source\",\"v\":\"MIRNA:hsa-miR-759\"},",
-        "{\"po\":7,\"n\":\"target\",\"v\":\"ENSG00000051108\"}]},", 
+        "{\"po\":6,\"n\":\"name\",\"v\":\"MIRNA:hsa-miR-759 (contains) ENSG00000051108\"},",
+        "{\"po\":6,\"n\":\"source\",\"v\":\"MIRNA:hsa-miR-759\"},",
+        "{\"po\":6,\"n\":\"target\",\"v\":\"ENSG00000051108\"}]},", 
         "{\"cyHiddenAttributes\":[{\"n\":\"layoutAlgorithm\",\"y\":\"yFiles Circular Layout\"}]},",
         "{\"metaData\":[{\"name\":\"nodes\",\"version\":\"1.0\"},", 
         "{\"name\":\"edges\",\"version\":\"1.0\"},",
@@ -288,29 +285,28 @@ test_that("extractNodesAndEdgesInformation() must return expected text", {
     
     expected <- list()
     
-    expected[["nodes"]] <- data.frame("@id" = c(1, 2, 4, 6, 8, 9, 11, 12, 14),
+    expected[["nodes"]] <- data.frame("@id" = c(1, 2, 4, 6, 8, 10),
         "n" = c("MIRNA:hsa-miR-335-5p", "ENSG00000051108", "ENSG00000059728",
-                "ENSG00000077616", "MIRNA:hsa-miR-3180-5p", "ENSG00000059728",
-                "MIRNA:hsa-miR-759", "ENSG00000051108", "ENSG00000059728"),
+            "ENSG00000077616", "MIRNA:hsa-miR-3180-5p", "MIRNA:hsa-miR-759"),
         check.names = FALSE, stringsAsFactors = FALSE)
     
-    expected[["edges"]] <- data.frame("@id" = c(3, 5, 7, 10, 13, 15),
-                                "s" = c(1, 1, 1, 8, 11, 11),
-                                "t" = c(2, 4, 6, 9, 12, 14),
+    expected[["edges"]] <- data.frame("@id" = c(3, 5, 7, 9, 11, 12),
+                                "s" = c(1, 1, 1, 8, 10, 10),
+                                "t" = c(2, 4, 6, 4, 2, 4),
                                 "i" = rep("contains", 6),
                                 check.names = FALSE, stringsAsFactors = FALSE)
     
     
     expected[["nodeAttributes"]] <- data.frame(
-        "po" = c(1, 1, 2, 2, 4, 4, 6, 6, 8, 8, 9, 9, 11, 11, 12, 12, 14, 14),
-        "n" = rep(c("alias", "group"), 9),
+        "po" = c(1, 1, 2, 2, 4, 4, 6, 6, 8, 8,10, 10),
+        "n" = rep(c("alias", "group"), 6),
         "v" = c("hsa-miR-335-5p", "TERM", "HERPUD1", "GENE", "MXD1", "GENE",
-            "NAALAD2", "GENE", "hsa-miR-3180-5p", "TERM", "MXD1", "GENE",
-            "hsa-miR-759", "TERM", "HERPUD1", "GENE", "MXD1", "GENE"),
+            "NAALAD2", "GENE", "hsa-miR-3180-5p", "TERM", 
+            "hsa-miR-759", "TERM"),
         check.names = FALSE, stringsAsFactors = FALSE)
    
     expected[["edgeAttributes"]] <- data.frame(
-        "po" = c(3, 3, 3, 5, 5, 5, 7, 7, 7, 10, 10, 10, 13, 13, 13, 15, 15, 15),
+        "po" = c(3, 3, 3, 5, 5, 5, 7, 7, 7, 9, 9, 9, 11, 11, 11, 12, 12, 12),
         "n" = rep(c("name", "source", "target"), 6),
         "v" = c("MIRNA:hsa-miR-335-5p (contains) ENSG00000051108", "MIRNA:hsa-miR-335-5p", "ENSG00000051108", 
             "MIRNA:hsa-miR-335-5p (contains) ENSG00000059728", "MIRNA:hsa-miR-335-5p", "ENSG00000059728",

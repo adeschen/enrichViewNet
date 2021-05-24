@@ -455,9 +455,9 @@ extractNodesAndEdgesInformation <- function(gostResults, gostObject) {
                     po = rep(gene_id, 2), n = c("alias", "group"),
                     v = c(geneName, "GENE"), stringsAsFactors = FALSE)
                 
-                done[[geneName]] <- gene_id
+                done[[g]] <- gene_id
             } else {
-                gene_id <- done[[geneName]] 
+                gene_id <- done[[g]] 
             }
             
             id <- id + 1
