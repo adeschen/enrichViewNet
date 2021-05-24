@@ -173,3 +173,31 @@ test_that("removeRootTerm() must return GO:MF root term", {
     
     expect_identical(result, expected)
 })
+
+
+### Tests createMetaDataSectionCXJSON() results
+
+context("createMetaDataSectionCXJSON() results")
+
+test_that("createMetaDataSectionCXJSON() must return expected text", {
+    
+    expected <- paste0(
+        "{\"metaData\":[{\"name\":\"nodes\",\"version\":\"1.0\"},", 
+        "{\"name\":\"edges\",\"version\":\"1.0\"},",
+        "{\"name\":\"edgeAttributes\",\"version\":\"1.0\"},",
+        "{\"name\":\"nodeAttributes\",\"version\":\"1.0\"},",
+        "{\"name\":\"cyHiddenAttributes\",\"version\":\"1.0\"},",
+        "{\"name\":\"cyNetworkRelations\",\"version\":\"1.0\"},",
+        "{\"name\":\"cyGroups\",\"version\":\"1.0\"},", 
+        "{\"name\":\"networkAttributes\",\"version\":\"1.0\"},",
+        "{\"name\":\"cyTableColumn\",\"version\":\"1.0\"},",
+        "{\"name\":\"cySubNetworks\",\"version\":\"1.0\"}]}")
+    
+    result <- gprofiler2cytoscape:::createMetaDataSectionCXJSON()
+    
+    expect_identical(as.character(result), expected)
+    expect_s3_class(result, "json")
+})
+
+
+
