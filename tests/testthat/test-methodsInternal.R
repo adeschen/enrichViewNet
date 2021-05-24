@@ -269,6 +269,61 @@ test_that("createCytoscapeCXJSON() must return expected text", {
 })
 
 
+### Tests extractNodesAndEdgesInformation() results
+
+context("extractNodesAndEdgesInformation() results")
+
+test_that("extractNodesAndEdgesInformation() must return expected text", {
+    
+    mirnaDemo <- demoGOST
+    
+    mirnaDemo$meta$query_metadata$queries[[1]] <- 
+        mirnaDemo$meta$query_metadata$queries[[1]][1:4]
+    
+    mirnaData <- demoGOST$result[demoGOST$result$source == "MIRNA", ]
+    
+    
+    result <- gprofiler2cytoscape:::extractNodesAndEdgesInformation (
+        gostResults = mirnaData, gostObject = mirnaDemo)
+    
+    expected <- list()
+    
+    expected[["nodes"]] <- data.frame("@id" = c(1, 2, 4, 6, 8, 9, 11, 12, 14),
+        "n" = c("MIRNA:hsa-miR-335-5p", "ENSG00000051108", "ENSG00000059728",
+                "ENSG00000077616", "MIRNA:hsa-miR-3180-5p", "ENSG00000059728",
+                "MIRNA:hsa-miR-759", "ENSG00000051108", "ENSG00000059728"),
+        check.names = FALSE, stringsAsFactors = FALSE)
+    
+    expected[["edges"]] <- data.frame("@id" = c(3, 5, 7, 10, 13, 15),
+                                "s" = c(1, 1, 1, 8, 11, 11),
+                                "t" = c(2, 4, 6, 9, 12, 14),
+                                "i" = rep("contains", 6),
+                                check.names = FALSE, stringsAsFactors = FALSE)
+    
+    
+    expected[["nodeAttributes"]] <- data.frame(
+        "po" = c(1, 1, 2, 2, 4, 4, 6, 6, 8, 8, 9, 9, 11, 11, 12, 12, 14, 14),
+        "n" = rep(c("alias", "group"), 9),
+        "v" = c("hsa-miR-335-5p", "TERM", "HERPUD1", "GENE", "MXD1", "GENE",
+            "NAALAD2", "GENE", "hsa-miR-3180-5p", "TERM", "MXD1", "GENE",
+            "hsa-miR-759", "TERM", "HERPUD1", "GENE", "MXD1", "GENE"),
+        check.names = FALSE, stringsAsFactors = FALSE)
+   
+    expected[["edgeAttributes"]] <- data.frame(
+        "po" = c(3, 3, 3, 5, 5, 5, 7, 7, 7, 10, 10, 10, 13, 13, 13, 15, 15, 15),
+        "n" = rep(c("name", "source", "target"), 6),
+        "v" = c("MIRNA:hsa-miR-335-5p (contains) ENSG00000051108", "MIRNA:hsa-miR-335-5p", "ENSG00000051108", 
+            "MIRNA:hsa-miR-335-5p (contains) ENSG00000059728", "MIRNA:hsa-miR-335-5p", "ENSG00000059728",
+            "MIRNA:hsa-miR-335-5p (contains) ENSG00000077616", "MIRNA:hsa-miR-335-5p", "ENSG00000077616", 
+            "MIRNA:hsa-miR-3180-5p (contains) ENSG00000059728", "MIRNA:hsa-miR-3180-5p", "ENSG00000059728",
+            "MIRNA:hsa-miR-759 (contains) ENSG00000051108", "MIRNA:hsa-miR-759", "ENSG00000051108", 
+            "MIRNA:hsa-miR-759 (contains) ENSG00000059728", "MIRNA:hsa-miR-759", "ENSG00000059728"),
+        check.names = FALSE, stringsAsFactors = FALSE) 
+    
+    expect_identical(result, expected)
+})
+
+
 
 
 
