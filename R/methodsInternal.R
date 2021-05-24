@@ -315,7 +315,6 @@ removeRootTerm <- function(gostResult) {
 #'                 title = "WikiPathways")
 #' 
 #' @author Astrid Deschênes
-#' @importFrom gprofiler2 gconvert
 #' @importFrom jsonlite toJSON
 #' @encoding UTF-8
 #' @keywords internal
