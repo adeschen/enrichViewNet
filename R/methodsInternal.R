@@ -316,7 +316,7 @@ removeRootTerm <- function(gostResult) {
 #' @keywords internal
 createCytoscapeCXJSON <- function(gostResults, gostObject, title) {
     
-    entriesL <- extractNodesAndEdgesInformation(gostResults = gostResults,
+    entriesL <- extractNodesAndEdgesInfoForCXJSON(gostResults = gostResults,
         gostObject = gostObject)
     
     networkAttributes <- data.frame(n = c("name"), v = c(title), 
@@ -392,16 +392,15 @@ createMetaDataSectionCXJSON <- function() {
 #' ## Only retained the WikiPathways results
 #' results <- demoGOST$result[demoGOST$result$source == "WP", ]
 #' 
-#' jsonFormat <- gprofiler2cytoscape:::createCytoscapeCXJSON(
-#'                 gostResults = results, gostObject = demoGOST, 
-#'                 title = "WikiPathways")
+#' information <- gprofiler2cytoscape:::extractNodesAndEdgesInfoForCXJSON(
+#'                 gostResults = results, gostObject = demoGOST)
 #' 
 #' @author Astrid Deschênes
 #' @importFrom gprofiler2 gconvert
 #' @importFrom jsonlite toJSON
 #' @encoding UTF-8
 #' @keywords internal
-extractNodesAndEdgesInformation <- function(gostResults, gostObject) {
+extractNodesAndEdgesInfoForCXJSON <- function(gostResults, gostObject) {
     
     done <- list()   
     nodes <- list()
@@ -480,3 +479,84 @@ extractNodesAndEdgesInformation <- function(gostResults, gostObject) {
     return(list(nodes=nodeInfo, edges=edgeInfo, 
         nodeAttributes=nodeAttributesInfo, edgeAttributes=edgeAttributesInfo))
 }
+
+
+
+#' @title Create node and edge information to be used to create Cytoscape
+#' network
+#' 
+#' @description Create a list containing all node and edge information needed 
+#' to create the Cytoscape network
+#' 
+#' @param gostResults a \code{data.frame} containing the terms retained
+#' for the creation of the network.
+#' 
+#' @param gostObject a \code{list} created by gprofiler2 that contains
+#' the results from an enrichment analysis.
+#' 
+#' @return \code{list} containing 2 entries:
+#' TODO
+#' 
+#' @examples
+#'
+#' ## Loading dataset containing result from an enrichment analysis done with
+#' ## gprofiler2
+#' data(demoGOST)
+#' 
+#' ## Only retained the GO Molecular Function results
+#' results <- demoGOST$result[demoGOST$result$source == "GO:MF", ]
+#' 
+#' information <- gprofiler2cytoscape:::extractNodesAndEdgesInfoForCytoscape(
+#'                 gostResults = results, gostObject = demoGOST)
+#' 
+#' @author Astrid Deschênes
+#' @importFrom gprofiler2 gconvert
+#' @importFrom jsonlite toJSON
+#' @encoding UTF-8
+#' @keywords internal
+extractNodesAndEdgesInfoForCytoscape <- function(gostResults, gostObject) {
+
+    done <- array()   
+    nodes <- list()
+    edges <- list()
+    
+    ## Create the list of genes and terms that will be included in the network
+    for (i in seq_len(nrow(gostResults))) {
+        term <- gostResults$term_id[i]
+        query <- gostResults$query[i]
+        termName <- gostResults$term_name[i]
+        #termShort <- str_replace(selectedTF[i, "term_name"], 
+        #                    pattern="Factor: ", "")
+        #termShort <- str_replace(termShort, pattern="; motif:.+$", "")
+        
+        nodes[[length(nodes) + 1]] <- data.frame(id=c(term),
+            group=c("TERM"), alias=c(termName), stringsAsFactors=FALSE)
+        
+        res <- gconvert(query=c(term))
+        genes <- gostObject$meta$query_metadata$queries[[query]]
+        
+        for (g in genes) {
+            if (g %in% res$target) {
+                geneName <- res[res$target == g, c("name")]
+                
+                if (! g %in% done) {
+                    nodes[[length(nodes) + 1]] <- data.frame(id=c(g),
+                        group=c("GENE"), alias=c(geneName),
+                        stringsAsFactors=FALSE)
+                    done <- c(done, g)
+                }
+                
+                edges[[length(edges) + 1]] <- data.frame(source=c(term),
+                    target=c(g), interaction=c("contains"), 
+                    stringsAsFactors=FALSE)
+            }
+        }
+    }
+    
+    ## Create data.frame for nodes and edges by merging all extracted info
+    nodeInfo <- do.call(rbind, nodes)
+    edgeInfo <- do.call(rbind, edges)
+
+    return(list(nodes=nodeInfo, edges=edgeInfo))
+}
+

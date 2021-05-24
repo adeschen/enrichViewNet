@@ -266,11 +266,11 @@ test_that("createCytoscapeCXJSON() must return expected text", {
 })
 
 
-### Tests extractNodesAndEdgesInformation() results
+### Tests extractNodesAndEdgesInfoForCXJSON() results
 
-context("extractNodesAndEdgesInformation() results")
+context("extractNodesAndEdgesInfoForCXJSON() results")
 
-test_that("extractNodesAndEdgesInformation() must return expected text", {
+test_that("extractNodesAndEdgesInfoForCXJSON() must return expected text", {
     
     mirnaDemo <- demoGOST
     
@@ -280,7 +280,7 @@ test_that("extractNodesAndEdgesInformation() must return expected text", {
     mirnaData <- demoGOST$result[demoGOST$result$source == "MIRNA", ]
     
     
-    result <- gprofiler2cytoscape:::extractNodesAndEdgesInformation (
+    result <- gprofiler2cytoscape:::extractNodesAndEdgesInfoForCXJSON(
         gostResults = mirnaData, gostObject = mirnaDemo)
     
     expected <- list()
