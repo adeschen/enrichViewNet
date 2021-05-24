@@ -61,9 +61,7 @@ createCytoscapeNetwork <- function(gostResults, gostObject, title, collection) {
         #                    pattern="Factor: ", "")
         #termShort <- str_replace(termShort, pattern="; motif:.+$", "")
         nodes[[length(nodes) + 1]] <- data.frame(id=c(term),
-                                            group=c("TERM"),
-                                            alias=c(termName),
-                                            stringsAsFactors=FALSE)
+            group=c("TERM"), alias=c(termName), stringsAsFactors=FALSE)
         
         res <- gconvert(query=c(term))
         genes <- gostObject$meta$query_metadata$queries[[query]]
@@ -73,15 +71,13 @@ createCytoscapeNetwork <- function(gostResults, gostObject, title, collection) {
                 geneName <- res[res$target == g, c("name")]
                 if (! g %in% done) {
                     nodes[[length(nodes) + 1]] <- data.frame(id=c(g),
-                                                        group=c("GENE"),
-                                                        alias=c(geneName),
-                                                        stringsAsFactors=FALSE)
+                        group=c("GENE"), alias=c(geneName),
+                        stringsAsFactors=FALSE)
                     done <- c(done, g)
                 }
                 edges[[length(edges) + 1]] <- data.frame(source=c(term),
-                                                    target=c(g),
-                                                    interaction=c("contains"), 
-                                                    stringsAsFactors=FALSE)
+                    target=c(g), interaction=c("contains"), 
+                    stringsAsFactors=FALSE)
             }
         }
     }
@@ -137,12 +133,12 @@ isCytoscapeRunning <- function() {
         },
         error=function(cond) {
             message(paste0("Unable to connect to Cytoscape. \n", 
-                                "Sif file will be created.\n"))
+                                "CX JSON file will be created.\n"))
             return(FALSE)
         },
         warning=function(cond) {
             message(paste0("Unable to connect to Cytoscape. \n", 
-                                "Sif file will be created."))
+                                "CX JSON file will be created."))
             return(FALSE)
         }
     ) 

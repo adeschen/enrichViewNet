@@ -35,6 +35,9 @@
 #' @param collection a \code{character} string representing the collection 
 #' name assigned to the network. Default: "enrichment results".
 #' 
+#' @param fileName a \code{character} string representing the name of the
+#' CX JSON file that is created when Cytoscape is not running. 
+#' Default: "gprofilerNetwork_01.cx".
 #' 
 #' @return \code{TRUE}
 #' 
@@ -61,7 +64,7 @@
 createNetwork <- function(gostObject, source=c("TERM_ID", "GO:MF", "GO:CC",
     "GO:BP", "KEGG", "REAC", "TF", "MIRNA", "HPA", "CORUM", "HP", "WP"), 
     termIDs=NULL, removeRoot=TRUE, title="gprofiler network", 
-    collection="enrichment results") {
+    collection="enrichment results", fileName="gprofilerNetwork.cx") {
     
     ## Validate source is among the possible choices
     source <- match_arg(source, ignore_case=TRUE)
@@ -98,11 +101,31 @@ createNetwork <- function(gostObject, source=c("TERM_ID", "GO:MF", "GO:CC",
     if (isRunning) {
         final <- createCytoscapeNetwork(gostResults = gostResults, 
             gostObject = gostObject, title = title, collection = collection)
+        message("Cystocape Network created.")
     } else {
         final <- createCytoscapeCXJSON(gostResults = gostResults, 
             gostObject = gostObject, title = title) 
+        if (!file.exists(fileName)) {
+            write(final, file= fileName, append=FALSE)
+            message(paste0("CX JSON file \"", fileName, 
+                            "\" has been created.\n"))
+        } else {
+            id <- 0
+            done <- FALSE
+            while(!done || id > 99) {
+                id <- id + 1
+                newFileName <- paste0("gprofilerNetwork_", 
+                                        sprintf("%02d", id), ".cx")
+                if (!file.exists(newFileName)) {
+                    write(final, file = newFileName, append = FALSE)
+                    done <- TRUE
+                }
+                message(paste0("CX JSON file \"", newFileName, 
+                                    "\" has been created.\n"))
+            }
+        }
     }
     
-    return(final)
+    return(TRUE)
 }
         

@@ -13,7 +13,8 @@ createNetwork(
   termIDs = NULL,
   removeRoot = TRUE,
   title = "gprofiler network",
-  collection = "enrichment results"
+  collection = "enrichment results",
+  fileName = "gprofilerNetwork.cx"
 )
 }
 \arguments{
@@ -41,6 +42,10 @@ the network. Default: "gprofiler network".}
 
 \item{collection}{a \code{character} string representing the collection 
 name assigned to the network. Default: "enrichment results".}
+
+\item{fileName}{a \code{character} string representing the name of the
+CX JSON file that is created when Cytoscape is not running. 
+Default: "gprofilerNetwork_01.cx".}
 }
 \value{
 \code{TRUE}
