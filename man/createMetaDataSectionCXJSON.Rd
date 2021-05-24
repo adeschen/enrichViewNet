@@ -8,7 +8,8 @@
 createMetaDataSectionCXJSON()
 }
 \value{
-TODO
+a \code{JSON} object that contains the meta data section related 
+to the network
 }
 \description{
 Create meta data section for the CX JSON file that contains
@@ -16,7 +17,7 @@ the network information
 }
 \examples{
 
-## TODO
+## Create the JSON object that contains the meta data information
 gprofiler2cytoscape:::createMetaDataSectionCXJSON()
 
 }

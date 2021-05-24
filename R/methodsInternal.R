@@ -321,7 +321,7 @@ removeRootTerm <- function(gostResult) {
 #' @keywords internal
 createCytoscapeCXJSON <- function(gostResults, gostObject, title) {
     
-    entriesL <- createNodesAndEdgesCXJSON(gostResults = gostResults,
+    entriesL <- extractNodesAndEdgesInformation(gostResults = gostResults,
         gostObject = gostObject)
     
     networkAttributes <- data.frame(n = c("name"), v = c(title), 
@@ -333,17 +333,17 @@ createCytoscapeCXJSON <- function(gostResults, gostObject, title) {
     metaData <- createMetaDataSectionCXJSON()
     
     ## Create the network using JSON data format and posting it to Cytoscape
-    result <- paste0(toJSON(list(networkAttributes = networkAttributes)), ",", 
+    result <- paste0("[", metaData, ",",
+            toJSON(list(networkAttributes = networkAttributes)), ",", 
             toJSON(list(nodes = entriesL$nodes)), ",", 
             toJSON(list(edges = entriesL$edges)), ",",
             toJSON(list(nodeAttributes = entriesL$nodeAttributes)), ",",
             toJSON(list(edgeAttributes = entriesL$edgeAttributes)), ",",
-            toJSON(list(cyHiddenAttributes=cyHiddenAttributes)))
+            toJSON(list(cyHiddenAttributes=cyHiddenAttributes)), ",",
+            metaData, ",{\"status\":[{\"error\":\"\",\"success\":true}]}]")
     
-    return(paste0("[", metaData, ",", result, ",", metaData, 
-                ",{\"status\":[{\"error\":\"\",\"success\":true}]}]"))
+    return(result)
 }
-
 
 
 #' @title Create meta data section for the CX JSON file
@@ -351,11 +351,12 @@ createCytoscapeCXJSON <- function(gostResults, gostObject, title) {
 #' @description Create meta data section for the CX JSON file that contains
 #' the network information
 #' 
-#' @return TODO
+#' @return a \code{JSON} object that contains the meta data section related 
+#' to the network
 #' 
 #' @examples
 #' 
-#' ## TODO
+#' ## Create the JSON object that contains the meta data information
 #' gprofiler2cytoscape:::createMetaDataSectionCXJSON()
 #' 
 #' @author Astrid Deschênes
@@ -373,6 +374,7 @@ createMetaDataSectionCXJSON <- function() {
     
     return(toJSON(list(metaData=metaData)))    
 }
+
 
 #' @title Create CX JSON text representing the network
 #' 
@@ -404,7 +406,7 @@ createMetaDataSectionCXJSON <- function() {
 #' @importFrom jsonlite toJSON
 #' @encoding UTF-8
 #' @keywords internal
-createNodesAndEdgesCXJSON <- function(gostResults, gostObject) {
+extractNodesAndEdgesInformation <- function(gostResults, gostObject) {
     
     done <- list()   
     nodes <- list()
