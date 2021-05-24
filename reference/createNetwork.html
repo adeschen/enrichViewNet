@@ -142,7 +142,8 @@ significant term to graph.</p>
   termIDs <span class='op'>=</span> <span class='cn'>NULL</span>,
   removeRoot <span class='op'>=</span> <span class='cn'>TRUE</span>,
   title <span class='op'>=</span> <span class='st'>"gprofiler network"</span>,
-  collection <span class='op'>=</span> <span class='st'>"enrichment results"</span>
+  collection <span class='op'>=</span> <span class='st'>"enrichment results"</span>,
+  fileName <span class='op'>=</span> <span class='st'>"gprofilerNetwork.cx"</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -184,6 +185,12 @@ the network. Default: "gprofiler network".</p></td>
       <th>collection</th>
       <td><p>a <code>character</code> string representing the collection 
 name assigned to the network. Default: "enrichment results".</p></td>
+    </tr>
+    <tr>
+      <th>fileName</th>
+      <td><p>a <code>character</code> string representing the name of the
+CX JSON file that is created when Cytoscape is not running. 
+Default: "gprofilerNetwork_01.cx".</p></td>
     </tr>
     </table>
 
