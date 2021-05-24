@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create meta data section for the CX JSON file — createMetaDataSectionCXJSON • gprofiler2cytoscape</title>
+<title>Create CX JSON text representing the network — extractNodesAndEdgesInformation • gprofiler2cytoscape</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,8 @@
 
 
 
-<meta property="og:title" content="Create meta data section for the CX JSON file — createMetaDataSectionCXJSON" />
-<meta property="og:description" content="Create meta data section for the CX JSON file that contains
-the network information" />
+<meta property="og:title" content="Create CX JSON text representing the network — extractNodesAndEdgesInformation" />
+<meta property="og:description" content="Create TODO" />
 
 
 
@@ -112,32 +111,52 @@ the network information" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create meta data section for the CX JSON file</h1>
+    <h1>Create CX JSON text representing the network</h1>
     <small class="dont-index">Source: <a href='https://github.com/adeschen/gprofiler2cytoscape/blob/master/R/methodsInternal.R'><code>R/methodsInternal.R</code></a></small>
-    <div class="hidden name"><code>createMetaDataSectionCXJSON.Rd</code></div>
+    <div class="hidden name"><code>extractNodesAndEdgesInformation.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Create meta data section for the CX JSON file that contains
-the network information</p>
+    <p>Create TODO</p>
     </div>
 
-    <pre class="usage"><span class='fu'>createMetaDataSectionCXJSON</span><span class='op'>(</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>extractNodesAndEdgesInformation</span><span class='op'>(</span><span class='va'>gostResults</span>, <span class='va'>gostObject</span><span class='op'>)</span></pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>gostResults</th>
+      <td><p>a <code>data.frame</code> containing the terms retained
+for the creation of the network.</p></td>
+    </tr>
+    <tr>
+      <th>gostObject</th>
+      <td><p>a <code>list</code> created by gprofiler2 that contains
+the results from an enrichment analysis.</p></td>
+    </tr>
+    </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a <code>JSON</code> object that contains the meta data section related 
-to the network</p>
+    <p><code>TRUE</code> TODO</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Astrid Deschênes</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='co'>## Create the JSON object that contains the meta data information</span>
-<span class='fu'>gprofiler2cytoscape</span><span class='fu'>:::</span><span class='fu'>createMetaDataSectionCXJSON</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {"metaData":[{"name":"nodes","version":"1.0"},{"name":"edges","version":"1.0"},{"name":"edgeAttributes","version":"1.0"},{"name":"nodeAttributes","version":"1.0"},{"name":"cyHiddenAttributes","version":"1.0"},{"name":"cyNetworkRelations","version":"1.0"},{"name":"cyGroups","version":"1.0"},{"name":"networkAttributes","version":"1.0"},{"name":"cyTableColumn","version":"1.0"},{"name":"cySubNetworks","version":"1.0"}]} </div><div class='input'>
+<span class='co'>## Loading dataset containing result from an enrichment analysis done with</span>
+<span class='co'>## gprofiler2</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>demoGOST</span><span class='op'>)</span>
+
+<span class='co'>## Only retained the WikiPathways results</span>
+<span class='va'>results</span> <span class='op'>&lt;-</span> <span class='va'>demoGOST</span><span class='op'>$</span><span class='va'>result</span><span class='op'>[</span><span class='va'>demoGOST</span><span class='op'>$</span><span class='va'>result</span><span class='op'>$</span><span class='va'>source</span> <span class='op'>==</span> <span class='st'>"WP"</span>, <span class='op'>]</span>
+
+<span class='va'>jsonFormat</span> <span class='op'>&lt;-</span> <span class='fu'>gprofiler2cytoscape</span><span class='fu'>:::</span><span class='fu'><a href='createCytoscapeCXJSON.html'>createCytoscapeCXJSON</a></span><span class='op'>(</span>
+                gostResults <span class='op'>=</span> <span class='va'>results</span>, gostObject <span class='op'>=</span> <span class='va'>demoGOST</span>, 
+                title <span class='op'>=</span> <span class='st'>"WikiPathways"</span><span class='op'>)</span>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
