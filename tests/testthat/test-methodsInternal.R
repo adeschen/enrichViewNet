@@ -321,5 +321,48 @@ test_that("extractNodesAndEdgesInfoForCXJSON() must return expected text", {
 
 
 
+### Tests extractNodesAndEdgesInfoForCytoscape() results
+
+context("extractNodesAndEdgesInfoForCytoscape() results")
+
+test_that("extractNodesAndEdgesInfoForCytoscape() must return expected text", {
+    
+    ccDemo <- demoGOST
+    
+    ccDemo$meta$query_metadata$queries[[1]] <- 
+        ccDemo$meta$query_metadata$queries[[1]][1:2]
+    
+    ccData <- ccDemo$result[ccDemo$result$source == "GO:CC", ]
+    
+    
+    result <- gprofiler2cytoscape:::extractNodesAndEdgesInfoForCytoscape(
+        gostResults = ccData, gostObject = ccDemo)
+    
+    expected <- list()
+    
+    
+    expected[["nodes"]] <- data.frame(
+        "id" = c("GO:0005737", "ENSG00000007944", "ENSG00000051108", 
+                    "GO:0110165", "GO:0005575", "GO:0005622"),
+        "group" = c("TERM", "GENE", "GENE", "TERM", "TERM", "TERM"),
+        "alias" = c("cytoplasm", "MYLIP", "HERPUD1", 
+                        "cellular anatomical entity", "cellular_component",
+                        "intracellular anatomical structure"),
+        check.names = FALSE, stringsAsFactors = FALSE)
+    
+    expected[["edges"]] <- data.frame(
+        "source" = c("GO:0005737", "GO:0005737", "GO:0110165", "GO:0110165", 
+                 "GO:0005575", "GO:0005575", "GO:0005622", "GO:0005622"),
+         "target" = c("ENSG00000007944", "ENSG00000051108", 
+                       "ENSG00000007944", "ENSG00000051108",
+                       "ENSG00000007944", "ENSG00000051108",
+                       "ENSG00000007944", "ENSG00000051108"),
+        "interaction" = rep("contains", 8),
+         check.names = FALSE, stringsAsFactors = FALSE)
+    
+    expect_identical(result, expected)
+})
+
+
 
 
