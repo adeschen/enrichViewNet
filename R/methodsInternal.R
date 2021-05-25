@@ -295,24 +295,24 @@ removeRootTerm <- function(gostResult) {
 #' @keywords internal
 createCytoscapeCXJSON <- function(gostResults, gostObject, title) {
     
-    entriesL <- extractNodesAndEdgesInfoForCXJSON(gostResults = gostResults,
+    entriesL <- extractNodesAndEdgesInfoForCXJSON(gostResults=gostResults,
         gostObject = gostObject)
     
-    networkAttributes <- data.frame(n = c("name"), v = c(title), 
-        stringsAsFactors = FALSE)
+    networkAttributes <- data.frame(n=c("name"), v=c(title), 
+        stringsAsFactors=FALSE)
     
-    cyHiddenAttributes <- data.frame(n = c("layoutAlgorithm"),
-        y = c("yFiles Circular Layout"), stringsAsFactors = FALSE)
+    cyHiddenAttributes <- data.frame(n=c("layoutAlgorithm"),
+        y=c("yFiles Circular Layout"), stringsAsFactors=FALSE)
     
     metaData <- createMetaDataSectionCXJSON()
     
     ## Create the network using JSON data format and posting it to Cytoscape
     result <- paste0("[", metaData, ",",
-            toJSON(list(networkAttributes = networkAttributes)), ",", 
-            toJSON(list(nodes = entriesL$nodes)), ",", 
-            toJSON(list(edges = entriesL$edges)), ",",
-            toJSON(list(nodeAttributes = entriesL$nodeAttributes)), ",",
-            toJSON(list(edgeAttributes = entriesL$edgeAttributes)), ",",
+            toJSON(list(networkAttributes=networkAttributes)), ",", 
+            toJSON(list(nodes=entriesL$nodes)), ",", 
+            toJSON(list(edges=entriesL$edges)), ",",
+            toJSON(list(nodeAttributes=entriesL$nodeAttributes)), ",",
+            toJSON(list(edgeAttributes=entriesL$edgeAttributes)), ",",
             toJSON(list(cyHiddenAttributes=cyHiddenAttributes)), ",",
             metaData, ",{\"status\":[{\"error\":\"\",\"success\":true}]}]")
     
@@ -343,8 +343,8 @@ createMetaDataSectionCXJSON <- function() {
                 "cyHiddenAttributes", "cyNetworkRelations", "cyGroups",
                 "networkAttributes", "cyTableColumn", "cySubNetworks")
     
-    metaData <- data.frame(name = name, version = rep("1.0", length(name)), 
-                            stringsAsFactors = FALSE)
+    metaData <- data.frame(name=name, version=rep("1.0", length(name)), 
+                            stringsAsFactors=FALSE)
     
     return(toJSON(list(metaData=metaData)))    
 }
@@ -420,13 +420,13 @@ extractNodesAndEdgesInfoForCXJSON <- function(gostResults, gostObject) {
                 gene_id <- id
                 
                 ## Create a node entry for the gene
-                nodes[[length(nodes) + 1]] <- data.frame('@id' = gene_id,
-                    n = c(g), stringsAsFactors = FALSE, check.names = FALSE)
+                nodes[[length(nodes) + 1]] <- data.frame('@id'=gene_id,
+                    n=c(g), stringsAsFactors=FALSE, check.names=FALSE)
                 
                 ## Create a node attribute entry for the gene alias and group
                 nodeAttributes[[length(nodeAttributes) + 1]] <- data.frame(
-                    po = rep(gene_id, 2), n = c("alias", "group"),
-                    v = c(geneName, "GENE"), stringsAsFactors = FALSE)
+                    po=rep(gene_id, 2), n=c("alias", "group"),
+                    v=c(geneName, "GENE"), stringsAsFactors=FALSE)
                 
                 done[[g]] <- gene_id
             } else {
@@ -436,15 +436,15 @@ extractNodesAndEdgesInfoForCXJSON <- function(gostResults, gostObject) {
             id <- id + 1
             
             ## Create an edge connecting term to gene
-            edges[[length(edges) + 1]] <- data.frame('@id' = id, s = term_id,
-                t = gene_id, i = c("contains"), stringsAsFactors = FALSE, 
-                check.names = FALSE)
+            edges[[length(edges) + 1]] <- data.frame('@id'=id, s=term_id,
+                t=gene_id, i = c("contains"), stringsAsFactors=FALSE, 
+                check.names=FALSE)
             
             ## Create edge attributes
             edgeAttributes[[length(edgeAttributes) + 1]] <- data.frame(
-                po = rep(id, 3), n = c("name", "source", "target"),
-                v = c(paste0(term, " (contains) ", g), term, g),
-                stringsAsFactors = FALSE)
+                po=rep(id, 3), n=c("name", "source", "target"),
+                v=c(paste0(term, " (contains) ", g), term, g),
+                stringsAsFactors=FALSE)
         }
     }
     
@@ -485,7 +485,7 @@ extractNodesAndEdgesInfoForCXJSON <- function(gostResults, gostObject) {
 #' results <- demoGOST$result[demoGOST$result$source == "GO:MF", ]
 #' 
 #' information <- gprofiler2cytoscape:::extractNodesAndEdgesInfoForCytoscape(
-#'                 gostResults = results, gostObject = demoGOST)
+#'                 gostResults=results, gostObject=demoGOST)
 #' 
 #' @author Astrid Deschênes
 #' @importFrom gprofiler2 gconvert

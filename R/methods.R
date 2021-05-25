@@ -51,7 +51,7 @@
 #' \dontrun{
 #' 
 #' ## Create network for Gene Ontology - Molecular Function related results
-#' createNetwork(gostObject = demoGOST, source="GO:MF", removeRoot=FALSE,
+#' createNetwork(gostObject=demoGOST, source="GO:MF", removeRoot=FALSE,
 #'     title="GO Molecular Function Graph")
 #' 
 #' }
@@ -68,11 +68,11 @@ createNetwork <- function(gostObject, source=c("TERM_ID", "GO:MF", "GO:CC",
     collection="enrichment results", fileName="gprofilerNetwork.cx") {
     
     ## Validate source is among the possible choices
-    source <- match_arg(source, ignore_case = TRUE)
+    source <- match_arg(source, ignore_case=TRUE)
     
     ## Validate parameters
-    validateCreateNetworkArguments(gostObject = gostObject, source = source,
-        termIDs = termIDs, removeRoot = removeRoot, fileName = fileName)
+    validateCreateNetworkArguments(gostObject=gostObject, source=source,
+        termIDs = termIDs, removeRoot=removeRoot, fileName=fileName)
     
     ## Extract results
     gostResults <- gostObject$result
@@ -100,14 +100,14 @@ createNetwork <- function(gostObject, source=c("TERM_ID", "GO:MF", "GO:CC",
     ## Otherwise, create CX JSON file
     final <- FALSE
     if (isRunning) {
-        final <- createCytoscapeNetwork(gostResults = gostResults, 
-            gostObject = gostObject, title = title, collection = collection)
+        final <- createCytoscapeNetwork(gostResults=gostResults, 
+            gostObject=gostObject, title=title, collection=collection)
         message("Cystocape Network created.")
     } else {
-        final <- createCytoscapeCXJSON(gostResults = gostResults, 
-            gostObject = gostObject, title = title) 
+        final <- createCytoscapeCXJSON(gostResults=gostResults, 
+            gostObject=gostObject, title=title) 
         if (!file.exists(fileName)) {
-            write(final, file= fileName, append=FALSE)
+            write(final, file=fileName, append=FALSE)
             message(paste0("CX JSON file \"", fileName, 
                             "\" has been created.\n"))
         } else {
@@ -118,7 +118,7 @@ createNetwork <- function(gostObject, source=c("TERM_ID", "GO:MF", "GO:CC",
                 newFileName <- paste0("gprofilerNetwork_", 
                                         sprintf("%02d", id), ".cx")
                 if (!file.exists(newFileName)) {
-                    write(final, file = newFileName, append = FALSE)
+                    write(final, file=newFileName, append=FALSE)
                     done <- TRUE
                 }
                 message(paste0("CX JSON file \"", newFileName, 

@@ -319,40 +319,40 @@ test_that("extractNodesAndEdgesInfoForCXJSON() must return expected text", {
     
     
     result <- gprofiler2cytoscape:::extractNodesAndEdgesInfoForCXJSON(
-        gostResults = mirnaData, gostObject = mirnaDemo)
+        gostResults=mirnaData, gostObject=mirnaDemo)
     
     expected <- list()
     
-    expected[["nodes"]] <- data.frame("@id" = c(1, 2, 4, 6, 8, 10),
-        "n" = c("MIRNA:hsa-miR-335-5p", "ENSG00000051108", "ENSG00000059728",
+    expected[["nodes"]] <- data.frame("@id"=c(1, 2, 4, 6, 8, 10),
+        "n"=c("MIRNA:hsa-miR-335-5p", "ENSG00000051108", "ENSG00000059728",
             "ENSG00000077616", "MIRNA:hsa-miR-3180-5p", "MIRNA:hsa-miR-759"),
-        check.names = FALSE, stringsAsFactors = FALSE)
+        check.names=FALSE, stringsAsFactors=FALSE)
     
-    expected[["edges"]] <- data.frame("@id" = c(3, 5, 7, 9, 11, 12),
-                                "s" = c(1, 1, 1, 8, 10, 10),
-                                "t" = c(2, 4, 6, 4, 2, 4),
-                                "i" = rep("contains", 6),
-                                check.names = FALSE, stringsAsFactors = FALSE)
+    expected[["edges"]] <- data.frame("@id"=c(3, 5, 7, 9, 11, 12),
+                                "s"=c(1, 1, 1, 8, 10, 10),
+                                "t"=c(2, 4, 6, 4, 2, 4),
+                                "i"=rep("contains", 6),
+                                check.names=FALSE, stringsAsFactors=FALSE)
     
     
     expected[["nodeAttributes"]] <- data.frame(
-        "po" = c(1, 1, 2, 2, 4, 4, 6, 6, 8, 8,10, 10),
-        "n" = rep(c("alias", "group"), 6),
-        "v" = c("hsa-miR-335-5p", "TERM", "HERPUD1", "GENE", "MXD1", "GENE",
+        "po"=c(1, 1, 2, 2, 4, 4, 6, 6, 8, 8,10, 10),
+        "n"=rep(c("alias", "group"), 6),
+        "v"=c("hsa-miR-335-5p", "TERM", "HERPUD1", "GENE", "MXD1", "GENE",
             "NAALAD2", "GENE", "hsa-miR-3180-5p", "TERM", 
             "hsa-miR-759", "TERM"),
-        check.names = FALSE, stringsAsFactors = FALSE)
+        check.names=FALSE, stringsAsFactors=FALSE)
    
     expected[["edgeAttributes"]] <- data.frame(
-        "po" = c(3, 3, 3, 5, 5, 5, 7, 7, 7, 9, 9, 9, 11, 11, 11, 12, 12, 12),
-        "n" = rep(c("name", "source", "target"), 6),
-        "v" = c("MIRNA:hsa-miR-335-5p (contains) ENSG00000051108", "MIRNA:hsa-miR-335-5p", "ENSG00000051108", 
+        "po"=c(3, 3, 3, 5, 5, 5, 7, 7, 7, 9, 9, 9, 11, 11, 11, 12, 12, 12),
+        "n"=rep(c("name", "source", "target"), 6),
+        "v"=c("MIRNA:hsa-miR-335-5p (contains) ENSG00000051108", "MIRNA:hsa-miR-335-5p", "ENSG00000051108", 
             "MIRNA:hsa-miR-335-5p (contains) ENSG00000059728", "MIRNA:hsa-miR-335-5p", "ENSG00000059728",
             "MIRNA:hsa-miR-335-5p (contains) ENSG00000077616", "MIRNA:hsa-miR-335-5p", "ENSG00000077616", 
             "MIRNA:hsa-miR-3180-5p (contains) ENSG00000059728", "MIRNA:hsa-miR-3180-5p", "ENSG00000059728",
             "MIRNA:hsa-miR-759 (contains) ENSG00000051108", "MIRNA:hsa-miR-759", "ENSG00000051108", 
             "MIRNA:hsa-miR-759 (contains) ENSG00000059728", "MIRNA:hsa-miR-759", "ENSG00000059728"),
-        check.names = FALSE, stringsAsFactors = FALSE) 
+        check.names=FALSE, stringsAsFactors=FALSE) 
     
     expect_identical(result, expected)
 })
@@ -374,29 +374,29 @@ test_that("extractNodesAndEdgesInfoForCytoscape() must return expected text", {
     
     
     result <- gprofiler2cytoscape:::extractNodesAndEdgesInfoForCytoscape(
-        gostResults = ccData, gostObject = ccDemo)
+        gostResults=ccData, gostObject=ccDemo)
     
     expected <- list()
     
     
     expected[["nodes"]] <- data.frame(
-        "id" = c("GO:0005737", "ENSG00000007944", "ENSG00000051108", 
+        "id"=c("GO:0005737", "ENSG00000007944", "ENSG00000051108", 
                     "GO:0110165", "GO:0005575", "GO:0005622"),
-        "group" = c("TERM", "GENE", "GENE", "TERM", "TERM", "TERM"),
-        "alias" = c("cytoplasm", "MYLIP", "HERPUD1", 
+        "group"=c("TERM", "GENE", "GENE", "TERM", "TERM", "TERM"),
+        "alias"=c("cytoplasm", "MYLIP", "HERPUD1", 
                         "cellular anatomical entity", "cellular_component",
                         "intracellular anatomical structure"),
-        check.names = FALSE, stringsAsFactors = FALSE)
+        check.names=FALSE, stringsAsFactors=FALSE)
     
     expected[["edges"]] <- data.frame(
-        "source" = c("GO:0005737", "GO:0005737", "GO:0110165", "GO:0110165", 
+        "source"=c("GO:0005737", "GO:0005737", "GO:0110165", "GO:0110165", 
                  "GO:0005575", "GO:0005575", "GO:0005622", "GO:0005622"),
-         "target" = c("ENSG00000007944", "ENSG00000051108", 
+         "target"=c("ENSG00000007944", "ENSG00000051108", 
                        "ENSG00000007944", "ENSG00000051108",
                        "ENSG00000007944", "ENSG00000051108",
                        "ENSG00000007944", "ENSG00000051108"),
-        "interaction" = rep("contains", 8),
-         check.names = FALSE, stringsAsFactors = FALSE)
+        "interaction"=rep("contains", 8),
+         check.names=FALSE, stringsAsFactors=FALSE)
     
     expect_identical(result, expected)
 })
