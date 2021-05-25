@@ -3,7 +3,14 @@ Type: Package
 Version: 0.0.1
 Date: 2021-03-25
 Title: From gprofiler2 to Cytoscape network
-Description: TODO.
+Description: This package enables the transformation of 
+    functional enrichment results obtained by gprofiler2 into a Cytoscape 
+    network where significant terms 
+    (Gene Ontology/Reactome/Kegg/Transcription Factor/etc..) and genes 
+    are nodes. In this network, edges connect genes that are part of the 
+    enrichment request to their terms. The gprofiler2cytoscape package offers 
+    the option to generate a network for only a portion of the significant 
+    terms by selecting the source or by providing a specific list of terms.
 Authors@R: c(person("Astrid", "Deschênes", email = "adeschen@hotmail.com",
     role = c("aut", "cre"),
     comment = c(ORCID = "0000-0001-7846-6749")), 
