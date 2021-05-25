@@ -36,8 +36,9 @@
 #' name assigned to the network. Default: "enrichment results".
 #' 
 #' @param fileName a \code{character} string representing the name of the
-#' CX JSON file that is created when Cytoscape is not running. 
-#' Default: "gprofilerNetwork_01.cx".
+#' CX JSON file that is created when Cytoscape is not running. The name 
+#' must have a '.cx' extension.
+#' Default: "gprofilerNetwork_01.cx". 
 #' 
 #' @return \code{TRUE}
 #' 
@@ -67,11 +68,11 @@ createNetwork <- function(gostObject, source=c("TERM_ID", "GO:MF", "GO:CC",
     collection="enrichment results", fileName="gprofilerNetwork.cx") {
     
     ## Validate source is among the possible choices
-    source <- match_arg(source, ignore_case=TRUE)
+    source <- match_arg(source, ignore_case = TRUE)
     
     ## Validate parameters
     validateCreateNetworkArguments(gostObject = gostObject, source = source,
-        termIDs = termIDs, removeRoot = removeRoot)
+        termIDs = termIDs, removeRoot = removeRoot, fileName = fileName)
     
     ## Extract results
     gostResults <- gostObject$result

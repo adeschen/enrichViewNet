@@ -26,8 +26,9 @@ test_that("validateCreateNetworkArguments() must return TRUE when all parameters
                                       term_id=c("GO:0051171", "GO:0010604"))
     gostObj[["meta"]] <- list()
     
-    result <- gprofiler2cytoscape:::validateCreateNetworkArguments(gostObject=gostObj, 
-                    source = "GO:BP", termIDs = NULL, removeRoot=FALSE)
+    result <- gprofiler2cytoscape:::validateCreateNetworkArguments(
+        gostObject=gostObj, source="GO:BP", termIDs=NULL, removeRoot=FALSE,
+        fileName="new.cx")
     
     expect_true(result)
 })
@@ -44,8 +45,9 @@ test_that("validateCreateNetworkArguments() must return error when source is  wh
     error_message <- paste0("There is no enriched term for the selected ", 
                             "source \'", source, "\'.")
     
-    expect_error(gprofiler2cytoscape:::validateCreateNetworkArguments(gostObject=gostObj, 
-            source=source, termIDs=NULL, removeRoot=FALSE), error_message)
+    expect_error(gprofiler2cytoscape:::validateCreateNetworkArguments(
+        gostObject=gostObj, source=source, termIDs=NULL, removeRoot=FALSE,
+        fileName="hello.cx"), error_message)
     
 })
 
@@ -61,8 +63,9 @@ test_that("validateCreateNetworkArguments() must return error when source is TER
     error_message <- paste0("A vector of terms should be given through", 
                     " the \'termIDs\' parameter when source is \'TERM_ID\'.")
     
-    expect_error(gprofiler2cytoscape:::validateCreateNetworkArguments(gostObject=gostObj, 
-                source=source, termIDs=NULL, removeRoot=FALSE), error_message)
+    expect_error(gprofiler2cytoscape:::validateCreateNetworkArguments(
+        gostObject=gostObj, source=source, termIDs=NULL, removeRoot=FALSE, 
+        fileName="toto.cx"), error_message)
     
 })
 
@@ -78,8 +81,10 @@ test_that("validateCreateNetworkArguments() must return error when not all term 
     error_message <- paste0("Not all listed terms are present in the  ",
                                 "enrichment results.")
     
-    expect_error(gprofiler2cytoscape:::validateCreateNetworkArguments(gostObject=gostObj, 
-        source=source, termIDs=c("GO:0051171","GO:0010999"), removeRoot=FALSE), error_message)
+    expect_error(gprofiler2cytoscape:::validateCreateNetworkArguments(
+        gostObject=gostObj, source=source, 
+        termIDs=c("GO:0051171","GO:0010999"), removeRoot=FALSE, 
+        fileName="toto.cx"), error_message)
 })
 
 
@@ -95,8 +100,9 @@ test_that("validateCreateNetworkArguments() must return error when removeRoot is
     error_message <- paste0("The \'removeRoot\' parameter must be the logical ", 
                                 "value TRUE or FALSE.")
     
-    expect_error(gprofiler2cytoscape:::validateCreateNetworkArguments(gostObject=gostObj, 
-        source=source, termIDs=c("GO:0051171"), removeRoot="HI"), error_message)
+    expect_error(gprofiler2cytoscape:::validateCreateNetworkArguments(
+        gostObject=gostObj, source=source, termIDs=c("GO:0051171"), 
+        removeRoot="HI", fileName="test.cx"), error_message)
 })
 
 
@@ -104,13 +110,45 @@ test_that("validateCreateNetworkArguments() must return term IDs are good", {
     
     gostObj <- list()
     gostObj[["result"]] <- data.frame(source=c(rep("GO:BP"), 2), 
-                                      term_id=c("GO:0051171", "GO:0010604"))
+                                        term_id=c("GO:0051171", "GO:0010604"))
     gostObj[["meta"]] <- list()
     
-    result <- gprofiler2cytoscape:::validateCreateNetworkArguments(gostObject=gostObj, 
-                 source="TERM_ID", termIDs=c("GO:0051171", "GO:0010604"), removeRoot=FALSE)
+    result <- gprofiler2cytoscape:::validateCreateNetworkArguments(
+                gostObject=gostObj, source="TERM_ID", 
+                termIDs=c("GO:0051171", "GO:0010604"), fileName="test.cx", 
+                removeRoot=FALSE)
     
     expect_true(result)
+})
+
+
+test_that("validateCreateNetworkArguments() must return error when fileName is not a string character", {
+    
+    gostObj <- list()
+    gostObj[["result"]] <- data.frame(source=c(rep("GO:BP"), 2), 
+                                        term_id=c("GO:0051171", "GO:0010604"))
+    gostObj[["meta"]] <- list()
+    
+    error_message <- "The \'fileName\' parameter must a character string."
+    
+    expect_error(gprofiler2cytoscape:::validateCreateNetworkArguments(
+        gostObject = gostObj, source = "GO:BP", termIDs = NULL, 
+        removeRoot = FALSE, fileName = 231), error_message)
+})
+
+
+test_that("validateCreateNetworkArguments() must return error when fileName not ending with .cx", {
+    
+    gostObj <- list()
+    gostObj[["result"]] <- data.frame(source=c(rep("GO:BP"), 2), 
+                                        term_id=c("GO:0051171", "GO:0010604"))
+    gostObj[["meta"]] <- list()
+    
+    error_message <- "The \'fileName\' parameter must have \'.cx\' extension."
+    
+    expect_error(gprofiler2cytoscape:::validateCreateNetworkArguments(
+        gostObject=gostObj, source="GO:BP", termIDs=NULL, 
+        removeRoot=FALSE, fileName="toto.txt"), error_message)
 })
 
 

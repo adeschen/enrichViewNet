@@ -44,7 +44,8 @@ the network. Default: "gprofiler network".}
 name assigned to the network. Default: "enrichment results".}
 
 \item{fileName}{a \code{character} string representing the name of the
-CX JSON file that is created when Cytoscape is not running. 
+CX JSON file that is created when Cytoscape is not running. The name 
+must have a '.cx' extension.
 Default: "gprofilerNetwork_01.cx".}
 }
 \value{

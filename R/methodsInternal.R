@@ -142,6 +142,10 @@ isCytoscapeRunning <- function() {
 #' @param removeRoot a \code{logical} that specified if the root terms of 
 #' the selected source should be removed (when present). 
 #' 
+#' @param fileName a \code{character} string representing the name of the
+#' CX JSON file that is created when Cytoscape is not running. The name 
+#' must have a '.cx' extension.
+#' 
 #' @return \code{TRUE} when all arguments are valid
 #' 
 #' @examples
@@ -151,14 +155,15 @@ isCytoscapeRunning <- function() {
 #' 
 #' ## Check that all arguments are valid
 #' gprofiler2cytoscape:::validateCreateNetworkArguments(gostObject=demoGOST,
-#'     source="GO:BP", termIDs=NULL, removeRoot=FALSE)
+#'     source="GO:BP", termIDs=NULL, removeRoot=FALSE, fileName="test.cx")
 #' 
 #' @author Astrid Deschênes
 #' @encoding UTF-8
 #' @importFrom methods is
+#' @importFrom stringr str_ends
 #' @keywords internal
 validateCreateNetworkArguments <- function(gostObject, source, termIDs,
-                                                removeRoot) {
+                                                removeRoot, fileName) {
     
     ## Test that gostObject is a gprofiler2 result 
     if (!("list" %in% class(gostObject) && "result" %in% names(gostObject) &&
@@ -189,6 +194,14 @@ validateCreateNetworkArguments <- function(gostObject, source, termIDs,
     if (!is(removeRoot, "logical")) {
         stop(paste0("The \'removeRoot\' parameter must be the logical ", 
                         "value TRUE or FALSE."))
+    }
+    
+    if (!is(fileName, "character")) {
+        stop(paste0("The \'fileName\' parameter must a character string."))
+    }
+    
+    if (str_ends(fileName, ".cx", negate = TRUE)) {
+        stop(paste0("The \'fileName\' parameter must have \'.cx\' extension."))
     }
     
     return(TRUE)   

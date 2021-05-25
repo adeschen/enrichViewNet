@@ -5,7 +5,13 @@
 \alias{validateCreateNetworkArguments}
 \title{Validate arguments passed to creatNetwork() function}
 \usage{
-validateCreateNetworkArguments(gostObject, source, termIDs, removeRoot)
+validateCreateNetworkArguments(
+  gostObject,
+  source,
+  termIDs,
+  removeRoot,
+  fileName
+)
 }
 \arguments{
 \item{gostObject}{a \code{list} created by \code{gprofiler2} that contains
@@ -27,6 +33,10 @@ only used when \code{source} is set to "TERM_ID".}
 
 \item{removeRoot}{a \code{logical} that specified if the root terms of 
 the selected source should be removed (when present).}
+
+\item{fileName}{a \code{character} string representing the name of the
+CX JSON file that is created when Cytoscape is not running. The name 
+must have a '.cx' extension.}
 }
 \value{
 \code{TRUE} when all arguments are valid
@@ -46,7 +56,7 @@ data(demoGOST)
 
 ## Check that all arguments are valid
 gprofiler2cytoscape:::validateCreateNetworkArguments(gostObject=demoGOST,
-    source="GO:BP", termIDs=NULL, removeRoot=FALSE)
+    source="GO:BP", termIDs=NULL, removeRoot=FALSE, fileName="test.cx")
 
 }
 \author{
