@@ -77,7 +77,7 @@ results." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gprofiler2cytoscape</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
       </span>
     </div>
 
@@ -94,6 +94,9 @@ results." />
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -130,7 +133,13 @@ source is 'TERM_ID', the listed terms must be present in the enrichment
 results.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>validateCreateNetworkArguments</span><span class='op'>(</span><span class='va'>gostObject</span>, <span class='va'>source</span>, <span class='va'>termIDs</span>, <span class='va'>removeRoot</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>validateCreateNetworkArguments</span><span class='op'>(</span>
+  <span class='va'>gostObject</span>,
+  <span class='va'>source</span>,
+  <span class='va'>termIDs</span>,
+  <span class='va'>removeRoot</span>,
+  <span class='va'>fileName</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -163,6 +172,12 @@ only used when <code>source</code> is set to "TERM_ID".</p></td>
       <td><p>a <code>logical</code> that specified if the root terms of 
 the selected source should be removed (when present).</p></td>
     </tr>
+    <tr>
+      <th>fileName</th>
+      <td><p>a <code>character</code> string representing the name of the
+CX JSON file that is created when Cytoscape is not running. The name 
+must have a '.cx' extension.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -179,7 +194,7 @@ the selected source should be removed (when present).</p></td>
 
 <span class='co'>## Check that all arguments are valid</span>
 <span class='fu'>gprofiler2cytoscape</span><span class='fu'>:::</span><span class='fu'>validateCreateNetworkArguments</span><span class='op'>(</span>gostObject<span class='op'>=</span><span class='va'>demoGOST</span>,
-    source<span class='op'>=</span><span class='st'>"GO:BP"</span>, termIDs<span class='op'>=</span><span class='cn'>NULL</span>, removeRoot<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
+    source<span class='op'>=</span><span class='st'>"GO:BP"</span>, termIDs<span class='op'>=</span><span class='cn'>NULL</span>, removeRoot<span class='op'>=</span><span class='cn'>FALSE</span>, fileName<span class='op'>=</span><span class='st'>"test.cx"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 </div></pre>
   </div>
