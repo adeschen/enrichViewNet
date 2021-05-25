@@ -1,5 +1,5 @@
 
-# gprofiler2cytoscape 0.0.2
+# gprofiler2cytoscape v0.0.2
 
 NEW FEATURES
 
