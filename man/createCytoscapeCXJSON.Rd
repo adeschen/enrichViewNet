@@ -18,10 +18,12 @@ the results from an enrichment analysis.}
 the network.}
 }
 \value{
-\code{TRUE} TODO
+\code{character} string that represent the network in a CX JSON
+format.
 }
 \description{
-Create TODO
+Create a CX JSON text that represent the network which 
+includes information about nodes and edges present in the network.
 }
 \examples{
 

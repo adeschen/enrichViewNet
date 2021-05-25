@@ -69,7 +69,7 @@ data(demoGOST)
 \dontrun{
 
 ## Create network for Gene Ontology - Molecular Function related results
-createNetwork(gostObject = demoGOST, source="GO:MF", removeRoot=FALSE,
+createNetwork(gostObject=demoGOST, source="GO:MF", removeRoot=FALSE,
     title="GO Molecular Function Graph")
 
 }

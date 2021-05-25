@@ -33,7 +33,7 @@ data(demoGOST)
 results <- demoGOST$result[demoGOST$result$source == "GO:MF", ]
 
 information <- gprofiler2cytoscape:::extractNodesAndEdgesInfoForCytoscape(
-                gostResults = results, gostObject = demoGOST)
+                gostResults=results, gostObject=demoGOST)
 
 }
 \author{

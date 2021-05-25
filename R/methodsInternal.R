@@ -263,7 +263,8 @@ removeRootTerm <- function(gostResult) {
 
 #' @title Create CX JSON text representing the network
 #' 
-#' @description Create TODO
+#' @description Create a CX JSON text that represent the network which 
+#' includes information about nodes and edges present in the network.
 #' 
 #' @param gostResults a \code{data.frame} containing the terms retained
 #' for the creation of the network.
@@ -274,7 +275,8 @@ removeRootTerm <- function(gostResult) {
 #' @param title a \code{character} string representing the name assigned to 
 #' the network.
 #' 
-#' @return \code{TRUE} TODO
+#' @return \code{character} string that represent the network in a CX JSON
+#' format. 
 #' 
 #' @examples
 #'
