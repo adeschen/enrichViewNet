@@ -41,52 +41,18 @@
 #' }
 #' 
 #' @author Astrid Deschênes
-#' @importFrom gprofiler2 gconvert
 #' @importFrom RCy3 createNetworkFromDataFrames setNodeColorMapping
 #' @importFrom RCy3 setNodeLabelBypass setNodeWidthMapping 
 #' @encoding UTF-8
 #' @keywords internal
 createCytoscapeNetwork <- function(gostResults, gostObject, title, collection) {
     
-    done <- array()   
-    nodes <- list()
-    edges <- list()
-    
-    ## Create the list of genes and terms that will be included in the network
-    for (i in seq_len(nrow(gostResults))) {
-        term <- gostResults$term_id[i]
-        query <- gostResults$query[i]
-        termName <- gostResults$term_name[i]
-        #termShort <- str_replace(selectedTF[i, "term_name"], 
-        #                    pattern="Factor: ", "")
-        #termShort <- str_replace(termShort, pattern="; motif:.+$", "")
-        nodes[[length(nodes) + 1]] <- data.frame(id=c(term),
-            group=c("TERM"), alias=c(termName), stringsAsFactors=FALSE)
-        
-        res <- gconvert(query=c(term))
-        genes <- gostObject$meta$query_metadata$queries[[query]]
-        
-        for (g in genes) {
-            if (g %in% res$target) {
-                geneName <- res[res$target == g, c("name")]
-                if (! g %in% done) {
-                    nodes[[length(nodes) + 1]] <- data.frame(id=c(g),
-                        group=c("GENE"), alias=c(geneName),
-                        stringsAsFactors=FALSE)
-                    done <- c(done, g)
-                }
-                edges[[length(edges) + 1]] <- data.frame(source=c(term),
-                    target=c(g), interaction=c("contains"), 
-                    stringsAsFactors=FALSE)
-            }
-        }
-    }
-    
-    nodeInfo <- do.call(rbind, nodes)
-    edgeInfo <- do.call(rbind, edges)
+    ## Extract node and edge information to be used to create network
+    info <- extractNodesAndEdgesInfoForCytoscape(gostResults = gostResults,
+                                                gostObject = gostObject)
     
     ## Create the network using JSON data format and posting it to Cytoscape
-    createNetworkFromDataFrames(nodes=nodeInfo, edges=edgeInfo, 
+    createNetworkFromDataFrames(nodes=info$nodes, edges=info$edges, 
                                 title=title, collection=collection)
     
     ## Assign different colors to terms and genes
@@ -97,7 +63,7 @@ createCytoscapeNetwork <- function(gostResults, gostObject, title, collection) {
         mapping.type="discrete", style.name="default")
     
     ## Override the node labels to use the term descriptions and gene names
-    setNodeLabelBypass(node.names=nodeInfo$id, new.labels=nodeInfo$alias)
+    setNodeLabelBypass(node.names=info$nodes$id, new.labels=info$nodes$alias)
     
     ## Assign larger node widths to terms and smaller ones to genes
     setNodeWidthMapping(table.column=column, 
@@ -397,7 +363,6 @@ createMetaDataSectionCXJSON <- function() {
 #' 
 #' @author Astrid Deschênes
 #' @importFrom gprofiler2 gconvert
-#' @importFrom jsonlite toJSON
 #' @encoding UTF-8
 #' @keywords internal
 extractNodesAndEdgesInfoForCXJSON <- function(gostResults, gostObject) {
@@ -482,7 +447,7 @@ extractNodesAndEdgesInfoForCXJSON <- function(gostResults, gostObject) {
 
 
 
-#' @title Create node and edge information to be used to create Cytoscape
+#' @title Extract node and edge information to be used to create Cytoscape
 #' network
 #' 
 #' @description Create a list containing all node and edge information needed 
@@ -511,7 +476,6 @@ extractNodesAndEdgesInfoForCXJSON <- function(gostResults, gostObject) {
 #' 
 #' @author Astrid Deschênes
 #' @importFrom gprofiler2 gconvert
-#' @importFrom jsonlite toJSON
 #' @encoding UTF-8
 #' @keywords internal
 extractNodesAndEdgesInfoForCytoscape <- function(gostResults, gostObject) {

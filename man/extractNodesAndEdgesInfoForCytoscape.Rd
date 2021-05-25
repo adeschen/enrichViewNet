@@ -3,7 +3,7 @@
 \encoding{UTF-8}
 \name{extractNodesAndEdgesInfoForCytoscape}
 \alias{extractNodesAndEdgesInfoForCytoscape}
-\title{Create node and edge information to be used to create Cytoscape
+\title{Extract node and edge information to be used to create Cytoscape
 network}
 \usage{
 extractNodesAndEdgesInfoForCytoscape(gostResults, gostObject)
