@@ -3,7 +3,7 @@
 \encoding{UTF-8}
 \name{extractNodesAndEdgesInfoForCXJSON}
 \alias{extractNodesAndEdgesInfoForCXJSON}
-\title{Create CX JSON text representing the network}
+\title{Extract information about nodes and edges}
 \usage{
 extractNodesAndEdgesInfoForCXJSON(gostResults, gostObject)
 }
@@ -15,10 +15,21 @@ for the creation of the network.}
 the results from an enrichment analysis.}
 }
 \value{
-\code{TRUE} TODO
+a \code{list} containing 4 entries: 
+\itemize{
+\item{"nodes"}{a \code{data.frame} containing the information about 
+the nodes present in the network.}
+\item{"edges"}{a \code{data.frame} containing the information about 
+the edges present in the network.}
+\item{"nodeAttributes"}{a \code{data.frame} containing the attributes 
+associated to the nodes present in the network.}
+\item{"edgesAttributes"}{a \code{data.frame} containing the attributes 
+associated to the edges present in the network}
+}
 }
 \description{
-Create TODO
+Extract information about nodes and edges that is necessary
+to create the CX JSON text representing the network
 }
 \examples{
 
@@ -30,7 +41,7 @@ data(demoGOST)
 results <- demoGOST$result[demoGOST$result$source == "WP", ]
 
 information <- gprofiler2cytoscape:::extractNodesAndEdgesInfoForCXJSON(
-                gostResults = results, gostObject = demoGOST)
+                gostResults=results, gostObject=demoGOST)
 
 }
 \author{

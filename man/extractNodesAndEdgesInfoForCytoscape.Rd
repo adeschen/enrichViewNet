@@ -17,7 +17,12 @@ the results from an enrichment analysis.}
 }
 \value{
 \code{list} containing 2 entries:
-TODO
+\itemize{
+\item{"nodes"}{a \code{data.frame} containing the information about 
+the nodes present in the network.}
+\item{"edges"}{a \code{data.frame} containing the information about 
+the edges present in the network.}
+}
 }
 \description{
 Create a list containing all node and edge information needed 

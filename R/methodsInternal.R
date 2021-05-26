@@ -352,9 +352,10 @@ createMetaDataSectionCXJSON <- function() {
 }
 
 
-#' @title Create CX JSON text representing the network
+#' @title Extract information about nodes and edges
 #' 
-#' @description Create TODO
+#' @description Extract information about nodes and edges that is necessary
+#' to create the CX JSON text representing the network
 #' 
 #' @param gostResults a \code{data.frame} containing the terms retained
 #' for the creation of the network.
@@ -362,7 +363,17 @@ createMetaDataSectionCXJSON <- function() {
 #' @param gostObject a \code{list} created by gprofiler2 that contains
 #' the results from an enrichment analysis.
 #' 
-#' @return \code{TRUE} TODO
+#' @return a \code{list} containing 4 entries: 
+#' \itemize{
+#' \item{"nodes"}{a \code{data.frame} containing the information about 
+#' the nodes present in the network.}
+#' \item{"edges"}{a \code{data.frame} containing the information about 
+#' the edges present in the network.}
+#' \item{"nodeAttributes"}{a \code{data.frame} containing the attributes 
+#' associated to the nodes present in the network.}
+#' \item{"edgesAttributes"}{a \code{data.frame} containing the attributes 
+#' associated to the edges present in the network}
+#' }
 #' 
 #' @examples
 #'
@@ -374,7 +385,7 @@ createMetaDataSectionCXJSON <- function() {
 #' results <- demoGOST$result[demoGOST$result$source == "WP", ]
 #' 
 #' information <- gprofiler2cytoscape:::extractNodesAndEdgesInfoForCXJSON(
-#'                 gostResults = results, gostObject = demoGOST)
+#'                 gostResults=results, gostObject=demoGOST)
 #' 
 #' @author Astrid Deschênes
 #' @importFrom gprofiler2 gconvert
@@ -475,7 +486,12 @@ extractNodesAndEdgesInfoForCXJSON <- function(gostResults, gostObject) {
 #' the results from an enrichment analysis.
 #' 
 #' @return \code{list} containing 2 entries:
-#' TODO
+#' \itemize{
+#' \item{"nodes"}{a \code{data.frame} containing the information about 
+#' the nodes present in the network.}
+#' \item{"edges"}{a \code{data.frame} containing the information about 
+#' the edges present in the network.}
+#' }
 #' 
 #' @examples
 #'
