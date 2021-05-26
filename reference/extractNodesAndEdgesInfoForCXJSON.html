@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create CX JSON text representing the network — extractNodesAndEdgesInfoForCXJSON • gprofiler2cytoscape</title>
+<title>Extract information about nodes and edges — extractNodesAndEdgesInfoForCXJSON • gprofiler2cytoscape</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,9 @@
 
 
 
-<meta property="og:title" content="Create CX JSON text representing the network — extractNodesAndEdgesInfoForCXJSON" />
-<meta property="og:description" content="Create TODO" />
+<meta property="og:title" content="Extract information about nodes and edges — extractNodesAndEdgesInfoForCXJSON" />
+<meta property="og:description" content="Extract information about nodes and edges that is necessary
+to create the CX JSON text representing the network" />
 
 
 
@@ -114,13 +115,14 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create CX JSON text representing the network</h1>
+    <h1>Extract information about nodes and edges</h1>
     <small class="dont-index">Source: <a href='https://github.com/adeschen/gprofiler2cytoscape/blob/master/R/methodsInternal.R'><code>R/methodsInternal.R</code></a></small>
     <div class="hidden name"><code>extractNodesAndEdgesInfoForCXJSON.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Create TODO</p>
+    <p>Extract information about nodes and edges that is necessary
+to create the CX JSON text representing the network</p>
     </div>
 
     <pre class="usage"><span class='fu'>extractNodesAndEdgesInfoForCXJSON</span><span class='op'>(</span><span class='va'>gostResults</span>, <span class='va'>gostObject</span><span class='op'>)</span></pre>
@@ -142,7 +144,17 @@ the results from an enrichment analysis.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>TRUE</code> TODO</p>
+    <p>a <code>list</code> containing 4 entries:</p><ul>
+<li><p>"nodes"a <code>data.frame</code> containing the information about 
+the nodes present in the network.</p></li>
+<li><p>"edges"a <code>data.frame</code> containing the information about 
+the edges present in the network.</p></li>
+<li><p>"nodeAttributes"a <code>data.frame</code> containing the attributes 
+associated to the nodes present in the network.</p></li>
+<li><p>"edgesAttributes"a <code>data.frame</code> containing the attributes 
+associated to the edges present in the network</p></li>
+</ul>
+
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Astrid Deschênes</p>
@@ -157,7 +169,7 @@ the results from an enrichment analysis.</p></td>
 <span class='va'>results</span> <span class='op'>&lt;-</span> <span class='va'>demoGOST</span><span class='op'>$</span><span class='va'>result</span><span class='op'>[</span><span class='va'>demoGOST</span><span class='op'>$</span><span class='va'>result</span><span class='op'>$</span><span class='va'>source</span> <span class='op'>==</span> <span class='st'>"WP"</span>, <span class='op'>]</span>
 
 <span class='va'>information</span> <span class='op'>&lt;-</span> <span class='fu'>gprofiler2cytoscape</span><span class='fu'>:::</span><span class='fu'>extractNodesAndEdgesInfoForCXJSON</span><span class='op'>(</span>
-                gostResults <span class='op'>=</span> <span class='va'>results</span>, gostObject <span class='op'>=</span> <span class='va'>demoGOST</span><span class='op'>)</span>
+                gostResults<span class='op'>=</span><span class='va'>results</span>, gostObject<span class='op'>=</span><span class='va'>demoGOST</span><span class='op'>)</span>
 
 </div></pre>
   </div>
