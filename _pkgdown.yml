@@ -1,5 +1,8 @@
-language:
-  label:
-    fig: "FIGURE "
-    tab: "TABLE "
+style: Normal
+align: center
+topcaption: false
+caption:
+  style: Image Caption
+  pre: 'Figure '
+  sep: ': '
     
