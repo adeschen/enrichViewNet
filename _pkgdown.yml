@@ -1,8 +1,9 @@
-style: Normal
-align: center
-topcaption: false
-caption:
-  style: Image Caption
-  pre: 'Figure '
-  sep: ': '
+output:
+  plots:
+      style: Normal
+      align: center
+      caption:
+        style: Image Caption
+        pre: 'Figure '
+        sep: ': '
     
