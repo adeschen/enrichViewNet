@@ -4,6 +4,8 @@ author: Astrid Deschênes and Pascal Belleau
 output:
   BiocStyle::html_document:
     toc: true
+pkgdown:
+  as_is: true
 bibliography: gprofiler2cytoscape.bibtex
 vignette: >
   %\VignetteIndexEntry{From gprofiler2 to Cytoscape network}
