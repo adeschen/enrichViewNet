@@ -528,7 +528,8 @@ extractNodesAndEdgesInfoForCytoscape <- function(gostResults, gostObject) {
             group=c("TERM"), alias=c(termName), stringsAsFactors=FALSE)
         
         res <- gconvert(query=c(term))
-        genes <- gostObject$meta$query_metadata$queries[[query]]
+        #genes <- gostObject$meta$query_metadata$queries[[query]]
+        genes <- gostObject$meta$genes_metadata$query[[query]]$ensgs
         
         for (g in genes) {
             if (g %in% res$target) {

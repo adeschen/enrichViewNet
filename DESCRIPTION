@@ -1,6 +1,6 @@
 Package: gprofiler2cytoscape
 Type: Package
-Version: 0.0.2
+Version: 0.0.3
 Date: 2021-03-25
 Title: From gprofiler2 to Cytoscape network
 Description: This package enables the transformation of 

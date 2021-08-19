@@ -367,8 +367,11 @@ test_that("extractNodesAndEdgesInfoForCytoscape() must return expected text", {
     
     ccDemo <- demoGOST
     
-    ccDemo$meta$query_metadata$queries[[1]] <- 
-        ccDemo$meta$query_metadata$queries[[1]][1:2]
+   # ccDemo$meta$query_metadata$queries[[1]] <- 
+    #    ccDemo$meta$query_metadata$queries[[1]][1:2]
+    
+    ccDemo$meta$genes_metadata$query[[1]]$ensgs <- 
+        ccDemo$meta$genes_metadata$query[[1]]$ensgs[1:2]
     
     ccData <- ccDemo$result[ccDemo$result$source == "GO:CC", ]
     
