@@ -527,7 +527,7 @@ extractNodesAndEdgesInfoForCytoscape <- function(gostResults, gostObject) {
         nodes[[length(nodes) + 1]] <- data.frame(id=c(term),
             group=c("TERM"), alias=c(termName), stringsAsFactors=FALSE)
         
-        res <- gconvert(query=c(term))
+        res <- gconvert(query=c(term), organism=gostObject$meta$query_metadata$organism)
         #genes <- gostObject$meta$query_metadata$queries[[query]]
         genes <- gostObject$meta$genes_metadata$query[[query]]$ensgs
         
