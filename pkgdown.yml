@@ -1,7 +1,7 @@
 pandoc: 2.11.4
-pkgdown: 1.6.1
+pkgdown: 2.0.1
 pkgdown_sha: ~
 articles:
   gprofiler2cytoscape: gprofiler2cytoscape.html
-last_built: 2021-08-19T22:51Z
+last_built: 2021-12-28T02:10Z
 

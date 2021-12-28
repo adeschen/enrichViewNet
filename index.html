@@ -27,6 +27,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -39,18 +41,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">gprofiler2cytoscape</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.3</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="articles/gprofiler2cytoscape.html">Get started</a>
 </li>
@@ -63,7 +59,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/adeschen/gprofiler2cytoscape/">
+  <a href="https://github.com/adeschen/gprofiler2cytoscape/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -82,38 +78,38 @@
   <div class="contents col-md-9">
 
 
-<p>The <strong><em>gprofiler2cytoscape</em></strong> package enables the transformation of functional enrichment results obtained by <a href="https://cran.r-project.org/web/packages/gprofiler2/vignettes/gprofiler2.html">gprofiler2</a> into a <a href="https://cytoscape.org/">Cytoscape</a> network where significant terms (Gene Ontology/Reactome/Kegg/Transcription Factor/etc..) and genes are nodes. In this network, edges connect genes that are part of the enrichment request to their terms. The <strong><em>gprofiler2cytoscape</em></strong> package offers the option to generate a network for only a portion of the significant terms by selecting the source or by providing a specific list of terms.</p>
-<div id="authors" class="section level2">
-<h2 class="hasAnchor">
-<a href="#authors" class="anchor"></a>Authors</h2>
-<p><a href="http://ca.linkedin.com/in/astriddeschenes" title="Astrid Deschênes">Astrid Deschênes</a> and <a href="http://ca.linkedin.com/in/pascalbelleau" title="Pascal Belleau">Pascal Belleau</a></p>
+<p>The <strong><em>gprofiler2cytoscape</em></strong> package enables the transformation of functional enrichment results obtained by <a href="https://cran.r-project.org/web/packages/gprofiler2/vignettes/gprofiler2.html" class="external-link">gprofiler2</a> into a <a href="https://cytoscape.org/" class="external-link">Cytoscape</a> network where significant terms (Gene Ontology/Reactome/Kegg/Transcription Factor/etc..) and genes are nodes. In this network, edges connect genes that are part of the enrichment request to their terms. The <strong><em>gprofiler2cytoscape</em></strong> package offers the option to generate a network for only a portion of the significant terms by selecting the source or by providing a specific list of terms.</p>
+<div class="section level2">
+<h2 id="authors">Authors<a class="anchor" aria-label="anchor" href="#authors"></a>
+</h2>
+<p><a href="http://ca.linkedin.com/in/astriddeschenes" title="Astrid Deschênes" class="external-link">Astrid Deschênes</a> and <a href="http://ca.linkedin.com/in/pascalbelleau" title="Pascal Belleau" class="external-link">Pascal Belleau</a></p>
 </div>
-<div id="license" class="section level2">
-<h2 class="hasAnchor">
-<a href="#license" class="anchor"></a>License</h2>
+<div class="section level2">
+<h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
+</h2>
 <p>This package and the underlying <strong><em>gprofiler2cytoscape</em></strong> code are distributed under the Artistic license 2.0. You are free to use and redistribute this software.</p>
-<p>For more information on Artistic 2.0 License see <a href="http://opensource.org/licenses/Artistic-2.0">http://opensource.org/licenses/Artistic-2.0</a></p>
+<p>For more information on Artistic 2.0 License see <a href="http://opensource.org/licenses/Artistic-2.0" class="external-link">http://opensource.org/licenses/Artistic-2.0</a></p>
 </div>
-<div id="documentation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#documentation" class="anchor"></a>Documentation</h2>
-<p><a href="https://adeschen.github.io/gprofiler2cytoscape/">gprofiler2cytoscape Website</a></p>
-<p><a href="https://adeschen.github.io/gprofiler2cytoscape/articles/gprofiler2cytoscape.html">gprofiler2cytoscape Get Started</a></p>
+<div class="section level2">
+<h2 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
+</h2>
+<p><a href="https://adeschen.github.io/gprofiler2cytoscape/" class="external-link">gprofiler2cytoscape Website</a></p>
+<p><a href="https://adeschen.github.io/gprofiler2cytoscape/articles/gprofiler2cytoscape.html" class="external-link">gprofiler2cytoscape Get Started</a></p>
 </div>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
-<p>To install the latest version accessible, the <a href="https://cran.r-project.org/web/packages/devtools/index.html">devtools</a> package is required.</p>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p>To install the latest version accessible, the <a href="https://cran.r-project.org/web/packages/devtools/index.html" class="external-link">devtools</a> package is required.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a> <span class="do">## Load required package</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">library</span>(devtools)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a> <span class="do">## Install the latest version of gprofiler2cytoscape</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a> devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">'adeschen/gprofiler2cytoscape'</span>)</span></code></pre></div>
 </div>
-<div id="bugsfeature-requests" class="section level2">
-<h2 class="hasAnchor">
-<a href="#bugsfeature-requests" class="anchor"></a>Bugs/Feature requests</h2>
-<p>If you have any bugs or feature requests, <a href="https://github.com/adeschen/gprofiler2cytoscape/issues">let us know</a>.</p>
+<div class="section level2">
+<h2 id="bugsfeature-requests">Bugs/Feature requests<a class="anchor" aria-label="anchor" href="#bugsfeature-requests"></a>
+</h2>
+<p>If you have any bugs or feature requests, <a href="https://github.com/adeschen/gprofiler2cytoscape/issues" class="external-link">let us know</a>.</p>
 <p>Thanks!</p>
 </div>
 
@@ -121,46 +117,57 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="https://github.com/adeschen/gprofiler2cytoscape/">https://​github.com/​adeschen/​gprofiler2cytoscape/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/adeschen/gprofiler2cytoscape/issues">https://​github.com/​adeschen/​gprofiler2cytoscape/​issues</a>
-</li>
-</ul>
-</div>
-<div class="license">
-<h2>License</h2>
-<ul class="list-unstyled">
-<li><a href="https://www.r-project.org/Licenses/Artistic-2.0">Artistic-2.0</a></li>
-</ul>
-</div>
-<div class="developers">
-<h2>Developers</h2>
-<ul class="list-unstyled">
-<li>Astrid Deschênes <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-7846-6749" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Pascal Belleau <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-0802-1071" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li><a href="https://github.com/adeschen/gprofiler2cytoscape/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/adeschen/gprofiler2cytoscape/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="license">
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/adeschen/gprofiler2cytoscape/actions/workflows/check-bioc.yml"><img src="https://github.com/adeschen/gprofiler2cytoscape/actions/workflows/check-bioc.yml/badge.svg" alt="R-CMD-check-bioc"></a></li>
-<li><a href="https://codecov.io/gh/adeschen/gprofiler2cytoscape?branch=main"><img src="https://codecov.io/gh/adeschen/gprofiler2cytoscape/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
-<li><a href="https://opensource.org/licenses/Artistic-2.0"><img src="https://img.shields.io/badge/License-Artistic%202.0-0298c3.svg" alt="License: Artistic-2.0"></a></li>
+<li><a href="https://www.r-project.org/Licenses/Artistic-2.0" class="external-link">Artistic-2.0</a></li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing gprofiler2cytoscape</a></li>
+</ul>
 </div>
+
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
+<ul class="list-unstyled">
+<li>Astrid Deschênes <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-7846-6749" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Pascal Belleau <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-0802-1071" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+</ul>
+</div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/adeschen/gprofiler2cytoscape/actions/workflows/check-bioc.yml" class="external-link"><img src="https://github.com/adeschen/gprofiler2cytoscape/actions/workflows/check-bioc.yml/badge.svg" alt="R-CMD-check-bioc"></a></li>
+<li><a href="https://codecov.io/gh/adeschen/gprofiler2cytoscape?branch=main" class="external-link"><img src="https://codecov.io/gh/adeschen/gprofiler2cytoscape/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://opensource.org/licenses/Artistic-2.0" class="external-link"><img src="https://img.shields.io/badge/License-Artistic%202.0-0298c3.svg" alt="License: Artistic-2.0"></a></li>
+</ul>
+</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Astrid Deschênes, Pascal Belleau.</p>
+  <p></p>
+<p>Developed by Astrid Deschênes, Pascal Belleau.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
       </footer>
@@ -168,6 +175,8 @@
 
   
 
+
+  
 
   </body>
 </html>
