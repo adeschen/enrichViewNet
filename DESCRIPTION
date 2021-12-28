@@ -19,7 +19,7 @@ Authors@R: c(person("Astrid", "Deschênes", email = "adeschen@hotmail.com",
     comment = c(ORCID = "0000-0002-0802-1071")))
 Encoding: UTF-8
 License: Artistic-2.0
-Depends: R (>= 3.5)
+Depends: R (>= 4.0)
 Imports: gprofiler2,
     strex,
     RCy3,
