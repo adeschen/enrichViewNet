@@ -98,13 +98,13 @@ isCytoscapeRunning <- function() {
             return(TRUE)
         },
         error=function(cond) {
-            message(paste0("Unable to connect to Cytoscape. \n", 
-                                "CX JSON file will be created.\n"))
+            message("Unable to connect to Cytoscape. \n", 
+                                "CX JSON file will be created.\n")
             return(FALSE)
         },
         warning=function(cond) {
-            message(paste0("Unable to connect to Cytoscape. \n", 
-                                "CX JSON file will be created."))
+            message("Unable to connect to Cytoscape. \n", 
+                                "CX JSON file will be created.")
             return(FALSE)
         }
     ) 
@@ -168,40 +168,40 @@ validateCreateNetworkArguments <- function(gostObject, source, termIDs,
     ## Test that gostObject is a gprofiler2 result 
     if (!("list" %in% class(gostObject) && "result" %in% names(gostObject) &&
             "meta" %in% names(gostObject)))   {
-        stop(paste0("The gostObject object should be a list with meta ", 
+        stop("The gostObject object should be a list with meta ", 
                     "and result as entries corresponding to gprofiler2 ", 
-                    "enrichment output."))
+                    "enrichment output.")
     } 
     
     if (source != "TERM_ID") {
         if (sum(gostObject$result$source == source) < 1) {
-            stop(paste0("There is no enriched term for the selected ", 
-                    "source \'", source, "\'."))    
+            stop("There is no enriched term for the selected ", 
+                    "source \'", source, "\'.")    
         }
     } else {
         if (is.null(termIDs)) {
-            stop(paste0("A vector of terms should be given through the ",
-                    "\'termIDs\' parameter when source is \'TERM_ID\'."))  
+            stop("A vector of terms should be given through the ",
+                    "\'termIDs\' parameter when source is \'TERM_ID\'.")  
         }
         else {
             if(!all(termIDs %in% gostObject$result$term_id)) {
-                stop(paste0("Not all listed terms are present in the  ",
-                                "enrichment results.")) 
+                stop("Not all listed terms are present in the  ",
+                                "enrichment results.")
             }
         }
     }
     
     if (!is(removeRoot, "logical")) {
-        stop(paste0("The \'removeRoot\' parameter must be the logical ", 
-                        "value TRUE or FALSE."))
+        stop("The \'removeRoot\' parameter must be the logical ", 
+                        "value TRUE or FALSE.")
     }
     
     if (!is(fileName, "character")) {
-        stop(paste0("The \'fileName\' parameter must a character string."))
+        stop("The \'fileName\' parameter must a character string.")
     }
     
     if (str_ends(fileName, ".cx", negate = TRUE)) {
-        stop(paste0("The \'fileName\' parameter must have \'.cx\' extension."))
+        stop("The \'fileName\' parameter must have \'.cx\' extension.")
     }
     
     return(TRUE)   

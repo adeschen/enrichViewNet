@@ -88,8 +88,8 @@ createNetwork <- function(gostObject, source=c("TERM_ID", "GO:MF", "GO:CC",
     if (removeRoot) {
         gostResults <- removeRootTerm(gostResults)
         if (nrow(gostResults) == 0) {
-            stop(paste0("With removal of the root term, there is no ", 
-                    "enrichment term left"))
+            stop("With removal of the root term, there is no ", 
+                    "enrichment term left")
         }
     }
     
@@ -108,8 +108,8 @@ createNetwork <- function(gostObject, source=c("TERM_ID", "GO:MF", "GO:CC",
             gostObject=gostObject, title=title) 
         if (!file.exists(fileName)) {
             write(final, file=fileName, append=FALSE)
-            message(paste0("CX JSON file \"", fileName, 
-                            "\" has been created.\n"))
+            message("CX JSON file \"", fileName, 
+                            "\" has been created.\n")
         } else {
             id <- 0
             done <- FALSE
@@ -121,8 +121,8 @@ createNetwork <- function(gostObject, source=c("TERM_ID", "GO:MF", "GO:CC",
                     write(final, file=newFileName, append=FALSE)
                     done <- TRUE
                 }
-                message(paste0("CX JSON file \"", newFileName, 
-                                    "\" has been created.\n"))
+                message("CX JSON file \"", newFileName, 
+                                    "\" has been created.\n")
             }
         }
     }
