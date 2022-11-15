@@ -37,7 +37,10 @@
     <loc>/reference/extractNodesAndEdgesInfoForCXJSON.html</loc>
   </url>
   <url>
-    <loc>/reference/extractNodesAndEdgesInfoForCytoscape.html</loc>
+    <loc>/reference/extractNodesAndEdgesWhenIntersection.html</loc>
+  </url>
+  <url>
+    <loc>/reference/extractNodesAndEdgesWhenNoIntersection.html</loc>
   </url>
   <url>
     <loc>/reference/gprofiler2cytoscape-package.html</loc>

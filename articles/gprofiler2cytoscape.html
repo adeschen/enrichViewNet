@@ -6,7 +6,7 @@
 <meta name="generator" content="pandoc">
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE">
 <meta name="author" content="Astrid Deschênes and Pascal Belleau">
-<meta name="date" content="2022-05-11">
+<meta name="date" content="2022-11-15">
 <title>From gprofiler2 to Cytoscape network</title>
 <script src="gprofiler2cytoscape_files/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="gprofiler2cytoscape_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
@@ -108,13 +108,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -179,8 +186,8 @@ details > summary > p:only-child {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -188,16 +195,9 @@ details > summary > p:only-child {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -243,7 +243,7 @@ function toggle_visibility(id1) {
 
 <h1 class="title toc-ignore">From gprofiler2 to Cytoscape network</h1>
 <p class="author-name">Astrid Deschênes and Pascal Belleau</p>
-<h4 class="date">11 May 2022</h4>
+<h4 class="date">15 November 2022</h4>
 
 </div>
 
@@ -268,7 +268,7 @@ function toggle_visibility(id1) {
 </div>
 
 <p><br><strong>Package</strong>: <em>gprofiler2cytoscape</em><br><strong>Authors</strong>: Astrid Deschênes [aut, cre] (<a href="https://orcid.org/0000-0001-7846-6749" class="external-link uri">https://orcid.org/0000-0001-7846-6749</a>),
-Pascal Belleau [aut] (<a href="https://orcid.org/0000-0002-0802-1071" class="external-link uri">https://orcid.org/0000-0002-0802-1071</a>)<br><strong>Version</strong>: 0.0.3<br><strong>Compiled date</strong>: 2022-05-11<br><strong>License</strong>: Artistic-2.0<br></p>
+Pascal Belleau [aut] (<a href="https://orcid.org/0000-0002-0802-1071" class="external-link uri">https://orcid.org/0000-0002-0802-1071</a>)<br><strong>Version</strong>: 0.0.4<br><strong>Compiled date</strong>: 2022-11-15<br><strong>License</strong>: Artistic-2.0<br></p>
 <div class="section level2" number="1">
 <h2 id="licensing">
 <span class="header-section-number">1</span> Licensing<a class="anchor" aria-label="anchor" href="#licensing"></a>
@@ -358,16 +358,16 @@ and other molecular states. The user can also peforms network analysis.</p>
 <em><a href="https://github.com/adeschen/gprofiler2cytoscape" class="external-link">gprofiler2cytoscape</a></em> Github Website, the
 <em><a href="https://CRAN.R-project.org/package=devtools" class="external-link">devtools</a></em> package is required.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Install the latest version of gprofiler2cytoscape</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/" class="external-link">devtools</a></span><span class="op">)</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/remote-reexports.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">'adeschen/gprofiler2cytoscape'</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">## Install the latest version of gprofiler2cytoscape</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/" class="external-link">devtools</a></span><span class="op">)</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">'adeschen/gprofiler2cytoscape'</span><span class="op">)</span></span></code></pre></div>
 <p>It is also possible to install an official release. The list of available
 releases is posted on the <a href="https://github.com/adeschen/gprofiler2cytoscape/releases" title="gprofiler2cytoscape Release Site" class="external-link">gprofiler2cytoscape Release Website</a>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Install the version v0.1 of gprofiler2cytoscape</span>
-<span class="co">## using 'ref' parameter</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/" class="external-link">devtools</a></span><span class="op">)</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/remote-reexports.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">'adeschen/gprofiler2cytoscape'</span>, ref <span class="op">=</span> <span class="st">"v0.0.2"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">## Install the version v0.1 of gprofiler2cytoscape</span></span>
+<span><span class="co">## using 'ref' parameter</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/" class="external-link">devtools</a></span><span class="op">)</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">'adeschen/gprofiler2cytoscape'</span>, ref <span class="op">=</span> <span class="st">"v0.0.2"</span><span class="op">)</span></span></code></pre></div>
 <p><br><br></p>
 </div>
 <div class="section level2" number="5">
@@ -435,13 +435,13 @@ software.</p>
 </h3>
 <p>TODO</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Load demo gprofiler2 enrichment result</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">demoGOST</span><span class="op">)</span>
-
-<span class="co">## Create network for Gene Ontology - Molecular Function related results</span>
-<span class="co">## The 'removeRoot=TRUE' parameter removes the root term from the network</span>
-<span class="fu"><a href="../reference/createNetwork.html">createNetwork</a></span><span class="op">(</span>gostObject<span class="op">=</span><span class="va">demoGOST</span>, source<span class="op">=</span><span class="st">"GO:MF"</span>, removeRoot<span class="op">=</span><span class="cn">FALSE</span>,
-    title<span class="op">=</span><span class="st">"GO Molecular Function Network"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">## Load demo gprofiler2 enrichment result</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">demoGOST</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Create network for Gene Ontology - Molecular Function related results</span></span>
+<span><span class="co">## The 'removeRoot=TRUE' parameter removes the root term from the network</span></span>
+<span><span class="fu"><a href="../reference/createNetwork.html">createNetwork</a></span><span class="op">(</span>gostObject<span class="op">=</span><span class="va">demoGOST</span>, source<span class="op">=</span><span class="st">"GO:MF"</span>, removeRoot<span class="op">=</span><span class="cn">FALSE</span>,</span>
+<span>    title<span class="op">=</span><span class="st">"GO Molecular Function Network"</span><span class="op">)</span></span></code></pre></div>
 <p><br><br></p>
 </div>
 </div>
@@ -451,57 +451,57 @@ software.</p>
 </h2>
 <p>Here is the output of sessionInfo() on the system on which this document
 was compiled:</p>
-<pre><code><span class="co">## R version 4.1.1 (2021-08-10)</span>
-<span class="co">## Platform: x86_64-pc-linux-gnu (64-bit)</span>
-<span class="co">## Running under: Ubuntu 20.04.3 LTS</span>
-<span class="co">## </span>
-<span class="co">## Matrix products: default</span>
-<span class="co">## BLAS/LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.8.so</span>
-<span class="co">## </span>
-<span class="co">## locale:</span>
-<span class="co">##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              </span>
-<span class="co">##  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    </span>
-<span class="co">##  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=C             </span>
-<span class="co">##  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 </span>
-<span class="co">##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            </span>
-<span class="co">## [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       </span>
-<span class="co">## </span>
-<span class="co">## attached base packages:</span>
-<span class="co">## [1] stats     graphics  grDevices utils     datasets  methods   base     </span>
-<span class="co">## </span>
-<span class="co">## other attached packages:</span>
-<span class="co">## [1] gprofiler2cytoscape_0.0.3 knitr_1.39               </span>
-<span class="co">## [3] BiocStyle_2.20.2         </span>
-<span class="co">## </span>
-<span class="co">## loaded via a namespace (and not attached):</span>
-<span class="co">##  [1] httr_1.4.3          tidyr_1.2.0         sass_0.4.1         </span>
-<span class="co">##  [4] viridisLite_0.4.0   jsonlite_1.8.0      R.utils_2.11.0     </span>
-<span class="co">##  [7] gprofiler2_0.2.1    bslib_0.3.1         highr_0.9          </span>
-<span class="co">## [10] BiocManager_1.30.17 stats4_4.1.1        dplR_1.7.2         </span>
-<span class="co">## [13] base64url_1.4       yaml_2.3.5          pillar_1.7.0       </span>
-<span class="co">## [16] backports_1.4.1     lattice_0.20-45     glue_1.6.2         </span>
-<span class="co">## [19] uuid_1.1-0          digest_0.6.29       RColorBrewer_1.1-3 </span>
-<span class="co">## [22] uchardet_1.1.0      colorspace_2.0-3    htmltools_0.5.2    </span>
-<span class="co">## [25] Matrix_1.4-1        R.oo_1.24.0         plyr_1.8.7         </span>
-<span class="co">## [28] XML_3.99-0.9        pkgconfig_2.0.3     bookdown_0.26      </span>
-<span class="co">## [31] purrr_0.3.4         scales_1.2.0        tibble_3.1.7       </span>
-<span class="co">## [34] generics_0.1.2      ggplot2_3.3.6       ellipsis_0.3.2     </span>
-<span class="co">## [37] repr_1.1.4          lazyeval_0.2.2      BiocGenerics_0.38.0</span>
-<span class="co">## [40] cli_3.3.0           RJSONIO_1.3-1.6     magrittr_2.0.3     </span>
-<span class="co">## [43] crayon_1.5.1        strex_1.4.2         evaluate_0.15      </span>
-<span class="co">## [46] R.methodsS3_1.8.1   fansi_1.0.3         MASS_7.3-57        </span>
-<span class="co">## [49] graph_1.70.0        data.table_1.14.2   tools_4.1.1        </span>
-<span class="co">## [52] lifecycle_1.0.1     matrixStats_0.62.0  stringr_1.4.0      </span>
-<span class="co">## [55] plotly_4.10.0       munsell_0.5.0       compiler_4.1.1     </span>
-<span class="co">## [58] jquerylib_0.1.4     signal_0.7-7        rlang_1.0.2        </span>
-<span class="co">## [61] grid_4.1.1          RCurl_1.98-1.6      pbdZMQ_0.3-7       </span>
-<span class="co">## [64] IRkernel_1.3        htmlwidgets_1.5.4   igraph_1.3.1       </span>
-<span class="co">## [67] bitops_1.0-7        base64enc_0.1-3     rmarkdown_2.14     </span>
-<span class="co">## [70] gtable_0.3.0        RCy3_2.12.4         R6_2.5.1           </span>
-<span class="co">## [73] dplyr_1.0.9         fastmap_1.1.0       utf8_1.2.2         </span>
-<span class="co">## [76] stringi_1.7.6       parallel_4.1.1      IRdisplay_1.1      </span>
-<span class="co">## [79] Rcpp_1.0.8.3        vctrs_0.4.1         png_0.1-7          </span>
-<span class="co">## [82] tidyselect_1.1.2    xfun_0.31</span></code></pre>
+<pre><code><span><span class="co">## R version 4.1.1 (2021-08-10)</span></span>
+<span><span class="co">## Platform: x86_64-pc-linux-gnu (64-bit)</span></span>
+<span><span class="co">## Running under: Ubuntu 20.04.3 LTS</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Matrix products: default</span></span>
+<span><span class="co">## BLAS/LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.8.so</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## locale:</span></span>
+<span><span class="co">##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              </span></span>
+<span><span class="co">##  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    </span></span>
+<span><span class="co">##  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=C             </span></span>
+<span><span class="co">##  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 </span></span>
+<span><span class="co">##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            </span></span>
+<span><span class="co">## [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## attached base packages:</span></span>
+<span><span class="co">## [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## other attached packages:</span></span>
+<span><span class="co">## [1] gprofiler2cytoscape_0.0.4 knitr_1.40               </span></span>
+<span><span class="co">## [3] BiocStyle_2.20.2         </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## loaded via a namespace (and not attached):</span></span>
+<span><span class="co">##  [1] httr_1.4.4          tidyr_1.2.1         sass_0.4.2         </span></span>
+<span><span class="co">##  [4] viridisLite_0.4.1   jsonlite_1.8.3      R.utils_2.12.2     </span></span>
+<span><span class="co">##  [7] gprofiler2_0.2.1    bslib_0.4.1         highr_0.9          </span></span>
+<span><span class="co">## [10] BiocManager_1.30.19 stats4_4.1.1        dplR_1.7.4         </span></span>
+<span><span class="co">## [13] base64url_1.4       yaml_2.3.6          pillar_1.8.1       </span></span>
+<span><span class="co">## [16] backports_1.4.1     lattice_0.20-45     glue_1.6.2         </span></span>
+<span><span class="co">## [19] uuid_1.1-0          digest_0.6.30       RColorBrewer_1.1-3 </span></span>
+<span><span class="co">## [22] uchardet_1.1.1      colorspace_2.0-3    htmltools_0.5.3    </span></span>
+<span><span class="co">## [25] Matrix_1.5-3        R.oo_1.25.0         plyr_1.8.8         </span></span>
+<span><span class="co">## [28] XML_3.99-0.12       pkgconfig_2.0.3     bookdown_0.30      </span></span>
+<span><span class="co">## [31] purrr_0.3.5         scales_1.2.1        tibble_3.1.8       </span></span>
+<span><span class="co">## [34] generics_0.1.3      ggplot2_3.4.0       cachem_1.0.6       </span></span>
+<span><span class="co">## [37] repr_1.1.4          lazyeval_0.2.2      BiocGenerics_0.38.0</span></span>
+<span><span class="co">## [40] cli_3.4.1           RJSONIO_1.3-1.6     magrittr_2.0.3     </span></span>
+<span><span class="co">## [43] crayon_1.5.2        strex_1.4.4         evaluate_0.18      </span></span>
+<span><span class="co">## [46] R.methodsS3_1.8.2   fansi_1.0.3         MASS_7.3-58.1      </span></span>
+<span><span class="co">## [49] graph_1.70.0        data.table_1.14.4   tools_4.1.1        </span></span>
+<span><span class="co">## [52] lifecycle_1.0.3     matrixStats_0.62.0  stringr_1.4.1      </span></span>
+<span><span class="co">## [55] plotly_4.10.1       munsell_0.5.0       compiler_4.1.1     </span></span>
+<span><span class="co">## [58] jquerylib_0.1.4     signal_0.7-7        rlang_1.0.6        </span></span>
+<span><span class="co">## [61] grid_4.1.1          RCurl_1.98-1.9      pbdZMQ_0.3-8       </span></span>
+<span><span class="co">## [64] IRkernel_1.3.1      htmlwidgets_1.5.4   igraph_1.3.5       </span></span>
+<span><span class="co">## [67] bitops_1.0-7        base64enc_0.1-3     rmarkdown_2.18     </span></span>
+<span><span class="co">## [70] boot_1.3-28         gtable_0.3.1        RCy3_2.12.4        </span></span>
+<span><span class="co">## [73] R6_2.5.1            dplyr_1.0.10        fastmap_1.1.0      </span></span>
+<span><span class="co">## [76] utf8_1.2.2          stringi_1.7.8       parallel_4.1.1     </span></span>
+<span><span class="co">## [79] IRdisplay_1.1       Rcpp_1.0.9          vctrs_0.5.0        </span></span>
+<span><span class="co">## [82] png_0.1-7           tidyselect_1.2.0    xfun_0.34</span></span></code></pre>
 <p><br><br></p>
 </div>
 <div class="section level2">

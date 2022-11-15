@@ -25,7 +25,7 @@ significant term to graph."><!-- mathjax --><script src="https://cdnjs.cloudflar
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gprofiler2cytoscape</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.4</span>
       </span>
     </div>
 
@@ -71,16 +71,16 @@ significant term to graph.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">createNetwork</span><span class="op">(</span>
-  <span class="va">gostObject</span>,
-  source <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TERM_ID"</span>, <span class="st">"GO:MF"</span>, <span class="st">"GO:CC"</span>, <span class="st">"GO:BP"</span>, <span class="st">"KEGG"</span>, <span class="st">"REAC"</span>, <span class="st">"TF"</span>, <span class="st">"MIRNA"</span>,
-    <span class="st">"HPA"</span>, <span class="st">"CORUM"</span>, <span class="st">"HP"</span>, <span class="st">"WP"</span><span class="op">)</span>,
-  termIDs <span class="op">=</span> <span class="cn">NULL</span>,
-  removeRoot <span class="op">=</span> <span class="cn">TRUE</span>,
-  title <span class="op">=</span> <span class="st">"gprofiler network"</span>,
-  collection <span class="op">=</span> <span class="st">"enrichment results"</span>,
-  fileName <span class="op">=</span> <span class="st">"gprofilerNetwork.cx"</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">createNetwork</span><span class="op">(</span></span>
+<span>  <span class="va">gostObject</span>,</span>
+<span>  source <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TERM_ID"</span>, <span class="st">"GO:MF"</span>, <span class="st">"GO:CC"</span>, <span class="st">"GO:BP"</span>, <span class="st">"KEGG"</span>, <span class="st">"REAC"</span>, <span class="st">"TF"</span>, <span class="st">"MIRNA"</span>,</span>
+<span>    <span class="st">"HPA"</span>, <span class="st">"CORUM"</span>, <span class="st">"HP"</span>, <span class="st">"WP"</span><span class="op">)</span>,</span>
+<span>  termIDs <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  removeRoot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  title <span class="op">=</span> <span class="st">"gprofiler network"</span>,</span>
+<span>  collection <span class="op">=</span> <span class="st">"enrichment results"</span>,</span>
+<span>  fileName <span class="op">=</span> <span class="st">"gprofilerNetwork.cx"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -88,6 +88,8 @@ significant term to graph.</p>
     <dl><dt>gostObject</dt>
 <dd><p>a <code>list</code> created by gprofiler2 that contains
 the results from an enrichment analysis.</p></dd>
+
+
 <dt>source</dt>
 <dd><p>a <code>character</code> string representing the selected source 
 that will be used to generate the network. To hand-pick the terms to be 
@@ -98,27 +100,42 @@ Cellular Component, "GO:MF" for Gene Ontology Molecular Function,
 "KEGG" for Kegg, "REAC" for Reactome, "TF" for TRANSFAC, "MIRNA" for 
 miRTarBase, "CORUM" for CORUM database, "HP" for Human phenotype ontology
 and "WP" for WikiPathways.  Default: "TERM_ID".</p></dd>
+
+
 <dt>termIDs</dt>
 <dd><p>a <code>vector</code> of <code>character</code> strings that contains the
 term IDS retained for the creation of the network. Default: <code>NULL</code>.</p></dd>
+
+
 <dt>removeRoot</dt>
 <dd><p>a <code>logical</code> that specified if the root terms of 
 the selected source should be removed (when present). Default: <code>TRUE</code>.</p></dd>
+
+
 <dt>title</dt>
 <dd><p>a <code>character</code> string representing the name assigned to 
 the network. Default: "gprofiler network".</p></dd>
+
+
 <dt>collection</dt>
 <dd><p>a <code>character</code> string representing the collection 
 name assigned to the network. Default: "enrichment results".</p></dd>
+
+
 <dt>fileName</dt>
 <dd><p>a <code>character</code> string representing the name of the
 CX JSON file that is created when Cytoscape is not running. The name 
 must have a '.cx' extension.
 Default: "gprofilerNetwork_01.cx".</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>TRUE</code></p>
+    
+
+<p><code>TRUE</code></p>
+
+
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -127,19 +144,19 @@ Default: "gprofilerNetwork_01.cx".</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="co">## Loading dataset containing result from an enrichment analysis done with</span></span>
-<span class="r-in"><span class="co">## gprofiler2</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">demoGOST</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Create network for Gene Ontology - Molecular Function related results</span></span>
-<span class="r-in"><span class="fu">createNetwork</span><span class="op">(</span>gostObject<span class="op">=</span><span class="va">demoGOST</span>, source<span class="op">=</span><span class="st">"GO:MF"</span>, removeRoot<span class="op">=</span><span class="cn">FALSE</span>,</span>
-<span class="r-in">    title<span class="op">=</span><span class="st">"GO Molecular Function Graph"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Loading dataset containing result from an enrichment analysis done with</span></span></span>
+<span class="r-in"><span><span class="co">## gprofiler2</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">demoGOST</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Create network for Gene Ontology - Molecular Function related results</span></span></span>
+<span class="r-in"><span><span class="fu">createNetwork</span><span class="op">(</span>gostObject<span class="op">=</span><span class="va">demoGOST</span>, source<span class="op">=</span><span class="st">"GO:MF"</span>, removeRoot<span class="op">=</span><span class="cn">FALSE</span>,</span></span>
+<span class="r-in"><span>    title<span class="op">=</span><span class="st">"GO Molecular Function Graph"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -154,7 +171,7 @@ Default: "gprofilerNetwork_01.cx".</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
