@@ -113,7 +113,7 @@ specific list of terms.
 
 Once the network is created, the user can personalize the visual attributes 
 and integrate external information such as expression profiles, phenotypes 
-and other molecular states. The user can also peforms network analysis.
+and other molecular states. The user can also perform network analysis.
 
 <br>
 <br>
@@ -137,7 +137,7 @@ releases is posted on the [gprofiler2cytoscape Release Website](https://github.c
 ## Install the version v0.1 of gprofiler2cytoscape
 ## using 'ref' parameter
 library(devtools)
-devtools::install_github('adeschen/gprofiler2cytoscape', ref = "v0.0.2")
+devtools::install_github('adeschen/gprofiler2cytoscape', ref = "v0.0.4")
 ```
 
 <br>
@@ -159,16 +159,25 @@ The key steps for the workflow are:
 
 Step                              | Function                    
 --------------------------------- | ---------------------------------------------
- Doing an Enrichment analysis     | `gprofiler2::gost()`
- Starting Cytoscape               |  outside R   
+ Run an Enrichment analysis       | `gprofiler2::gost()`
+ Start Cytoscape                  |  outside R   
  Create Cytoscape network         | `createNetwork()`
 
 The `package::function()` notation is used for functions from other packages.
 
-## Doing an Enrichment analysis 
+## Run an enrichment analysis 
+
+The first step consists in running an enrichment analysis with 
+`r CRANpkg("gprofiler2")` package. The output of the _gprofiler2::gost()_ 
+is a _list_ and should be saved. 
 
 
-## Starting Cytoscape
+```{r gprofiler, echo = FALSE}
+library(gprofiler2)
+
+```
+
+## Start Cytoscape
 
 [Cytoscape](https://cytoscape.org/) is an open source software for 
 visualizing networks. It enables network integration with any type of attribute
