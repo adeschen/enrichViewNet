@@ -1,3 +1,10 @@
+# gprofiler2cytoscape v0.0.4
+
+NEW FEATURES
+
+* When 'intersection' column present in the GOST object, the software uses the column to create the output for Cytoscape, without having to call 'gconvert()'. The output is generated much more rapidly.
+
+
 
 # gprofiler2cytoscape v0.0.2
 

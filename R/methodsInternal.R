@@ -48,9 +48,14 @@
 createCytoscapeNetwork <- function(gostResults, gostObject, title, collection) {
     
     ## Extract node and edge information to be used to create network
-    info <- extractNodesAndEdgesInfoForCytoscape(gostResults = gostResults,
-                                                gostObject = gostObject)
-    
+    if (! "intersection" %in% colnames(gostResults)) {
+        info <- extractNodesAndEdgesWhenNoIntersection(gostResults=gostResults,
+                                                    gostObject=gostObject)
+    } else {
+        info <- extractNodesAndEdgesWhenIntersection(gostResults=gostResults,
+                                                  gostObject=gostObject)
+    }
+        
     ## Create the network using JSON data format and posting it to Cytoscape
     createNetworkFromDataFrames(nodes=info$nodes, edges=info$edges, 
                                 title=title, collection=collection)
@@ -502,14 +507,15 @@ extractNodesAndEdgesInfoForCXJSON <- function(gostResults, gostObject) {
 #' ## Only retained the GO Molecular Function results
 #' results <- demoGOST$result[demoGOST$result$source == "GO:MF", ]
 #' 
-#' information <- gprofiler2cytoscape:::extractNodesAndEdgesInfoForCytoscape(
+#' information <- 
+#'     gprofiler2cytoscape:::extractNodesAndEdgesWhenNoIntersection(
 #'                 gostResults=results, gostObject=demoGOST)
 #' 
 #' @author Astrid Deschênes
 #' @importFrom gprofiler2 gconvert
 #' @encoding UTF-8
 #' @keywords internal
-extractNodesAndEdgesInfoForCytoscape <- function(gostResults, gostObject) {
+extractNodesAndEdgesWhenNoIntersection <- function(gostResults, gostObject) {
 
     done <- array()   
     nodes <- list()
@@ -520,15 +526,12 @@ extractNodesAndEdgesInfoForCytoscape <- function(gostResults, gostObject) {
         term <- gostResults$term_id[i]
         query <- gostResults$query[i]
         termName <- gostResults$term_name[i]
-        #termShort <- str_replace(selectedTF[i, "term_name"], 
-        #                    pattern="Factor: ", "")
-        #termShort <- str_replace(termShort, pattern="; motif:.+$", "")
         
         nodes[[length(nodes) + 1]] <- data.frame(id=c(term),
             group=c("TERM"), alias=c(termName), stringsAsFactors=FALSE)
         
-        res <- gconvert(query=c(term), organism=gostObject$meta$query_metadata$organism)
-        #genes <- gostObject$meta$query_metadata$queries[[query]]
+        res <- gconvert(query=c(term), 
+                            organism=gostObject$meta$query_metadata$organism)
         genes <- gostObject$meta$genes_metadata$query[[query]]$ensgs
         
         for (g in genes) {
@@ -556,3 +559,92 @@ extractNodesAndEdgesInfoForCytoscape <- function(gostResults, gostObject) {
     return(list(nodes=nodeInfo, edges=edgeInfo))
 }
 
+
+
+
+#' @title Extract node and edge information to be used to create Cytoscape
+#' network
+#' 
+#' @description Create a list containing all node and edge information needed 
+#' to create the Cytoscape network
+#' 
+#' @param gostResults a \code{data.frame} containing the terms retained
+#' for the creation of the network. The \code{data.frame} does not contain a   
+#' column called "intersection".
+#' 
+#' @param gostObject a \code{list} created by gprofiler2 that contains
+#' the results from an enrichment analysis.
+#' 
+#' @return \code{list} containing 2 entries:
+#' \itemize{
+#' \item{"nodes"}{a \code{data.frame} containing the information about 
+#' the nodes present in the network.}
+#' \item{"edges"}{a \code{data.frame} containing the information about 
+#' the edges present in the network.}
+#' }
+#' 
+#' @examples
+#'
+#' ## Loading dataset containing result from an enrichment analysis done with
+#' ## gprofiler2
+#' data(demoGOST)
+#' 
+#' ## Only retained the GO Molecular Function results
+#' results <- demoGOST$result[demoGOST$result$source == "GO:MF", ]
+#' 
+#' ##information <- 
+#' ##      gprofiler2cytoscape:::extractNodesAndEdgesWhenIntersection(
+#' ##                gostResults=results, gostObject=demoGOST)
+#' 
+#' @author Astrid Deschênes
+#' @importFrom gprofiler2 gconvert
+#' @importFrom stringr str_split
+#' @encoding UTF-8
+#' @keywords internal
+extractNodesAndEdgesWhenIntersection <- function(gostResults, gostObject) {
+    
+    done <- array()   
+    nodes <- list()
+    edges <- list()
+    
+    geneInter <- unique(unlist(str_split(gostResults$intersection, ",")))
+    
+    res <- gconvert(query=c(geneInter), 
+                    organism=gostObject$meta$query_metadata$organism)
+    
+    ## Create the list of genes and terms that will be included in the network
+    for (i in seq_len(nrow(gostResults))) {
+        term <- gostResults$term_id[i]
+        query <- gostResults$query[i]
+        termName <- gostResults$term_name[i]
+        
+        nodes[[length(nodes) + 1]] <- data.frame(id=c(term),
+            group=c("TERM"), alias=c(termName), stringsAsFactors=FALSE)
+        
+        genes <- res[res$input %in% 
+                    unlist(str_split(gostResults$intersection[i], ",")), 
+                            c("input", "name") ]
+        
+        for (j in seq_len(nrow(genes))) {
+                g <- genes$input[j]
+                geneName <- genes$name[j]
+                print(geneName)
+                if (! g %in% done) {
+                    nodes[[length(nodes) + 1]] <- data.frame(id=c(g),
+                                group=c("GENE"), alias=c(geneName),
+                                stringsAsFactors=FALSE)
+                    done <- c(done, g)
+                }
+                
+                edges[[length(edges) + 1]] <- data.frame(source=c(term),
+                                target=c(g), interaction=c("contains"), 
+                                stringsAsFactors=FALSE)
+        }
+    }
+    
+    ## Create data.frame for nodes and edges by merging all extracted info
+    nodeInfo <- do.call(rbind, nodes)
+    edgeInfo <- do.call(rbind, edges)
+    
+    return(list(nodes=nodeInfo, edges=edgeInfo))
+}

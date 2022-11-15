@@ -1,6 +1,6 @@
 Package: gprofiler2cytoscape
 Type: Package
-Version: 0.0.3
+Version: 0.0.4
 Date: 2021-03-25
 Title: From gprofiler2 to Cytoscape network
 Description: This package enables the transformation of 
@@ -39,4 +39,4 @@ biocViews: BiologicalQuestion,
 VignetteBuilder: knitr
 URL: https://github.com/adeschen/gprofiler2cytoscape, https://adeschen.github.io/gprofiler2cytoscape/
 BugReports: https://github.com/adeschen/gprofiler2cytoscape/issues
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2

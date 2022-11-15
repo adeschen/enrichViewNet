@@ -359,11 +359,11 @@ test_that("extractNodesAndEdgesInfoForCXJSON() must return expected text", {
 
 
 
-### Tests extractNodesAndEdgesInfoForCytoscape() results
+### Tests extractNodesAndEdgesWhenNoIntersection() results
 
-context("extractNodesAndEdgesInfoForCytoscape() results")
+context("extractNodesAndEdgesWhenNoIntersection() results")
 
-test_that("extractNodesAndEdgesInfoForCytoscape() must return expected text", {
+test_that("extractNodesAndEdgesWhenNoIntersection() must return expected text", {
     
     ccDemo <- demoGOST
     
@@ -376,7 +376,7 @@ test_that("extractNodesAndEdgesInfoForCytoscape() must return expected text", {
     ccData <- ccDemo$result[ccDemo$result$source == "GO:CC", ]
     
     
-    result <- gprofiler2cytoscape:::extractNodesAndEdgesInfoForCytoscape(
+    result <- gprofiler2cytoscape:::extractNodesAndEdgesWhenNoIntersection(
         gostResults=ccData, gostObject=ccDemo)
     
     expected <- list()
