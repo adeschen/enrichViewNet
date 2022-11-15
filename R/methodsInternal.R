@@ -47,6 +47,8 @@
 #' @keywords internal
 createCytoscapeNetwork <- function(gostResults, gostObject, title, collection) {
     
+    message("Perparing information for Cytoscape.")
+    
     ## Extract node and edge information to be used to create network
     if (! "intersection" %in% colnames(gostResults)) {
         info <- extractNodesAndEdgesWhenNoIntersection(gostResults=gostResults,
@@ -74,6 +76,8 @@ createCytoscapeNetwork <- function(gostResults, gostObject, title, collection) {
     setNodeWidthMapping(table.column=column, 
         table.column.values=control.points, widths=c(100, 75),
         mapping.type="discrete", style.name="default")
+    
+    message("Done.")
     
     return(TRUE)
 }
@@ -521,6 +525,9 @@ extractNodesAndEdgesWhenNoIntersection <- function(gostResults, gostObject) {
     nodes <- list()
     edges <- list()
     
+    resAll <- gconvert(query=c(gostResults$term_id), 
+                    organism=gostObject$meta$query_metadata$organism)
+    
     ## Create the list of genes and terms that will be included in the network
     for (i in seq_len(nrow(gostResults))) {
         term <- gostResults$term_id[i]
@@ -530,12 +537,13 @@ extractNodesAndEdgesWhenNoIntersection <- function(gostResults, gostObject) {
         nodes[[length(nodes) + 1]] <- data.frame(id=c(term),
             group=c("TERM"), alias=c(termName), stringsAsFactors=FALSE)
         
-        res <- gconvert(query=c(term), 
-                            organism=gostObject$meta$query_metadata$organism)
+        res <- resAll[resAll$input == term, ]
         genes <- gostObject$meta$genes_metadata$query[[query]]$ensgs
         
-        for (g in genes) {
-            if (g %in% res$target) {
+        genesTarget <- genes[genes %in% res$target]
+        
+        if (length(genesTarget) > 0) {
+            for (g in genesTarget) {
                 geneName <- res[res$target == g, c("name")]
                 
                 if (! g %in% done) {
@@ -628,7 +636,7 @@ extractNodesAndEdgesWhenIntersection <- function(gostResults, gostObject) {
         for (j in seq_len(nrow(genes))) {
                 g <- genes$input[j]
                 geneName <- genes$name[j]
-                print(geneName)
+                #print(geneName)
                 if (! g %in% done) {
                     nodes[[length(nodes) + 1]] <- data.frame(id=c(g),
                                 group=c("GENE"), alias=c(geneName),
