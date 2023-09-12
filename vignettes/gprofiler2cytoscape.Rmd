@@ -241,7 +241,8 @@ signRes <-  parentalNapaVsDMSODEG[retained, ]
 ## Only the significant results are retained (significant=TRUE)
 ## The evidence codes are included in the results (evcodes=TRUE)
 ## A custom background included the tested genes is used
-gostres <- gprofiler2::gost(query=list(napa_vs_DMSO=unique(signRes$EnsemblID)),
+gostres <- gprofiler2::gost(
+                query=list(parental_napa_vs_DMSO=unique(signRes$EnsemblID)),
                 organism="hsapiens",
                 correction_method="g_SCS",
                 sources=c("WP"),
@@ -295,16 +296,20 @@ TODO
 
 ```{r runCreateNetwork, echo = TRUE, eval=FALSE}
 ## Load demo gprofiler2 enrichment result
-data(demoGOST)
+data("parentalNapaVsDMSOEnrichment")
 
-## Create network for Gene Ontology - Molecular Function related results
+## Create network for REACTOME significant terms
 ## The 'removeRoot=TRUE' parameter removes the root term from the network
-createNetwork(gostObject=demoGOST, source="GO:MF", removeRoot=FALSE,
-    title="GO Molecular Function Network")
+createNetwork(gostObject=parentalNapaVsDMSOEnrichment, source="REAC", 
+                removeRoot=FALSE, title="Reactome_All", 
+                collection="parental_napa_vs_DMSO")
 ```
 
 <br>
 <br>
+```{r networkInCytoscape, echo = FALSE, fig.align="center", fig.cap="All reactome terms in a gene-term network loaded in Cytoscape.", out.width = '100%'}
+knitr::include_graphics("Cytoscape_with_Reactome_ALL_parental_napa_vs_DMSO.png")
+```
 
 
 

@@ -84,3 +84,314 @@ NULL
 #'
 #'
 NULL
+
+
+#' The result of a differential expression analysis done between 
+#' napabucasin treated and DMSO control parental 
+#' MiaPaCa2 cells. The cells were treated for 2 hour with 0.5 uM napabucasin.
+#' The protocol to generate the RNA-seq is described 
+#' in Froeling F.E.M. et al 2019.
+#' 
+#' The RNA reads, for all conditions, were mapped to transcript annotation 
+#' GENCODE 39 (Frankish A. et al 2019) using STAR software version 2.7.9a 
+#' (Dobin A et al 2013). RSEM (Li B. et al 2011) was used to extract counts 
+#' per gene. Differential gene expression analysis was performed using 
+#' Bioconductor DESeq2 package version 1.36.0 (Love, M.I. et al 2014).
+#' 
+#' The object is a \code{data.frame} with 31856 rows and 4 columns. 
+#' Each row correspond to a tested gene.
+#'
+#' @name parentalNapaVsDMSODEG
+#'
+#' @docType data
+#'
+#' @aliases parentalNapaVsDMSODEG
+#'
+#' @format a \code{data.frame} containing the results of a differential 
+#' expression analysis between napabucasin treated and DMSO control parental 
+#' MiaPaCa2 cells for all 31856 genes tested. The 4 columns are:
+#' \itemize{
+#' \item{EnsemblID} {a \code{character} string representing the unique Ensembl 
+#' identifier for the tested gene}
+#' \item{EnsemblID} {a \code{numeric} representing the expression difference 
+#' (in log2FoldChange) between the napabucasin treatment and the DMSO control 
+#' for the tested gene}
+#' \item{padj} {a \code{numeric} representing the adjusted p-value associated  
+#' to the difference in expression for the tested gene}
+#' \item{GeneName} {a \code{character} string representing the name of 
+#' the tested gene}
+#' }
+#'
+#' @return  a \code{data.frame} containing the results of a differential 
+#' expression analysis between napabucasin treated and DMSO control parental 
+#' MiaPaCa2 cells for all 31856 genes tested. The 4 columns are:
+#' \itemize{
+#' \item{EnsemblID} {a \code{character} string representing the unique Ensembl 
+#' identifier for the tested gene}
+#' \item{log2FoldChange} {a \code{numeric} representing the expression 
+#' difference (in log2FoldChange) between the napabucasin treatment and 
+#' the DMSO control for the tested gene}
+#' \item{padj} {a \code{numeric} representing the adjusted p-value associated  
+#' to the difference in expression for the tested gene}
+#' \item{GeneName} {a \code{character} string representing the name of 
+#' the tested gene}
+#' }
+#'
+#' @seealso
+#' \itemize{
+#'     \item \code{\link{createNetwork}} {for transforming functional 
+#'     enrichment results from gprofiler2 into a Cytoscape network}
+#' }
+#'
+#' @usage data(parentalNapaVsDMSODEG)
+#'
+#' @keywords datasets
+#'
+#' @details
+#' 
+#' The protocol associated to the RNA-seq prepration is avaiable in  
+#' this publication:
+#' 
+#' Froeling F.E.M. et al.Bioactivation of Napabucasin Triggers Reactive Oxygen 
+#' Species–Mediated Cancer Cell Death. Clin Cancer Res 
+#' 1 December 2019; 25 (23): 7162–7174
+#' 
+#' @source 
+#' 
+#' The original RNA-sequencing data is available at the Gene Expression 
+#' Omnibus (GEO) under the accession number GSE135352.
+#' 
+#' @examples
+#'
+#' ## Required library
+#' library(gprofiler2)
+#' 
+#' ## Loading dataset containing the results of a differentially expressed 
+#' ## analysis between 2-hour treatment with 0.5 uM napabucasin and 
+#' ## DMSO vehicle control parental MiaPaCa2 cells
+#' data(parentalNapaVsDMSODEG)
+#' 
+#' allGenes <- unique(parentalNapaVsDMSODEG$EnsemblID)
+#' 
+#' ## Select the significantly differentially expressed genes
+#' selection <- which(abs(parentalNapaVsDMSODEG$log2FoldChange) > 1 & 
+#'                             parentalNapaVsDMSODEG$padj < 0.05)
+#'                             
+#' selectedGenes <- unique(parentalNapaVsDMSODEG$EnsemblID[selection])
+#' 
+#' ## Run an enrichment analysis using WikiPathways dataset
+#' gostres <- gost(query = list(parental_napa_vs_DMSO=selectedGenes),
+#'     organism="hsapiens",
+#'     correction_method = "g_SCS",
+#'     sources=c("WP"), significant=TRUE, evcodes=TRUE,
+#'     custom_bg=allGenes, exclude_iea=TRUE)
+#' 
+#' 
+#'
+NULL
+
+
+
+
+#' The result of a differential expression analysis done between 
+#' napabucasin treated and DMSO control MiaPaCa2 cells stably expressing 
+#' the Rosa26 control vector. The cells were treated for 2 hour 
+#' with 0.5 uM napabucasin.
+#' The protocol to generate the RNA-seq is described 
+#' in Froeling F.E.M. et al 2019.
+#' 
+#' The RNA reads, for all conditions, were mapped to transcript annotation 
+#' GENCODE 39 (Frankish A. et al 2019) using STAR software version 2.7.9a 
+#' (Dobin A et al 2013). RSEM (Li B. et al 2011) was used to extract counts 
+#' per gene. Differential gene expression analysis was performed using 
+#' Bioconductor DESeq2 package version 1.36.0 (Love, M.I. et al 2014).
+#' 
+#' The object is a \code{data.frame} with 31856 rows and 4 columns. 
+#' Each row correspond to a tested gene.
+#'
+#' @name rosaNapaVsDMSODEG
+#'
+#' @docType data
+#'
+#' @aliases rosaNapaVsDMSODEG
+#'
+#' @format a \code{data.frame} containing the results of a differential 
+#' expression analysis between napabucasin treated and DMSO control MiaPaCa2 
+#' cells stably expressing the Rosa26 control vector for all 31856 genes 
+#' tested. The 4 columns are:
+#' \itemize{
+#' \item{EnsemblID} {a \code{character} string representing the unique Ensembl 
+#' identifier for the tested gene}
+#' \item{EnsemblID} {a \code{numeric} representing the expression difference 
+#' (in log2FoldChange) between the napabucasin treatment and the DMSO control 
+#' for the tested gene}
+#' \item{padj} {a \code{numeric} representing the adjusted p-value associated  
+#' to the difference in expression for the tested gene}
+#' \item{GeneName} {a \code{character} string representing the name of 
+#' the tested gene}
+#' }
+#'
+#' @return  a \code{data.frame} containing the results of a differential 
+#' expression analysis between napabucasin treated and DMSO control MiaPaCa2 
+#' cells stably expressing the Rosa26 control vector for all 31856 genes 
+#' tested. The 4 columns are:
+#' \itemize{
+#' \item{EnsemblID} {a \code{character} string representing the unique Ensembl 
+#' identifier for the tested gene}
+#' \item{log2FoldChange} {a \code{numeric} representing the expression 
+#' difference (in log2FoldChange) between the napabucasin treatment and 
+#' the DMSO control for the tested gene}
+#' \item{padj} {a \code{numeric} representing the adjusted p-value associated  
+#' to the difference in expression for the tested gene}
+#' \item{GeneName} {a \code{character} string representing the name of 
+#' the tested gene}
+#' }
+#'
+#' @seealso
+#' \itemize{
+#'     \item \code{\link{createNetwork}} {for transforming functional 
+#'     enrichment results from gprofiler2 into a Cytoscape network}
+#' }
+#'
+#' @usage data(rosaNapaVsDMSODEG)
+#'
+#' @keywords datasets
+#'
+#' @details
+#' 
+#' The protocol associated to the RNA-seq prepration is avaiable in  
+#' this publication:
+#' 
+#' Froeling F.E.M. et al.Bioactivation of Napabucasin Triggers Reactive Oxygen 
+#' Species–Mediated Cancer Cell Death. Clin Cancer Res 
+#' 1 December 2019; 25 (23): 7162–7174
+#' 
+#' @source 
+#' 
+#' The original RNA-sequencing data is available at the Gene Expression 
+#' Omnibus (GEO) under the accession number GSE135352.
+#' 
+#' @examples
+#'
+#' ## Required library
+#' library(gprofiler2)
+#' 
+#' ## Loading dataset containing the results of a differentially expressed 
+#' ## analysis between 2-hour treatment with 0.5 uM napabucasin and 
+#' ## DMSO vehicle control MiaPaCa2 cells stably expressing the 
+#' ## Rosa26 control vector
+#' data(rosaNapaVsDMSODEG)
+#' 
+#' allGenes <- unique(rosaNapaVsDMSODEG$EnsemblID)
+#' 
+#' ## Select the significantly differentially expressed genes
+#' selection <- which(abs(rosaNapaVsDMSODEG$log2FoldChange) > 1 & 
+#'                             rosaNapaVsDMSODEG$padj < 0.05)
+#'                             
+#' selectedGenes <- unique(rosaNapaVsDMSODEG$EnsemblID[selection])
+#' 
+#' ## Run an enrichment analysis using Transfac dataset (transcription factor)
+#' gostres <- gost(query = list(rosa_napa_vs_DMSO=selectedGenes),
+#'     organism="hsapiens",
+#'     correction_method = "g_SCS",
+#'     sources=c("TF"), significant=TRUE, evcodes=TRUE,
+#'     custom_bg=allGenes, exclude_iea=TRUE)
+#' 
+#' 
+#'
+NULL
+
+
+#' The result of an enrichment analysis has been done using the significantly 
+#' differentially expressed genes between napabucasin treated and DMSO 
+#' control parental MiaPaCa2 cells, as published in Froeling F.E.M. et al 2019.
+#' The cells were treated for 2 hour with 0.5 uM napabucasin.  
+#' 
+#' The enrichment analysis was done with gprofile2 package 
+#' (Kolberg L et al 2020) with database version 'e109_eg56_p17_1d3191d' and 
+#' g:SCS multiple testing correction method applying significance 
+#' threshold of 0.05 (Raudvere U et al 2019).
+#' 
+#' The object is a named \code{list} with 2 entries. The 'result' entry 
+#' contains a \code{data.frame} with the enrichment analysis results and 
+#' the 'meta' entry contains metadata infomration.
+#' 
+#' @name parentalNapaVsDMSOEnrichment
+#'
+#' @docType data
+#'
+#' @aliases parentalNapaVsDMSOEnrichment
+#'
+#' @format a \code{data.frame} containing the results of a differential 
+#' expression analysis between napabucasin treated and DMSO control parental 
+#' MiaPaCa2 cells for all 24184 genes tested. The 4 columns are:
+#' \itemize{
+#' \item{EnsemblID} {a \code{character} string representing the unique Ensembl 
+#' identifier for the tested gene}
+#' \item{EnsemblID} {a \code{numeric} representing the expression difference 
+#' (in log2FoldChange) between the napabucasin treatment and the DMSO control 
+#' for the tested gene}
+#' \item{padj} {a \code{numeric} representing the adjusted p-value associated  
+#' to the difference in expression for the tested gene}
+#' \item{GeneName} {a \code{character} string representing the name of 
+#' the tested gene}
+#' }
+#'
+#' @return  a \code{data.frame} containing the results of a differential 
+#' expression analysis between napabucasin treated and DMSO control parental 
+#' MiaPaCa2 cells for all 24184 genes tested. The 4 columns are:
+#' \itemize{
+#' \item{EnsemblID} {a \code{character} string representing the unique Ensembl 
+#' identifier for the tested gene}
+#' \item{log2FoldChange} {a \code{numeric} representing the expression 
+#' difference (in log2FoldChange) between the napabucasin treatment and 
+#' the DMSO control for the tested gene}
+#' \item{padj} {a \code{numeric} representing the adjusted p-value associated  
+#' to the difference in expression for the tested gene}
+#' \item{GeneName} {a \code{character} string representing the name of 
+#' the tested gene}
+#' }
+#'
+#' @seealso
+#' \itemize{
+#'     \item \code{\link{createNetwork}} {for transforming functional 
+#'     enrichment results from gprofiler2 into a Cytoscape network}
+#' }
+#'
+#' @usage data(parentalNapaVsDMSOEnrichment)
+#'
+#' @keywords datasets
+#'
+#' @details
+#' 
+#' The dataset used for the enrichment analysis is 
+#' associated to this publication:
+#' 
+#' Froeling F.E.M. et al.Bioactivation of Napabucasin Triggers Reactive Oxygen 
+#' Species–Mediated Cancer Cell Death. Clin Cancer Res 
+#' 1 December 2019; 25 (23): 7162–7174
+#' 
+#' The enrichment analysis has been done with gprofile2 package 
+#' (Kolberg L et al 2020) with database version 'e109_eg56_p17_1d3191d' and 
+#' g:SCS multiple testing correction method applying significance 
+#' threshold of 0.05 (Raudvere U et al 2019).
+#' 
+#' @source 
+#' 
+#' The original RNA-sequencing data is available at the Gene Expression 
+#' Omnibus (GEO) under the accession number GSE135352.
+#' 
+#' @examples
+#'
+#' ## Required library
+#' library(gprofiler2)
+#' 
+#' ## Loading dataset containing the results of a differentially expressed 
+#' ## analysis between 2-hour treatment with 0.5 uM napabucasin and 
+#' ## DMSO vehicle control parental MiaPaCa2 cells
+#' data(parentalNapaVsDMSOEnrichment)
+#' 
+#' ## TODO
+#' 
+#'
+NULL
