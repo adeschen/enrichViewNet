@@ -6,8 +6,8 @@
 <meta name="generator" content="pandoc">
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE">
 <meta name="author" content="Astrid Deschênes and Pascal Belleau">
-<meta name="date" content="2023-05-19">
-<title>From gprofiler2 to Cytoscape network</title>
+<meta name="date" content="2023-09-12">
+<title>From gprofiler2 to Cytoscape networks</title>
 <script src="gprofiler2cytoscape_files/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="gprofiler2cytoscape_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
 <script src="gprofiler2cytoscape_files/bootstrap-3.3.5/js/bootstrap.min.js"></script><script src="gprofiler2cytoscape_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script><script src="gprofiler2cytoscape_files/bootstrap-3.3.5/shim/respond.min.js"></script><style>h1 {font-size: 34px;}
@@ -18,7 +18,7 @@
        h5 {font-size: 16px;}
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
-</style>
+       </style>
 <script src="gprofiler2cytoscape_files/navigation-1.1/tabsets.js"></script><style type="text/css">
   code{white-space: pre-wrap;}
   span.smallcaps{font-variant: small-caps;}
@@ -241,9 +241,9 @@ function toggle_visibility(id1) {
 
 
 
-<h1 class="title toc-ignore">From gprofiler2 to Cytoscape network</h1>
+<h1 class="title toc-ignore">From gprofiler2 to Cytoscape networks</h1>
 <p class="author-name">Astrid Deschênes and Pascal Belleau</p>
-<h4 class="date">19 May 2023</h4>
+<h4 class="date">12 September 2023</h4>
 
 </div>
 
@@ -254,21 +254,24 @@ function toggle_visibility(id1) {
 <li><a href="#citing" id="toc-citing"><span class="toc-section-number">2</span> Citing</a></li>
 <li><a href="#introduction" id="toc-introduction"><span class="toc-section-number">3</span> Introduction</a></li>
 <li><a href="#installation" id="toc-installation"><span class="toc-section-number">4</span> Installation</a></li>
+<li><a href="#general-workflow" id="toc-general-workflow"><span class="toc-section-number">5</span> General workflow</a></li>
 <li>
-<a href="#transforming-gprofiler2-enrichment-results-to-cytoscape-network" id="toc-transforming-gprofiler2-enrichment-results-to-cytoscape-network"><span class="toc-section-number">5</span> Transforming gprofiler2 enrichment results to Cytoscape network</a>
+<a href="#transforming-enrichment-results-into-a-cytoscape-gene-term-network" id="toc-transforming-enrichment-results-into-a-cytoscape-gene-term-network"><span class="toc-section-number">6</span> Transforming enrichment results into a Cytoscape gene-term network</a>
 <ul>
-<li><a href="#run-an-enrichment-analysis" id="toc-run-an-enrichment-analysis"><span class="toc-section-number">5.1</span> Run an enrichment analysis</a></li>
-<li><a href="#start-cytoscape" id="toc-start-cytoscape"><span class="toc-section-number">5.2</span> Start Cytoscape</a></li>
-<li><a href="#create-cytoscape-network" id="toc-create-cytoscape-network"><span class="toc-section-number">5.3</span> Create Cytoscape network</a></li>
+<li><a href="#run-an-enrichment-analysis" id="toc-run-an-enrichment-analysis"><span class="toc-section-number">6.1</span> Run an enrichment analysis</a></li>
+<li><a href="#start-cytoscape" id="toc-start-cytoscape"><span class="toc-section-number">6.2</span> Start Cytoscape</a></li>
+<li><a href="#create-a-cytoscape-network" id="toc-create-a-cytoscape-network"><span class="toc-section-number">6.3</span> Create a Cytoscape network</a></li>
 </ul>
 </li>
-<li><a href="#session-info" id="toc-session-info"><span class="toc-section-number">6</span> Session info</a></li>
+<li><a href="#transforming-gprofiler2-enrichment-results-into-a-enrichment-map" id="toc-transforming-gprofiler2-enrichment-results-into-a-enrichment-map"><span class="toc-section-number">7</span> Transforming gprofiler2 enrichment results into a enrichment map</a></li>
+<li><a href="#acknowledgments" id="toc-acknowledgments"><span class="toc-section-number">8</span> Acknowledgments</a></li>
+<li><a href="#session-info" id="toc-session-info"><span class="toc-section-number">9</span> Session info</a></li>
 <li><a href="#references" id="toc-references">References</a></li>
 </ul>
 </div>
 
 <p><br><strong>Package</strong>: <em>gprofiler2cytoscape</em><br><strong>Authors</strong>: Astrid Deschênes [aut, cre] (<a href="https://orcid.org/0000-0001-7846-6749" class="external-link uri">https://orcid.org/0000-0001-7846-6749</a>),
-Pascal Belleau [aut] (<a href="https://orcid.org/0000-0002-0802-1071" class="external-link uri">https://orcid.org/0000-0002-0802-1071</a>)<br><strong>Version</strong>: 0.0.4<br><strong>Compiled date</strong>: 2023-05-19<br><strong>License</strong>: Artistic-2.0<br></p>
+Pascal Belleau [aut] (<a href="https://orcid.org/0000-0002-0802-1071" class="external-link uri">https://orcid.org/0000-0002-0802-1071</a>)<br><strong>Version</strong>: 0.0.4<br><strong>Compiled date</strong>: 2023-09-12<br><strong>License</strong>: Artistic-2.0<br></p>
 <div class="section level2" number="1">
 <h2 id="licensing">
 <span class="header-section-number">1</span> Licensing<a class="anchor" aria-label="anchor" href="#licensing"></a>
@@ -296,41 +299,47 @@ gprofiler2 to Cytoscape network.
 <h2 id="introduction">
 <span class="header-section-number">3</span> Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>Biology studies that use high-throughput technologies, such as RNA sequencing
-or microarray platform, usually end up generating large amount of data such
-as gene lists. For instance, RNA sequencing is frequently uses to discover
-genes that have differential expression between two biological states
-(such as healthy versus diseased). Those studies can make use of statistical
-tools that enable positioning those novel gene lists against previous
-knowledge.</p>
-<p>Functional enrichment analysis tools, such as <em>Enrichr</em> <span class="citation">(<a href="#ref-Kuleshov2016" role="doc-biblioref">Kuleshov et al. 2016</a>)</span> and
-<em>DAVID</em> <span class="citation">(<a href="#ref-Dennis2003" role="doc-biblioref">Dennis et al. 2003</a>)</span>, specialize in positioning novel findings against
-well curated data sources of biological processes and pathways. Most
-specifically, those tools identify functionally coherent gene sets that are
-statistically over- (or under-) represented in a gene list. The
-traditional output of enrichment analysis tool is a table containing the
-significant gene sets with their associated statistics. While those results
-are extremely useful, their interpretation is not always easy. In that
-respect, visual representation of the results as network could be handy.</p>
-<p>Biological network models are visual representation of various biological
+<p>High-throughput technologies are routinely used in basic and applied
+research and are key drivers of scientific discovery. A major challenge
+in using these experimental approaches is the analysis of the large amount
+of data generated. These include lists of proteins or genes generated by
+mass spectrometry, single-cell RNA sequencing and/or microarray analysis,
+respectively. There is thus a need for robust bioinformatic and statistical
+tools that can analyze these large datasets and display the data in the form
+of networks that illustrate the biological and conceptual links with findings
+in the literature. This gap has been partially addressed by several
+bioinformatic tools that perform enrichment analysis of the data and/or
+present it in the form of networks.</p>
+<p>Functional enrichment analysis tools, such as <em>Enrichr</em> <span class="citation">(<a href="#ref-Kuleshov2016">Kuleshov et al. 2016</a>)</span> and
+<em>DAVID</em> <span class="citation">(<a href="#ref-Dennis2003">Dennis et al. 2003</a>)</span>, are specialized in positioning novel findings against
+well curated data sources of biological processes and pathways.
+Most specifically, those tools identify functionally coherent gene sets that
+are statistically over- (or under-) represented in a gene list.
+The traditional output of an enrichment analysis tool is a table containing
+the significant gene sets with their associated statistics. While those
+results are extremely useful, their interpretation is challenging. The visual
+representation of these results as a network can greatly facilitate the
+interpretation of the data.</p>
+<p>Biological network models are visual representations of various biological
 interacting elements which are based on mathematical graphs. In those
 networks, the biological elements are generally represented by nodes while
 the interactions and relationships are represented by edges. One of the
-wildly used network tool in the quantitative biology community is the
-open source software <em>Cytoscape</em>. In addition of biological data
-visualization and network
+widely used network tools in the quantitative biology community is the
+open source software <em>Cytoscape</em> <span class="citation">(<a href="#ref-PaulShannon2003">Shannon et al. 2003</a>)</span>. In addition of
+biological data visualization and network
 analysis, <em>Cytoscape</em> can be expended through the use of
 specialized plug-ins such as <em>BiNGO</em> that calculates over-represented GO terms
-in a network <span class="citation">(<a href="#ref-Maere2005" role="doc-biblioref">Maere, Heymans, and Kuiper 2005</a>)</span> or <em>CentiScaPe</em> that identifies relevant network
-nodes <span class="citation">(<a href="#ref-Scardoni2009" role="doc-biblioref">Scardoni, Petterlini, and Laudanna 2009</a>)</span>.</p>
-<p>The <em>g:Profiler</em> enrichment analysis tool <span class="citation">(<a href="#ref-Raudvere2019" role="doc-biblioref">Raudvere et al. 2019</a>)</span> is web based as
+in a network <span class="citation">(<a href="#ref-Maere2005">Maere, Heymans, and Kuiper 2005</a>)</span> or <em>CentiScaPe</em> that identifies relevant network
+nodes <span class="citation">(<a href="#ref-Scardoni2009">Scardoni, Petterlini, and Laudanna 2009</a>)</span>.</p>
+<p>The <em>g:Profiler</em> enrichment analysis tool <span class="citation">(<a href="#ref-Raudvere2019">Raudvere et al. 2019</a>)</span> is web based and as
 the particularity of being accompanied by the CRAN package
-<em>gprofiler2</em> <span class="citation">(<a href="#ref-Kolberg2020" role="doc-biblioref">Kolberg et al. 2020</a>)</span>. The <em>gprofiler2</em> package enables researchers to
-incorporate functional enrichment analysis into automated analysis pipelines
-written in R. This greatly facilitates research reproducibility.</p>
+<em>gprofiler2</em> <span class="citation">(<a href="#ref-Kolberg2020">Kolberg et al. 2020</a>)</span>. The <em>gprofiler2</em> package gives the opportunity to
+researchers to incorporate functional enrichment analysis into automated
+analysis pipelines written in R. This greatly facilitates research
+reproducibility.</p>
 <p>The <strong><em>gprofiler2cytoscape</em></strong> package enables the
 visualization of enrichment results generated by <em>gprofiler2</em> as
-customisable <em>Cytoscape</em> network <span class="citation">(<a href="#ref-PaulShannon2003" role="doc-biblioref">Shannon et al. 2003</a>)</span>. In the biological
+customisable <em>Cytoscape</em> network <span class="citation">(<a href="#ref-PaulShannon2003">Shannon et al. 2003</a>)</span>. In the biological
 networks generated by <em><a href="https://github.com/adeschen/gprofiler2cytoscape" class="external-link">gprofiler2cytoscape</a></em>, both
 gene datasets (GO terms/pathways/protein complexes) and genes associated
 to the datasets are represented as nodes. While the edges connect each gene
@@ -338,8 +347,8 @@ to its dataset(s). Only genes present in the query used for the
 enrichment analysis are shown.</p>
 <div class="figure" style="text-align: left">
 <span style="display:block;" id="fig:graphDemo01"></span>
-<img src="demo01.jpeg" alt="Demo a biologocial network where GO terms and genes are presented as nodes while edges connect each gene to its dataset(s)." width="90%"><p class="caption">
-Figure 1: <span class="caption-title">Demo a biologocial network where GO terms and genes are presented as nodes while edges connect each gene to its dataset(s)</span><br></p>
+<img src="demo01.jpeg" alt="A network where significant GO terms and genes are presented as nodes while edges connect each gene to its associated term(s)." width="90%"><p class="caption">
+Figure 1: <span class="caption-title">A network where significant GO terms and genes are presented as nodes while edges connect each gene to its associated term(s)</span><br></p>
 </div>
 <p>The <strong><em>gprofiler2cytoscape</em></strong> package
 offers the option to generate a network for only a portion of the
@@ -348,6 +357,19 @@ specific list of terms.</p>
 <p>Once the network is created, the user can personalize the visual attributes
 and integrate external information such as expression profiles, phenotypes
 and other molecular states. The user can also perform network analysis.</p>
+<p>In addition, the <strong><em>gprofiler2cytoscape</em></strong> package also offers the option to<br>
+create enrichment maps from functional enrichment results.
+The enrichment maps have been introduced in the Bioconductor
+<strong><em>enrichplot</em></strong> package <span class="citation">(<a href="#ref-Yu2022">Yu 2022</a>)</span>.
+Enrichment maps enable the visualization of enriched terms into a network
+with edges connecting overlapping genes. Thus, enriched terms with overlapping
+genes cluster together. This type of graphs facilitate the
+identification of functional modules.</p>
+<div class="figure" style="text-align: left">
+<span style="display:block;" id="fig:graphDemo02"></span>
+<img src="demo_KEGG_emap_v01.jpeg" alt="An enrichment map using Kegg terms." width="90%"><p class="caption">
+Figure 2: <span class="caption-title">An enrichment map using Kegg terms</span><br></p>
+</div>
 <p><br><br></p>
 </div>
 <div class="section level2" number="4">
@@ -371,16 +393,39 @@ releases is posted on the <a href="https://github.com/adeschen/gprofiler2cytosca
 <p><br><br></p>
 </div>
 <div class="section level2" number="5">
-<h2 id="transforming-gprofiler2-enrichment-results-to-cytoscape-network">
-<span class="header-section-number">5</span> Transforming gprofiler2 enrichment results to Cytoscape network<a class="anchor" aria-label="anchor" href="#transforming-gprofiler2-enrichment-results-to-cytoscape-network"></a>
+<h2 id="general-workflow">
+<span class="header-section-number">5</span> General workflow<a class="anchor" aria-label="anchor" href="#general-workflow"></a>
 </h2>
+<p>The following workflow gives an overview of the capabilities of
+<em><a href="https://github.com/adeschen/gprofiler2cytoscape" class="external-link">gprofiler2cytoscape</a></em>:</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:graphWorkflow"></span>
+<img src="Figure_gprofiler2cytoscape_workflow_v01.png" alt="The gprofiler2cytoscape workflow" width="100%"><p class="caption">
+Figure 3: <span class="caption-title">The gprofiler2cytoscape workflow</span><br></p>
+</div>
+<p>The principal input of <strong><em>gprofiler2cytoscape</em></strong> is an functional enrichment
+result in a format identical to the one generated by the CRAN
+<em>gprofiler2</em> package.</p>
+<p>From an enrichment result, the <strong><em>gprofiler2cytoscape</em></strong> offers two options:</p>
+<ul>
+<li>generate a gene-term network that can be loaded in <em>Cytoscape</em> software</li>
+<li>generate a enrichment map</li>
+</ul>
+<p>For the gene-term network, the installation of <em>Cytoscape</em> software is
+highly recommended.</p>
+<p><br><br></p>
+</div>
+<div class="section level2" number="6">
+<h2 id="transforming-enrichment-results-into-a-cytoscape-gene-term-network">
+<span class="header-section-number">6</span> Transforming enrichment results into a Cytoscape gene-term network<a class="anchor" aria-label="anchor" href="#transforming-enrichment-results-into-a-cytoscape-gene-term-network"></a>
+</h2>
+<p>The following workflow gives an overview of the steps associated to the
+creation of an gene-term network loadable in <em>Cytoscape</em>.</p>
 <div class="figure" style="text-align: left">
 <span style="display:block;" id="fig:graphListToGraph01"></span>
 <img src="FromListToGraph_v01.jpg" alt="From an enrichment list to a Cytoscape network" width="100%"><p class="caption">
-Figure 2: <span class="caption-title">From an enrichment list to a Cytoscape network</span><br></p>
+Figure 4: <span class="caption-title">From an enrichment list to a Cytoscape network</span><br></p>
 </div>
-<p>The following workflow gives an overview of the capabilities of
-<em><a href="https://github.com/adeschen/gprofiler2cytoscape" class="external-link">gprofiler2cytoscape</a></em></p>
 <p>The key steps for the workflow are:</p>
 <div class="horizontal-scroll"><table class="table">
 <colgroup>
@@ -393,31 +438,76 @@ Figure 2: <span class="caption-title">From an enrichment list to a Cytoscape net
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td>Run an Enrichment analysis</td>
+<td>Run an enrichment analysis</td>
 <td><code><a href="https://rdrr.io/pkg/gprofiler2/man/gost.html" class="external-link">gprofiler2::gost()</a></code></td>
 </tr>
 <tr class="even">
-<td>Start Cytoscape</td>
+<td>Start <em>Cytoscape</em>
+</td>
 <td>outside R</td>
 </tr>
 <tr class="odd">
-<td>Create Cytoscape network</td>
+<td>Create a Cytoscape network</td>
 <td><code><a href="../reference/createNetwork.html">createNetwork()</a></code></td>
 </tr>
 </tbody>
 </table></div>
 <p>The <code>package::function()</code> notation is used for functions from other packages.</p>
-<div class="section level3" number="5.1">
+<div class="section level3" number="6.1">
 <h3 id="run-an-enrichment-analysis">
-<span class="header-section-number">5.1</span> Run an enrichment analysis<a class="anchor" aria-label="anchor" href="#run-an-enrichment-analysis"></a>
+<span class="header-section-number">6.1</span> Run an enrichment analysis<a class="anchor" aria-label="anchor" href="#run-an-enrichment-analysis"></a>
 </h3>
 <p>The first step consists in running an enrichment analysis with
 <em><a href="https://CRAN.R-project.org/package=gprofiler2" class="external-link">gprofiler2</a></em> package. The output of the <em>gprofiler2::gost()</em>
 is a <em>list</em> and should be saved.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## Required library</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">gprofiler2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## The dataset of differentially expressed genes done between </span></span>
+<span><span class="co">## napabucasin treated and DMSO control parental (Froeling et al 2019)</span></span>
+<span><span class="co">## All genes testd are present</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"parentalNapaVsDMSODEG"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Retain significant results </span></span>
+<span><span class="co">## (absolute fold change superior to 1 and adjusted p-value inferior to 0.05)</span></span>
+<span><span class="va">retained</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">parentalNapaVsDMSODEG</span><span class="op">$</span><span class="va">log2FoldChange</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1</span> <span class="op">&amp;</span> </span>
+<span>                      <span class="va">parentalNapaVsDMSODEG</span><span class="op">$</span><span class="va">padj</span> <span class="op">&lt;</span> <span class="fl">0.05</span><span class="op">)</span></span>
+<span><span class="va">signRes</span> <span class="op">&lt;-</span>  <span class="va">parentalNapaVsDMSODEG</span><span class="op">[</span><span class="va">retained</span>, <span class="op">]</span></span>
+<span></span>
+<span><span class="co">## Run one functional enrichment analysis using all significant genes</span></span>
+<span><span class="co">## The species is homo sapiens ("hsapiens")</span></span>
+<span><span class="co">## The g:SCS multiple testing correction method (Raudvere U et al 2019)</span></span>
+<span><span class="co">## The WikiPathways database is used</span></span>
+<span><span class="co">## Only the significant results are retained (significant=TRUE)</span></span>
+<span><span class="co">## The evidence codes are included in the results (evcodes=TRUE)</span></span>
+<span><span class="co">## A custom background included the tested genes is used</span></span>
+<span><span class="va">gostres</span> <span class="op">&lt;-</span> <span class="fu">gprofiler2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/gprofiler2/man/gost.html" class="external-link">gost</a></span><span class="op">(</span></span>
+<span>                query<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>parental_napa_vs_DMSO<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">signRes</span><span class="op">$</span><span class="va">EnsemblID</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                organism<span class="op">=</span><span class="st">"hsapiens"</span>,</span>
+<span>                correction_method<span class="op">=</span><span class="st">"g_SCS"</span>,</span>
+<span>                sources<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"WP"</span><span class="op">)</span>,</span>
+<span>                significant<span class="op">=</span><span class="cn">TRUE</span>,</span>
+<span>                evcodes<span class="op">=</span><span class="cn">TRUE</span>,</span>
+<span>                custom_bg<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">parentalNapaVsDMSODEG</span><span class="op">$</span><span class="va">EnsemblID</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>The gost() function returns an named list of 2 entries:
+* The <strong>result</strong> entry contains the enrichment results.
+* The <strong>meta</strong> entry contains the metadata information.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## The 'gostres' object is a list of 2 entries</span></span>
+<span><span class="co">## The 'result' entry contains the enrichment results</span></span>
+<span><span class="co">## The 'meta' entry contains the metadata information</span></span>
+<span></span>
+<span><span class="co">## Some columns of interest in the results</span></span>
+<span><span class="va">gostres</span><span class="op">$</span><span class="va">result</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"query"</span>, <span class="st">"p_value"</span>, <span class="st">"term_size"</span>, </span>
+<span>                    <span class="st">"query_size"</span>, <span class="st">"intersection_size"</span>, <span class="st">"term_id"</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co">## The term names can be longer than the one shown</span></span>
+<span><span class="va">gostres</span><span class="op">$</span><span class="va">result</span><span class="op">[</span><span class="fl">19</span><span class="op">:</span><span class="fl">22</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"term_id"</span>, <span class="st">"source"</span>, <span class="st">"term_name"</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
 </div>
-<div class="section level3" number="5.2">
+<div class="section level3" number="6.2">
 <h3 id="start-cytoscape">
-<span class="header-section-number">5.2</span> Start Cytoscape<a class="anchor" aria-label="anchor" href="#start-cytoscape"></a>
+<span class="header-section-number">6.2</span> Start Cytoscape<a class="anchor" aria-label="anchor" href="#start-cytoscape"></a>
 </h3>
 <p><a href="https://cytoscape.org/" class="external-link">Cytoscape</a> is an open source software for
 visualizing networks. It enables network integration with any type of attribute
@@ -426,7 +516,7 @@ is available at the <a href="https://cytoscape.org/" class="external-link">Cytos
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:cytoscapeLogo01"></span>
 <img src="cy3sticker.png" alt="Cytoscape software logo." width="100%"><p class="caption">
-Figure 3: <span class="caption-title">Cytoscape software logo</span><br></p>
+Figure 5: <span class="caption-title">Cytoscape software logo</span><br></p>
 </div>
 <p>The Cytoscape network generated by
 <em><a href="https://github.com/adeschen/gprofiler2cytoscape" class="external-link">gprofiler2cytoscape</a></em>
@@ -436,31 +526,50 @@ software when the application is running.</p>
 can then be loaded manually into the <a href="https://cytoscape.org/" class="external-link">Cytoscape</a>
 software.</p>
 </div>
-<div class="section level3" number="5.3">
-<h3 id="create-cytoscape-network">
-<span class="header-section-number">5.3</span> Create Cytoscape network<a class="anchor" aria-label="anchor" href="#create-cytoscape-network"></a>
+<div class="section level3" number="6.3">
+<h3 id="create-a-cytoscape-network">
+<span class="header-section-number">6.3</span> Create a Cytoscape network<a class="anchor" aria-label="anchor" href="#create-a-cytoscape-network"></a>
 </h3>
 <p>TODO</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Load demo gprofiler2 enrichment result</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">demoGOST</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"parentalNapaVsDMSOEnrichment"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">## Create network for Gene Ontology - Molecular Function related results</span></span>
+<span><span class="co">## Create network for REACTOME significant terms</span></span>
 <span><span class="co">## The 'removeRoot=TRUE' parameter removes the root term from the network</span></span>
-<span><span class="fu"><a href="../reference/createNetwork.html">createNetwork</a></span><span class="op">(</span>gostObject<span class="op">=</span><span class="va">demoGOST</span>, source<span class="op">=</span><span class="st">"GO:MF"</span>, removeRoot<span class="op">=</span><span class="cn">FALSE</span>,</span>
-<span>    title<span class="op">=</span><span class="st">"GO Molecular Function Network"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/createNetwork.html">createNetwork</a></span><span class="op">(</span>gostObject<span class="op">=</span><span class="va">parentalNapaVsDMSOEnrichment</span>, source<span class="op">=</span><span class="st">"REAC"</span>, </span>
+<span>                removeRoot<span class="op">=</span><span class="cn">FALSE</span>, title<span class="op">=</span><span class="st">"Reactome_All"</span>, </span>
+<span>                collection<span class="op">=</span><span class="st">"parental_napa_vs_DMSO"</span><span class="op">)</span></span></code></pre></div>
+<br><br><div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:networkInCytoscape"></span>
+<img src="Cytoscape_with_Reactome_ALL_parental_napa_vs_DMSO.png" alt="All reactome terms in a gene-term network loaded in Cytoscape." width="100%"><p class="caption">
+Figure 6: <span class="caption-title">All reactome terms in a gene-term network loaded in Cytoscape</span><br></p>
+</div>
+</div>
+</div>
+<div class="section level2" number="7">
+<h2 id="transforming-gprofiler2-enrichment-results-into-a-enrichment-map">
+<span class="header-section-number">7</span> Transforming gprofiler2 enrichment results into a enrichment map<a class="anchor" aria-label="anchor" href="#transforming-gprofiler2-enrichment-results-into-a-enrichment-map"></a>
+</h2>
+<p>TODO</p>
 <p><br><br></p>
 </div>
+<div class="section level2" number="8">
+<h2 id="acknowledgments">
+<span class="header-section-number">8</span> Acknowledgments<a class="anchor" aria-label="anchor" href="#acknowledgments"></a>
+</h2>
+<p>TODO</p>
+<p><br><br></p>
 </div>
-<div class="section level2" number="6">
+<div class="section level2" number="9">
 <h2 id="session-info">
-<span class="header-section-number">6</span> Session info<a class="anchor" aria-label="anchor" href="#session-info"></a>
+<span class="header-section-number">9</span> Session info<a class="anchor" aria-label="anchor" href="#session-info"></a>
 </h2>
 <p>Here is the output of sessionInfo() on the system on which this document
 was compiled:</p>
-<pre><code><span><span class="co">## R version 4.3.0 (2023-04-21)</span></span>
+<pre><code><span><span class="co">## R version 4.3.1 (2023-06-16)</span></span>
 <span><span class="co">## Platform: x86_64-pc-linux-gnu (64-bit)</span></span>
-<span><span class="co">## Running under: Ubuntu 22.04.2 LTS</span></span>
+<span><span class="co">## Running under: Ubuntu 22.04.3 LTS</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Matrix products: default</span></span>
 <span><span class="co">## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 </span></span>
@@ -481,35 +590,34 @@ was compiled:</p>
 <span><span class="co">## [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">## [1] gprofiler2_0.2.1          gprofiler2cytoscape_0.0.4</span></span>
-<span><span class="co">## [3] knitr_1.42                BiocStyle_2.29.0         </span></span>
+<span><span class="co">## [1] gprofiler2_0.2.2          gprofiler2cytoscape_0.0.4</span></span>
+<span><span class="co">## [3] knitr_1.44                BiocStyle_2.29.1         </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
-<span><span class="co">##  [1] gtable_0.3.3        xfun_0.39           bslib_0.4.2        </span></span>
-<span><span class="co">##  [4] ggplot2_3.4.2       htmlwidgets_1.6.2   caTools_1.18.2     </span></span>
-<span><span class="co">##  [7] vctrs_0.6.2         tools_4.3.0         bitops_1.0-7       </span></span>
-<span><span class="co">## [10] generics_0.1.3      stats4_4.3.0        base64url_1.4      </span></span>
-<span><span class="co">## [13] tibble_3.2.1        fansi_1.0.4         highr_0.10         </span></span>
-<span><span class="co">## [16] pkgconfig_2.0.3     KernSmooth_2.23-21  data.table_1.14.8  </span></span>
-<span><span class="co">## [19] RColorBrewer_1.1-3  RCy3_2.21.0         uuid_1.1-0         </span></span>
-<span><span class="co">## [22] graph_1.79.0        lifecycle_1.0.3     compiler_4.3.0     </span></span>
-<span><span class="co">## [25] stringr_1.5.0       gplots_3.1.3        munsell_0.5.0      </span></span>
-<span><span class="co">## [28] repr_1.1.6          uchardet_1.1.1      htmltools_0.5.5    </span></span>
-<span><span class="co">## [31] sass_0.4.6          RCurl_1.98-1.12     yaml_2.3.7         </span></span>
-<span><span class="co">## [34] lazyeval_0.2.2      plotly_4.10.1       tidyr_1.3.0        </span></span>
-<span><span class="co">## [37] pillar_1.9.0        crayon_1.5.2        jquerylib_0.1.4    </span></span>
-<span><span class="co">## [40] cachem_1.0.8        gtools_3.9.4        tidyselect_1.2.0   </span></span>
-<span><span class="co">## [43] digest_0.6.31       stringi_1.7.12      purrr_1.0.1        </span></span>
-<span><span class="co">## [46] dplyr_1.1.2         bookdown_0.34       RJSONIO_1.3-1.8    </span></span>
-<span><span class="co">## [49] fastmap_1.1.1       grid_4.3.0          colorspace_2.1-0   </span></span>
-<span><span class="co">## [52] cli_3.6.1           magrittr_2.0.3      base64enc_0.1-3    </span></span>
-<span><span class="co">## [55] XML_3.99-0.14       utf8_1.2.3          IRdisplay_1.1      </span></span>
-<span><span class="co">## [58] scales_1.2.1        backports_1.4.1     IRkernel_1.3.2     </span></span>
-<span><span class="co">## [61] rmarkdown_2.21      httr_1.4.6          pbdZMQ_0.3-9       </span></span>
-<span><span class="co">## [64] evaluate_0.21       viridisLite_0.4.2   rlang_1.1.1        </span></span>
-<span><span class="co">## [67] glue_1.6.2          BiocManager_1.30.20 BiocGenerics_0.47.0</span></span>
-<span><span class="co">## [70] strex_1.6.0         jsonlite_1.8.4      R6_2.5.1           </span></span>
-<span><span class="co">## [73] fs_1.6.2</span></span></code></pre>
+<span><span class="co">##  [1] gtable_0.3.4        xfun_0.40           bslib_0.5.1        </span></span>
+<span><span class="co">##  [4] ggplot2_3.4.3       htmlwidgets_1.6.2   caTools_1.18.2     </span></span>
+<span><span class="co">##  [7] vctrs_0.6.3         tools_4.3.1         bitops_1.0-7       </span></span>
+<span><span class="co">## [10] generics_0.1.3      stats4_4.3.1        base64url_1.4      </span></span>
+<span><span class="co">## [13] tibble_3.2.1        fansi_1.0.4         pkgconfig_2.0.3    </span></span>
+<span><span class="co">## [16] KernSmooth_2.23-22  data.table_1.14.8   RColorBrewer_1.1-3 </span></span>
+<span><span class="co">## [19] RCy3_2.21.2         uuid_1.1-1          graph_1.79.1       </span></span>
+<span><span class="co">## [22] lifecycle_1.0.3     compiler_4.3.1      stringr_1.5.0      </span></span>
+<span><span class="co">## [25] gplots_3.1.3        munsell_0.5.0       repr_1.1.6         </span></span>
+<span><span class="co">## [28] uchardet_1.1.1      htmltools_0.5.6     sass_0.4.7         </span></span>
+<span><span class="co">## [31] RCurl_1.98-1.12     yaml_2.3.7          lazyeval_0.2.2     </span></span>
+<span><span class="co">## [34] plotly_4.10.2       tidyr_1.3.0         pillar_1.9.0       </span></span>
+<span><span class="co">## [37] crayon_1.5.2        jquerylib_0.1.4     cachem_1.0.8       </span></span>
+<span><span class="co">## [40] gtools_3.9.4        tidyselect_1.2.0    digest_0.6.33      </span></span>
+<span><span class="co">## [43] stringi_1.7.12      purrr_1.0.2         dplyr_1.1.3        </span></span>
+<span><span class="co">## [46] bookdown_0.35       RJSONIO_1.3-1.8     fastmap_1.1.1      </span></span>
+<span><span class="co">## [49] grid_4.3.1          colorspace_2.1-0    cli_3.6.1          </span></span>
+<span><span class="co">## [52] magrittr_2.0.3      base64enc_0.1-3     XML_3.99-0.14      </span></span>
+<span><span class="co">## [55] utf8_1.2.3          IRdisplay_1.1       scales_1.2.1       </span></span>
+<span><span class="co">## [58] backports_1.4.1     IRkernel_1.3.2      rmarkdown_2.24     </span></span>
+<span><span class="co">## [61] httr_1.4.7          pbdZMQ_0.3-10       evaluate_0.21      </span></span>
+<span><span class="co">## [64] viridisLite_0.4.2   rlang_1.1.1         glue_1.6.2         </span></span>
+<span><span class="co">## [67] BiocManager_1.30.22 BiocGenerics_0.47.0 strex_1.6.0        </span></span>
+<span><span class="co">## [70] jsonlite_1.8.7      R6_2.5.1            fs_1.6.3</span></span></code></pre>
 <p><br><br></p>
 </div>
 <div class="section level2">
@@ -536,6 +644,9 @@ Scardoni, Giovanni, Michele Petterlini, and Carlo Laudanna. 2009. <span>“<span
 </div>
 <div id="ref-PaulShannon2003" class="csl-entry">
 Shannon, Paul, Andrew Markiel, Owen Ozier, Nitin S Baliga, Jonathan T Wang, Daniel Ramage, Nada Amin, Benno Schwikowski, and Trey Ideker. 2003. <span>“<span class="nocase">Cytoscape: a software environment for integrated models of biomolecular interaction networks.</span>”</span> <em>Genome Research</em> 13 (11): 2498–2504. <a href="https://doi.org/10.1101/gr.1239303" class="external-link">https://doi.org/10.1101/gr.1239303</a>.
+</div>
+<div id="ref-Yu2022" class="csl-entry">
+Yu, Guangchuang. 2022. <em>Enrichplot: Visualization of Functional Enrichment Result</em>. <a href="https://yulab-smu.top/biomedical-knowledge-mining-book/" class="external-link">https://yulab-smu.top/biomedical-knowledge-mining-book/</a>.
 </div>
 </div>
 </div>

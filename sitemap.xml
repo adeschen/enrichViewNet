@@ -19,10 +19,16 @@
     <loc>/news/index.html</loc>
   </url>
   <url>
+    <loc>/reference/createBasicEmap.html</loc>
+  </url>
+  <url>
     <loc>/reference/createCytoscapeCXJSON.html</loc>
   </url>
   <url>
     <loc>/reference/createCytoscapeNetwork.html</loc>
+  </url>
+  <url>
+    <loc>/reference/createEnrichMap.html</loc>
   </url>
   <url>
     <loc>/reference/createMetaDataSectionCXJSON.html</loc>
@@ -52,7 +58,19 @@
     <loc>/reference/isCytoscapeRunning.html</loc>
   </url>
   <url>
+    <loc>/reference/parentalNapaVsDMSODEG.html</loc>
+  </url>
+  <url>
+    <loc>/reference/parentalNapaVsDMSOEnrichment.html</loc>
+  </url>
+  <url>
     <loc>/reference/removeRootTerm.html</loc>
+  </url>
+  <url>
+    <loc>/reference/rosaNapaVsDMSODEG.html</loc>
+  </url>
+  <url>
+    <loc>/reference/validateCreateEnrichMapArguments.html</loc>
   </url>
   <url>
     <loc>/reference/validateCreateNetworkArguments.html</loc>
