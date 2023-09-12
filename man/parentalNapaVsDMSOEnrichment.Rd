@@ -5,8 +5,10 @@
 \alias{parentalNapaVsDMSOEnrichment}
 \title{The result of an enrichment analysis has been done using the significantly 
 differentially expressed genes between napabucasin treated and DMSO 
-control parental MiaPaCa2 cells, as published in Froeling F.E.M. et al 2019.
-The cells were treated for 2 hour with 0.5 uM napabucasin.}
+control parental MiaPaCa2 cells. 
+The cells were treated for 2 hour with 0.5 uM napabucasin.  
+The protocol to generate the RNA-seq is described 
+in Froeling F.E.M. et al 2019.}
 \format{
 a \code{data.frame} containing the results of a differential 
 expression analysis between napabucasin treated and DMSO control parental 

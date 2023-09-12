@@ -304,8 +304,10 @@ NULL
 
 #' The result of an enrichment analysis has been done using the significantly 
 #' differentially expressed genes between napabucasin treated and DMSO 
-#' control parental MiaPaCa2 cells, as published in Froeling F.E.M. et al 2019.
+#' control parental MiaPaCa2 cells. 
 #' The cells were treated for 2 hour with 0.5 uM napabucasin.  
+#' The protocol to generate the RNA-seq is described 
+#' in Froeling F.E.M. et al 2019.
 #' 
 #' The enrichment analysis was done with gprofile2 package 
 #' (Kolberg L et al 2020) with database version 'e109_eg56_p17_1d3191d' and 
