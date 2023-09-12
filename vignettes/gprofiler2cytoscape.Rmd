@@ -331,7 +331,15 @@ TODO
 
 # Acknowledgments
 
-TODO
+The differentially expressed genes between napabucasin-treated cells (0.5 uM) 
+and DMSO as vehicle control are reprinted from 
+Clinical Cancer Research, 2019, 25 (23), 7162–7174, 
+Fieke E.M. Froeling, Manojit Mosur Swamynathan, Astrid Deschênes, 
+Iok In Christine Chio, Erin Brosnan, Melissa A. Yao, Priya Alagesan, 
+Matthew Lucito, Juying Li, An-Yun Chang, Lloyd C. Trotman, Pascal Belleau, 
+Youngkyu Park, Harry A. Rogoff, James D. Watson, David A. Tuveson, 
+Bioactivation of napabucasin triggers reactive oxygen species–mediated 
+cancer cell death, with permission from AACR.
 
 <br>
 <br>
