@@ -1,5 +1,5 @@
 ---
-title: "From gprofiler2 to Cytoscape networks"
+title: "From functional enrichment results to biological networks"
 author: Astrid Deschênes and Pascal Belleau
 output:
   BiocStyle::html_document:
@@ -49,7 +49,7 @@ If you use this package for a publication, we would ask you to cite the
 following:
 
 > Astrid Deschênes and Pascal Belleau (2021). gprofiler2cytoscape: From 
-  gprofiler2 to Cytoscape network. 
+  functional enrichment results to biological networks. 
   https://github.com/adeschen/gprofiler2cytoscape,
   https://adeschen.github.io/gprofiler2cytoscape/.
 
