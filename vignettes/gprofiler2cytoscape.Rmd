@@ -317,7 +317,7 @@ createNetwork(gostObject=parentalNapaVsDMSOEnrichment, source="REAC",
 <br>
 <br>
 ```{r networkInCytoscape, echo = FALSE, fig.align="center", fig.cap="All reactome terms in a gene-term network loaded in Cytoscape.", out.width = '100%'}
-knitr::include_graphics("Cytoscape_with_Reactome_ALL_parental_napa_vs_DMSO.png")
+knitr::include_graphics("cytoscape_reactome_all_parental_napa_vs_DMSO.png")
 ```
 
 
