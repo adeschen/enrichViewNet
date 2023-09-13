@@ -178,7 +178,7 @@ The following workflow gives an overview of the capabilities of
 `r Githubpkg("adeschen/gprofiler2cytoscape")`:
 
 ```{r graphWorkflow, echo=FALSE, fig.align="center", fig.cap="The gprofiler2cytoscape workflow", out.width = '100%'}
-knitr::include_graphics("Figure_gprofiler2cytoscape_workflow_v01.png")
+knitr::include_graphics("Figure_workflow_v02.jpg")
 ```
 
 
@@ -307,9 +307,9 @@ data("parentalNapaVsDMSOEnrichment")
 
 ## Create network for REACTOME significant terms
 ## The 'removeRoot=TRUE' parameter removes the root term from the network
-createNetwork(gostObject=parentalNapaVsDMSOEnrichment, source="REAC", 
-                removeRoot=FALSE, title="Reactome_All", 
-                collection="parental_napa_vs_DMSO")
+createNetwork(gostObject=parentalNapaVsDMSOEnrichment,  source="REAC", 
+                  removeRoot=TRUE, title="REACTOME_All", 
+                  collection="parental_napa_vs_DMSO")
 ```
 
 <br>
