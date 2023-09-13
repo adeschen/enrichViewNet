@@ -9,11 +9,8 @@ napabucasin treated and DMSO control MiaPaCa2 cells stably expressing
 the Rosa26 control vector. The cells were treated for 2 hour 
 with 0.5 uM napabucasin.
 The protocol to generate the RNA-seq is described 
-in Froeling F.E.M. et al 2019. — rosaNapaVsDMSODEG"><meta property="og:description" content="The RNA reads, for all conditions, were mapped to transcript annotation 
-GENCODE 39 (Frankish A. et al 2019) using STAR software version 2.7.9a 
-(Dobin A et al 2013). RSEM (Li B. et al 2011) was used to extract counts 
-per gene. Differential gene expression analysis was performed using 
-Bioconductor DESeq2 package version 1.36.0 (Love, M.I. et al 2014)."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
+in Froeling F.E.M. et al 2019. — rosaNapaVsDMSODEG"><meta property="og:description" content="The object is a data.frame with 23542 rows and 4 columns. 
+Each row correspond to a tested gene."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
@@ -71,11 +68,8 @@ in Froeling F.E.M. et al 2019.</h1>
     </div>
 
     <div class="ref-description">
-    <p>The RNA reads, for all conditions, were mapped to transcript annotation 
-GENCODE 39 (Frankish A. et al 2019) using STAR software version 2.7.9a 
-(Dobin A et al 2013). RSEM (Li B. et al 2011) was used to extract counts 
-per gene. Differential gene expression analysis was performed using 
-Bioconductor DESeq2 package version 1.36.0 (Love, M.I. et al 2014).</p>
+    <p>The object is a <code>data.frame</code> with 23542 rows and 4 columns. 
+Each row correspond to a tested gene.</p>
     </div>
 
     <div id="ref-usage">
@@ -86,7 +80,7 @@ Bioconductor DESeq2 package version 1.36.0 (Love, M.I. et al 2014).</p>
     <h2>Format</h2>
     <p>a <code>data.frame</code> containing the results of a differential 
 expression analysis between napabucasin treated and DMSO control MiaPaCa2 
-cells stably expressing the Rosa26 control vector for all 31856 genes 
+cells stably expressing the Rosa26 control vector for all 23542 genes 
 tested. The 4 columns are:</p><ul><li><p>EnsemblID a <code>character</code> string representing the unique Ensembl 
 identifier for the tested gene</p></li>
 <li><p>EnsemblID a <code>numeric</code> representing the expression difference 
@@ -108,7 +102,7 @@ Omnibus (GEO) under the accession number GSE135352.</p>
 
 <p>a <code>data.frame</code> containing the results of a differential 
 expression analysis between napabucasin treated and DMSO control MiaPaCa2 
-cells stably expressing the Rosa26 control vector for all 31856 genes 
+cells stably expressing the Rosa26 control vector for all 23542 genes 
 tested. The 4 columns are:</p><ul><li><p>EnsemblID a <code>character</code> string representing the unique Ensembl 
 identifier for the tested gene</p></li>
 <li><p>log2FoldChange a <code>numeric</code> representing the expression 
@@ -121,15 +115,15 @@ the tested gene</p></li>
 </ul></div>
     <div id="details">
     <h2>Details</h2>
-    <p>The object is a <code>data.frame</code> with 31856 rows and 4 columns. 
-Each row correspond to a tested gene.</p>
-
-
-<p>The protocol associated to the RNA-seq prepration is avaiable in  
-this publication:</p>
-<p>Froeling F.E.M. et al.Bioactivation of Napabucasin Triggers Reactive Oxygen 
-Species–Mediated Cancer Cell Death. Clin Cancer Res 
-1 December 2019; 25 (23): 7162–7174</p>
+    <p>The differentially expressed genes between napabucasin-treated 
+cells (0.5 uM) and DMSO as vehicle control are reprinted from Clinical 
+Cancer Research, 2019, 25 (23), 7162–7174, Fieke E.M. Froeling, Manojit 
+Mosur Swamynathan, Astrid Deschênes, Iok In Christine Chio, Erin Brosnan, 
+Melissa A. Yao, Priya Alagesan, Matthew Lucito, Juying Li, An-Yun Chang, 
+Lloyd C. Trotman, Pascal Belleau, Youngkyu Park, Harry A. Rogoff, 
+James D. Watson, David A. Tuveson, Bioactivation of napabucasin triggers 
+reactive oxygen species–mediated cancer cell death, with permission 
+from AACR.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
