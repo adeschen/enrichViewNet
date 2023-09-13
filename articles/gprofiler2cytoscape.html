@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="pandoc">
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE">
-<meta name="author" content="Astrid Deschênes and Pascal Belleau">
+<meta name="author" content="Astrid Deschênes, Pascal Belleau, Robert L Faure and Maria J Fernandes">
 <meta name="date" content="2023-09-13">
 <title>From functional enrichment results to biological networks</title>
 <script src="gprofiler2cytoscape_files/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1">
@@ -242,7 +242,7 @@ function toggle_visibility(id1) {
 
 
 <h1 class="title toc-ignore">From functional enrichment results to biological networks</h1>
-<p class="author-name">Astrid Deschênes and Pascal Belleau</p>
+<p class="author-name">Astrid Deschênes, Pascal Belleau, Robert L Faure and Maria J Fernandes</p>
 <h4 class="date">13 September 2023</h4>
 
 </div>
@@ -256,14 +256,14 @@ function toggle_visibility(id1) {
 <li><a href="#installation" id="toc-installation"><span class="toc-section-number">4</span> Installation</a></li>
 <li><a href="#general-workflow" id="toc-general-workflow"><span class="toc-section-number">5</span> General workflow</a></li>
 <li>
-<a href="#transforming-enrichment-results-into-a-cytoscape-gene-term-network" id="toc-transforming-enrichment-results-into-a-cytoscape-gene-term-network"><span class="toc-section-number">6</span> Transforming enrichment results into a Cytoscape gene-term network</a>
+<a href="#transforming-enrichment-results-into-a-gene-term-network-loadable-in-cytoscape" id="toc-transforming-enrichment-results-into-a-gene-term-network-loadable-in-cytoscape"><span class="toc-section-number">6</span> Transforming enrichment results into a gene-term network loadable in Cytoscape</a>
 <ul>
 <li><a href="#run-an-enrichment-analysis" id="toc-run-an-enrichment-analysis"><span class="toc-section-number">6.1</span> Run an enrichment analysis</a></li>
 <li><a href="#start-cytoscape" id="toc-start-cytoscape"><span class="toc-section-number">6.2</span> Start Cytoscape</a></li>
-<li><a href="#create-a-cytoscape-network" id="toc-create-a-cytoscape-network"><span class="toc-section-number">6.3</span> Create a Cytoscape network</a></li>
+<li><a href="#create-a-gene-term-network" id="toc-create-a-gene-term-network"><span class="toc-section-number">6.3</span> Create a gene-term network</a></li>
 </ul>
 </li>
-<li><a href="#transforming-gprofiler2-enrichment-results-into-a-enrichment-map" id="toc-transforming-gprofiler2-enrichment-results-into-a-enrichment-map"><span class="toc-section-number">7</span> Transforming gprofiler2 enrichment results into a enrichment map</a></li>
+<li><a href="#transforming-enrichment-results-into-a-enrichment-map" id="toc-transforming-enrichment-results-into-a-enrichment-map"><span class="toc-section-number">7</span> Transforming enrichment results into a enrichment map</a></li>
 <li><a href="#acknowledgments" id="toc-acknowledgments"><span class="toc-section-number">8</span> Acknowledgments</a></li>
 <li><a href="#session-info" id="toc-session-info"><span class="toc-section-number">9</span> Session info</a></li>
 <li><a href="#references" id="toc-references">References</a></li>
@@ -288,7 +288,7 @@ Artistic license 2.0. You are free to use and redistribute this software.</p>
 <p>If you use this package for a publication, we would ask you to cite the
 following:</p>
 <blockquote>
-<p>Astrid Deschênes and Pascal Belleau (2021). gprofiler2cytoscape: From
+<p>Astrid Deschênes and Pascal Belleau (2023). gprofiler2cytoscape: From
 functional enrichment results to biological networks.
 <a href="https://github.com/adeschen/gprofiler2cytoscape" class="external-link uri">https://github.com/adeschen/gprofiler2cytoscape</a>,
 <a href="https://adeschen.github.io/gprofiler2cytoscape/" class="external-link uri">https://adeschen.github.io/gprofiler2cytoscape/</a>.</p>
@@ -341,7 +341,7 @@ reproducibility.</p>
 of functional enrichment results. Visualization of enriched terms aims to
 reduce the complexity of the analyses of complex results. Moreover, the
 <strong><em>gprofiler2cytoscape</em></strong> package takes advantage of a powerful network
-visualization tool which is <em>Cytoscape</em>. By doing so, all the<br>
+visualization tool which is <em>Cytoscape</em>. By doing so, all the
 functionalities of this mature software can be used by users to personalize
 and analyze the enrichment networks.</p>
 <p>First, the <strong><em>gprofiler2cytoscape</em></strong> package enables the
@@ -352,7 +352,7 @@ gene datasets (GO terms/pathways/protein complexes) and genes associated
 to the datasets are represented as nodes. While the edges connect each gene
 to its dataset(s). Only genes present in the query used for the
 enrichment analysis are shown.</p>
-<div class="figure" style="text-align: left">
+<div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:graphDemo01"></span>
 <img src="demo01.jpeg" alt="A network where significant GO terms and genes are presented as nodes while edges connect each gene to its associated term(s)." width="90%"><p class="caption">
 Figure 1: <span class="caption-title">A network where significant GO terms and genes are presented as nodes while edges connect each gene to its associated term(s)</span><br></p>
@@ -360,11 +360,11 @@ Figure 1: <span class="caption-title">A network where significant GO terms and g
 <p>The <strong><em>gprofiler2cytoscape</em></strong> package
 offers the option to generate a network for only a portion of the
 significant terms by selecting the source or by providing a
-specific list of terms.</p>
-<p>Once the network is created, the user can personalize the visual attributes
+specific list of terms.Once the network is created, the user can
+personalize the visual attributes
 and integrate external information such as expression profiles, phenotypes
 and other molecular states. The user can also perform network analysis.</p>
-<p>In addition, the <strong><em>gprofiler2cytoscape</em></strong> package also provides the option to<br>
+<p>In addition, the <strong><em>gprofiler2cytoscape</em></strong> package also provides the option to
 create enrichment maps from functional enrichment results.
 The enrichment maps have been introduced in the Bioconductor
 <strong><em>enrichplot</em></strong> package <span class="citation">(<a href="#ref-Yu2022">Yu 2022</a>)</span>.
@@ -372,10 +372,10 @@ Enrichment maps enable the visualization of enriched terms into a network
 with edges connecting overlapping genes. Thus, enriched terms with overlapping
 genes cluster together. This type of graphs facilitate the
 identification of functional modules.</p>
-<div class="figure" style="text-align: left">
+<div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:graphDemo02"></span>
-<img src="demo_KEGG_emap_v01.jpeg" alt="An enrichment map using Kegg terms." width="90%"><p class="caption">
-Figure 2: <span class="caption-title">An enrichment map using Kegg terms</span><br></p>
+<img src="demo_KEGG_emap_v01.jpeg" alt="An enrichment map using significant Kegg terms." width="90%"><p class="caption">
+Figure 2: <span class="caption-title">An enrichment map using significant Kegg terms</span><br></p>
 </div>
 <p><br><br></p>
 </div>
@@ -423,8 +423,8 @@ highly recommended.</p>
 <p><br><br></p>
 </div>
 <div class="section level2" number="6">
-<h2 id="transforming-enrichment-results-into-a-cytoscape-gene-term-network">
-<span class="header-section-number">6</span> Transforming enrichment results into a Cytoscape gene-term network<a class="anchor" aria-label="anchor" href="#transforming-enrichment-results-into-a-cytoscape-gene-term-network"></a>
+<h2 id="transforming-enrichment-results-into-a-gene-term-network-loadable-in-cytoscape">
+<span class="header-section-number">6</span> Transforming enrichment results into a gene-term network loadable in Cytoscape<a class="anchor" aria-label="anchor" href="#transforming-enrichment-results-into-a-gene-term-network-loadable-in-cytoscape"></a>
 </h2>
 <p>The following workflow gives an overview of the steps associated to the
 creation of an gene-term network loadable in <em>Cytoscape</em>.</p>
@@ -507,10 +507,25 @@ is a <em>list</em> and should be saved.</p>
 <span></span>
 <span><span class="co">## Some columns of interest in the results</span></span>
 <span><span class="va">gostres</span><span class="op">$</span><span class="va">result</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"query"</span>, <span class="st">"p_value"</span>, <span class="st">"term_size"</span>, </span>
-<span>                    <span class="st">"query_size"</span>, <span class="st">"intersection_size"</span>, <span class="st">"term_id"</span><span class="op">)</span><span class="op">]</span></span>
-<span></span>
-<span><span class="co">## The term names can be longer than the one shown</span></span>
+<span>                    <span class="st">"query_size"</span>, <span class="st">"intersection_size"</span>, <span class="st">"term_id"</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
+<pre><code><span><span class="co">##                   query      p_value term_size query_size intersection_size</span></span>
+<span><span class="co">## 1 parental_napa_vs_DMSO 2.670662e-08        25        157                 7</span></span>
+<span><span class="co">## 2 parental_napa_vs_DMSO 2.506453e-07      6160        157                75</span></span>
+<span><span class="co">## 3 parental_napa_vs_DMSO 8.980755e-07        23        157                 6</span></span>
+<span><span class="co">## 4 parental_napa_vs_DMSO 9.029296e-07       391        157                16</span></span>
+<span><span class="co">##     term_id</span></span>
+<span><span class="co">## 1 WP:WP3613</span></span>
+<span><span class="co">## 2 WP:000000</span></span>
+<span><span class="co">## 3 WP:WP4925</span></span>
+<span><span class="co">## 4 WP:WP3888</span></span></code></pre>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## The term names can be longer than the one shown</span></span>
 <span><span class="va">gostres</span><span class="op">$</span><span class="va">result</span><span class="op">[</span><span class="fl">19</span><span class="op">:</span><span class="fl">22</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"term_id"</span>, <span class="st">"source"</span>, <span class="st">"term_name"</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
+<pre><code><span><span class="co">##      term_id source                  term_name</span></span>
+<span><span class="co">## 19 WP:WP4970     WP   Galanin receptor pathway</span></span>
+<span><span class="co">## 20 WP:WP2877     WP Vitamin D receptor pathway</span></span>
+<span><span class="co">## 21  WP:WP516     WP          Hypertrophy model</span></span>
+<span><span class="co">## 22 WP:WP1742     WP               TP53 network</span></span></code></pre>
 </div>
 <div class="section level3" number="6.2">
 <h3 id="start-cytoscape">
@@ -522,7 +537,7 @@ data. The Cytoscape software
 is available at the <a href="https://cytoscape.org/" class="external-link">Cytoscape website</a>.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:cytoscapeLogo01"></span>
-<img src="cy3sticker.png" alt="Cytoscape software logo." width="100%"><p class="caption">
+<img src="cy3sticker.png" alt="Cytoscape software logo." width="75%"><p class="caption">
 Figure 5: <span class="caption-title">Cytoscape software logo</span><br></p>
 </div>
 <p>The Cytoscape network generated by
@@ -534,11 +549,11 @@ can then be loaded manually into the <a href="https://cytoscape.org/" class="ext
 software.</p>
 </div>
 <div class="section level3" number="6.3">
-<h3 id="create-a-cytoscape-network">
-<span class="header-section-number">6.3</span> Create a Cytoscape network<a class="anchor" aria-label="anchor" href="#create-a-cytoscape-network"></a>
+<h3 id="create-a-gene-term-network">
+<span class="header-section-number">6.3</span> Create a gene-term network<a class="anchor" aria-label="anchor" href="#create-a-gene-term-network"></a>
 </h3>
 <p>TODO</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Load demo gprofiler2 enrichment result</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"parentalNapaVsDMSOEnrichment"</span><span class="op">)</span></span>
 <span></span>
@@ -547,16 +562,27 @@ software.</p>
 <span><span class="fu"><a href="../reference/createNetwork.html">createNetwork</a></span><span class="op">(</span>gostObject<span class="op">=</span><span class="va">parentalNapaVsDMSOEnrichment</span>, source<span class="op">=</span><span class="st">"REAC"</span>, </span>
 <span>                removeRoot<span class="op">=</span><span class="cn">FALSE</span>, title<span class="op">=</span><span class="st">"Reactome_All"</span>, </span>
 <span>                collection<span class="op">=</span><span class="st">"parental_napa_vs_DMSO"</span><span class="op">)</span></span></code></pre></div>
-<br><br><div class="figure" style="text-align: center">
+<p><br><br></p>
+<p>The following figure shows what the gene-term network looks like
+in <em>Cytoscape</em>. As there are numerous significant Reactome terms, the network
+is a bit hectic.</p>
+<div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:networkInCytoscape"></span>
-<img src="cytoscape_reactome_all_parental_napa_vs_DMSO.png" alt="All reactome terms in a gene-term network loaded in Cytoscape." width="100%"><p class="caption">
+<img src="cytoscape_reactome_all_parental_napa_vs_DMSO.png" alt="All reactome terms in a gene-term network loaded in Cytoscape." width="110%"><p class="caption">
 Figure 6: <span class="caption-title">All reactome terms in a gene-term network loaded in Cytoscape</span><br></p>
 </div>
+<p><br><br></p>
+<p>The following figure shows what the gene-term network looks like
+in <em>Cytoscape</em>. As there are numerous significant Reactome terms, the network
+is a bit hectic.</p>
+<p>To address this situation, a updated gene-term network containing only selected
+Reactome terms can be created.</p>
+<p><br><br></p>
 </div>
 </div>
 <div class="section level2" number="7">
-<h2 id="transforming-gprofiler2-enrichment-results-into-a-enrichment-map">
-<span class="header-section-number">7</span> Transforming gprofiler2 enrichment results into a enrichment map<a class="anchor" aria-label="anchor" href="#transforming-gprofiler2-enrichment-results-into-a-enrichment-map"></a>
+<h2 id="transforming-enrichment-results-into-a-enrichment-map">
+<span class="header-section-number">7</span> Transforming enrichment results into a enrichment map<a class="anchor" aria-label="anchor" href="#transforming-enrichment-results-into-a-enrichment-map"></a>
 </h2>
 <p>TODO</p>
 <p><br><br></p>
