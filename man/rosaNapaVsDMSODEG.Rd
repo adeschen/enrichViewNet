@@ -12,7 +12,7 @@ in Froeling F.E.M. et al 2019.}
 \format{
 a \code{data.frame} containing the results of a differential 
 expression analysis between napabucasin treated and DMSO control MiaPaCa2 
-cells stably expressing the Rosa26 control vector for all 31856 genes 
+cells stably expressing the Rosa26 control vector for all 23542 genes 
 tested. The 4 columns are:
 \itemize{
 \item{EnsemblID} {a \code{character} string representing the unique Ensembl 
@@ -36,7 +36,7 @@ data(rosaNapaVsDMSODEG)
 \value{
 a \code{data.frame} containing the results of a differential 
 expression analysis between napabucasin treated and DMSO control MiaPaCa2 
-cells stably expressing the Rosa26 control vector for all 31856 genes 
+cells stably expressing the Rosa26 control vector for all 23542 genes 
 tested. The 4 columns are:
 \itemize{
 \item{EnsemblID} {a \code{character} string representing the unique Ensembl 
@@ -51,24 +51,19 @@ the tested gene}
 }
 }
 \description{
-The RNA reads, for all conditions, were mapped to transcript annotation 
-GENCODE 39 (Frankish A. et al 2019) using STAR software version 2.7.9a 
-(Dobin A et al 2013). RSEM (Li B. et al 2011) was used to extract counts 
-per gene. Differential gene expression analysis was performed using 
-Bioconductor DESeq2 package version 1.36.0 (Love, M.I. et al 2014).
+The object is a \code{data.frame} with 23542 rows and 4 columns. 
+Each row correspond to a tested gene.
 }
 \details{
-The object is a \code{data.frame} with 31856 rows and 4 columns. 
-Each row correspond to a tested gene.
-
-
-
-The protocol associated to the RNA-seq prepration is avaiable in  
-this publication:
-
-Froeling F.E.M. et al.Bioactivation of Napabucasin Triggers Reactive Oxygen 
-Species–Mediated Cancer Cell Death. Clin Cancer Res 
-1 December 2019; 25 (23): 7162–7174
+The differentially expressed genes between napabucasin-treated 
+cells (0.5 uM) and DMSO as vehicle control are reprinted from Clinical 
+Cancer Research, 2019, 25 (23), 7162–7174, Fieke E.M. Froeling, Manojit 
+Mosur Swamynathan, Astrid Deschênes, Iok In Christine Chio, Erin Brosnan, 
+Melissa A. Yao, Priya Alagesan, Matthew Lucito, Juying Li, An-Yun Chang, 
+Lloyd C. Trotman, Pascal Belleau, Youngkyu Park, Harry A. Rogoff, 
+James D. Watson, David A. Tuveson, Bioactivation of napabucasin triggers 
+reactive oxygen species–mediated cancer cell death, with permission 
+from AACR.
 }
 \examples{
 

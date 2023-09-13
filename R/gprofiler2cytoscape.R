@@ -1,4 +1,4 @@
-#' From gprofiler2 to Cytoscape network
+#' From functional enrichment results to biological networks
 #'
 #' The \code{gprofiler2cytoscape} package enables the visualization 
 #' of enrichment results obtained by \code{gprofiler2} 
@@ -92,13 +92,7 @@ NULL
 #' The protocol to generate the RNA-seq is described 
 #' in Froeling F.E.M. et al 2019.
 #' 
-#' The RNA reads, for all conditions, were mapped to transcript annotation 
-#' GENCODE 39 (Frankish A. et al 2019) using STAR software version 2.7.9a 
-#' (Dobin A et al 2013). RSEM (Li B. et al 2011) was used to extract counts 
-#' per gene. Differential gene expression analysis was performed using 
-#' Bioconductor DESeq2 package version 1.36.0 (Love, M.I. et al 2014).
-#' 
-#' The object is a \code{data.frame} with 31856 rows and 4 columns. 
+#' The object is a \code{data.frame} with 24184 rows and 4 columns. 
 #' Each row correspond to a tested gene.
 #'
 #' @name parentalNapaVsDMSODEG
@@ -117,7 +111,8 @@ NULL
 #' (in log2FoldChange) between the napabucasin treatment and the DMSO control 
 #' for the tested gene}
 #' \item{padj} {a \code{numeric} representing the adjusted p-value associated  
-#' to the difference in expression for the tested gene}
+#' to the difference in expression for the tested gene; \code{NA} when the 
+#' adjusted p-value as not been calculated (equivalent to not significant)}
 #' \item{GeneName} {a \code{character} string representing the name of 
 #' the tested gene}
 #' }
@@ -128,11 +123,12 @@ NULL
 #' \itemize{
 #' \item{EnsemblID} {a \code{character} string representing the unique Ensembl 
 #' identifier for the tested gene}
-#' \item{log2FoldChange} {a \code{numeric} representing the expression 
-#' difference (in log2FoldChange) between the napabucasin treatment and 
-#' the DMSO control for the tested gene}
+#' \item{EnsemblID} {a \code{numeric} representing the expression difference 
+#' (in log2FoldChange) between the napabucasin treatment and the DMSO control 
+#' for the tested gene}
 #' \item{padj} {a \code{numeric} representing the adjusted p-value associated  
-#' to the difference in expression for the tested gene}
+#' to the difference in expression for the tested gene; \code{NA} when the 
+#' adjusted p-value as not been calculated (equivalent to not significant)}
 #' \item{GeneName} {a \code{character} string representing the name of 
 #' the tested gene}
 #' }
@@ -149,12 +145,15 @@ NULL
 #'
 #' @details
 #' 
-#' The protocol associated to the RNA-seq prepration is avaiable in  
-#' this publication:
-#' 
-#' Froeling F.E.M. et al.Bioactivation of Napabucasin Triggers Reactive Oxygen 
-#' Species–Mediated Cancer Cell Death. Clin Cancer Res 
-#' 1 December 2019; 25 (23): 7162–7174
+#' The differentially expressed genes between napabucasin-treated 
+#' cells (0.5 uM) and DMSO as vehicle control are reprinted from Clinical 
+#' Cancer Research, 2019, 25 (23), 7162–7174, Fieke E.M. Froeling, Manojit 
+#' Mosur Swamynathan, Astrid Deschênes, Iok In Christine Chio, Erin Brosnan, 
+#' Melissa A. Yao, Priya Alagesan, Matthew Lucito, Juying Li, An-Yun Chang, 
+#' Lloyd C. Trotman, Pascal Belleau, Youngkyu Park, Harry A. Rogoff, 
+#' James D. Watson, David A. Tuveson, Bioactivation of napabucasin triggers 
+#' reactive oxygen species–mediated cancer cell death, with permission 
+#' from AACR.
 #' 
 #' @source 
 #' 
@@ -166,7 +165,7 @@ NULL
 #' ## Required library
 #' library(gprofiler2)
 #' 
-#' ## Loading dataset containing the results of a differentially expressed 
+#' ## Loading data set containing the results of a differentially expressed 
 #' ## analysis between 2-hour treatment with 0.5 uM napabucasin and 
 #' ## DMSO vehicle control parental MiaPaCa2 cells
 #' data(parentalNapaVsDMSODEG)
@@ -191,8 +190,6 @@ NULL
 NULL
 
 
-
-
 #' The result of a differential expression analysis done between 
 #' napabucasin treated and DMSO control MiaPaCa2 cells stably expressing 
 #' the Rosa26 control vector. The cells were treated for 2 hour 
@@ -200,13 +197,7 @@ NULL
 #' The protocol to generate the RNA-seq is described 
 #' in Froeling F.E.M. et al 2019.
 #' 
-#' The RNA reads, for all conditions, were mapped to transcript annotation 
-#' GENCODE 39 (Frankish A. et al 2019) using STAR software version 2.7.9a 
-#' (Dobin A et al 2013). RSEM (Li B. et al 2011) was used to extract counts 
-#' per gene. Differential gene expression analysis was performed using 
-#' Bioconductor DESeq2 package version 1.36.0 (Love, M.I. et al 2014).
-#' 
-#' The object is a \code{data.frame} with 31856 rows and 4 columns. 
+#' The object is a \code{data.frame} with 23542 rows and 4 columns. 
 #' Each row correspond to a tested gene.
 #'
 #' @name rosaNapaVsDMSODEG
@@ -217,7 +208,7 @@ NULL
 #'
 #' @format a \code{data.frame} containing the results of a differential 
 #' expression analysis between napabucasin treated and DMSO control MiaPaCa2 
-#' cells stably expressing the Rosa26 control vector for all 31856 genes 
+#' cells stably expressing the Rosa26 control vector for all 23542 genes 
 #' tested. The 4 columns are:
 #' \itemize{
 #' \item{EnsemblID} {a \code{character} string representing the unique Ensembl 
@@ -233,7 +224,7 @@ NULL
 #'
 #' @return  a \code{data.frame} containing the results of a differential 
 #' expression analysis between napabucasin treated and DMSO control MiaPaCa2 
-#' cells stably expressing the Rosa26 control vector for all 31856 genes 
+#' cells stably expressing the Rosa26 control vector for all 23542 genes 
 #' tested. The 4 columns are:
 #' \itemize{
 #' \item{EnsemblID} {a \code{character} string representing the unique Ensembl 
@@ -259,12 +250,15 @@ NULL
 #'
 #' @details
 #' 
-#' The protocol associated to the RNA-seq prepration is avaiable in  
-#' this publication:
-#' 
-#' Froeling F.E.M. et al.Bioactivation of Napabucasin Triggers Reactive Oxygen 
-#' Species–Mediated Cancer Cell Death. Clin Cancer Res 
-#' 1 December 2019; 25 (23): 7162–7174
+#' The differentially expressed genes between napabucasin-treated 
+#' cells (0.5 uM) and DMSO as vehicle control are reprinted from Clinical 
+#' Cancer Research, 2019, 25 (23), 7162–7174, Fieke E.M. Froeling, Manojit 
+#' Mosur Swamynathan, Astrid Deschênes, Iok In Christine Chio, Erin Brosnan, 
+#' Melissa A. Yao, Priya Alagesan, Matthew Lucito, Juying Li, An-Yun Chang, 
+#' Lloyd C. Trotman, Pascal Belleau, Youngkyu Park, Harry A. Rogoff, 
+#' James D. Watson, David A. Tuveson, Bioactivation of napabucasin triggers 
+#' reactive oxygen species–mediated cancer cell death, with permission 
+#' from AACR.
 #' 
 #' @source 
 #' 

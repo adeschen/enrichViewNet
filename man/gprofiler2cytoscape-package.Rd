@@ -5,7 +5,7 @@
 \name{gprofiler2cytoscape-package}
 \alias{gprofiler2cytoscape-package}
 \alias{gprofiler2cytoscape}
-\title{From gprofiler2 to Cytoscape network}
+\title{From functional enrichment results to biological networks}
 \description{
 The \code{gprofiler2cytoscape} package enables the visualization 
 of enrichment results obtained by \code{gprofiler2} 

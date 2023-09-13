@@ -19,7 +19,8 @@ identifier for the tested gene}
 (in log2FoldChange) between the napabucasin treatment and the DMSO control 
 for the tested gene}
 \item{padj} {a \code{numeric} representing the adjusted p-value associated  
-to the difference in expression for the tested gene}
+to the difference in expression for the tested gene; \code{NA} when the 
+adjusted p-value as not been calculated (equivalent to not significant)}
 \item{GeneName} {a \code{character} string representing the name of 
 the tested gene}
 }
@@ -38,41 +39,37 @@ MiaPaCa2 cells for all 31856 genes tested. The 4 columns are:
 \itemize{
 \item{EnsemblID} {a \code{character} string representing the unique Ensembl 
 identifier for the tested gene}
-\item{log2FoldChange} {a \code{numeric} representing the expression 
-difference (in log2FoldChange) between the napabucasin treatment and 
-the DMSO control for the tested gene}
+\item{EnsemblID} {a \code{numeric} representing the expression difference 
+(in log2FoldChange) between the napabucasin treatment and the DMSO control 
+for the tested gene}
 \item{padj} {a \code{numeric} representing the adjusted p-value associated  
-to the difference in expression for the tested gene}
+to the difference in expression for the tested gene; \code{NA} when the 
+adjusted p-value as not been calculated (equivalent to not significant)}
 \item{GeneName} {a \code{character} string representing the name of 
 the tested gene}
 }
 }
 \description{
-The RNA reads, for all conditions, were mapped to transcript annotation 
-GENCODE 39 (Frankish A. et al 2019) using STAR software version 2.7.9a 
-(Dobin A et al 2013). RSEM (Li B. et al 2011) was used to extract counts 
-per gene. Differential gene expression analysis was performed using 
-Bioconductor DESeq2 package version 1.36.0 (Love, M.I. et al 2014).
+The object is a \code{data.frame} with 24184 rows and 4 columns. 
+Each row correspond to a tested gene.
 }
 \details{
-The object is a \code{data.frame} with 31856 rows and 4 columns. 
-Each row correspond to a tested gene.
-
-
-
-The protocol associated to the RNA-seq prepration is avaiable in  
-this publication:
-
-Froeling F.E.M. et al.Bioactivation of Napabucasin Triggers Reactive Oxygen 
-Species–Mediated Cancer Cell Death. Clin Cancer Res 
-1 December 2019; 25 (23): 7162–7174
+The differentially expressed genes between napabucasin-treated 
+cells (0.5 uM) and DMSO as vehicle control are reprinted from Clinical 
+Cancer Research, 2019, 25 (23), 7162–7174, Fieke E.M. Froeling, Manojit 
+Mosur Swamynathan, Astrid Deschênes, Iok In Christine Chio, Erin Brosnan, 
+Melissa A. Yao, Priya Alagesan, Matthew Lucito, Juying Li, An-Yun Chang, 
+Lloyd C. Trotman, Pascal Belleau, Youngkyu Park, Harry A. Rogoff, 
+James D. Watson, David A. Tuveson, Bioactivation of napabucasin triggers 
+reactive oxygen species–mediated cancer cell death, with permission 
+from AACR.
 }
 \examples{
 
 ## Required library
 library(gprofiler2)
 
-## Loading dataset containing the results of a differentially expressed 
+## Loading data set containing the results of a differentially expressed 
 ## analysis between 2-hour treatment with 0.5 uM napabucasin and 
 ## DMSO vehicle control parental MiaPaCa2 cells
 data(parentalNapaVsDMSODEG)
