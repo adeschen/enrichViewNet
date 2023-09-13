@@ -12,7 +12,8 @@ The protocol to generate the RNA-seq is described
 in Froeling F.E.M. et al 2019. — parentalNapaVsDMSOEnrichment"><meta property="og:description" content="The enrichment analysis was done with gprofile2 package 
 (Kolberg L et al 2020) with database version 'e109_eg56_p17_1d3191d' and 
 g:SCS multiple testing correction method applying significance 
-threshold of 0.05 (Raudvere U et al 2019)."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
+threshold of 0.05 (Raudvere U et al 2019). All tested genes were used 
+as background."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
@@ -73,7 +74,8 @@ in Froeling F.E.M. et al 2019.</h1>
     <p>The enrichment analysis was done with gprofile2 package 
 (Kolberg L et al 2020) with database version 'e109_eg56_p17_1d3191d' and 
 g:SCS multiple testing correction method applying significance 
-threshold of 0.05 (Raudvere U et al 2019).</p>
+threshold of 0.05 (Raudvere U et al 2019). All tested genes were used 
+as background.</p>
     </div>
 
     <div id="ref-usage">
@@ -82,17 +84,9 @@ threshold of 0.05 (Raudvere U et al 2019).</p>
 
     <div id="format">
     <h2>Format</h2>
-    <p>a <code>data.frame</code> containing the results of a differential 
-expression analysis between napabucasin treated and DMSO control parental 
-MiaPaCa2 cells for all 24184 genes tested. The 4 columns are:</p><ul><li><p>EnsemblID a <code>character</code> string representing the unique Ensembl 
-identifier for the tested gene</p></li>
-<li><p>EnsemblID a <code>numeric</code> representing the expression difference 
-(in log2FoldChange) between the napabucasin treatment and the DMSO control 
-for the tested gene</p></li>
-<li><p>padj a <code>numeric</code> representing the adjusted p-value associated  
-to the difference in expression for the tested gene</p></li>
-<li><p>GeneName a <code>character</code> string representing the name of 
-the tested gene</p></li>
+    <p>a <code>list</code> containing 2 entries:</p><ul><li><p>result a <code>data.frame</code> with the significantly enriched 
+terms</p></li>
+<li><p>meta a TODO</p></li>
 </ul></div>
     <div id="source">
     <h2>Source</h2>
@@ -103,23 +97,15 @@ Omnibus (GEO) under the accession number GSE135352.</p>
     <h2>Value</h2>
     
 
-<p>a <code>data.frame</code> containing the results of a differential 
-expression analysis between napabucasin treated and DMSO control parental 
-MiaPaCa2 cells for all 24184 genes tested. The 4 columns are:</p><ul><li><p>EnsemblID a <code>character</code> string representing the unique Ensembl 
-identifier for the tested gene</p></li>
-<li><p>log2FoldChange a <code>numeric</code> representing the expression 
-difference (in log2FoldChange) between the napabucasin treatment and 
-the DMSO control for the tested gene</p></li>
-<li><p>padj a <code>numeric</code> representing the adjusted p-value associated  
-to the difference in expression for the tested gene</p></li>
-<li><p>GeneName a <code>character</code> string representing the name of 
-the tested gene</p></li>
+<p>a <code>list</code> containing 2 entries:</p><ul><li><p>result a <code>data.frame</code> with the significantly enriched 
+terms</p></li>
+<li><p>meta a TODO</p></li>
 </ul></div>
     <div id="details">
     <h2>Details</h2>
     <p>The object is a named <code>list</code> with 2 entries. The 'result' entry 
 contains a <code>data.frame</code> with the enrichment analysis results and 
-the 'meta' entry contains metadata infomration.</p>
+the 'meta' entry contains metadata information.</p>
 
 
 <p>The dataset used for the enrichment analysis is 
@@ -130,7 +116,8 @@ Species–Mediated Cancer Cell Death. Clin Cancer Res
 <p>The enrichment analysis has been done with gprofile2 package 
 (Kolberg L et al 2020) with database version 'e109_eg56_p17_1d3191d' and 
 g:SCS multiple testing correction method applying significance 
-threshold of 0.05 (Raudvere U et al 2019).</p>
+threshold of 0.05 (Raudvere U et al 2019). All tested genes were used 
+as background.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
