@@ -407,7 +407,7 @@ releases is posted on the <a href="https://github.com/adeschen/gprofiler2cytosca
 <em><a href="https://github.com/adeschen/gprofiler2cytoscape" class="external-link">gprofiler2cytoscape</a></em>:</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:graphWorkflow"></span>
-<img src="Figure_gprofiler2cytoscape_workflow_v01.png" alt="The gprofiler2cytoscape workflow" width="100%"><p class="caption">
+<img src="Figure_workflow_v02.jpg" alt="The gprofiler2cytoscape workflow" width="100%"><p class="caption">
 Figure 3: <span class="caption-title">The gprofiler2cytoscape workflow</span><br></p>
 </div>
 <p>The principal input of <strong><em>gprofiler2cytoscape</em></strong> is a functional enrichment
@@ -559,9 +559,9 @@ software.</p>
 <span></span>
 <span><span class="co">## Create network for REACTOME significant terms</span></span>
 <span><span class="co">## The 'removeRoot=TRUE' parameter removes the root term from the network</span></span>
-<span><span class="fu"><a href="../reference/createNetwork.html">createNetwork</a></span><span class="op">(</span>gostObject<span class="op">=</span><span class="va">parentalNapaVsDMSOEnrichment</span>, source<span class="op">=</span><span class="st">"REAC"</span>, </span>
-<span>                removeRoot<span class="op">=</span><span class="cn">FALSE</span>, title<span class="op">=</span><span class="st">"Reactome_All"</span>, </span>
-<span>                collection<span class="op">=</span><span class="st">"parental_napa_vs_DMSO"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/createNetwork.html">createNetwork</a></span><span class="op">(</span>gostObject<span class="op">=</span><span class="va">parentalNapaVsDMSOEnrichment</span>,  source<span class="op">=</span><span class="st">"REAC"</span>, </span>
+<span>                  removeRoot<span class="op">=</span><span class="cn">TRUE</span>, title<span class="op">=</span><span class="st">"REACTOME_All"</span>, </span>
+<span>                  collection<span class="op">=</span><span class="st">"parental_napa_vs_DMSO"</span><span class="op">)</span></span></code></pre></div>
 <p><br><br></p>
 <p>The following figure shows what the gene-term network looks like
 in <em>Cytoscape</em>. As there are numerous significant Reactome terms, the network
