@@ -16,8 +16,8 @@
 #'
 #' @aliases gprofiler2cytoscape-package gprofiler2cytoscape
 #'
-#' @author Astrid Deschênes and
-#' Pascal Belleau
+#' @author Astrid Deschênes, Pascal Belleau, Robert L Faure,  
+#' Maria J Fernandes, David A Tuveson
 #'
 #' Maintainer:
 #' Astrid Deschênes <adeschen@hotmail.com>
