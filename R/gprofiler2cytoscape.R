@@ -377,3 +377,88 @@ NULL
 #' 
 #'
 NULL
+
+
+
+#' The result of an enrichment analysis has been done using the significantly 
+#' differentially expressed genes between 
+#' napabucasin treated and DMSO control MiaPaCa2 cells stably expressing 
+#' the Rosa26 control vector.
+#' The cells were treated for 2 hour with 0.5 uM napabucasin.  
+#' The protocol to generate the RNA-seq is described 
+#' in Froeling F.E.M. et al 2019.
+#' 
+#' The enrichment analysis was done with gprofile2 package 
+#' (Kolberg L et al 2020) with database version 'e109_eg56_p17_1d3191d' and 
+#' g:SCS multiple testing correction method applying significance 
+#' threshold of 0.05 (Raudvere U et al 2019). All tested genes were used 
+#' as background.
+#' 
+#' The object is a named \code{list} with 2 entries. The 'result' entry 
+#' contains a \code{data.frame} with the enrichment analysis results and 
+#' the 'meta' entry contains metadata information.
+#' 
+#' @name rosaNapaVsDMSOEnrichment
+#'
+#' @docType data
+#'
+#' @aliases rosaNapaVsDMSOEnrichment
+#'
+#' @format a \code{list} containing 2 entries:
+#' \itemize{
+#' \item{result} {a \code{data.frame} with the significantly enriched 
+#' terms }
+#' \item{meta} {a TODO}
+#' }
+#'
+#' @return  a \code{list} containing 2 entries:
+#' \itemize{
+#' \item{result} {a \code{data.frame} with the significantly enriched 
+#' terms }
+#' \item{meta} {a TODO}
+#' }
+#'
+#' @seealso
+#' \itemize{
+#'     \item \code{\link{createNetwork}} {for transforming functional 
+#'     enrichment results from gprofiler2 into a Cytoscape network}
+#' }
+#'
+#' @usage data(rosaNapaVsDMSOEnrichment)
+#'
+#' @keywords datasets
+#'
+#' @details
+#' 
+#' The dataset used for the enrichment analysis is 
+#' associated to this publication:
+#' 
+#' Froeling F.E.M. et al.Bioactivation of Napabucasin Triggers Reactive Oxygen 
+#' Species–Mediated Cancer Cell Death. Clin Cancer Res 
+#' 1 December 2019; 25 (23): 7162–7174
+#' 
+#' The enrichment analysis has been done with gprofile2 package 
+#' (Kolberg L et al 2020) with database version 'e109_eg56_p17_1d3191d' and 
+#' g:SCS multiple testing correction method applying significance 
+#' threshold of 0.05 (Raudvere U et al 2019). All tested genes were used 
+#' as background.
+#' 
+#' @source 
+#' 
+#' The original RNA-sequencing data is available at the Gene Expression 
+#' Omnibus (GEO) under the accession number GSE135352.
+#' 
+#' @examples
+#'
+#' ## Required library
+#' library(gprofiler2)
+#' 
+#' ## Loading dataset containing the results of a differentially expressed 
+#' ## analysis between 2-hour treatment with 0.5 uM napabucasin and 
+#' ## DMSO control MiaPaCa2 cells stably expressing the Rosa26 control vector
+#' data(rosaNapaVsDMSOEnrichment)
+#' 
+#' ## TODO
+#' 
+#'
+NULL
