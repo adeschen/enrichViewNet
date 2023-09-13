@@ -18,9 +18,11 @@ specific list of terms.
 
 ## Authors ##
 
-[Astrid Desch&ecirc;nes](http://ca.linkedin.com/in/astriddeschenes "Astrid Desch&ecirc;nes") and
-[Pascal Belleau](http://ca.linkedin.com/in/pascalbelleau "Pascal Belleau")
-
+[Astrid Desch&ecirc;nes](http://ca.linkedin.com/in/astriddeschenes "Astrid Desch&ecirc;nes"), 
+[Pascal Belleau](http://ca.linkedin.com/in/pascalbelleau "Pascal Belleau"), 
+[Robert L Faure](https://www.crchudequebec.ulaval.ca/en/research/researchers/robert-l-faure/),   
+[Maria J Fernandes](https://www.crchudequebec.ulaval.ca/en/research/researchers/maria-fernandes/) and 
+[David A Tuveson](https://tuvesonlab.labsites.cshl.edu/)
 
 ## License ##
 
