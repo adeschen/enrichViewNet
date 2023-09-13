@@ -331,13 +331,48 @@ The following figure shows what the gene-term network looks like
 in _Cytoscape_. As there are numerous significant Reactome terms, the network 
 is a bit hectic.
 
-To address this situation, a updated gene-term network containing only selected 
-Reactome terms can be created.
+To address this situation, a updated gene-term network containing only 
+Reactome terms of interest can be created.
 
 <br>
 <br>
 
+```{r runCreateNetworkSelected, echo=TRUE, eval=TRUE}
+## Load demo gprofiler2 enrichment result
+data("parentalNapaVsDMSOEnrichment")
 
+## List of terms of interest
+reactomeSelected <- c("REAC:R-HSA-9031628", "REAC:R-HSA-198725", 
+                        "REAC:R-HSA-9614085", "REAC:R-HSA-212436",
+                        "REAC:R-HSA-9614657", "REAC:R-HSA-73857",
+                        "REAC:R-HSA-74160", "REAC:R-HSA-381340",
+                        "REAC:R-HSA-9617828")
+
+## All enrichment results
+results <- parentalNapaVsDMSOEnrichment$result
+
+## Retain selected results
+selectedRes <- results[which(results$term_id %in% reactomeSelected), ]
+
+## Print the first selected terms
+selectedRes[, c("term_name")]
+
+```
+
+
+```{r runCreateNetworkSelected2, echo=TRUE, eval=FALSE}
+
+## Create network for REACTOME selected terms
+## The 'source="TERM_ID"' parameter enable to specify a personalized 
+## list of terms of interest
+createNetwork(gostObject=parentalNapaVsDMSOEnrichment,  source="TERM_ID", 
+                  termIDs=selectedRes$term_id, title="REACTOME_Selected", 
+                  collection="parental_napa_vs_DMSO")
+```
+
+
+<br>
+<br>
 
 # Transforming enrichment results into a enrichment map
 
