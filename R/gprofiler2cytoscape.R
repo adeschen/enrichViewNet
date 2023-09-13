@@ -1,7 +1,8 @@
 #' From functional enrichment results to biological networks
 #'
 #' The \code{gprofiler2cytoscape} package enables the visualization 
-#' of enrichment results obtained by \code{gprofiler2} 
+#' of enrichment results, in a format corresponding to the one generated 
+#' by \code{gprofiler2} 
 #' (\url{https://cran.r-project.org/web/packages/gprofiler2/index.html})  
 #' under the form of \code{Cytoscape} network (\url{https://cytoscape.org/}). 
 #' 

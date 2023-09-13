@@ -8,7 +8,8 @@
 \title{From functional enrichment results to biological networks}
 \description{
 The \code{gprofiler2cytoscape} package enables the visualization 
-of enrichment results obtained by \code{gprofiler2} 
+of enrichment results, in a format corresponding to the one generated 
+by \code{gprofiler2} 
 (\url{https://cran.r-project.org/web/packages/gprofiler2/index.html})  
 under the form of \code{Cytoscape} network (\url{https://cytoscape.org/}).
 }
@@ -25,8 +26,8 @@ are retained.
 }
 }
 \author{
-Astrid Deschênes and
-Pascal Belleau
+Astrid Deschênes, Pascal Belleau, Robert L Faure,  
+Maria J Fernandes, David A Tuveson
 
 Maintainer:
 Astrid Deschênes <adeschen@hotmail.com>
