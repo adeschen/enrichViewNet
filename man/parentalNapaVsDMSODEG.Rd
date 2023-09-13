@@ -11,7 +11,7 @@ in Froeling F.E.M. et al 2019.}
 \format{
 a \code{data.frame} containing the results of a differential 
 expression analysis between napabucasin treated and DMSO control parental 
-MiaPaCa2 cells for all 31856 genes tested. The 4 columns are:
+MiaPaCa2 cells for all 24184 genes tested. The 4 columns are:
 \itemize{
 \item{EnsemblID} {a \code{character} string representing the unique Ensembl 
 identifier for the tested gene}
@@ -35,7 +35,7 @@ data(parentalNapaVsDMSODEG)
 \value{
 a \code{data.frame} containing the results of a differential 
 expression analysis between napabucasin treated and DMSO control parental 
-MiaPaCa2 cells for all 31856 genes tested. The 4 columns are:
+MiaPaCa2 cells for all 24184 genes tested. The 4 columns are:
 \itemize{
 \item{EnsemblID} {a \code{character} string representing the unique Ensembl 
 identifier for the tested gene}

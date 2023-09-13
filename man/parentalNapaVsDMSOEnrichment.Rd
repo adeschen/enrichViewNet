@@ -10,19 +10,11 @@ The cells were treated for 2 hour with 0.5 uM napabucasin.
 The protocol to generate the RNA-seq is described 
 in Froeling F.E.M. et al 2019.}
 \format{
-a \code{data.frame} containing the results of a differential 
-expression analysis between napabucasin treated and DMSO control parental 
-MiaPaCa2 cells for all 24184 genes tested. The 4 columns are:
+a \code{list} containing 2 entries:
 \itemize{
-\item{EnsemblID} {a \code{character} string representing the unique Ensembl 
-identifier for the tested gene}
-\item{EnsemblID} {a \code{numeric} representing the expression difference 
-(in log2FoldChange) between the napabucasin treatment and the DMSO control 
-for the tested gene}
-\item{padj} {a \code{numeric} representing the adjusted p-value associated  
-to the difference in expression for the tested gene}
-\item{GeneName} {a \code{character} string representing the name of 
-the tested gene}
+\item{result} {a \code{data.frame} with the significantly enriched 
+terms }
+\item{meta} {a TODO}
 }
 }
 \source{
@@ -33,31 +25,24 @@ Omnibus (GEO) under the accession number GSE135352.
 data(parentalNapaVsDMSOEnrichment)
 }
 \value{
-a \code{data.frame} containing the results of a differential 
-expression analysis between napabucasin treated and DMSO control parental 
-MiaPaCa2 cells for all 24184 genes tested. The 4 columns are:
+a \code{list} containing 2 entries:
 \itemize{
-\item{EnsemblID} {a \code{character} string representing the unique Ensembl 
-identifier for the tested gene}
-\item{log2FoldChange} {a \code{numeric} representing the expression 
-difference (in log2FoldChange) between the napabucasin treatment and 
-the DMSO control for the tested gene}
-\item{padj} {a \code{numeric} representing the adjusted p-value associated  
-to the difference in expression for the tested gene}
-\item{GeneName} {a \code{character} string representing the name of 
-the tested gene}
+\item{result} {a \code{data.frame} with the significantly enriched 
+terms }
+\item{meta} {a TODO}
 }
 }
 \description{
 The enrichment analysis was done with gprofile2 package 
 (Kolberg L et al 2020) with database version 'e109_eg56_p17_1d3191d' and 
 g:SCS multiple testing correction method applying significance 
-threshold of 0.05 (Raudvere U et al 2019).
+threshold of 0.05 (Raudvere U et al 2019). All tested genes were used 
+as background.
 }
 \details{
 The object is a named \code{list} with 2 entries. The 'result' entry 
 contains a \code{data.frame} with the enrichment analysis results and 
-the 'meta' entry contains metadata infomration.
+the 'meta' entry contains metadata information.
 
 
 
@@ -71,7 +56,8 @@ Species–Mediated Cancer Cell Death. Clin Cancer Res
 The enrichment analysis has been done with gprofile2 package 
 (Kolberg L et al 2020) with database version 'e109_eg56_p17_1d3191d' and 
 g:SCS multiple testing correction method applying significance 
-threshold of 0.05 (Raudvere U et al 2019).
+threshold of 0.05 (Raudvere U et al 2019). All tested genes were used 
+as background.
 }
 \examples{
 
