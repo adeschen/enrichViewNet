@@ -1,6 +1,6 @@
 ---
 title: "From functional enrichment results to biological networks"
-author: Astrid Deschênes and Pascal Belleau
+author: Astrid Deschênes, Pascal Belleau, Robert L Faure and Maria J Fernandes
 output:
   BiocStyle::html_document:
     toc: true
@@ -48,7 +48,7 @@ Artistic license 2.0. You are free to use and redistribute this software.
 If you use this package for a publication, we would ask you to cite the 
 following:
 
-> Astrid Deschênes and Pascal Belleau (2021). gprofiler2cytoscape: From 
+> Astrid Deschênes and Pascal Belleau (2023). gprofiler2cytoscape: From 
   functional enrichment results to biological networks. 
   https://github.com/adeschen/gprofiler2cytoscape,
   https://adeschen.github.io/gprofiler2cytoscape/.
@@ -104,7 +104,7 @@ The **_gprofiler2cytoscape_** package offers multiple types of visualization
 of functional enrichment results. Visualization of enriched terms aims to 
 reduce the complexity of the analyses of complex results. Moreover, the 
 **_gprofiler2cytoscape_** package takes advantage of a powerful network 
-visualization tool which is _Cytoscape_. By doing so, all the  
+visualization tool which is _Cytoscape_. By doing so, all the 
 functionalities of this mature software can be used by users to personalize 
 and analyze the enrichment networks.
 
@@ -118,20 +118,19 @@ to its dataset(s). Only genes present in the query used for the
 enrichment analysis are shown.
 
 
-```{r graphDemo01, echo = FALSE, fig.align="left", fig.cap="A network where significant GO terms and genes are presented as nodes while edges connect each gene to its associated term(s).", out.width = '90%'}
+```{r graphDemo01, echo = FALSE, fig.align="center", fig.cap="A network where significant GO terms and genes are presented as nodes while edges connect each gene to its associated term(s).", out.width = '90%'}
 knitr::include_graphics("demo01.jpeg")
 ```
 
 The **_gprofiler2cytoscape_** package 
 offers the option to generate a network for only a portion of the 
 significant terms by selecting the source or by providing a 
-specific list of terms.
-
-Once the network is created, the user can personalize the visual attributes 
+specific list of terms.Once the network is created, the user can 
+personalize the visual attributes 
 and integrate external information such as expression profiles, phenotypes 
 and other molecular states. The user can also perform network analysis.
 
-In addition, the **_gprofiler2cytoscape_** package also provides the option to  
+In addition, the **_gprofiler2cytoscape_** package also provides the option to 
 create enrichment maps from functional enrichment results. 
 The enrichment maps have been introduced in the Bioconductor 
 **_enrichplot_** package [@Yu2022]. 
@@ -140,7 +139,7 @@ with edges connecting overlapping genes. Thus, enriched terms with overlapping
 genes cluster together. This type of graphs facilitate the 
 identification of functional modules.
 
-```{r graphDemo02, echo = FALSE, fig.align="left", fig.cap="An enrichment map using Kegg terms.", out.width = '90%'}
+```{r graphDemo02, echo = FALSE, fig.align="center", fig.cap="An enrichment map using significant Kegg terms.", out.width = '90%'}
 knitr::include_graphics("demo_KEGG_emap_v01.jpeg")
 ```
 
@@ -175,11 +174,10 @@ devtools::install_github('adeschen/gprofiler2cytoscape', ref = "v0.0.4")
 # General workflow
 
 
-
 The following workflow gives an overview of the capabilities of 
 `r Githubpkg("adeschen/gprofiler2cytoscape")`:
 
-```{r graphWorkflow, echo = FALSE, fig.align="center", fig.cap="The gprofiler2cytoscape workflow", out.width = '100%'}
+```{r graphWorkflow, echo=FALSE, fig.align="center", fig.cap="The gprofiler2cytoscape workflow", out.width = '100%'}
 knitr::include_graphics("Figure_gprofiler2cytoscape_workflow_v01.png")
 ```
 
@@ -199,7 +197,7 @@ highly recommended.
 <br>
 <br>
 
-# Transforming enrichment results into a Cytoscape gene-term network
+# Transforming enrichment results into a gene-term network loadable in Cytoscape
 
 
 The following workflow gives an overview of the steps associated to the 
@@ -227,7 +225,7 @@ The first step consists in running an enrichment analysis with
 is a _list_ and should be saved. 
 
 
-```{r gprofiler, echo=TRUE, warning=FALSE, message=FALSE, collapse=F, eval=FALSE}
+```{r gprofiler, echo=TRUE, warning=FALSE, message=FALSE, collapse=F, eval=TRUE}
 
 ## Required library
 library(gprofiler2)
@@ -265,7 +263,7 @@ The gost() function returns an named list of 2 entries:
  * The __result__ entry contains the enrichment results.
  * The __meta__ entry contains the metadata information.
 
-```{r gostResult, echo=TRUE, eval=FALSE}
+```{r gostResult, echo=TRUE, eval=TRUE}
 ## The 'gostres' object is a list of 2 entries
 ## The 'result' entry contains the enrichment results
 ## The 'meta' entry contains the metadata information
@@ -286,7 +284,7 @@ visualizing networks. It enables network integration with any type of attribute
 data. The Cytoscape software 
 is available at the [Cytoscape website](https://cytoscape.org/).
 
-```{r cytoscapeLogo01, echo = FALSE, fig.align="center", fig.cap="Cytoscape software logo.", out.width = '100%'}
+```{r cytoscapeLogo01, echo = FALSE, fig.align="center", fig.cap="Cytoscape software logo.", out.width = '75%'}
 knitr::include_graphics("cy3sticker.png")
 ```
 
@@ -299,7 +297,7 @@ If the application is not running, a CX JSON file will be created. The file
 can then be loaded manually into the [Cytoscape](https://cytoscape.org/) 
 software.
 
-## Create a Cytoscape network 
+## Create a gene-term network 
 
 TODO
 
@@ -316,13 +314,32 @@ createNetwork(gostObject=parentalNapaVsDMSOEnrichment, source="REAC",
 
 <br>
 <br>
-```{r networkInCytoscape, echo = FALSE, fig.align="center", fig.cap="All reactome terms in a gene-term network loaded in Cytoscape.", out.width = '100%'}
+
+The following figure shows what the gene-term network looks like 
+in _Cytoscape_. As there are numerous significant Reactome terms, the network 
+is a bit hectic.
+
+
+```{r networkInCytoscape, echo=FALSE, fig.align="center", fig.cap="All reactome terms in a gene-term network loaded in Cytoscape.", out.width = '110%'}
 knitr::include_graphics("cytoscape_reactome_all_parental_napa_vs_DMSO.png")
 ```
 
+<br>
+<br>
+
+The following figure shows what the gene-term network looks like 
+in _Cytoscape_. As there are numerous significant Reactome terms, the network 
+is a bit hectic.
+
+To address this situation, a updated gene-term network containing only selected 
+Reactome terms can be created.
+
+<br>
+<br>
 
 
-# Transforming gprofiler2 enrichment results into a enrichment map
+
+# Transforming enrichment results into a enrichment map
 
 TODO 
 
