@@ -2,7 +2,7 @@ Package: gprofiler2cytoscape
 Type: Package
 Version: 0.0.4
 Date: 2021-03-25
-Title: From gprofiler2 to Cytoscape network
+Title: From functional enrichment results to biological networks
 Description: This package enables the transformation of 
     functional enrichment results obtained by gprofiler2 into a Cytoscape 
     network where significant terms 
@@ -12,11 +12,16 @@ Description: This package enables the transformation of
     the option to generate a network for only a portion of the significant 
     terms by selecting the source or by providing a specific list of terms.
 Authors@R: c(person("Astrid", "Deschênes", email = "adeschen@hotmail.com",
-    role = c("aut", "cre"),
-    comment = c(ORCID = "0000-0001-7846-6749")), 
+    role=c("aut", "cre"), comment=c(ORCID = "0000-0001-7846-6749")), 
     person("Pascal", "Belleau", email = "pascal_belleau@hotmail.com",
-    role = c("aut"),
-    comment = c(ORCID = "0000-0002-0802-1071")))
+    role=c("aut"), comment = c(ORCID = "0000-0002-0802-1071")), 
+    person("Robert", "Faure", email="robert.faure@crchudequebec.ulaval.ca",
+    role=c("aut"), comment=c(ORCID="0000-0003-1798-4723")), 
+    person("Maria", "Fernandes", 
+    email="maria.fernandes@crchudequebec.ulaval.ca", role = c("aut")),
+    person(given="David A.", family="Tuveson",
+    email="dtuveson@cshl.edu", 
+    role=c("aut"), comment=c(ORCID="0000-0002-8017-2712")))
 Encoding: UTF-8
 License: Artistic-2.0
 Depends: R (>= 4.0)
