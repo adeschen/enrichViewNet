@@ -5,28 +5,36 @@
 <!-- badges: end -->
 
 
-The **_gprofiler2cytoscape_** package enables the transformation of 
-functional enrichment results obtained by [gprofiler2](https://cran.r-project.org/web/packages/gprofiler2/vignettes/gprofiler2.html) 
-into a 
-[Cytoscape](https://cytoscape.org/) network where significant terms (Gene Ontology/Reactome/Kegg/Transcription Factor/etc..) and 
+The **enrichViewNet** package enables the transformation of 
+functional enrichment results, formatted as the results obtained  by [gprofiler2](https://cran.r-project.org/web/packages/gprofiler2/vignettes/gprofiler2.html), 
+into networks. 
+
+First, the **enrichViewNet** package enables the 
+visualization of enrichment results a [Cytoscape](https://cytoscape.org/) 
+network where significant terms 
+(Gene Ontology/Reactome/Transcription Factor/etc..) and 
 genes are nodes. In this network, edges connect genes that are part of the
-enrichment request to their terms. The **_gprofiler2cytoscape_** package 
-offers the option to generate a network for only a portion of the 
-significant terms by selecting the source or by providing a 
-specific list of terms.
+enrichment request to their terms. 
+
+In addition, the **enrichViewNet** package also provides the option to 
+create enrichment maps from functional enrichment results. 
+Enrichment maps, as introduced in the Bioconductor 
+**_enrichplot_** package, enable the visualization of enriched terms 
+into a network with edges connecting overlapping genes. Thus, enriched terms 
+with overlapping genes cluster together.
 
 
 ## Authors ##
 
 [Astrid Desch&ecirc;nes](http://ca.linkedin.com/in/astriddeschenes "Astrid Desch&ecirc;nes"), 
 [Pascal Belleau](http://ca.linkedin.com/in/pascalbelleau "Pascal Belleau"), 
-[Robert L Faure](https://www.crchudequebec.ulaval.ca/en/research/researchers/robert-l-faure/),   
+[Robert L Faure](https://www.crchudequebec.ulaval.ca/en/research/researchers/robert-l-faure/), 
 [Maria J Fernandes](https://www.crchudequebec.ulaval.ca/en/research/researchers/maria-fernandes/) and 
 [David A Tuveson](https://tuvesonlab.labsites.cshl.edu/)
 
 ## License ##
 
-This package and the underlying **_gprofiler2cytoscape_** code are distributed under 
+This package and the underlying **enrichViewNet** code are distributed under 
 the Artistic license 2.0. You are free to use and redistribute this software. 
 
 For more information on Artistic 2.0 License see
@@ -35,14 +43,15 @@ For more information on Artistic 2.0 License see
 
 ## Documentation ##
 
-[gprofiler2cytoscape Website](https://adeschen.github.io/gprofiler2cytoscape/)
+[enrichViewNet Website](https://adeschen.github.io/gprofiler2cytoscape/)
 
-[gprofiler2cytoscape Get Started](https://adeschen.github.io/gprofiler2cytoscape/articles/gprofiler2cytoscape.html)
+[enrichViewNet Get Started](https://adeschen.github.io/gprofiler2cytoscape/articles/gprofiler2cytoscape.html)
 
 
 ## Installation ##
 
-To install the latest version accessible, the  [devtools](https://cran.r-project.org/web/packages/devtools/index.html) 
+To install the latest version accessible, the 
+[devtools](https://cran.r-project.org/web/packages/devtools/index.html) 
 package is required.
 
      ## Load required package
