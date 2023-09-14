@@ -2,6 +2,6 @@ pandoc: 3.1.1
 pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
-  gprofiler2cytoscape: gprofiler2cytoscape.html
-last_built: 2023-09-14T18:23Z
+  enrichViewNet: enrichViewNet.html
+last_built: 2023-09-14T21:32Z
 

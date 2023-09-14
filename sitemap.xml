@@ -4,7 +4,7 @@
     <loc>/404.html</loc>
   </url>
   <url>
-    <loc>/articles/gprofiler2cytoscape.html</loc>
+    <loc>/articles/enrichViewNet.html</loc>
   </url>
   <url>
     <loc>/articles/index.html</loc>
@@ -40,6 +40,9 @@
     <loc>/reference/demoGOST.html</loc>
   </url>
   <url>
+    <loc>/reference/enrichViewNet-package.html</loc>
+  </url>
+  <url>
     <loc>/reference/extractNodesAndEdgesInfoForCXJSON.html</loc>
   </url>
   <url>
@@ -47,9 +50,6 @@
   </url>
   <url>
     <loc>/reference/extractNodesAndEdgesWhenNoIntersection.html</loc>
-  </url>
-  <url>
-    <loc>/reference/gprofiler2cytoscape-package.html</loc>
   </url>
   <url>
     <loc>/reference/index.html</loc>

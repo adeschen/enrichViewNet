@@ -8,9 +8,9 @@
 <meta name="author" content="Astrid Deschênes, Pascal Belleau, Robert L Faure and Maria J Fernandes">
 <meta name="date" content="2023-09-14">
 <title>From functional enrichment results to biological networks</title>
-<script src="gprofiler2cytoscape_files/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="gprofiler2cytoscape_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
-<script src="gprofiler2cytoscape_files/bootstrap-3.3.5/js/bootstrap.min.js"></script><script src="gprofiler2cytoscape_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script><script src="gprofiler2cytoscape_files/bootstrap-3.3.5/shim/respond.min.js"></script><style>h1 {font-size: 34px;}
+<script src="enrichViewNet_files/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="enrichViewNet_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<script src="enrichViewNet_files/bootstrap-3.3.5/js/bootstrap.min.js"></script><script src="enrichViewNet_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script><script src="enrichViewNet_files/bootstrap-3.3.5/shim/respond.min.js"></script><style>h1 {font-size: 34px;}
        h1.title {font-size: 38px;}
        h2 {font-size: 30px;}
        h3 {font-size: 24px;}
@@ -19,7 +19,7 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        </style>
-<script src="gprofiler2cytoscape_files/navigation-1.1/tabsets.js"></script><style type="text/css">
+<script src="enrichViewNet_files/navigation-1.1/tabsets.js"></script><style type="text/css">
   code{white-space: pre-wrap;}
   span.smallcaps{font-variant: small-caps;}
   span.underline{text-decoration: underline;}
@@ -270,7 +270,7 @@ function toggle_visibility(id1) {
 </ul>
 </div>
 
-<p><br><strong>Package</strong>: <em>gprofiler2cytoscape</em><br><strong>Authors</strong>: Astrid Deschênes [aut, cre] (<a href="https://orcid.org/0000-0001-7846-6749" class="external-link uri">https://orcid.org/0000-0001-7846-6749</a>),
+<p><br><strong>Package</strong>: <em>enrichViewNet</em><br><strong>Authors</strong>: Astrid Deschênes [aut, cre] (<a href="https://orcid.org/0000-0001-7846-6749" class="external-link uri">https://orcid.org/0000-0001-7846-6749</a>),
 Pascal Belleau [aut] (<a href="https://orcid.org/0000-0002-0802-1071" class="external-link uri">https://orcid.org/0000-0002-0802-1071</a>),
 Robert L. Faure [aut] (<a href="https://orcid.org/0000-0003-1798-4723" class="external-link uri">https://orcid.org/0000-0003-1798-4723</a>),
 Maria J. Fernandes [aut],
@@ -279,8 +279,8 @@ David A. Tuveson [aut] (<a href="https://orcid.org/0000-0002-8017-2712" class="e
 <h2 id="licensing">
 <span class="header-section-number">1</span> Licensing<a class="anchor" aria-label="anchor" href="#licensing"></a>
 </h2>
-<p>The <em><a href="https://github.com/adeschen/gprofiler2cytoscape" class="external-link">gprofiler2cytoscape</a></em> package and the underlying
-<em><a href="https://github.com/adeschen/gprofiler2cytoscape" class="external-link">gprofiler2cytoscape</a></em> code are distributed under the
+<p>The <em><a href="https://github.com/adeschen/enrichViewNet" class="external-link">enrichViewNet</a></em> package and the underlying
+<em><a href="https://github.com/adeschen/enrichViewNet" class="external-link">enrichViewNet</a></em> code are distributed under the
 Artistic license 2.0. You are free to use and redistribute this software.</p>
 <p><br><br></p>
 </div>
@@ -291,10 +291,10 @@ Artistic license 2.0. You are free to use and redistribute this software.</p>
 <p>If you use this package for a publication, we would ask you to cite the
 following:</p>
 <blockquote>
-<p>Astrid Deschênes and Pascal Belleau (2023). gprofiler2cytoscape: From
+<p>Astrid Deschênes and Pascal Belleau (2023). enrichViewNet: From
 functional enrichment results to biological networks.
-<a href="https://github.com/adeschen/gprofiler2cytoscape" class="external-link uri">https://github.com/adeschen/gprofiler2cytoscape</a>,
-<a href="https://adeschen.github.io/gprofiler2cytoscape/" class="external-link uri">https://adeschen.github.io/gprofiler2cytoscape/</a>.</p>
+<a href="https://github.com/adeschen/enrichViewNet" class="external-link uri">https://github.com/adeschen/enrichViewNet</a>,
+<a href="https://adeschen.github.io/enrichViewNet/" class="external-link uri">https://adeschen.github.io/enrichViewNet/</a>.</p>
 </blockquote>
 <p><br><br></p>
 </div>
@@ -340,22 +340,22 @@ the particularity of being accompanied by the CRAN package
 researchers to incorporate functional enrichment analysis into automated
 analysis pipelines written in R. This greatly facilitates research
 reproducibility.</p>
-<p>The <strong><em>gprofiler2cytoscape</em></strong> package enables the visualization
+<p>The <strong>enrichViewNet</strong> package enables the visualization
 of functional enrichment results as network graphs. Visualization of
 enriched terms aims to
 reduce the complexity of the analyses of complex results.
 Compared to popular enrichment visualization graphs such as bar plots and
 dot plots, network graphs unveil the connection between the
 terms as significant terms often share one or multiple genes. Moreover, the
-<strong><em>gprofiler2cytoscape</em></strong> package takes advantage of a powerful network
+<strong>enrichViewNet</strong> package takes advantage of a powerful network
 visualization tool which is <em>Cytoscape</em>. By doing so, all the
 functionalities of this mature software can be used by users to personalize
 and analyze the enrichment networks.</p>
-<p>First, the <strong><em>gprofiler2cytoscape</em></strong> package enables the
+<p>First, the <strong>enrichViewNet</strong> package enables the
 visualization of enrichment results, in a format corresponding to the one
 generated by <em>gprofiler2</em>, as a
 customizable <em>Cytoscape</em> network <span class="citation">(<a href="#ref-PaulShannon2003">Shannon et al. 2003</a>)</span>. In the biological
-networks generated by <strong><em>gprofiler2cytoscape</em></strong>, both
+networks generated by <strong>enrichViewNet</strong>, both
 gene datasets (GO terms/pathways/protein complexes) and genes associated
 to the datasets are represented as nodes. While the edges connect each gene
 to its dataset(s). Only genes present in the query used for the
@@ -365,14 +365,14 @@ enrichment analysis are shown.</p>
 <img src="demo01.jpeg" alt="A network where significant GO terms and genes are presented as nodes while edges connect each gene to its associated term(s)." width="90%"><p class="caption">
 Figure 1: <span class="caption-title">A network where significant GO terms and genes are presented as nodes while edges connect each gene to its associated term(s)</span><br></p>
 </div>
-<p>The <strong><em>gprofiler2cytoscape</em></strong> package
+<p>The <strong>enrichViewNet</strong> package
 offers the option to generate a network for only a portion of the
 significant terms by selecting the source or by providing a
 specific list of terms.Once the network is created, the user can
 personalize the visual attributes
 and integrate external information such as expression profiles, phenotypes
 and other molecular states. The user can also perform network analysis.</p>
-<p>In addition, the <strong><em>gprofiler2cytoscape</em></strong> package also provides the option to
+<p>In addition, the <strong>enrichViewNet</strong> package also provides the option to
 create enrichment maps from functional enrichment results.
 The enrichment maps have been introduced in the Bioconductor
 <strong><em>enrichplot</em></strong> package <span class="citation">(<a href="#ref-Yu2022">Yu 2022</a>)</span>.
@@ -382,7 +382,7 @@ genes cluster together. This type of graphs facilitate the
 identification of functional modules.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:graphDemo02"></span>
-<img src="demo_KEGG_emap_v01.jpeg" alt="An enrichment map using significant Kegg terms." width="90%"><p class="caption">
+<img src="demo_KEGG_emap_v01.jpeg" alt="An enrichment map using significant Kegg terms." width="95%"><p class="caption">
 Figure 2: <span class="caption-title">An enrichment map using significant Kegg terms</span><br></p>
 </div>
 <p><br><br></p>
@@ -392,19 +392,19 @@ Figure 2: <span class="caption-title">An enrichment map using significant Kegg t
 <span class="header-section-number">4</span> Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>To install the latest version accessible on the
-<em><a href="https://github.com/adeschen/gprofiler2cytoscape" class="external-link">gprofiler2cytoscape</a></em> Github Website, the
+<em><a href="https://github.com/adeschen/enrichViewNet" class="external-link">enrichViewNet</a></em> Github Website, the
 <em><a href="https://CRAN.R-project.org/package=devtools" class="external-link">devtools</a></em> package is required.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">## Install the latest version of gprofiler2cytoscape</span></span>
+<code class="sourceCode R"><span><span class="co">## Install the latest version of enrichViewNet</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/" class="external-link">devtools</a></span><span class="op">)</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">'adeschen/gprofiler2cytoscape'</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">'adeschen/enrichViewNet'</span><span class="op">)</span></span></code></pre></div>
 <p>It is also possible to install an official release. The list of available
-releases is posted on the <a href="https://github.com/adeschen/gprofiler2cytoscape/releases" title="gprofiler2cytoscape Release Site" class="external-link">gprofiler2cytoscape Release Website</a>.</p>
+releases is posted on the <a href="https://github.com/adeschen/enrichViewNet/releases" title="enrichViewNet Release Site" class="external-link">enrichViewNet Release Website</a>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">## Install the version v0.1 of gprofiler2cytoscape</span></span>
+<code class="sourceCode R"><span><span class="co">## Install the version v0.1 of enrichViewNet</span></span>
 <span><span class="co">## using 'ref' parameter</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/" class="external-link">devtools</a></span><span class="op">)</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">'adeschen/gprofiler2cytoscape'</span>, ref <span class="op">=</span> <span class="st">"v0.0.4"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">'adeschen/enrichViewNet'</span>, ref <span class="op">=</span> <span class="st">"v0.0.4"</span><span class="op">)</span></span></code></pre></div>
 <p><br><br></p>
 </div>
 <div class="section level2" number="5">
@@ -412,16 +412,16 @@ releases is posted on the <a href="https://github.com/adeschen/gprofiler2cytosca
 <span class="header-section-number">5</span> General workflow<a class="anchor" aria-label="anchor" href="#general-workflow"></a>
 </h2>
 <p>The following workflow gives an overview of the capabilities of
-<em><a href="https://github.com/adeschen/gprofiler2cytoscape" class="external-link">gprofiler2cytoscape</a></em>:</p>
+<em><a href="https://github.com/adeschen/enrichViewNet" class="external-link">enrichViewNet</a></em>:</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:graphWorkflow"></span>
-<img src="Figure_workflow_v02.jpg" alt="The gprofiler2cytoscape workflow" width="100%"><p class="caption">
-Figure 3: <span class="caption-title">The gprofiler2cytoscape workflow</span><br></p>
+<img src="Figure_workflow_v02.jpg" alt="The enrichViewNet workflow" width="100%"><p class="caption">
+Figure 3: <span class="caption-title">The enrichViewNet workflow</span><br></p>
 </div>
-<p>The principal input of <strong><em>gprofiler2cytoscape</em></strong> is a functional enrichment
+<p>The principal input of <strong>enrichViewNet</strong> is a functional enrichment
 result in a format identical to the one generated by the CRAN
 <em>gprofiler2</em> package.</p>
-<p>From an enrichment result, the <strong><em>gprofiler2cytoscape</em></strong> offers two options:</p>
+<p>From an enrichment result, the <strong>enrichViewNet</strong> offers two options:</p>
 <ul>
 <li>generate a gene-term network that can be loaded in <em>Cytoscape</em> software</li>
 <li>generate a enrichment map</li>
@@ -549,7 +549,7 @@ is available at the <a href="https://cytoscape.org/" class="external-link">Cytos
 Figure 5: <span class="caption-title">Cytoscape software logo</span><br></p>
 </div>
 <p>The Cytoscape network generated by
-<em><a href="https://github.com/adeschen/gprofiler2cytoscape" class="external-link">gprofiler2cytoscape</a></em>
+<em><a href="https://github.com/adeschen/enrichViewNet" class="external-link">enrichViewNet</a></em>
 will be automatically loaded into the <a href="https://cytoscape.org/" class="external-link">Cytoscape</a>
 software when the application is running.</p>
 <p>If the application is not running, a CX JSON file will be created. The file
@@ -570,7 +570,7 @@ software.</p>
 <span><span class="fu"><a href="../reference/createNetwork.html">createNetwork</a></span><span class="op">(</span>gostObject<span class="op">=</span><span class="va">parentalNapaVsDMSOEnrichment</span>,  source<span class="op">=</span><span class="st">"REAC"</span>, </span>
 <span>                  removeRoot<span class="op">=</span><span class="cn">TRUE</span>, title<span class="op">=</span><span class="st">"REACTOME_All"</span>, </span>
 <span>                  collection<span class="op">=</span><span class="st">"parental_napa_vs_DMSO"</span><span class="op">)</span></span></code></pre></div>
-<p><br><br></p>
+<p><br></p>
 <p>The following figure shows what the gene-term network looks like
 in <em>Cytoscape</em>. As there are numerous significant Reactome terms, the network
 is a bit hectic.</p>
@@ -579,13 +579,10 @@ is a bit hectic.</p>
 <img src="cytoscape_reactome_all_parental_napa_vs_DMSO.png" alt="All reactome terms in a gene-term network loaded in Cytoscape." width="110%"><p class="caption">
 Figure 6: <span class="caption-title">All reactome terms in a gene-term network loaded in Cytoscape</span><br></p>
 </div>
-<p><br><br></p>
-<p>The following figure shows what the gene-term network looks like
-in <em>Cytoscape</em>. As there are numerous significant Reactome terms, the network
-is a bit hectic.</p>
+<p><br></p>
 <p>To address this situation, a updated gene-term network containing only
 Reactome terms of interest can be created.</p>
-<p><br><br></p>
+<p><br></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Load demo gprofiler2 enrichment result</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"parentalNapaVsDMSOEnrichment"</span><span class="op">)</span></span>
@@ -675,8 +672,8 @@ was compiled:</p>
 <span><span class="co">## [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">## [1] gprofiler2_0.2.2          gprofiler2cytoscape_0.0.4</span></span>
-<span><span class="co">## [3] knitr_1.44                BiocStyle_2.29.1         </span></span>
+<span><span class="co">## [1] gprofiler2_0.2.2    enrichViewNet_0.0.4 knitr_1.44         </span></span>
+<span><span class="co">## [4] BiocStyle_2.29.1   </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
 <span><span class="co">##  [1] gtable_0.3.4        xfun_0.40           bslib_0.5.1        </span></span>
@@ -689,7 +686,7 @@ was compiled:</p>
 <span><span class="co">## [22] lifecycle_1.0.3     compiler_4.3.1      stringr_1.5.0      </span></span>
 <span><span class="co">## [25] gplots_3.1.3        munsell_0.5.0       repr_1.1.6         </span></span>
 <span><span class="co">## [28] uchardet_1.1.1      htmltools_0.5.6     sass_0.4.7         </span></span>
-<span><span class="co">## [31] RCurl_1.98-1.12     yaml_2.3.7          lazyeval_0.2.2     </span></span>
+<span><span class="co">## [31] lazyeval_0.2.2      RCurl_1.98-1.12     yaml_2.3.7         </span></span>
 <span><span class="co">## [34] plotly_4.10.2       tidyr_1.3.0         pillar_1.9.0       </span></span>
 <span><span class="co">## [37] crayon_1.5.2        jquerylib_0.1.4     cachem_1.0.8       </span></span>
 <span><span class="co">## [40] gtools_3.9.4        tidyselect_1.2.0    digest_0.6.33      </span></span>
