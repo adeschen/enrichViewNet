@@ -7,7 +7,7 @@
 \alias{gprofiler2cytoscape}
 \title{From functional enrichment results to biological networks}
 \description{
-The \code{gprofiler2cytoscape} package enables the visualization 
+The \code{enrichViewNet} package enables the visualization 
 of enrichment results, in a format corresponding to the one generated 
 by \code{gprofiler2} 
 (\url{https://cran.r-project.org/web/packages/gprofiler2/index.html})  
