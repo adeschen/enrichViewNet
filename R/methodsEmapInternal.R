@@ -41,7 +41,7 @@
 #' 
 #' 
 #' ## Check that all arguments are valid
-#' gprofiler2cytoscape:::validateCreateEnrichMapArguments(gostObject=demoGOST,
+#' enrichViewNet:::validateCreateEnrichMapArguments(gostObject=demoGOST,
 #'     source="GO:BP", termIDs=NULL, removeRoot=FALSE, title="GO:BP")
 #' 
 #' @author Astrid Deschênes

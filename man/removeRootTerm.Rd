@@ -27,7 +27,7 @@ data(demoGOST)
 results <- demoGOST$result[demoGOST$result$source == "WP", ]
 
 ## Remove WIKIPATHWAYS root term 
-gprofiler2cytoscape:::removeRootTerm(gostResult=results)
+enrichViewNet:::removeRootTerm(gostResult=results)
 
 
 }

@@ -1,6 +1,6 @@
 ### Unit tests for methodsInternal.R functions
 
-library(gprofiler2cytoscape)
+library(enrichViewNet)
 
 data(demoGOST)
 
@@ -11,7 +11,7 @@ context("isCytoscapeRunning() results")
 
 test_that("isCytoscapeRunning() must return an logical value", {
     
-    expect_is(gprofiler2cytoscape:::isCytoscapeRunning(), "logical")
+    expect_is(enrichViewNet:::isCytoscapeRunning(), "logical")
 })
 
 
@@ -26,7 +26,7 @@ test_that("validateCreateNetworkArguments() must return TRUE when all parameters
                                       term_id=c("GO:0051171", "GO:0010604"))
     gostObj[["meta"]] <- list()
     
-    result <- gprofiler2cytoscape:::validateCreateNetworkArguments(
+    result <- enrichViewNet:::validateCreateNetworkArguments(
         gostObject=gostObj, source="GO:BP", termIDs=NULL, removeRoot=FALSE,
         fileName="new.cx")
     
@@ -45,7 +45,7 @@ test_that("validateCreateNetworkArguments() must return error when source is  wh
     error_message <- paste0("There is no enriched term for the selected ", 
                             "source \'", source, "\'.")
     
-    expect_error(gprofiler2cytoscape:::validateCreateNetworkArguments(
+    expect_error(enrichViewNet:::validateCreateNetworkArguments(
         gostObject=gostObj, source=source, termIDs=NULL, removeRoot=FALSE,
         fileName="hello.cx"), error_message)
     
@@ -63,7 +63,7 @@ test_that("validateCreateNetworkArguments() must return error when source is TER
     error_message <- paste0("A vector of terms should be given through", 
                     " the \'termIDs\' parameter when source is \'TERM_ID\'.")
     
-    expect_error(gprofiler2cytoscape:::validateCreateNetworkArguments(
+    expect_error(enrichViewNet:::validateCreateNetworkArguments(
         gostObject=gostObj, source=source, termIDs=NULL, removeRoot=FALSE, 
         fileName="toto.cx"), error_message)
     
@@ -81,7 +81,7 @@ test_that("validateCreateNetworkArguments() must return error when not all term 
     error_message <- paste0("Not all listed terms are present in the  ",
                                 "enrichment results.")
     
-    expect_error(gprofiler2cytoscape:::validateCreateNetworkArguments(
+    expect_error(enrichViewNet:::validateCreateNetworkArguments(
         gostObject=gostObj, source=source, 
         termIDs=c("GO:0051171","GO:0010999"), removeRoot=FALSE, 
         fileName="toto.cx"), error_message)
@@ -100,7 +100,7 @@ test_that("validateCreateNetworkArguments() must return error when removeRoot is
     error_message <- paste0("The \'removeRoot\' parameter must be the logical ", 
                                 "value TRUE or FALSE.")
     
-    expect_error(gprofiler2cytoscape:::validateCreateNetworkArguments(
+    expect_error(enrichViewNet:::validateCreateNetworkArguments(
         gostObject=gostObj, source=source, termIDs=c("GO:0051171"), 
         removeRoot="HI", fileName="test.cx"), error_message)
 })
@@ -113,7 +113,7 @@ test_that("validateCreateNetworkArguments() must return term IDs are good", {
                                         term_id=c("GO:0051171", "GO:0010604"))
     gostObj[["meta"]] <- list()
     
-    result <- gprofiler2cytoscape:::validateCreateNetworkArguments(
+    result <- enrichViewNet:::validateCreateNetworkArguments(
                 gostObject=gostObj, source="TERM_ID", 
                 termIDs=c("GO:0051171", "GO:0010604"), fileName="test.cx", 
                 removeRoot=FALSE)
@@ -131,7 +131,7 @@ test_that("validateCreateNetworkArguments() must return error when fileName is n
     
     error_message <- "The \'fileName\' parameter must a character string."
     
-    expect_error(gprofiler2cytoscape:::validateCreateNetworkArguments(
+    expect_error(enrichViewNet:::validateCreateNetworkArguments(
         gostObject = gostObj, source = "GO:BP", termIDs = NULL, 
         removeRoot = FALSE, fileName = 231), error_message)
 })
@@ -146,7 +146,7 @@ test_that("validateCreateNetworkArguments() must return error when fileName not 
     
     error_message <- "The \'fileName\' parameter must have \'.cx\' extension."
     
-    expect_error(gprofiler2cytoscape:::validateCreateNetworkArguments(
+    expect_error(enrichViewNet:::validateCreateNetworkArguments(
         gostObject=gostObj, source="GO:BP", termIDs=NULL, 
         removeRoot=FALSE, fileName="toto.txt"), error_message)
 })
@@ -161,7 +161,7 @@ test_that("removeRootTerm() must return same list when not root term present", {
     demo <- data.frame(source=c(rep("GO:BP", 3)), 
                         term_id=c("GO:0051171", "GO:0010604", "GO:0014444"))
     
-    result <- gprofiler2cytoscape:::removeRootTerm(gostResult=demo)
+    result <- enrichViewNet:::removeRootTerm(gostResult=demo)
     
     expect_identical(result, demo)
 })
@@ -177,7 +177,7 @@ test_that("removeRootTerm() must return KEGG root term", {
                        term_id=c("GO:0051171", "GO:0010604", "GO:0014444",
                                  "KEGG:00010"))
     
-    result <- gprofiler2cytoscape:::removeRootTerm(gostResult=demo)
+    result <- enrichViewNet:::removeRootTerm(gostResult=demo)
     
     expect_identical(result, expected)
 })
@@ -193,7 +193,7 @@ test_that("removeRootTerm() must return MIRNA root term", {
                            term_id=c("GO:0051171", "GO:0010604", "GO:0014444",
                                      "KEGG:00044", "KEGG:00010"))
     
-    result <- gprofiler2cytoscape:::removeRootTerm(gostResult=demo)
+    result <- enrichViewNet:::removeRootTerm(gostResult=demo)
     
     expect_identical(result, expected)
 })
@@ -209,7 +209,7 @@ test_that("removeRootTerm() must return GO:MF root term", {
                            term_id=c("GO:0051171", "GO:0010604", "GO:0014444",
                                      "KEGG:00044", "KEGG:00010"))
     
-    result <- gprofiler2cytoscape:::removeRootTerm(gostResult=demo)
+    result <- enrichViewNet:::removeRootTerm(gostResult=demo)
     
     expect_identical(result, expected)
 })
@@ -233,7 +233,7 @@ test_that("createMetaDataSectionCXJSON() must return expected text", {
         "{\"name\":\"cyTableColumn\",\"version\":\"1.0\"},",
         "{\"name\":\"cySubNetworks\",\"version\":\"1.0\"}]}")
     
-    result <- gprofiler2cytoscape:::createMetaDataSectionCXJSON()
+    result <- enrichViewNet:::createMetaDataSectionCXJSON()
     
     expect_identical(as.character(result), expected)
     expect_s3_class(result, "json")
@@ -251,7 +251,7 @@ test_that("createCytoscapeCXJSON() must return expected text", {
             mirnaDemo$meta$query_metadata$queries[[1]][1:2]
     mirnaData <- demoGOST$result[demoGOST$result$source == "MIRNA", ]
     
-    result <- gprofiler2cytoscape:::createCytoscapeCXJSON(
+    result <- enrichViewNet:::createCytoscapeCXJSON(
                          gostResults = mirnaData, gostObject = mirnaDemo, 
                          title = "MIRNA")
     
@@ -318,7 +318,7 @@ test_that("extractNodesAndEdgesInfoForCXJSON() must return expected text", {
     mirnaData <- demoGOST$result[demoGOST$result$source == "MIRNA", ]
     
     
-    result <- gprofiler2cytoscape:::extractNodesAndEdgesInfoForCXJSON(
+    result <- enrichViewNet:::extractNodesAndEdgesInfoForCXJSON(
         gostResults=mirnaData, gostObject=mirnaDemo)
     
     expected <- list()
@@ -376,7 +376,7 @@ test_that("extractNodesAndEdgesWhenNoIntersection() must return expected text", 
     ccData <- ccDemo$result[ccDemo$result$source == "GO:CC", ]
     
     
-    result <- gprofiler2cytoscape:::extractNodesAndEdgesWhenNoIntersection(
+    result <- enrichViewNet:::extractNodesAndEdgesWhenNoIntersection(
         gostResults=ccData, gostObject=ccDemo)
     
     expected <- list()

@@ -1,6 +1,6 @@
 ### Unit tests for methods.R functions
 
-library(gprofiler2cytoscape)
+library(enrichViewNet)
 
 data("demoGOST")
 

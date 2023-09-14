@@ -18,7 +18,7 @@ the network information
 \examples{
 
 ## Create the JSON object that contains the meta data information
-gprofiler2cytoscape:::createMetaDataSectionCXJSON()
+enrichViewNet:::createMetaDataSectionCXJSON()
 
 }
 \author{

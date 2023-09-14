@@ -13,9 +13,9 @@
 #'
 #' @docType package
 #'
-#' @name gprofiler2cytoscape-package
+#' @name enrichViewNet-package
 #'
-#' @aliases gprofiler2cytoscape-package gprofiler2cytoscape
+#' @aliases enrichViewNet-package enrichViewNet
 #'
 #' @author Astrid Deschênes, Pascal Belleau, Robert L Faure,  
 #' Maria J Fernandes, David A Tuveson

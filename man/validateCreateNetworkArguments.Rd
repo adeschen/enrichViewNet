@@ -55,7 +55,7 @@ results.
 data(demoGOST)
 
 ## Check that all arguments are valid
-gprofiler2cytoscape:::validateCreateNetworkArguments(gostObject=demoGOST,
+enrichViewNet:::validateCreateNetworkArguments(gostObject=demoGOST,
     source="GO:BP", termIDs=NULL, removeRoot=FALSE, fileName="test.cx")
 
 }

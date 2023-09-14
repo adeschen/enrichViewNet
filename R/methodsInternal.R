@@ -33,8 +33,8 @@
 #' ## is up and running
 #' ## A network using GO - Molecular Function enriched terms will be 
 #' ## generated and loaded into Cytoscape
-#' if (gprofiler2cytoscape:::isCytoscapeRunning()) {
-#'     gprofiler2cytoscape:::createCytoscapeNetwork(gostResults=results, 
+#' if (enrichViewNet:::isCytoscapeRunning()) {
+#'     enrichViewNet:::createCytoscapeNetwork(gostResults=results, 
 #'         gostObject=demoGOST, title="Test", collection="New Collection")
 #' }
 #' 
@@ -92,7 +92,7 @@ createCytoscapeNetwork <- function(gostResults, gostObject, title, collection) {
 #' @examples
 #'
 #' ## Test if Cytoscape is running
-#' gprofiler2cytoscape:::isCytoscapeRunning()
+#' enrichViewNet:::isCytoscapeRunning()
 #' 
 #' @author Astrid Deschênes
 #' @importFrom RCy3 cytoscapePing 
@@ -163,7 +163,7 @@ isCytoscapeRunning <- function() {
 #' data(demoGOST)
 #' 
 #' ## Check that all arguments are valid
-#' gprofiler2cytoscape:::validateCreateNetworkArguments(gostObject=demoGOST,
+#' enrichViewNet:::validateCreateNetworkArguments(gostObject=demoGOST,
 #'     source="GO:BP", termIDs=NULL, removeRoot=FALSE, fileName="test.cx")
 #' 
 #' @author Astrid Deschênes
@@ -236,7 +236,7 @@ validateCreateNetworkArguments <- function(gostObject, source, termIDs,
 #' results <- demoGOST$result[demoGOST$result$source == "WP", ]
 #'
 #' ## Remove WIKIPATHWAYS root term 
-#' gprofiler2cytoscape:::removeRootTerm(gostResult=results)
+#' enrichViewNet:::removeRootTerm(gostResult=results)
 #' 
 #' 
 #' @author Astrid Deschênes
@@ -296,7 +296,7 @@ removeRootTerm <- function(gostResult) {
 #' ## Only retained the WikiPathways results
 #' results <- demoGOST$result[demoGOST$result$source == "WP", ]
 #' 
-#' jsonFormat <- gprofiler2cytoscape:::createCytoscapeCXJSON(
+#' jsonFormat <- enrichViewNet:::createCytoscapeCXJSON(
 #'                 gostResults = results, gostObject = demoGOST, 
 #'                 title = "WikiPathways")
 #' 
@@ -342,7 +342,7 @@ createCytoscapeCXJSON <- function(gostResults, gostObject, title) {
 #' @examples
 #' 
 #' ## Create the JSON object that contains the meta data information
-#' gprofiler2cytoscape:::createMetaDataSectionCXJSON()
+#' enrichViewNet:::createMetaDataSectionCXJSON()
 #' 
 #' @author Astrid Deschênes
 #' @importFrom jsonlite toJSON
@@ -393,7 +393,7 @@ createMetaDataSectionCXJSON <- function() {
 #' ## Only retained the WikiPathways results
 #' results <- demoGOST$result[demoGOST$result$source == "WP", ]
 #' 
-#' information <- gprofiler2cytoscape:::extractNodesAndEdgesInfoForCXJSON(
+#' information <- enrichViewNet:::extractNodesAndEdgesInfoForCXJSON(
 #'                 gostResults=results, gostObject=demoGOST)
 #' 
 #' @author Astrid Deschênes
@@ -512,7 +512,7 @@ extractNodesAndEdgesInfoForCXJSON <- function(gostResults, gostObject) {
 #' results <- demoGOST$result[demoGOST$result$source == "GO:MF", ]
 #' 
 #' information <- 
-#'     gprofiler2cytoscape:::extractNodesAndEdgesWhenNoIntersection(
+#'     enrichViewNet:::extractNodesAndEdgesWhenNoIntersection(
 #'                 gostResults=results, gostObject=demoGOST)
 #' 
 #' @author Astrid Deschênes
@@ -601,7 +601,7 @@ extractNodesAndEdgesWhenNoIntersection <- function(gostResults, gostObject) {
 #' results <- demoGOST$result[demoGOST$result$source == "GO:MF", ]
 #' 
 #' ##information <- 
-#' ##      gprofiler2cytoscape:::extractNodesAndEdgesWhenIntersection(
+#' ##      enrichViewNet:::extractNodesAndEdgesWhenIntersection(
 #' ##                gostResults=results, gostObject=demoGOST)
 #' 
 #' @author Astrid Deschênes

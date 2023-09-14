@@ -40,7 +40,7 @@ data(demoGOST)
 ## Only retained the WikiPathways results
 results <- demoGOST$result[demoGOST$result$source == "WP", ]
 
-information <- gprofiler2cytoscape:::extractNodesAndEdgesInfoForCXJSON(
+information <- enrichViewNet:::extractNodesAndEdgesInfoForCXJSON(
                 gostResults=results, gostObject=demoGOST)
 
 }

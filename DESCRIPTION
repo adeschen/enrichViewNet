@@ -1,4 +1,4 @@
-Package: gprofiler2cytoscape
+Package: enrichViewNet
 Type: Package
 Version: 0.0.4
 Date: 2021-03-25
@@ -8,7 +8,7 @@ Description: This package enables the transformation of
     network where significant terms 
     (Gene Ontology/Reactome/Kegg/Transcription Factor/etc..) and genes 
     are nodes. In this network, edges connect genes that are part of the 
-    enrichment request to their terms. The gprofiler2cytoscape package offers 
+    enrichment request to their terms. The enrichViewNet package offers 
     the option to generate a network for only a portion of the significant 
     terms by selecting the source or by providing a specific list of terms.
 Authors@R: c(person("Astrid", "Deschênes", email = "adeschen@hotmail.com",
@@ -42,6 +42,6 @@ biocViews: BiologicalQuestion,
     NetworkEnrichment,
     GO
 VignetteBuilder: knitr
-URL: https://github.com/adeschen/gprofiler2cytoscape, https://adeschen.github.io/gprofiler2cytoscape/
-BugReports: https://github.com/adeschen/gprofiler2cytoscape/issues
+URL: https://github.com/adeschen/enrichViewNet, https://adeschen.github.io/enrichViewNet/
+BugReports: https://github.com/adeschen/enrichViewNet/issues
 RoxygenNote: 7.2.3

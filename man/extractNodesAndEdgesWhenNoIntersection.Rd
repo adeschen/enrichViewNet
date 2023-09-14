@@ -38,7 +38,7 @@ data(demoGOST)
 results <- demoGOST$result[demoGOST$result$source == "GO:MF", ]
 
 information <- 
-    gprofiler2cytoscape:::extractNodesAndEdgesWhenNoIntersection(
+    enrichViewNet:::extractNodesAndEdgesWhenNoIntersection(
                 gostResults=results, gostObject=demoGOST)
 
 }

@@ -1,6 +1,6 @@
 <!-- badges: start -->
-[![R-CMD-check-bioc](https://github.com/adeschen/gprofiler2cytoscape/actions/workflows/check-bioc.yml/badge.svg)](https://github.com/adeschen/gprofiler2cytoscape/actions/workflows/check-bioc.yml)
-[![Codecov test coverage](https://codecov.io/gh/adeschen/gprofiler2cytoscape/branch/main/graph/badge.svg)](https://codecov.io/gh/adeschen/gprofiler2cytoscape?branch=main)
+[![R-CMD-check-bioc](https://github.com/adeschen/enrichViewNet/actions/workflows/check-bioc.yml/badge.svg)](https://github.com/adeschen/enrichViewNet/actions/workflows/check-bioc.yml)
+[![Codecov test coverage](https://codecov.io/gh/adeschen/enrichViewNet/branch/main/graph/badge.svg)](https://codecov.io/gh/adeschen/enrichViewNet?branch=main)
 [![License: Artistic-2.0](https://img.shields.io/badge/License-Artistic%202.0-0298c3.svg)](https://opensource.org/licenses/Artistic-2.0)
 <!-- badges: end -->
 
@@ -43,9 +43,9 @@ For more information on Artistic 2.0 License see
 
 ## Documentation ##
 
-[enrichViewNet Website](https://adeschen.github.io/gprofiler2cytoscape/)
+[enrichViewNet Website](https://adeschen.github.io/enrichViewNet/)
 
-[enrichViewNet Get Started](https://adeschen.github.io/gprofiler2cytoscape/articles/gprofiler2cytoscape.html)
+[enrichViewNet Get Started](https://adeschen.github.io/enrichViewNet/articles/enrichViewNet.html)
 
 
 ## Installation ##
@@ -57,13 +57,13 @@ package is required.
      ## Load required package
      library(devtools)
 
-     ## Install the latest version of gprofiler2cytoscape
-     devtools::install_github('adeschen/gprofiler2cytoscape')
+     ## Install the latest version of enrichViewNet
+     devtools::install_github('adeschen/enrichViewNet')
 
 
 ## Bugs/Feature requests ##
 
 If you have any bugs or feature requests, 
-[let us know](https://github.com/adeschen/gprofiler2cytoscape/issues). 
+[let us know](https://github.com/adeschen/enrichViewNet/issues). 
 
 Thanks!

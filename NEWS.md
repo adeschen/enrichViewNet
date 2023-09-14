@@ -1,4 +1,4 @@
-# gprofiler2cytoscape v0.0.4
+# enrichViewNet v0.0.4
 
 ## NEW FEATURES
 
@@ -6,7 +6,7 @@
 
 
 
-# gprofiler2cytoscape v0.0.2
+# enrichViewNet v0.0.2
 
 ## NEW FEATURES
 

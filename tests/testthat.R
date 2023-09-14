@@ -1,5 +1,5 @@
 library(testthat)
-library(gprofiler2cytoscape)
+library(enrichViewNet)
 
 ## Run all unit tests
-test_check("gprofiler2cytoscape")
+test_check("enrichViewNet")

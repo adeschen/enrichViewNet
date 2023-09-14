@@ -34,7 +34,7 @@ data(demoGOST)
 ## Only retained the WikiPathways results
 results <- demoGOST$result[demoGOST$result$source == "WP", ]
 
-jsonFormat <- gprofiler2cytoscape:::createCytoscapeCXJSON(
+jsonFormat <- enrichViewNet:::createCytoscapeCXJSON(
                 gostResults = results, gostObject = demoGOST, 
                 title = "WikiPathways")
 

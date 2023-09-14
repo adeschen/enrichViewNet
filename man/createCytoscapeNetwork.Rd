@@ -42,8 +42,8 @@ results <- demoGOST$result[demoGOST$result$source == "WP", ]
 ## is up and running
 ## A network using GO - Molecular Function enriched terms will be 
 ## generated and loaded into Cytoscape
-if (gprofiler2cytoscape:::isCytoscapeRunning()) {
-    gprofiler2cytoscape:::createCytoscapeNetwork(gostResults=results, 
+if (enrichViewNet:::isCytoscapeRunning()) {
+    enrichViewNet:::createCytoscapeNetwork(gostResults=results, 
         gostObject=demoGOST, title="Test", collection="New Collection")
 }
 

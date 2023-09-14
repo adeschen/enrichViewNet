@@ -16,7 +16,7 @@ Verifying that Cytoscape is running
 \examples{
 
 ## Test if Cytoscape is running
-gprofiler2cytoscape:::isCytoscapeRunning()
+enrichViewNet:::isCytoscapeRunning()
 
 }
 \author{
