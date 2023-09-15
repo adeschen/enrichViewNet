@@ -103,13 +103,13 @@ reproducibility.
 The **enrichViewNet** package enables the visualization 
 of functional enrichment results as network graphs. Visualization of 
 enriched terms aims to 
-reduce the complexity of the analyses of complex results.
+facilitate the analyses of complex results.
 Compared to popular enrichment visualization graphs such as bar plots and 
 dot plots, network graphs unveil the connection between the 
 terms as significant terms often share one or multiple genes. Moreover, the 
 **enrichViewNet** package takes advantage of a powerful network 
 visualization tool which is _Cytoscape_. By doing so, all the 
-functionalities of this mature software can be used by users to personalize 
+functionalities of this mature software can be used to personalize 
 and analyze the enrichment networks. 
 
 First, the **enrichViewNet** package enables the 
