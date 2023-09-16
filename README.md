@@ -19,7 +19,8 @@ enrichment request to their terms.
 In addition, the **enrichViewNet** package also provides the option to 
 create enrichment maps from functional enrichment results. 
 Enrichment maps, as introduced in the Bioconductor 
-**_enrichplot_** package, enable the visualization of enriched terms 
+[enrichplot](https://bioconductor.org/packages/release/bioc/html/enrichplot.html) package, 
+enable the visualization of enriched terms 
 into a network with edges connecting overlapping genes. Thus, enriched terms 
 with overlapping genes cluster together.
 
