@@ -39,7 +39,8 @@ the selected source should be removed (when present). Default: \code{TRUE}.}
 \item{title}{a \code{character} string representing the name TODO}
 }
 \value{
-\code{TRUE}
+a \code{ggplot} object which is the enrichment map for enrichment 
+results.
 }
 \description{
 User selected enrichment terms are used to create a enrichment 

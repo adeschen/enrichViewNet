@@ -22,7 +22,15 @@ TODO
 \examples{
 
 ## Load the result of an enrichment analysis done with gprofiler2
-data(demoGOST)
+data(parentalNapaVsDMSOEnrichment)
+
+## Only retain the results section
+gostResults <- as.data.frame(parentalNapaVsDMSOEnrichment$result)
+
+## Limit the results to Wikipathways
+## and remove the root term
+gostResults <- gostResults[which(gostResults$source == "WP"),]
+gostResults <- gostResults[which(gostResults$term_id != "WILIPATHWAYS"),]
 
 
 }

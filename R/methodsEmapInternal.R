@@ -99,16 +99,87 @@ validateCreateEnrichMapArguments <- function(gostObject, source, termIDs,
 #' @examples
 #'
 #' ## Load the result of an enrichment analysis done with gprofiler2
-#' data(demoGOST)
+#' data(parentalNapaVsDMSOEnrichment)
+#' 
+#' ## Only retain the results section
+#' gostResults <- as.data.frame(parentalNapaVsDMSOEnrichment$result)
+#' 
+#' ## Limit the results to Wikipathways
+#' ## and remove the root term
+#' gostResults <- gostResults[which(gostResults$source == "WP"),]
+#' gostResults <- gostResults[which(gostResults$term_id != "WILIPATHWAYS"),]
 #' 
 #' 
 #' @author Astrid Deschênes
 #' @encoding UTF-8
 #' @importFrom methods is
 #' @importFrom stringr str_ends
+#' @importFrom enrichplot pairwise_termsim emapplot
 #' @keywords internal
 createBasicEmap <- function(gostResults, title) {
     
     ## TODO
-    return(TRUE)
+    
+    
+    mapInfo <- data.frame(Cluster=c(rep(title, nrow(gostResults))), 
+                    ID=c(gostResults$term_id), 
+                    Description=c(gostResults$term_name), 
+                    GeneRatio=c(paste0(gostResults$intersection_size, "/", 
+                                            gostResults$query_size)),
+                    BgRatio=c(paste0(gostResults$intersection_size, "/", 
+                                            gostResults$query_size)),
+                    pvalue=c(gostResults$p_value),
+                    p.adjust=c(gostResults$p_value),
+                    qvalue=c(gostResults$p_value),
+                    geneID=c(gostResults$intersection),
+                    Count=c(gostResults$intersection_size))
+    
+    
+    
+    mapInfo$Cluster = factor(mapInfo$Cluster, levels=c(title))
+   # mapInfo$ID <- stringr::str_replace(string = mapInfo$ID , pattern = "KEGG:", "hsa") 
+    mapInfo$geneID <- stringr::str_replace_all(string = mapInfo$geneID , 
+                                                    pattern = ",", "/") 
+    
+    
+    geneClusters <- list()
+    geneClusters[[title]] <- mapInfo$EnsemblID
+    
+    setClass("compareClusterResult",
+             representation = representation(
+                 compareClusterResult = "data.frame",
+                 geneClusters = "list",
+                 fun = "character",
+                 gene2Symbol    = "character",
+                 keytype        = "character",
+                 readable       = "logical",
+                 .call          = "call",
+                 termsim        = "matrix",
+                 method         = "character",
+                 dr             = "list"
+             )
+    )
+    
+    res <- new("compareClusterResult",
+               compareClusterResult=mapInfo,
+               geneClusters=geneClusters,
+               fun="enrichDEMO",
+               .call = call("compareCluster(geneClusters = x, 
+                                fun = \"enrichDEMO\", organism = \"hsa\", 
+                                pvalueCutoff = 0.05)")
+    )
+    
+    res@keytype <- "UNKNOWN"
+    res@readable <- FALSE
+    
+    ## Get similarity matrix
+    comp <- pairwise_termsim(res)  
+    
+    
+    graphEmap <- emapplot(x=comp, 
+                        showCategory=length(table(mapInfo$Description)),
+                        cex_label_category=1,  group_category=F,
+                        cex_category=1)
+    
+    return(graphEmap)
 }

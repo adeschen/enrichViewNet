@@ -30,7 +30,8 @@
 #' 
 #' @param title a \code{character} string representing the name TODO
 #' 
-#' @return \code{TRUE}
+#' @return a \code{ggplot} object which is the enrichment map for enrichment 
+#' results.
 #' 
 #' @examples
 #'
@@ -60,7 +61,7 @@ createEnrichMap <- function(gostObject, source=c("TERM_ID", "GO:MF", "GO:CC",
     
     ## Validate parameters
     validateCreateEnrichMapArguments(gostObject=gostObject, source=source,
-            termIDs = termIDs, removeRoot=removeRoot)
+            termIDs = termIDs, removeRoot=removeRoot, title=title)
     
     ## Extract results
     gostResults <- gostObject$result
@@ -81,8 +82,8 @@ createEnrichMap <- function(gostObject, source=c("TERM_ID", "GO:MF", "GO:CC",
         }
     }
     
-    ## TODO
-    createBasicEmap(gostResults=gostResults, title=title)
+    ## Create basic emap
+    emap <- createBasicEmap(gostResults=gostResults, title=title)
     
-    return(TRUE)
+    return(emap)
 }
