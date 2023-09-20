@@ -56,7 +56,14 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">createBasicEmap</span><span class="op">(</span><span class="va">gostResults</span>, <span class="va">title</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">createBasicEmap</span><span class="op">(</span></span>
+<span>  <span class="va">gostResults</span>,</span>
+<span>  <span class="va">title</span>,</span>
+<span>  <span class="va">showCategory</span>,</span>
+<span>  <span class="va">groupCategory</span>,</span>
+<span>  <span class="va">cexLabelCategory</span>,</span>
+<span>  <span class="va">cexCategory</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -68,6 +75,29 @@ results to be plot.</p></dd>
 
 <dt>title</dt>
 <dd><p>a <code>character</code> string representing TODO</p></dd>
+
+
+<dt>showCategory</dt>
+<dd><p>a positive <code>integer</code> or a <code>vector</code> of 
+<code>characters</code> representing terms.  If a <code>integer</code>, the first 
+<code>n</code> terms will be displayed. If <code>vector</code> of terms, 
+the selected terms will be displayed.</p></dd>
+
+
+<dt>groupCategory</dt>
+<dd><p>a <code>logical</code> indicating if the categories should 
+be grouped.</p></dd>
+
+
+<dt>cexLabelCategory</dt>
+<dd><p>a positive <code>numeric</code> representing the amount by 
+which plotting category nodes label size should be scaled relative 
+to the default (1).</p></dd>
+
+
+<dt>cexCategory</dt>
+<dd><p>a positive <code>numeric</code> representing the amount by 
+which plotting category nodes should be scaled relative to the default (1).</p></dd>
 
 </dl></div>
     <div id="value">

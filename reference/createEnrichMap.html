@@ -73,7 +73,11 @@ significant term to graph.</p>
 <span>    <span class="st">"CORUM"</span>, <span class="st">"HP"</span>, <span class="st">"WP"</span><span class="op">)</span>,</span>
 <span>  termIDs <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  removeRoot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  title <span class="op">=</span> <span class="st">"gprofiler network"</span></span>
+<span>  title <span class="op">=</span> <span class="st">"gprofiler network"</span>,</span>
+<span>  showCategory <span class="op">=</span> <span class="fl">30</span>,</span>
+<span>  groupCategory <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  cexLabelCategory <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  cexCategory <span class="op">=</span> <span class="fl">1</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -109,6 +113,30 @@ the selected source should be removed (when present). Default: <code>TRUE</code>
 
 <dt>title</dt>
 <dd><p>a <code>character</code> string representing the name TODO</p></dd>
+
+
+<dt>showCategory</dt>
+<dd><p>a positive <code>integer</code> or a <code>vector</code> of 
+<code>characters</code> representing terms.  If a <code>integer</code>, the first 
+<code>n</code> terms will be displayed. If <code>vector</code> of terms, 
+the selected terms will be displayed. Default: <code>30L</code>.</p></dd>
+
+
+<dt>groupCategory</dt>
+<dd><p>a <code>logical</code> indicating if the categories should 
+be grouped. Default: <code>FALSE</code>.</p></dd>
+
+
+<dt>cexLabelCategory</dt>
+<dd><p>a positive <code>numeric</code> representing the amount by 
+which plotting category nodes label size should be scaled relative 
+to the default (1). Default: <code>1</code>.s</p></dd>
+
+
+<dt>cexCategory</dt>
+<dd><p>a positive <code>numeric</code> representing the amount by 
+which plotting category nodes should be scaled relative to the default (1). 
+Default: <code>1</code>.</p></dd>
 
 </dl></div>
     <div id="value">

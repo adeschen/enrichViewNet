@@ -71,7 +71,11 @@ results.</p>
 <span>  <span class="va">source</span>,</span>
 <span>  <span class="va">termIDs</span>,</span>
 <span>  <span class="va">removeRoot</span>,</span>
-<span>  <span class="va">title</span></span>
+<span>  <span class="va">title</span>,</span>
+<span>  <span class="va">showCategory</span>,</span>
+<span>  <span class="va">groupCategory</span>,</span>
+<span>  <span class="va">cexLabelCategory</span>,</span>
+<span>  <span class="va">cexCategory</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -105,10 +109,31 @@ only used when <code>source</code> is set to "TERM_ID".</p></dd>
 the selected source should be removed (when present).</p></dd>
 
 
-<dt>fileName</dt>
-<dd><p>a <code>character</code> string representing the name of the
-CX JSON file that is created when Cytoscape is not running. The name 
-must have a '.cx' extension.</p></dd>
+<dt>title</dt>
+<dd><p>a <code>character</code> string representing the name TODO</p></dd>
+
+
+<dt>showCategory</dt>
+<dd><p>a positive <code>integer</code> or a <code>vector</code> of 
+<code>characters</code> representing terms.  If a <code>integer</code>, the first 
+<code>n</code> terms will be displayed. If <code>vector</code> of terms, 
+the selected terms will be displayed.</p></dd>
+
+
+<dt>groupCategory</dt>
+<dd><p>a <code>logical</code> indicating if the categories should 
+be grouped.</p></dd>
+
+
+<dt>cexLabelCategory</dt>
+<dd><p>a positive <code>numeric</code> representing the amount by 
+which plotting category nodes label size should be scaled relative 
+to the default (1).</p></dd>
+
+
+<dt>cexCategory</dt>
+<dd><p>a positive <code>numeric</code> representing he amount by which 
+plotting category nodes should be scaled relative to the default (1).</p></dd>
 
 </dl></div>
     <div id="value">
@@ -131,7 +156,9 @@ must have a '.cx' extension.</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Check that all arguments are valid</span></span></span>
 <span class="r-in"><span><span class="fu">enrichViewNet</span><span class="fu">:::</span><span class="fu">validateCreateEnrichMapArguments</span><span class="op">(</span>gostObject<span class="op">=</span><span class="va">demoGOST</span>,</span></span>
-<span class="r-in"><span>    source<span class="op">=</span><span class="st">"GO:BP"</span>, termIDs<span class="op">=</span><span class="cn">NULL</span>, removeRoot<span class="op">=</span><span class="cn">FALSE</span>, title<span class="op">=</span><span class="st">"GO:BP"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    source<span class="op">=</span><span class="st">"GO:BP"</span>, termIDs<span class="op">=</span><span class="cn">NULL</span>, removeRoot<span class="op">=</span><span class="cn">FALSE</span>, title<span class="op">=</span><span class="st">"GO:BP"</span>, </span></span>
+<span class="r-in"><span>    showCategory<span class="op">=</span><span class="fl">20</span>, groupCategory<span class="op">=</span><span class="cn">FALSE</span>, cexLabelCategory<span class="op">=</span><span class="fl">1.1</span>, </span></span>
+<span class="r-in"><span>    cexCategory<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
