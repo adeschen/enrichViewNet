@@ -30,6 +30,22 @@
 #' 
 #' @param title a \code{character} string representing the name TODO
 #' 
+#' @param showCategory a positive \code{integer} or a \code{vector} of 
+#' \code{characters} representing terms.  If a \code{integer}, the first 
+#' \code{n} terms will be displayed. If \code{vector} of terms, 
+#' the selected terms will be displayed. Default: \code{30L}.
+#' 
+#' @param groupCategory a \code{logical} indicating if the categories should 
+#' be grouped. Default: \code{FALSE}.
+#' 
+#' @param cexLabelCategory a positive \code{numeric} representing the amount by 
+#' which plotting category nodes label size should be scaled relative 
+#' to the default (1). Default: \code{1}.s
+#' 
+#' @param cexCategory a positive \code{numeric} representing the amount by 
+#' which plotting category nodes should be scaled relative to the default (1). 
+#' Default: \code{1}.
+#' 
 #' @return a \code{ggplot} object which is the enrichment map for enrichment 
 #' results.
 #' 
@@ -54,14 +70,18 @@
 #' @export
 createEnrichMap <- function(gostObject, source=c("TERM_ID", "GO:MF", "GO:CC",
         "GO:BP", "KEGG", "REAC", "TF", "MIRNA", "HPA", "CORUM", "HP", "WP"), 
-        termIDs=NULL, removeRoot=TRUE, title="gprofiler network") {
+        termIDs=NULL, removeRoot=TRUE, title="gprofiler network", 
+        showCategory=30, groupCategory=FALSE, cexLabelCategory=1,
+        cexCategory=1) {
     
     ## Validate source is among the possible choices
     source <- match_arg(source, ignore_case=TRUE)
     
     ## Validate parameters
     validateCreateEnrichMapArguments(gostObject=gostObject, source=source,
-            termIDs = termIDs, removeRoot=removeRoot, title=title)
+            termIDs = termIDs, removeRoot=removeRoot, title=title, 
+            showCategory=showCategory, cexLabelCategory=cexLabelCategory,
+            groupCategory=groupCategory, cexCategory=cexCategory)
     
     ## Extract results
     gostResults <- gostObject$result
@@ -83,7 +103,9 @@ createEnrichMap <- function(gostObject, source=c("TERM_ID", "GO:MF", "GO:CC",
     }
     
     ## Create basic emap
-    emap <- createBasicEmap(gostResults=gostResults, title=title)
+    emap <- createBasicEmap(gostResults=gostResults, title=title, 
+                showCategory=showCategory, cexLabelCategory=cexLabelCategory,
+                groupCategory=groupCategory, cexCategory=cexCategory)
     
     return(emap)
 }

@@ -12,7 +12,11 @@ createEnrichMap(
     "CORUM", "HP", "WP"),
   termIDs = NULL,
   removeRoot = TRUE,
-  title = "gprofiler network"
+  title = "gprofiler network",
+  showCategory = 30,
+  groupCategory = FALSE,
+  cexLabelCategory = 1,
+  cexCategory = 1
 )
 }
 \arguments{
@@ -37,6 +41,22 @@ term IDS retained for the creation of the network. Default: \code{NULL}.}
 the selected source should be removed (when present). Default: \code{TRUE}.}
 
 \item{title}{a \code{character} string representing the name TODO}
+
+\item{showCategory}{a positive \code{integer} or a \code{vector} of 
+\code{characters} representing terms.  If a \code{integer}, the first 
+\code{n} terms will be displayed. If \code{vector} of terms, 
+the selected terms will be displayed. Default: \code{30L}.}
+
+\item{groupCategory}{a \code{logical} indicating if the categories should 
+be grouped. Default: \code{FALSE}.}
+
+\item{cexLabelCategory}{a positive \code{numeric} representing the amount by 
+which plotting category nodes label size should be scaled relative 
+to the default (1). Default: \code{1}.s}
+
+\item{cexCategory}{a positive \code{numeric} representing the amount by 
+which plotting category nodes should be scaled relative to the default (1). 
+Default: \code{1}.}
 }
 \value{
 a \code{ggplot} object which is the enrichment map for enrichment 

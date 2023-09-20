@@ -17,7 +17,9 @@ test_that("createEnrichMap() must return error when gostObject is a number", {
                         "to gprofiler2 enrichment output.")
     
     expect_error(createEnrichMap(gostObject=33, source="GO:CC",
-        termIDs=NULL, removeRoot=TRUE, title="gprofiler network"), 
+        termIDs=NULL, removeRoot=TRUE, title="gprofiler network", 
+        showCategory=30, groupCategory=FALSE, cexLabelCategory=1,
+        cexCategory=1), 
         error_message)
 })
 
@@ -28,7 +30,9 @@ test_that("createEnrichMap() must return error when gostObject is a string chara
                         "to gprofiler2 enrichment output.")
     
     expect_error(createEnrichMap(gostObject="TEST", source="GO:CC",
-        termIDs=NULL, removeRoot=TRUE, title="gprofiler network"), 
+        termIDs=NULL, removeRoot=TRUE, title="gprofiler network", 
+        showCategory=30, groupCategory=FALSE, cexLabelCategory=1,
+        cexCategory=1), 
         error_message)
 })
 
@@ -42,7 +46,9 @@ test_that("createEnrichMap() must return error when source is a number", {
                                 "'character', not 'double'.")
     
     expect_error(createEnrichMap(gostObject=gostObject, source=333,
-        termIDs=NULL, removeRoot=TRUE, title="gprofiler network"), 
+        termIDs=NULL, removeRoot=TRUE, title="gprofiler network", 
+        showCategory=30, groupCategory=FALSE, cexLabelCategory=1,
+        cexCategory=1), 
         error_message)
 })
 
@@ -53,7 +59,9 @@ test_that("createEnrichMap() must return error when source is a wrong name", {
     gostObject[["result"]] <- list()
     
     expect_error(createEnrichMap(gostObject=gostObject, source="test",
-        termIDs=NULL, removeRoot=TRUE, title="gprofiler network"))
+        termIDs=NULL, removeRoot=TRUE, title="gprofiler network", 
+        showCategory=30, groupCategory=FALSE, cexLabelCategory=1,
+        cexCategory=1))
 })
 
 
@@ -64,7 +72,9 @@ test_that("createEnrichMap() must return error when source is GO", {
     gostObject[["result"]] <- list()
     
     expect_error(createEnrichMap(gostObject=gostObject, source="GO",
-        termIDs=NULL, removeRoot=TRUE, title="gprofiler network"))
+        termIDs=NULL, removeRoot=TRUE, title="gprofiler network", 
+        showCategory=30, groupCategory=FALSE, cexLabelCategory=1,
+        cexCategory=1))
 })
 
 
@@ -77,7 +87,9 @@ test_that("createEnrichMap() must return error when removeRoot remove last enric
                                 "enrichment term left")
     
     expect_error(createEnrichMap(gostObject=gostTerm, source="WP", 
-                    removeRoot=TRUE, title="gprofiler network"), 
+                    removeRoot=TRUE, title="gprofiler network", 
+                    showCategory=30, groupCategory=FALSE, cexLabelCategory=1,
+                    cexCategory=1), 
                     error_message)
 })
 
@@ -91,7 +103,106 @@ test_that("createEnrichMap() must return error when removeRoot remove last enric
                                 "enrichment term left")
     
     expect_error(createEnrichMap(gostObject=gostTerm, source="TERM_ID",
-        termIDs=c("WP:000000"), removeRoot=TRUE), error_message)
+        termIDs=c("WP:000000"), removeRoot=TRUE, showCategory=30, 
+        groupCategory=FALSE, cexLabelCategory=1,
+        cexCategory=1), error_message)
 })
 
 
+test_that("createEnrichMap() must return error when showCategory negative value", {
+    
+    gostTerm <- demoGOST
+    
+    error_message <- paste0("The \'showCategory\' parameter must an positive ", 
+            "integer or a vector of character strings representing terms.")
+    
+    expect_error(createEnrichMap(gostObject=gostTerm, source="WP",
+                    removeRoot=TRUE, showCategory=-30, 
+                    groupCategory=FALSE, cexLabelCategory=1,
+                    cexCategory=1), error_message)
+})
+
+
+test_that("createEnrichMap() must return error when showCategory is boolean", {
+    
+    gostTerm <- demoGOST
+    
+    error_message <- paste0("The \'showCategory\' parameter must an positive ", 
+            "integer or a vector of character strings representing terms.")
+    
+    expect_error(createEnrichMap(gostObject=gostTerm, source="WP",
+                            removeRoot=TRUE, showCategory=TRUE, 
+                            groupCategory=FALSE, cexLabelCategory=1,
+                            cexCategory=1), error_message)
+})
+
+
+test_that("createEnrichMap() must return error when groupCategory is integer", {
+    
+    gostTerm <- demoGOST
+    
+    error_message <- paste0("The \'groupCategory\' parameter must a logical ", 
+                            "(TRUE or FALSE).")
+    
+    expect_error(createEnrichMap(gostObject=gostTerm, source="WP",
+                            removeRoot=TRUE, showCategory=30, 
+                            groupCategory=22, cexLabelCategory=1,
+                            cexCategory=1), error_message, fixed=TRUE)
+})
+
+
+test_that("createEnrichMap() must return error when cexLabelCategory is string", {
+    
+    gostTerm <- demoGOST
+    
+    error_message <- paste0("The \'cexLabelCategory\' parameter ", 
+                                "must be a positive numeric.")
+    
+    expect_error(createEnrichMap(gostObject=gostTerm, source="WP",
+                        removeRoot=TRUE, showCategory=30, 
+                        groupCategory=FALSE, cexLabelCategory="test",
+                        cexCategory=1), error_message, fixed=TRUE)
+})
+
+
+test_that("createEnrichMap() must return error when cexLabelCategory is negative", {
+    
+    gostTerm <- demoGOST
+    
+    error_message <- paste0("The \'cexLabelCategory\' parameter ", 
+                            "must be a positive numeric.")
+    
+    expect_error(createEnrichMap(gostObject=gostTerm, source="WP",
+                            removeRoot=TRUE, showCategory=30, 
+                            groupCategory=FALSE, cexLabelCategory=-1.1,
+                            cexCategory=1), error_message, fixed=TRUE)
+})
+
+
+test_that("createEnrichMap() must return error when cexCategory is negative", {
+    
+    gostTerm <- demoGOST
+    
+    error_message <- paste0("The \'cexCategory\' parameter ", 
+                            "must be a positive numeric.")
+    
+    expect_error(createEnrichMap(gostObject=gostTerm, source="WP",
+                            removeRoot=TRUE, showCategory=30, 
+                            groupCategory=FALSE, cexLabelCategory=2,
+                            cexCategory=-1), error_message, fixed=TRUE)
+})
+
+
+
+test_that("createEnrichMap() must return error when cexCategory is string", {
+    
+    gostTerm <- demoGOST
+    
+    error_message <- paste0("The \'cexCategory\' parameter ", 
+                            "must be a positive numeric.")
+    
+    expect_error(createEnrichMap(gostObject=gostTerm, source="WP",
+                            removeRoot=TRUE, showCategory=30, 
+                            groupCategory=FALSE, cexLabelCategory=2,
+                            cexCategory="te"), error_message, fixed=TRUE)
+})

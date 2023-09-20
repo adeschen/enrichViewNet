@@ -10,7 +10,11 @@ validateCreateEnrichMapArguments(
   source,
   termIDs,
   removeRoot,
-  title
+  title,
+  showCategory,
+  groupCategory,
+  cexLabelCategory,
+  cexCategory
 )
 }
 \arguments{
@@ -34,9 +38,22 @@ only used when \code{source} is set to "TERM_ID".}
 \item{removeRoot}{a \code{logical} that specified if the root terms of 
 the selected source should be removed (when present).}
 
-\item{fileName}{a \code{character} string representing the name of the
-CX JSON file that is created when Cytoscape is not running. The name 
-must have a '.cx' extension.}
+\item{title}{a \code{character} string representing the name TODO}
+
+\item{showCategory}{a positive \code{integer} or a \code{vector} of 
+\code{characters} representing terms.  If a \code{integer}, the first 
+\code{n} terms will be displayed. If \code{vector} of terms, 
+the selected terms will be displayed.}
+
+\item{groupCategory}{a \code{logical} indicating if the categories should 
+be grouped.}
+
+\item{cexLabelCategory}{a positive \code{numeric} representing the amount by 
+which plotting category nodes label size should be scaled relative 
+to the default (1).}
+
+\item{cexCategory}{a positive \code{numeric} representing he amount by which 
+plotting category nodes should be scaled relative to the default (1).}
 }
 \value{
 \code{TRUE} when all arguments are valid
@@ -57,7 +74,9 @@ data(demoGOST)
 
 ## Check that all arguments are valid
 enrichViewNet:::validateCreateEnrichMapArguments(gostObject=demoGOST,
-    source="GO:BP", termIDs=NULL, removeRoot=FALSE, title="GO:BP")
+    source="GO:BP", termIDs=NULL, removeRoot=FALSE, title="GO:BP", 
+    showCategory=20, groupCategory=FALSE, cexLabelCategory=1.1, 
+    cexCategory=1)
 
 }
 \author{

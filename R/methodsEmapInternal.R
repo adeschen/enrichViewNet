@@ -28,9 +28,22 @@
 #' @param removeRoot a \code{logical} that specified if the root terms of 
 #' the selected source should be removed (when present). 
 #' 
-#' @param fileName a \code{character} string representing the name of the
-#' CX JSON file that is created when Cytoscape is not running. The name 
-#' must have a '.cx' extension.
+#' @param title a \code{character} string representing the name TODO
+#' 
+#' @param showCategory a positive \code{integer} or a \code{vector} of 
+#' \code{characters} representing terms.  If a \code{integer}, the first 
+#' \code{n} terms will be displayed. If \code{vector} of terms, 
+#' the selected terms will be displayed.
+#' 
+#' @param groupCategory a \code{logical} indicating if the categories should 
+#' be grouped.
+#' 
+#' @param cexLabelCategory a positive \code{numeric} representing the amount by 
+#' which plotting category nodes label size should be scaled relative 
+#' to the default (1).
+#' 
+#' @param cexCategory a positive \code{numeric} representing he amount by which 
+#' plotting category nodes should be scaled relative to the default (1).
 #' 
 #' @return \code{TRUE} when all arguments are valid
 #' 
@@ -42,7 +55,9 @@
 #' 
 #' ## Check that all arguments are valid
 #' enrichViewNet:::validateCreateEnrichMapArguments(gostObject=demoGOST,
-#'     source="GO:BP", termIDs=NULL, removeRoot=FALSE, title="GO:BP")
+#'     source="GO:BP", termIDs=NULL, removeRoot=FALSE, title="GO:BP", 
+#'     showCategory=20, groupCategory=FALSE, cexLabelCategory=1.1, 
+#'     cexCategory=1)
 #' 
 #' @author Astrid Deschênes
 #' @encoding UTF-8
@@ -50,7 +65,8 @@
 #' @importFrom stringr str_ends
 #' @keywords internal
 validateCreateEnrichMapArguments <- function(gostObject, source, termIDs,
-                                           removeRoot, title) {
+        removeRoot, title, showCategory, groupCategory, cexLabelCategory,
+        cexCategory) {
     
     ## Test that gostObject is a gprofiler2 result 
     if (!("list" %in% class(gostObject) && "result" %in% names(gostObject) &&
@@ -82,6 +98,25 @@ validateCreateEnrichMapArguments <- function(gostObject, source, termIDs,
         stop("The \'title\' parameter must a character string.")
     }
     
+    if (!is(showCategory, "character") && 
+            !(is(showCategory, "numeric") && (showCategory > 0))) {
+        stop("The \'showCategory\' parameter must an positive integer or a ", 
+                "vector of character strings representing terms.")
+    }
+    
+    if (!is(groupCategory , "logical")) {
+        stop("The \'groupCategory\' parameter must a logical ", 
+                "(TRUE or FALSE).")
+    }
+    
+    if (!is(cexLabelCategory, "numeric") || !(cexLabelCategory > 0)) {
+        stop("The \'cexLabelCategory\' parameter must be a positive numeric.")
+    }
+    
+    if (!is(cexCategory, "numeric") || !(cexCategory > 0)) {
+        stop("The \'cexCategory\' parameter must be a positive numeric.")
+    }
+    
     return(TRUE)   
 }
 
@@ -93,6 +128,21 @@ validateCreateEnrichMapArguments <- function(gostObject, source, termIDs,
 #' results to be plot.
 #' 
 #' @param title a \code{character} string representing TODO
+#' 
+#' @param showCategory a positive \code{integer} or a \code{vector} of 
+#' \code{characters} representing terms.  If a \code{integer}, the first 
+#' \code{n} terms will be displayed. If \code{vector} of terms, 
+#' the selected terms will be displayed.
+#' 
+#' @param groupCategory a \code{logical} indicating if the categories should 
+#' be grouped.
+#' 
+#' @param cexLabelCategory a positive \code{numeric} representing the amount by 
+#' which plotting category nodes label size should be scaled relative 
+#' to the default (1).
+#' 
+#' @param cexCategory a positive \code{numeric} representing the amount by 
+#' which plotting category nodes should be scaled relative to the default (1). 
 #' 
 #' @return TODO
 #' 
@@ -116,10 +166,8 @@ validateCreateEnrichMapArguments <- function(gostObject, source, termIDs,
 #' @importFrom stringr str_ends
 #' @importFrom enrichplot pairwise_termsim emapplot
 #' @keywords internal
-createBasicEmap <- function(gostResults, title) {
-    
-    ## TODO
-    
+createBasicEmap <- function(gostResults, title, showCategory, groupCategory, 
+                                cexLabelCategory, cexCategory) {
     
     mapInfo <- data.frame(Cluster=c(rep(title, nrow(gostResults))), 
                     ID=c(gostResults$term_id), 
@@ -136,9 +184,9 @@ createBasicEmap <- function(gostResults, title) {
     
     
     
-    mapInfo$Cluster = factor(mapInfo$Cluster, levels=c(title))
-   # mapInfo$ID <- stringr::str_replace(string = mapInfo$ID , pattern = "KEGG:", "hsa") 
-    mapInfo$geneID <- stringr::str_replace_all(string = mapInfo$geneID , 
+    mapInfo$Cluster <- factor(mapInfo$Cluster, levels=c(title))
+   ## mapInfo$ID <- stringr::str_replace(string = mapInfo$ID , pattern = "KEGG:", "hsa") 
+    mapInfo$geneID <- stringr::str_replace_all(string = mapInfo$geneID, 
                                                     pattern = ",", "/") 
     
     
@@ -146,11 +194,11 @@ createBasicEmap <- function(gostResults, title) {
     geneClusters[[title]] <- mapInfo$EnsemblID
     
     setClass("compareClusterResult",
-             representation = representation(
-                 compareClusterResult = "data.frame",
-                 geneClusters = "list",
-                 fun = "character",
-                 gene2Symbol    = "character",
+             representation=representation(
+                 compareClusterResult="data.frame",
+                 geneClusters="list",
+                 fun="character",
+                 gene2Symbol="character",
                  keytype        = "character",
                  readable       = "logical",
                  .call          = "call",
@@ -175,11 +223,11 @@ createBasicEmap <- function(gostResults, title) {
     ## Get similarity matrix
     comp <- pairwise_termsim(res)  
     
-    
     graphEmap <- emapplot(x=comp, 
                         showCategory=length(table(mapInfo$Description)),
-                        cex_label_category=1,  group_category=F,
-                        cex_category=1)
+                        cex_label_category=cexLabelCategory,  
+                        group_category=groupCategory,
+                        cex_category=cexCategory)
     
     return(graphEmap)
 }

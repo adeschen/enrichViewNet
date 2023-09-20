@@ -5,13 +5,35 @@
 \alias{createBasicEmap}
 \title{Create a basic enrichment map}
 \usage{
-createBasicEmap(gostResults, title)
+createBasicEmap(
+  gostResults,
+  title,
+  showCategory,
+  groupCategory,
+  cexLabelCategory,
+  cexCategory
+)
 }
 \arguments{
 \item{gostResults}{a \code{data.frame} containing the enrichment 
 results to be plot.}
 
 \item{title}{a \code{character} string representing TODO}
+
+\item{showCategory}{a positive \code{integer} or a \code{vector} of 
+\code{characters} representing terms.  If a \code{integer}, the first 
+\code{n} terms will be displayed. If \code{vector} of terms, 
+the selected terms will be displayed.}
+
+\item{groupCategory}{a \code{logical} indicating if the categories should 
+be grouped.}
+
+\item{cexLabelCategory}{a positive \code{numeric} representing the amount by 
+which plotting category nodes label size should be scaled relative 
+to the default (1).}
+
+\item{cexCategory}{a positive \code{numeric} representing the amount by 
+which plotting category nodes should be scaled relative to the default (1).}
 }
 \value{
 TODO
