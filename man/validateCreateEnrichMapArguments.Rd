@@ -7,6 +7,7 @@
 \usage{
 validateCreateEnrichMapArguments(
   gostObject,
+  query,
   source,
   termIDs,
   removeRoot,
@@ -20,6 +21,10 @@ validateCreateEnrichMapArguments(
 \arguments{
 \item{gostObject}{a \code{list} created by \code{gprofiler2} that contains
 the results from an enrichment analysis.}
+
+\item{query}{a \code{character} string representing the name of the query 
+that is going to be used to generate the graph. The query must exist in the 
+\code{gostObject} object.}
 
 \item{source}{a \code{character} string representing the selected source 
 that will be used to generate the network. To hand-pick the terms to be 
@@ -71,12 +76,11 @@ results.
 ## Load the result of an enrichment analysis done with gprofiler2
 data(demoGOST)
 
-
 ## Check that all arguments are valid
 enrichViewNet:::validateCreateEnrichMapArguments(gostObject=demoGOST,
-    source="GO:BP", termIDs=NULL, removeRoot=FALSE, title="GO:BP", 
-    showCategory=20, groupCategory=FALSE, cexLabelCategory=1.1, 
-    cexCategory=1)
+    query="query_1", source="GO:BP", termIDs=NULL, removeRoot=FALSE, 
+    title="GO:BP", showCategory=20, groupCategory=FALSE, 
+    cexLabelCategory=1.1, cexCategory=1)
 
 }
 \author{

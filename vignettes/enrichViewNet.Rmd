@@ -48,8 +48,8 @@ Artistic license 2.0. You are free to use and redistribute this software.
 If you use this package for a publication, we would ask you to cite the 
 following:
 
-> Astrid Deschênes and Pascal Belleau (2023). enrichViewNet: From 
-  functional enrichment results to biological networks. 
+> eschênes A, Belleau P, Faure RL, Fernandes MJ, Tuveson DA (2021). 
+  enrichViewNet: From functional enrichment results to biological networks. 
   https://github.com/adeschen/enrichViewNet,
   https://adeschen.github.io/enrichViewNet/.
 
@@ -223,6 +223,8 @@ Step                              | Function
 
 The `package::function()` notation is used for functions from other packages.
 
+<br>
+
 ## Run an enrichment analysis 
 
 The first step consists in running an enrichment analysis with 
@@ -282,6 +284,8 @@ gostres$result[19:22, c("term_id", "source", "term_name")]
 
 ```
 
+<br>
+
 ## Start Cytoscape
 
 [Cytoscape](https://cytoscape.org/) is an open source software for 
@@ -301,6 +305,8 @@ software when the application is running.
 If the application is not running, a CX JSON file will be created. The file 
 can then be loaded manually into the [Cytoscape](https://cytoscape.org/) 
 software.
+
+<br>
 
 ## Create a gene-term network 
 
@@ -359,7 +365,7 @@ selectedRes[, c("term_name")]
 ```
 
 
-```{r runCreateNetworkSelected2, echo=TRUE, eval=FALSE}
+```{r runCreateNetworkSelected2, echo=TRUE, eval=FALSE, fig.align="center", fig.cap="Enrichment map."}
 
 ## Create network for REACTOME selected terms
 ## The 'source="TERM_ID"' parameter enable to specify a personalized 
@@ -367,18 +373,121 @@ selectedRes[, c("term_name")]
 createNetwork(gostObject=parentalNapaVsDMSOEnrichment,  source="TERM_ID", 
                   termIDs=selectedRes$term_id, title="REACTOME_Selected", 
                   collection="parental_napa_vs_DMSO")
+
 ```
 
 
 <br>
 <br>
 
-# Transforming enrichment results into a enrichment map
+# Transforming enrichment results into an enrichment map
 
-TODO 
+
+The following workflow gives an overview of the steps associated to the 
+creation of an enrichment map. 
+
+The key steps for the workflow are:
+
+Step                              | Function                    
+--------------------------------- | ---------------------------------------------
+ Run an enrichment analysis       | `gprofiler2::gost()`
+ Create an enrichment map          | `createEnrichMap()`
+
+The `package::function()` notation is used for functions from other packages.
+
+<br>
+
+
+## Run an enrichment analysis 
+
+The first step consists in running an enrichment analysis with 
+`r CRANpkg("gprofiler2")` package. The output of the _gprofiler2::gost()_ 
+is a _list_ and should be saved. 
+
+
+```{r gprofiler2, echo=TRUE, warning=FALSE, message=FALSE, collapse=F, eval=TRUE}
+
+## Required library
+library(gprofiler2)
+
+## The dataset of differentially expressed genes done between 
+## napabucasin treated and DMSO control parental (Froeling et al 2019)
+## All genes testd are present
+data("parentalNapaVsDMSODEG")
+
+## Retain significant results 
+## (absolute fold change superior to 1 and adjusted p-value inferior to 0.05)
+retained <- which(abs(parentalNapaVsDMSODEG$log2FoldChange) > 1 & 
+                      parentalNapaVsDMSODEG$padj < 0.05)
+signRes <-  parentalNapaVsDMSODEG[retained, ]
+
+## Run one functional enrichment analysis using all significant genes
+## The species is homo sapiens ("hsapiens")
+## The g:SCS multiple testing correction method (Raudvere U et al 2019)
+## The WikiPathways database is used
+## Only the significant results are retained (significant=TRUE)
+## The evidence codes are included in the results (evcodes=TRUE)
+## A custom background included the tested genes is used
+gostres <- gprofiler2::gost(
+                query=list(parental_napa_vs_DMSO=unique(signRes$EnsemblID)),
+                organism="hsapiens",
+                correction_method="g_SCS",
+                sources=c("WP"),
+                significant=TRUE,
+                evcodes=TRUE,
+                custom_bg=unique(parentalNapaVsDMSODEG$EnsemblID))
+```
+
+
+<br>
+
+The gost() function returns an named list of 2 entries: 
+
+* The __result__ entry contains the enrichment results.
+* The __meta__ entry contains the metadata information.
+
+<br>
+
+```{r gostResult2, echo=TRUE, eval=TRUE}
+## The 'gostres' object is a list of 2 entries
+## The 'result' entry contains the enrichment results
+## The 'meta' entry contains the metadata information
+
+## Some columns of interest in the results
+gostres$result[1:4, c("query", "p_value", "term_size", 
+                    "query_size", "intersection_size", "term_id")]
+
+## The term names can be longer than the one shown
+gostres$result[19:22, c("term_id", "source", "term_name")]
+
+```
+
+<br>
+
+
+## Create an enrichment map  
+
+TODO
+
+```{r runCreateEmap01, echo=TRUE, eval=TRUE}
+
+data(parentalNapaVsDMSOEnrichment)
+
+set.seed(121)
+
+## Create network for REACTOME selected terms
+## The 'source="TERM_ID"' parameter enable to specify a personalized 
+## list of terms of interest
+createEnrichMap(gostObject=parentalNapaVsDMSOEnrichment, 
+                  query="parental_napa_vs_DMSO", 
+                  source="KEGG", title="KEGG")
+```
+
+
 
 <br>
 <br>
+
 
 # Acknowledgments
 

@@ -12,6 +12,10 @@
 #' output that contains and that contains 
 #' the results from an enrichment analysis.
 #' 
+#' @param query a \code{character} string representing the name of the query 
+#' that is going to be used to generate the graph. The query must exist in the 
+#' \code{gostObject} object.
+#' 
 #' @param source a \code{character} string representing the selected source 
 #' that will be used to generate the network. To hand-pick the terms to be 
 #' used, "TERM_ID" should be used and the list of selected term IDs should
@@ -53,23 +57,25 @@
 #'
 #' ## Loading dataset containing result from an enrichment analysis done with
 #' ## gprofiler2
-#' data(demoGOST)
+#' data(parentalNapaVsDMSOEnrichment)
 #'
-#' \dontrun{
+#' ## Extract query information (only one in this dataset)
+#' query <- unique(parentalNapaVsDMSOEnrichment$result$query)
 #' 
-#' ## Create network for Gene Ontology - Molecular Function related results
-#' createEnrichMap(gostObject=demoGOST, source="GO:MF", removeRoot=FALSE,
-#'     title="GO Molecular Function Graph")
+#' ## Create graph for Gene Ontology - Cellular Component related results
+#' createEnrichMap(gostObject=parentalNapaVsDMSOEnrichment, 
+#'     query=query, source="GO:CC", removeRoot=TRUE,
+#'     title="GO Cellular Component")
 #' 
-#' }
 #' 
 #' @author Astrid Deschênes
 #' @importFrom gprofiler2 gconvert
 #' @importFrom strex match_arg
 #' @encoding UTF-8
 #' @export
-createEnrichMap <- function(gostObject, source=c("TERM_ID", "GO:MF", "GO:CC",
-        "GO:BP", "KEGG", "REAC", "TF", "MIRNA", "HPA", "CORUM", "HP", "WP"), 
+createEnrichMap <- function(gostObject, query, source=c("TERM_ID", "GO:MF", 
+        "GO:CC", "GO:BP", "KEGG", "REAC", "TF", "MIRNA", "HPA", "CORUM", 
+        "HP", "WP"), 
         termIDs=NULL, removeRoot=TRUE, title="gprofiler network", 
         showCategory=30, groupCategory=FALSE, cexLabelCategory=1,
         cexCategory=1) {
@@ -78,13 +84,16 @@ createEnrichMap <- function(gostObject, source=c("TERM_ID", "GO:MF", "GO:CC",
     source <- match_arg(source, ignore_case=TRUE)
     
     ## Validate parameters
-    validateCreateEnrichMapArguments(gostObject=gostObject, source=source,
-            termIDs = termIDs, removeRoot=removeRoot, title=title, 
-            showCategory=showCategory, cexLabelCategory=cexLabelCategory,
-            groupCategory=groupCategory, cexCategory=cexCategory)
+    validateCreateEnrichMapArguments(gostObject=gostObject, query=query, 
+        source=source, termIDs=termIDs, removeRoot=removeRoot, title=title, 
+        showCategory=showCategory, cexLabelCategory=cexLabelCategory,
+        groupCategory=groupCategory, cexCategory=cexCategory)
     
     ## Extract results
     gostResults <- gostObject$result
+    
+    ## Retain results associated to query
+    gostResults <- gostResults[gostResults$query == query,]
     
     ## Filter results
     if (source == "TERM_ID") {
@@ -102,10 +111,18 @@ createEnrichMap <- function(gostObject, source=c("TERM_ID", "GO:MF", "GO:CC",
         }
     }
     
+    meta <- gostObject$meta
+    
+    backgroundGenes <- meta$query_metadata$queries[[query]]
+    
+    significantMethod <- meta$query_metadata$significance_threshold_method
+    
     ## Create basic emap
-    emap <- createBasicEmap(gostResults=gostResults, title=title, 
+    emap <- createBasicEmap(gostResults=gostResults, 
+                backgroundGenes=backgroundGenes, title=title, 
                 showCategory=showCategory, cexLabelCategory=cexLabelCategory,
-                groupCategory=groupCategory, cexCategory=cexCategory)
+                groupCategory=groupCategory, cexCategory=cexCategory, 
+                significantMethod=significantMethod)
     
     return(emap)
 }

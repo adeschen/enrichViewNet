@@ -8,6 +8,7 @@ enrichment map}
 \usage{
 createEnrichMap(
   gostObject,
+  query,
   source = c("TERM_ID", "GO:MF", "GO:CC", "GO:BP", "KEGG", "REAC", "TF", "MIRNA", "HPA",
     "CORUM", "HP", "WP"),
   termIDs = NULL,
@@ -23,6 +24,10 @@ createEnrichMap(
 \item{gostObject}{a \code{list} corresponding to gprofiler2 enrichment 
 output that contains and that contains 
 the results from an enrichment analysis.}
+
+\item{query}{a \code{character} string representing the name of the query 
+that is going to be used to generate the graph. The query must exist in the 
+\code{gostObject} object.}
 
 \item{source}{a \code{character} string representing the selected source 
 that will be used to generate the network. To hand-pick the terms to be 
@@ -73,15 +78,16 @@ significant term to graph.
 
 ## Loading dataset containing result from an enrichment analysis done with
 ## gprofiler2
-data(demoGOST)
+data(parentalNapaVsDMSOEnrichment)
 
-\dontrun{
+## Extract query information (only one in this dataset)
+query <- unique(parentalNapaVsDMSOEnrichment$result$query)
 
-## Create network for Gene Ontology - Molecular Function related results
-createEnrichMap(gostObject=demoGOST, source="GO:MF", removeRoot=FALSE,
-    title="GO Molecular Function Graph")
+## Create graph for Gene Ontology - Cellular Component related results
+createEnrichMap(gostObject=parentalNapaVsDMSOEnrichment, 
+    query=query, source="GO:CC", removeRoot=TRUE,
+    title="GO Cellular Component")
 
-}
 
 }
 \author{

@@ -7,16 +7,21 @@
 \usage{
 createBasicEmap(
   gostResults,
+  backgroundGenes,
   title,
   showCategory,
   groupCategory,
   cexLabelCategory,
-  cexCategory
+  cexCategory,
+  significantMethod
 )
 }
 \arguments{
 \item{gostResults}{a \code{data.frame} containing the enrichment 
 results to be plot.}
+
+\item{backgroundGenes}{a \code{vector} of \code{character} string 
+representing the name of the genes present in the request.}
 
 \item{title}{a \code{character} string representing TODO}
 
@@ -34,6 +39,9 @@ to the default (1).}
 
 \item{cexCategory}{a positive \code{numeric} representing the amount by 
 which plotting category nodes should be scaled relative to the default (1).}
+
+\item{significantMethod}{a \code{character} string representing the name 
+of the multiple testing correction method used on the results.}
 }
 \value{
 TODO
@@ -54,6 +62,12 @@ gostResults <- as.data.frame(parentalNapaVsDMSOEnrichment$result)
 gostResults <- gostResults[which(gostResults$source == "WP"),]
 gostResults <- gostResults[which(gostResults$term_id != "WILIPATHWAYS"),]
 
+## Extract meta data information
+meta <- parentalNapaVsDMSOEnrichment$meta
+
+backgroundGenes <- meta$query_metadata$queries[["parental_napa_vs_DMSO"]]
+
+significantMethod <- meta$query_metadata$significance_threshold_method
 
 }
 \author{
