@@ -68,6 +68,7 @@ results.</p>
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">validateCreateEnrichMapArguments</span><span class="op">(</span></span>
 <span>  <span class="va">gostObject</span>,</span>
+<span>  <span class="va">query</span>,</span>
 <span>  <span class="va">source</span>,</span>
 <span>  <span class="va">termIDs</span>,</span>
 <span>  <span class="va">removeRoot</span>,</span>
@@ -84,6 +85,12 @@ results.</p>
     <dl><dt>gostObject</dt>
 <dd><p>a <code>list</code> created by <code>gprofiler2</code> that contains
 the results from an enrichment analysis.</p></dd>
+
+
+<dt>query</dt>
+<dd><p>a <code>character</code> string representing the name of the query 
+that is going to be used to generate the graph. The query must exist in the 
+<code>gostObject</code> object.</p></dd>
 
 
 <dt>source</dt>
@@ -153,12 +160,11 @@ plotting category nodes should be scaled relative to the default (1).</p></dd>
 <span class="r-in"><span><span class="co">## Load the result of an enrichment analysis done with gprofiler2</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">demoGOST</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Check that all arguments are valid</span></span></span>
 <span class="r-in"><span><span class="fu">enrichViewNet</span><span class="fu">:::</span><span class="fu">validateCreateEnrichMapArguments</span><span class="op">(</span>gostObject<span class="op">=</span><span class="va">demoGOST</span>,</span></span>
-<span class="r-in"><span>    source<span class="op">=</span><span class="st">"GO:BP"</span>, termIDs<span class="op">=</span><span class="cn">NULL</span>, removeRoot<span class="op">=</span><span class="cn">FALSE</span>, title<span class="op">=</span><span class="st">"GO:BP"</span>, </span></span>
-<span class="r-in"><span>    showCategory<span class="op">=</span><span class="fl">20</span>, groupCategory<span class="op">=</span><span class="cn">FALSE</span>, cexLabelCategory<span class="op">=</span><span class="fl">1.1</span>, </span></span>
-<span class="r-in"><span>    cexCategory<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    query<span class="op">=</span><span class="st">"query_1"</span>, source<span class="op">=</span><span class="st">"GO:BP"</span>, termIDs<span class="op">=</span><span class="cn">NULL</span>, removeRoot<span class="op">=</span><span class="cn">FALSE</span>, </span></span>
+<span class="r-in"><span>    title<span class="op">=</span><span class="st">"GO:BP"</span>, showCategory<span class="op">=</span><span class="fl">20</span>, groupCategory<span class="op">=</span><span class="cn">FALSE</span>, </span></span>
+<span class="r-in"><span>    cexLabelCategory<span class="op">=</span><span class="fl">1.1</span>, cexCategory<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

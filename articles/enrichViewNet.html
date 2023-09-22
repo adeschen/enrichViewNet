@@ -6,7 +6,7 @@
 <meta name="generator" content="pandoc">
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE">
 <meta name="author" content="Astrid Deschênes, Pascal Belleau, Robert L Faure and Maria J Fernandes">
-<meta name="date" content="2023-09-20">
+<meta name="date" content="2023-09-22">
 <title>From functional enrichment results to biological networks</title>
 <script src="enrichViewNet_files/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="enrichViewNet_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
@@ -243,7 +243,7 @@ function toggle_visibility(id1) {
 
 <h1 class="title toc-ignore">From functional enrichment results to biological networks</h1>
 <p class="author-name">Astrid Deschênes, Pascal Belleau, Robert L Faure and Maria J Fernandes</p>
-<h4 class="date">20 September 2023</h4>
+<h4 class="date">22 September 2023</h4>
 
 </div>
 
@@ -263,7 +263,13 @@ function toggle_visibility(id1) {
 <li><a href="#create-a-gene-term-network" id="toc-create-a-gene-term-network"><span class="toc-section-number">6.3</span> Create a gene-term network</a></li>
 </ul>
 </li>
-<li><a href="#transforming-enrichment-results-into-a-enrichment-map" id="toc-transforming-enrichment-results-into-a-enrichment-map"><span class="toc-section-number">7</span> Transforming enrichment results into a enrichment map</a></li>
+<li>
+<a href="#transforming-enrichment-results-into-an-enrichment-map" id="toc-transforming-enrichment-results-into-an-enrichment-map"><span class="toc-section-number">7</span> Transforming enrichment results into an enrichment map</a>
+<ul>
+<li><a href="#run-an-enrichment-analysis-1" id="toc-run-an-enrichment-analysis-1"><span class="toc-section-number">7.1</span> Run an enrichment analysis</a></li>
+<li><a href="#create-an-enrichment-map" id="toc-create-an-enrichment-map"><span class="toc-section-number">7.2</span> Create an enrichment map</a></li>
+</ul>
+</li>
 <li><a href="#acknowledgments" id="toc-acknowledgments"><span class="toc-section-number">8</span> Acknowledgments</a></li>
 <li><a href="#session-info" id="toc-session-info"><span class="toc-section-number">9</span> Session info</a></li>
 <li><a href="#references" id="toc-references">References</a></li>
@@ -274,7 +280,7 @@ function toggle_visibility(id1) {
 Pascal Belleau [aut] (<a href="https://orcid.org/0000-0002-0802-1071" class="external-link uri">https://orcid.org/0000-0002-0802-1071</a>),
 Robert L. Faure [aut] (<a href="https://orcid.org/0000-0003-1798-4723" class="external-link uri">https://orcid.org/0000-0003-1798-4723</a>),
 Maria J. Fernandes [aut] (<a href="https://orcid.org/0000-0002-3973-025X" class="external-link uri">https://orcid.org/0000-0002-3973-025X</a>),
-David A. Tuveson [aut] (<a href="https://orcid.org/0000-0002-8017-2712" class="external-link uri">https://orcid.org/0000-0002-8017-2712</a>)<br><strong>Version</strong>: 0.0.4<br><strong>Compiled date</strong>: 2023-09-20<br><strong>License</strong>: Artistic-2.0<br></p>
+David A. Tuveson [aut] (<a href="https://orcid.org/0000-0002-8017-2712" class="external-link uri">https://orcid.org/0000-0002-8017-2712</a>)<br><strong>Version</strong>: 0.0.4<br><strong>Compiled date</strong>: 2023-09-22<br><strong>License</strong>: Artistic-2.0<br></p>
 <div class="section level2" number="1">
 <h2 id="licensing">
 <span class="header-section-number">1</span> Licensing<a class="anchor" aria-label="anchor" href="#licensing"></a>
@@ -291,8 +297,8 @@ Artistic license 2.0. You are free to use and redistribute this software.</p>
 <p>If you use this package for a publication, we would ask you to cite the
 following:</p>
 <blockquote>
-<p>Astrid Deschênes and Pascal Belleau (2023). enrichViewNet: From
-functional enrichment results to biological networks.
+<p>eschênes A, Belleau P, Faure RL, Fernandes MJ, Tuveson DA (2021).
+enrichViewNet: From functional enrichment results to biological networks.
 <a href="https://github.com/adeschen/enrichViewNet" class="external-link uri">https://github.com/adeschen/enrichViewNet</a>,
 <a href="https://adeschen.github.io/enrichViewNet/" class="external-link uri">https://adeschen.github.io/enrichViewNet/</a>.</p>
 </blockquote>
@@ -468,6 +474,7 @@ Figure 4: <span class="caption-title">From an enrichment list to a Cytoscape net
 </tbody>
 </table></div>
 <p>The <code>package::function()</code> notation is used for functions from other packages.</p>
+<p><br></p>
 <div class="section level3" number="6.1">
 <h3 id="run-an-enrichment-analysis">
 <span class="header-section-number">6.1</span> Run an enrichment analysis<a class="anchor" aria-label="anchor" href="#run-an-enrichment-analysis"></a>
@@ -517,23 +524,24 @@ is a <em>list</em> and should be saved.</p>
 <span><span class="va">gostres</span><span class="op">$</span><span class="va">result</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"query"</span>, <span class="st">"p_value"</span>, <span class="st">"term_size"</span>, </span>
 <span>                    <span class="st">"query_size"</span>, <span class="st">"intersection_size"</span>, <span class="st">"term_id"</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
 <pre><code><span><span class="co">##                   query      p_value term_size query_size intersection_size</span></span>
-<span><span class="co">## 1 parental_napa_vs_DMSO 2.670662e-08        25        157                 7</span></span>
-<span><span class="co">## 2 parental_napa_vs_DMSO 2.506453e-07      6160        157                75</span></span>
-<span><span class="co">## 3 parental_napa_vs_DMSO 8.980755e-07        23        157                 6</span></span>
-<span><span class="co">## 4 parental_napa_vs_DMSO 9.029296e-07       391        157                16</span></span>
+<span><span class="co">## 1 parental_napa_vs_DMSO 3.234502e-14       153        157                17</span></span>
+<span><span class="co">## 2 parental_napa_vs_DMSO 2.900542e-08        25        157                 7</span></span>
+<span><span class="co">## 3 parental_napa_vs_DMSO 9.750556e-07        23        157                 6</span></span>
+<span><span class="co">## 4 parental_napa_vs_DMSO 9.829403e-07       391        157                16</span></span>
 <span><span class="co">##     term_id</span></span>
-<span><span class="co">## 1 WP:WP3613</span></span>
-<span><span class="co">## 2 WP:000000</span></span>
+<span><span class="co">## 1 WP:WP5094</span></span>
+<span><span class="co">## 2 WP:WP3613</span></span>
 <span><span class="co">## 3 WP:WP4925</span></span>
 <span><span class="co">## 4 WP:WP3888</span></span></code></pre>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## The term names can be longer than the one shown</span></span>
 <span><span class="va">gostres</span><span class="op">$</span><span class="va">result</span><span class="op">[</span><span class="fl">19</span><span class="op">:</span><span class="fl">22</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"term_id"</span>, <span class="st">"source"</span>, <span class="st">"term_name"</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
-<pre><code><span><span class="co">##      term_id source                  term_name</span></span>
-<span><span class="co">## 19 WP:WP4970     WP   Galanin receptor pathway</span></span>
-<span><span class="co">## 20 WP:WP2877     WP Vitamin D receptor pathway</span></span>
-<span><span class="co">## 21  WP:WP516     WP          Hypertrophy model</span></span>
-<span><span class="co">## 22 WP:WP1742     WP               TP53 network</span></span></code></pre>
+<pre><code><span><span class="co">##      term_id source                          term_name</span></span>
+<span><span class="co">## 19 WP:WP1772     WP Apoptosis modulation and signaling</span></span>
+<span><span class="co">## 20 WP:WP2374     WP     Oncostatin M signaling pathway</span></span>
+<span><span class="co">## 21 WP:WP4970     WP           Galanin receptor pathway</span></span>
+<span><span class="co">## 22 WP:WP2877     WP         Vitamin D receptor pathway</span></span></code></pre>
+<p><br></p>
 </div>
 <div class="section level3" number="6.2">
 <h3 id="start-cytoscape">
@@ -555,6 +563,7 @@ software when the application is running.</p>
 <p>If the application is not running, a CX JSON file will be created. The file
 can then be loaded manually into the <a href="https://cytoscape.org/" class="external-link">Cytoscape</a>
 software.</p>
+<p><br></p>
 </div>
 <div class="section level3" number="6.3">
 <h3 id="create-a-gene-term-network">
@@ -622,11 +631,131 @@ Reactome terms of interest can be created.</p>
 </div>
 </div>
 <div class="section level2" number="7">
-<h2 id="transforming-enrichment-results-into-a-enrichment-map">
-<span class="header-section-number">7</span> Transforming enrichment results into a enrichment map<a class="anchor" aria-label="anchor" href="#transforming-enrichment-results-into-a-enrichment-map"></a>
+<h2 id="transforming-enrichment-results-into-an-enrichment-map">
+<span class="header-section-number">7</span> Transforming enrichment results into an enrichment map<a class="anchor" aria-label="anchor" href="#transforming-enrichment-results-into-an-enrichment-map"></a>
 </h2>
+<p>The following workflow gives an overview of the steps associated to the
+creation of an enrichment map.</p>
+<p>The key steps for the workflow are:</p>
+<div class="horizontal-scroll"><table class="table">
+<colgroup>
+<col width="42%">
+<col width="57%">
+</colgroup>
+<thead><tr class="header">
+<th>Step</th>
+<th>Function</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Run an enrichment analysis</td>
+<td><code><a href="https://rdrr.io/pkg/gprofiler2/man/gost.html" class="external-link">gprofiler2::gost()</a></code></td>
+</tr>
+<tr class="even">
+<td>Create an enrichment map</td>
+<td><code><a href="../reference/createEnrichMap.html">createEnrichMap()</a></code></td>
+</tr>
+</tbody>
+</table></div>
+<p>The <code>package::function()</code> notation is used for functions from other packages.</p>
+<p><br></p>
+<div class="section level3" number="7.1">
+<h3 id="run-an-enrichment-analysis-1">
+<span class="header-section-number">7.1</span> Run an enrichment analysis<a class="anchor" aria-label="anchor" href="#run-an-enrichment-analysis-1"></a>
+</h3>
+<p>The first step consists in running an enrichment analysis with
+<em><a href="https://CRAN.R-project.org/package=gprofiler2" class="external-link">gprofiler2</a></em> package. The output of the <em>gprofiler2::gost()</em>
+is a <em>list</em> and should be saved.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## Required library</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">gprofiler2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## The dataset of differentially expressed genes done between </span></span>
+<span><span class="co">## napabucasin treated and DMSO control parental (Froeling et al 2019)</span></span>
+<span><span class="co">## All genes testd are present</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"parentalNapaVsDMSODEG"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Retain significant results </span></span>
+<span><span class="co">## (absolute fold change superior to 1 and adjusted p-value inferior to 0.05)</span></span>
+<span><span class="va">retained</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">parentalNapaVsDMSODEG</span><span class="op">$</span><span class="va">log2FoldChange</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1</span> <span class="op">&amp;</span> </span>
+<span>                      <span class="va">parentalNapaVsDMSODEG</span><span class="op">$</span><span class="va">padj</span> <span class="op">&lt;</span> <span class="fl">0.05</span><span class="op">)</span></span>
+<span><span class="va">signRes</span> <span class="op">&lt;-</span>  <span class="va">parentalNapaVsDMSODEG</span><span class="op">[</span><span class="va">retained</span>, <span class="op">]</span></span>
+<span></span>
+<span><span class="co">## Run one functional enrichment analysis using all significant genes</span></span>
+<span><span class="co">## The species is homo sapiens ("hsapiens")</span></span>
+<span><span class="co">## The g:SCS multiple testing correction method (Raudvere U et al 2019)</span></span>
+<span><span class="co">## The WikiPathways database is used</span></span>
+<span><span class="co">## Only the significant results are retained (significant=TRUE)</span></span>
+<span><span class="co">## The evidence codes are included in the results (evcodes=TRUE)</span></span>
+<span><span class="co">## A custom background included the tested genes is used</span></span>
+<span><span class="va">gostres</span> <span class="op">&lt;-</span> <span class="fu">gprofiler2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/gprofiler2/man/gost.html" class="external-link">gost</a></span><span class="op">(</span></span>
+<span>                query<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>parental_napa_vs_DMSO<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">signRes</span><span class="op">$</span><span class="va">EnsemblID</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                organism<span class="op">=</span><span class="st">"hsapiens"</span>,</span>
+<span>                correction_method<span class="op">=</span><span class="st">"g_SCS"</span>,</span>
+<span>                sources<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"WP"</span><span class="op">)</span>,</span>
+<span>                significant<span class="op">=</span><span class="cn">TRUE</span>,</span>
+<span>                evcodes<span class="op">=</span><span class="cn">TRUE</span>,</span>
+<span>                custom_bg<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">parentalNapaVsDMSODEG</span><span class="op">$</span><span class="va">EnsemblID</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><br></p>
+<p>The gost() function returns an named list of 2 entries:</p>
+<ul>
+<li>The <strong>result</strong> entry contains the enrichment results.</li>
+<li>The <strong>meta</strong> entry contains the metadata information.</li>
+</ul>
+<p><br></p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## The 'gostres' object is a list of 2 entries</span></span>
+<span><span class="co">## The 'result' entry contains the enrichment results</span></span>
+<span><span class="co">## The 'meta' entry contains the metadata information</span></span>
+<span></span>
+<span><span class="co">## Some columns of interest in the results</span></span>
+<span><span class="va">gostres</span><span class="op">$</span><span class="va">result</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"query"</span>, <span class="st">"p_value"</span>, <span class="st">"term_size"</span>, </span>
+<span>                    <span class="st">"query_size"</span>, <span class="st">"intersection_size"</span>, <span class="st">"term_id"</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
+<pre><code><span><span class="co">##                   query      p_value term_size query_size intersection_size</span></span>
+<span><span class="co">## 1 parental_napa_vs_DMSO 3.234502e-14       153        157                17</span></span>
+<span><span class="co">## 2 parental_napa_vs_DMSO 2.900542e-08        25        157                 7</span></span>
+<span><span class="co">## 3 parental_napa_vs_DMSO 9.750556e-07        23        157                 6</span></span>
+<span><span class="co">## 4 parental_napa_vs_DMSO 9.829403e-07       391        157                16</span></span>
+<span><span class="co">##     term_id</span></span>
+<span><span class="co">## 1 WP:WP5094</span></span>
+<span><span class="co">## 2 WP:WP3613</span></span>
+<span><span class="co">## 3 WP:WP4925</span></span>
+<span><span class="co">## 4 WP:WP3888</span></span></code></pre>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## The term names can be longer than the one shown</span></span>
+<span><span class="va">gostres</span><span class="op">$</span><span class="va">result</span><span class="op">[</span><span class="fl">19</span><span class="op">:</span><span class="fl">22</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"term_id"</span>, <span class="st">"source"</span>, <span class="st">"term_name"</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
+<pre><code><span><span class="co">##      term_id source                          term_name</span></span>
+<span><span class="co">## 19 WP:WP1772     WP Apoptosis modulation and signaling</span></span>
+<span><span class="co">## 20 WP:WP2374     WP     Oncostatin M signaling pathway</span></span>
+<span><span class="co">## 21 WP:WP4970     WP           Galanin receptor pathway</span></span>
+<span><span class="co">## 22 WP:WP2877     WP         Vitamin D receptor pathway</span></span></code></pre>
+<p><br></p>
+</div>
+<div class="section level3" number="7.2">
+<h3 id="create-an-enrichment-map">
+<span class="header-section-number">7.2</span> Create an enrichment map<a class="anchor" aria-label="anchor" href="#create-an-enrichment-map"></a>
+</h3>
 <p>TODO</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">parentalNapaVsDMSOEnrichment</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">121</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Create network for REACTOME selected terms</span></span>
+<span><span class="co">## The 'source="TERM_ID"' parameter enable to specify a personalized </span></span>
+<span><span class="co">## list of terms of interest</span></span>
+<span><span class="fu"><a href="../reference/createEnrichMap.html">createEnrichMap</a></span><span class="op">(</span>gostObject<span class="op">=</span><span class="va">parentalNapaVsDMSOEnrichment</span>, </span>
+<span>                  query<span class="op">=</span><span class="st">"parental_napa_vs_DMSO"</span>, </span>
+<span>                  source<span class="op">=</span><span class="st">"KEGG"</span>, title<span class="op">=</span><span class="st">"KEGG"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Warning in emapplot.enrichResult(x, showCategory = showCategory, ...): Use 'cex.params = list(category_node = your_value)' instead of 'cex_category'.</span></span>
+<span><span class="co">##  The cex_category parameter will be removed in the next version.</span></span></code></pre>
+<pre><code><span><span class="co">## Warning in emapplot.enrichResult(x, showCategory = showCategory, ...): Use 'cex.params = list(category_label = your_value)' instead of 'cex_label_category'.</span></span>
+<span><span class="co">##  The cex_label_category parameter will be removed in the next version.</span></span></code></pre>
+<pre><code><span><span class="co">## Warning in emapplot.enrichResult(x, showCategory = showCategory, ...): Use 'cluster.params = list(cluster = your_value)' instead of 'group_category'.</span></span>
+<span><span class="co">##  The group_category parameter will be removed in the next version.</span></span></code></pre>
+<p><img src="enrichViewNet_files/figure-html/runCreateEmap01-1.png" width="100%"></p>
 <p><br><br></p>
+</div>
 </div>
 <div class="section level2" number="8">
 <h2 id="acknowledgments">
@@ -693,7 +822,7 @@ was compiled:</p>
 <span><span class="co">##  [25] RColorBrewer_1.1-3            zlibbioc_1.47.0              </span></span>
 <span><span class="co">##  [27] purrr_1.0.2                   ggraph_2.1.0                 </span></span>
 <span><span class="co">##  [29] BiocGenerics_0.47.0           RCurl_1.98-1.12              </span></span>
-<span><span class="co">##  [31] yulab.utils_0.0.9             tweenr_2.0.2                 </span></span>
+<span><span class="co">##  [31] yulab.utils_0.1.0             tweenr_2.0.2                 </span></span>
 <span><span class="co">##  [33] rappdirs_0.3.3                GenomeInfoDbData_1.2.10      </span></span>
 <span><span class="co">##  [35] IRanges_2.35.2                S4Vectors_0.39.1             </span></span>
 <span><span class="co">##  [37] enrichplot_1.21.3             ggrepel_0.9.3                </span></span>
@@ -704,55 +833,57 @@ was compiled:</p>
 <span><span class="co">##  [47] stats4_4.3.1                  BiocFileCache_2.9.1          </span></span>
 <span><span class="co">##  [49] base64enc_0.1-3               jsonlite_1.8.7               </span></span>
 <span><span class="co">##  [51] ellipsis_0.3.2                tidygraph_1.2.3              </span></span>
-<span><span class="co">##  [53] tools_4.3.1                   treeio_1.25.4                </span></span>
-<span><span class="co">##  [55] HPO.db_0.99.2                 Rcpp_1.0.11                  </span></span>
-<span><span class="co">##  [57] glue_1.6.2                    gridExtra_2.3                </span></span>
-<span><span class="co">##  [59] xfun_0.40                     qvalue_2.33.0                </span></span>
-<span><span class="co">##  [61] GenomeInfoDb_1.37.4           IRdisplay_1.1                </span></span>
-<span><span class="co">##  [63] dplyr_1.1.3                   withr_2.5.0                  </span></span>
-<span><span class="co">##  [65] BiocManager_1.30.22           fastmap_1.1.1                </span></span>
-<span><span class="co">##  [67] fansi_1.0.4                   caTools_1.18.2               </span></span>
-<span><span class="co">##  [69] digest_0.6.33                 R6_2.5.1                     </span></span>
-<span><span class="co">##  [71] mime_0.12                     gridGraphics_0.5-1           </span></span>
-<span><span class="co">##  [73] colorspace_2.1-0              GO.db_3.17.0                 </span></span>
-<span><span class="co">##  [75] gtools_3.9.4                  RSQLite_2.3.1                </span></span>
-<span><span class="co">##  [77] utf8_1.2.3                    tidyr_1.3.0                  </span></span>
-<span><span class="co">##  [79] generics_0.1.3                data.table_1.14.8            </span></span>
-<span><span class="co">##  [81] graphlayouts_1.0.1            httr_1.4.7                   </span></span>
-<span><span class="co">##  [83] htmlwidgets_1.6.2             scatterpie_0.2.1             </span></span>
-<span><span class="co">##  [85] RJSONIO_1.3-1.8               pkgconfig_2.0.3              </span></span>
-<span><span class="co">##  [87] gtable_0.3.4                  blob_1.2.4                   </span></span>
-<span><span class="co">##  [89] XVector_0.41.1                shadowtext_0.1.2             </span></span>
-<span><span class="co">##  [91] htmltools_0.5.6               bookdown_0.35                </span></span>
-<span><span class="co">##  [93] fgsea_1.27.1                  base64url_1.4                </span></span>
-<span><span class="co">##  [95] strex_1.6.0                   scales_1.2.1                 </span></span>
-<span><span class="co">##  [97] Biobase_2.61.0                png_0.1-8                    </span></span>
-<span><span class="co">##  [99] ggfun_0.1.3                   uchardet_1.1.1               </span></span>
-<span><span class="co">## [101] reshape2_1.4.4                uuid_1.1-1                   </span></span>
-<span><span class="co">## [103] nlme_3.1-163                  curl_5.0.2                   </span></span>
-<span><span class="co">## [105] repr_1.1.6                    cachem_1.0.8                 </span></span>
-<span><span class="co">## [107] stringr_1.5.0                 BiocVersion_3.18.0           </span></span>
-<span><span class="co">## [109] KernSmooth_2.23-22            parallel_4.3.1               </span></span>
-<span><span class="co">## [111] HDO.db_0.99.1                 AnnotationDbi_1.63.2         </span></span>
-<span><span class="co">## [113] pillar_1.9.0                  grid_4.3.1                   </span></span>
-<span><span class="co">## [115] vctrs_0.6.3                   gplots_3.1.3                 </span></span>
-<span><span class="co">## [117] promises_1.2.1                dbplyr_2.3.3                 </span></span>
-<span><span class="co">## [119] xtable_1.8-4                  evaluate_0.21                </span></span>
-<span><span class="co">## [121] cli_3.6.1                     compiler_4.3.1               </span></span>
-<span><span class="co">## [123] rlang_1.1.1                   crayon_1.5.2                 </span></span>
-<span><span class="co">## [125] plyr_1.8.8                    fs_1.6.3                     </span></span>
-<span><span class="co">## [127] stringi_1.7.12                viridisLite_0.4.2            </span></span>
-<span><span class="co">## [129] BiocParallel_1.35.4           MPO.db_0.99.7                </span></span>
-<span><span class="co">## [131] munsell_0.5.0                 Biostrings_2.69.2            </span></span>
-<span><span class="co">## [133] lazyeval_0.2.2                GOSemSim_2.27.3              </span></span>
-<span><span class="co">## [135] Matrix_1.6-1.1                IRkernel_1.3.2               </span></span>
-<span><span class="co">## [137] patchwork_1.1.3               bit64_4.0.5                  </span></span>
-<span><span class="co">## [139] ggplot2_3.4.3                 KEGGREST_1.41.0              </span></span>
-<span><span class="co">## [141] shiny_1.7.5                   interactiveDisplayBase_1.39.0</span></span>
-<span><span class="co">## [143] AnnotationHub_3.9.2           igraph_1.5.1                 </span></span>
-<span><span class="co">## [145] memoise_2.0.1                 bslib_0.5.1                  </span></span>
-<span><span class="co">## [147] ggtree_3.9.1                  fastmatch_1.1-4              </span></span>
-<span><span class="co">## [149] bit_4.0.5                     ape_5.7-1</span></span></code></pre>
+<span><span class="co">##  [53] ggnewscale_0.4.9              tools_4.3.1                  </span></span>
+<span><span class="co">##  [55] treeio_1.25.4                 HPO.db_0.99.2                </span></span>
+<span><span class="co">##  [57] Rcpp_1.0.11                   glue_1.6.2                   </span></span>
+<span><span class="co">##  [59] gridExtra_2.3                 xfun_0.40                    </span></span>
+<span><span class="co">##  [61] qvalue_2.33.0                 GenomeInfoDb_1.37.4          </span></span>
+<span><span class="co">##  [63] IRdisplay_1.1                 dplyr_1.1.3                  </span></span>
+<span><span class="co">##  [65] withr_2.5.0                   BiocManager_1.30.22          </span></span>
+<span><span class="co">##  [67] fastmap_1.1.1                 fansi_1.0.4                  </span></span>
+<span><span class="co">##  [69] caTools_1.18.2                digest_0.6.33                </span></span>
+<span><span class="co">##  [71] R6_2.5.1                      mime_0.12                    </span></span>
+<span><span class="co">##  [73] gridGraphics_0.5-1            colorspace_2.1-0             </span></span>
+<span><span class="co">##  [75] GO.db_3.17.0                  gtools_3.9.4                 </span></span>
+<span><span class="co">##  [77] RSQLite_2.3.1                 utf8_1.2.3                   </span></span>
+<span><span class="co">##  [79] tidyr_1.3.0                   generics_0.1.3               </span></span>
+<span><span class="co">##  [81] data.table_1.14.8             graphlayouts_1.0.1           </span></span>
+<span><span class="co">##  [83] httr_1.4.7                    htmlwidgets_1.6.2            </span></span>
+<span><span class="co">##  [85] scatterpie_0.2.1              RJSONIO_1.3-1.8              </span></span>
+<span><span class="co">##  [87] pkgconfig_2.0.3               gtable_0.3.4                 </span></span>
+<span><span class="co">##  [89] blob_1.2.4                    XVector_0.41.1               </span></span>
+<span><span class="co">##  [91] shadowtext_0.1.2              htmltools_0.5.6              </span></span>
+<span><span class="co">##  [93] bookdown_0.35                 fgsea_1.27.1                 </span></span>
+<span><span class="co">##  [95] base64url_1.4                 strex_1.6.0                  </span></span>
+<span><span class="co">##  [97] scales_1.2.1                  Biobase_2.61.0               </span></span>
+<span><span class="co">##  [99] png_0.1-8                     ggfun_0.1.3                  </span></span>
+<span><span class="co">## [101] uchardet_1.1.1                reshape2_1.4.4               </span></span>
+<span><span class="co">## [103] uuid_1.1-1                    checkmate_2.2.0              </span></span>
+<span><span class="co">## [105] nlme_3.1-163                  curl_5.0.2                   </span></span>
+<span><span class="co">## [107] repr_1.1.6                    cachem_1.0.8                 </span></span>
+<span><span class="co">## [109] stringr_1.5.0                 BiocVersion_3.18.0           </span></span>
+<span><span class="co">## [111] KernSmooth_2.23-22            parallel_4.3.1               </span></span>
+<span><span class="co">## [113] HDO.db_0.99.1                 AnnotationDbi_1.63.2         </span></span>
+<span><span class="co">## [115] pillar_1.9.0                  grid_4.3.1                   </span></span>
+<span><span class="co">## [117] vctrs_0.6.3                   gplots_3.1.3                 </span></span>
+<span><span class="co">## [119] promises_1.2.1                dbplyr_2.3.3                 </span></span>
+<span><span class="co">## [121] xtable_1.8-4                  evaluate_0.21                </span></span>
+<span><span class="co">## [123] cli_3.6.1                     compiler_4.3.1               </span></span>
+<span><span class="co">## [125] rlang_1.1.1                   crayon_1.5.2                 </span></span>
+<span><span class="co">## [127] labeling_0.4.3                plyr_1.8.8                   </span></span>
+<span><span class="co">## [129] fs_1.6.3                      stringi_1.7.12               </span></span>
+<span><span class="co">## [131] viridisLite_0.4.2             BiocParallel_1.35.4          </span></span>
+<span><span class="co">## [133] MPO.db_0.99.7                 munsell_0.5.0                </span></span>
+<span><span class="co">## [135] Biostrings_2.69.2             lazyeval_0.2.2               </span></span>
+<span><span class="co">## [137] GOSemSim_2.27.3               Matrix_1.6-1.1               </span></span>
+<span><span class="co">## [139] IRkernel_1.3.2                patchwork_1.1.3              </span></span>
+<span><span class="co">## [141] bit64_4.0.5                   ggplot2_3.4.3                </span></span>
+<span><span class="co">## [143] KEGGREST_1.41.0               shiny_1.7.5                  </span></span>
+<span><span class="co">## [145] interactiveDisplayBase_1.39.0 AnnotationHub_3.9.2          </span></span>
+<span><span class="co">## [147] igraph_1.5.1                  memoise_2.0.1                </span></span>
+<span><span class="co">## [149] bslib_0.5.1                   ggtree_3.9.1                 </span></span>
+<span><span class="co">## [151] fastmatch_1.1-4               bit_4.0.5                    </span></span>
+<span><span class="co">## [153] ape_5.7-1</span></span></code></pre>
 <p><br><br></p>
 </div>
 <div class="section level2">

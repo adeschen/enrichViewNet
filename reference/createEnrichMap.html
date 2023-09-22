@@ -69,6 +69,7 @@ significant term to graph.</p>
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">createEnrichMap</span><span class="op">(</span></span>
 <span>  <span class="va">gostObject</span>,</span>
+<span>  <span class="va">query</span>,</span>
 <span>  source <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TERM_ID"</span>, <span class="st">"GO:MF"</span>, <span class="st">"GO:CC"</span>, <span class="st">"GO:BP"</span>, <span class="st">"KEGG"</span>, <span class="st">"REAC"</span>, <span class="st">"TF"</span>, <span class="st">"MIRNA"</span>, <span class="st">"HPA"</span>,</span>
 <span>    <span class="st">"CORUM"</span>, <span class="st">"HP"</span>, <span class="st">"WP"</span><span class="op">)</span>,</span>
 <span>  termIDs <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -87,6 +88,12 @@ significant term to graph.</p>
 <dd><p>a <code>list</code> corresponding to gprofiler2 enrichment 
 output that contains and that contains 
 the results from an enrichment analysis.</p></dd>
+
+
+<dt>query</dt>
+<dd><p>a <code>character</code> string representing the name of the query 
+that is going to be used to generate the graph. The query must exist in the 
+<code>gostObject</code> object.</p></dd>
 
 
 <dt>source</dt>
@@ -156,15 +163,23 @@ results.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Loading dataset containing result from an enrichment analysis done with</span></span></span>
 <span class="r-in"><span><span class="co">## gprofiler2</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">demoGOST</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">parentalNapaVsDMSOEnrichment</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co">## Extract query information (only one in this dataset)</span></span></span>
+<span class="r-in"><span><span class="va">query</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">parentalNapaVsDMSOEnrichment</span><span class="op">$</span><span class="va">result</span><span class="op">$</span><span class="va">query</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## Create network for Gene Ontology - Molecular Function related results</span></span></span>
-<span class="r-in"><span><span class="fu">createEnrichMap</span><span class="op">(</span>gostObject<span class="op">=</span><span class="va">demoGOST</span>, source<span class="op">=</span><span class="st">"GO:MF"</span>, removeRoot<span class="op">=</span><span class="cn">FALSE</span>,</span></span>
-<span class="r-in"><span>    title<span class="op">=</span><span class="st">"GO Molecular Function Graph"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co">## Create graph for Gene Ontology - Cellular Component related results</span></span></span>
+<span class="r-in"><span><span class="fu">createEnrichMap</span><span class="op">(</span>gostObject<span class="op">=</span><span class="va">parentalNapaVsDMSOEnrichment</span>, </span></span>
+<span class="r-in"><span>    query<span class="op">=</span><span class="va">query</span>, source<span class="op">=</span><span class="st">"GO:CC"</span>, removeRoot<span class="op">=</span><span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>    title<span class="op">=</span><span class="st">"GO Cellular Component"</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Use 'cex.params = list(category_node = your_value)' instead of 'cex_category'.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>  The cex_category parameter will be removed in the next version.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Use 'cex.params = list(category_label = your_value)' instead of 'cex_label_category'.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>  The cex_label_category parameter will be removed in the next version.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Use 'cluster.params = list(cluster = your_value)' instead of 'group_category'.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>  The group_category parameter will be removed in the next version.</span>
+<span class="r-plt img"><img src="createEnrichMap-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
