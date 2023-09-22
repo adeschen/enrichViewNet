@@ -418,7 +418,7 @@ releases is posted on the <a href="https://github.com/adeschen/enrichViewNet/rel
 <span class="header-section-number">5</span> General workflow<a class="anchor" aria-label="anchor" href="#general-workflow"></a>
 </h2>
 <p>The following workflow gives an overview of the capabilities of
-<em><a href="https://github.com/adeschen/enrichViewNet" class="external-link">enrichViewNet</a></em>:</p>
+<strong>enrichViewNet</strong>:</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:graphWorkflow"></span>
 <img src="Figure_workflow_v02.jpg" alt="The enrichViewNet workflow" width="100%"><p class="caption">
@@ -468,7 +468,7 @@ Figure 4: <span class="caption-title">From an enrichment list to a Cytoscape net
 <td>outside R</td>
 </tr>
 <tr class="odd">
-<td>Create a Cytoscape network</td>
+<td>Create a gene-term network</td>
 <td><code><a href="../reference/createNetwork.html">createNetwork()</a></code></td>
 </tr>
 </tbody>
@@ -512,9 +512,13 @@ is a <em>list</em> and should be saved.</p>
 <span>                significant<span class="op">=</span><span class="cn">TRUE</span>,</span>
 <span>                evcodes<span class="op">=</span><span class="cn">TRUE</span>,</span>
 <span>                custom_bg<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">parentalNapaVsDMSODEG</span><span class="op">$</span><span class="va">EnsemblID</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>The gost() function returns an named list of 2 entries:
-* The <strong>result</strong> entry contains the enrichment results.
-* The <strong>meta</strong> entry contains the metadata information.</p>
+<p><br></p>
+<p>The gost() function returns an named list of 2 entries:</p>
+<ul>
+<li>The <strong>result</strong> entry contains the enrichment results.</li>
+<li>The <strong>meta</strong> entry contains the metadata information.</li>
+</ul>
+<p><br></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## The 'gostres' object is a list of 2 entries</span></span>
 <span><span class="co">## The 'result' entry contains the enrichment results</span></span>
@@ -569,7 +573,13 @@ software.</p>
 <h3 id="create-a-gene-term-network">
 <span class="header-section-number">6.3</span> Create a gene-term network<a class="anchor" aria-label="anchor" href="#create-a-gene-term-network"></a>
 </h3>
-<p>TODO</p>
+<p>The gene-term network can be created with the <em>createNetwork()</em> function. If
+<em>Cytoscape</em> is opened, the network should automatically be loaded in the
+application. Otherwise, a CX JSON file is created. The CX JSON can be manually
+be opened in <em>Cytoscape</em>.</p>
+<p>The following figure shows what the gene-term network looks like
+in <em>Cytoscape</em>. As there are numerous significant Reactome terms, the network
+is a bit hectic.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Load demo gprofiler2 enrichment result</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"parentalNapaVsDMSOEnrichment"</span><span class="op">)</span></span>
@@ -579,10 +589,6 @@ software.</p>
 <span><span class="fu"><a href="../reference/createNetwork.html">createNetwork</a></span><span class="op">(</span>gostObject<span class="op">=</span><span class="va">parentalNapaVsDMSOEnrichment</span>,  source<span class="op">=</span><span class="st">"REAC"</span>, </span>
 <span>                  removeRoot<span class="op">=</span><span class="cn">TRUE</span>, title<span class="op">=</span><span class="st">"REACTOME_All"</span>, </span>
 <span>                  collection<span class="op">=</span><span class="st">"parental_napa_vs_DMSO"</span><span class="op">)</span></span></code></pre></div>
-<p><br></p>
-<p>The following figure shows what the gene-term network looks like
-in <em>Cytoscape</em>. As there are numerous significant Reactome terms, the network
-is a bit hectic.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:networkInCytoscape"></span>
 <img src="cytoscape_reactome_all_parental_napa_vs_DMSO.png" alt="All reactome terms in a gene-term network loaded in Cytoscape." width="110%"><p class="caption">
@@ -590,7 +596,7 @@ Figure 6: <span class="caption-title">All reactome terms in a gene-term network 
 </div>
 <p><br></p>
 <p>To address this situation, a updated gene-term network containing only
-Reactome terms of interest can be created.</p>
+Reactome terms of interest is created.</p>
 <p><br></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Load demo gprofiler2 enrichment result</span></span>
@@ -735,6 +741,8 @@ is a <em>list</em> and should be saved.</p>
 <h3 id="create-an-enrichment-map">
 <span class="header-section-number">7.2</span> Create an enrichment map<a class="anchor" aria-label="anchor" href="#create-an-enrichment-map"></a>
 </h3>
+<p>The enrichment map can be created with the <em>createEnrichMap()</em> function. The
+function generates a <em>ggplot</em> object.</p>
 <p>TODO</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">parentalNapaVsDMSOEnrichment</span><span class="op">)</span></span>
