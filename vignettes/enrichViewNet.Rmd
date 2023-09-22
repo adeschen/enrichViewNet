@@ -180,7 +180,7 @@ devtools::install_github('adeschen/enrichViewNet', ref = "v0.0.4")
 
 
 The following workflow gives an overview of the capabilities of 
-`r Githubpkg("adeschen/enrichViewNet")`:
+ **enrichViewNet**:
 
 ```{r graphWorkflow, echo=FALSE, fig.align="center", fig.cap="The enrichViewNet workflow", out.width = '100%'}
 knitr::include_graphics("Figure_workflow_v02.jpg")
@@ -219,7 +219,7 @@ Step                              | Function
 --------------------------------- | ---------------------------------------------
  Run an enrichment analysis       | `gprofiler2::gost()`
  Start *Cytoscape*                |  outside R   
- Create a Cytoscape network       | `createNetwork()`
+ Create a gene-term network       | `createNetwork()`
 
 The `package::function()` notation is used for functions from other packages.
 
@@ -266,9 +266,14 @@ gostres <- gprofiler2::gost(
 ```
 
 
+<br>
+
 The gost() function returns an named list of 2 entries: 
- * The __result__ entry contains the enrichment results.
- * The __meta__ entry contains the metadata information.
+
+* The __result__ entry contains the enrichment results.
+* The __meta__ entry contains the metadata information.
+
+<br>
 
 ```{r gostResult, echo=TRUE, eval=TRUE}
 ## The 'gostres' object is a list of 2 entries
@@ -310,7 +315,15 @@ software.
 
 ## Create a gene-term network 
 
-TODO
+The gene-term network can be created with the _createNetwork()_ function. If 
+_Cytoscape_ is opened, the network should automatically be loaded in the 
+application. Otherwise, a CX JSON file is created. The CX JSON can be manually 
+be opened in _Cytoscape_.
+
+
+The following figure shows what the gene-term network looks like 
+in _Cytoscape_. As there are numerous significant Reactome terms, the network 
+is a bit hectic.
 
 ```{r runCreateNetwork, echo = TRUE, eval=FALSE}
 ## Load demo gprofiler2 enrichment result
@@ -323,12 +336,6 @@ createNetwork(gostObject=parentalNapaVsDMSOEnrichment,  source="REAC",
                   collection="parental_napa_vs_DMSO")
 ```
 
-<br>
-
-The following figure shows what the gene-term network looks like 
-in _Cytoscape_. As there are numerous significant Reactome terms, the network 
-is a bit hectic.
-
 
 ```{r networkInCytoscape, echo=FALSE, fig.align="center", fig.cap="All reactome terms in a gene-term network loaded in Cytoscape.", out.width = '110%'}
 knitr::include_graphics("cytoscape_reactome_all_parental_napa_vs_DMSO.png")
@@ -336,9 +343,8 @@ knitr::include_graphics("cytoscape_reactome_all_parental_napa_vs_DMSO.png")
 
 <br>
 
-
 To address this situation, a updated gene-term network containing only 
-Reactome terms of interest can be created.
+Reactome terms of interest is created.
 
 <br>
 
@@ -465,7 +471,10 @@ gostres$result[19:22, c("term_id", "source", "term_name")]
 <br>
 
 
-## Create an enrichment map  
+## Create an enrichment map 
+
+The enrichment map can be created with the _createEnrichMap()_ function. The 
+function generates a _ggplot_ object.
 
 TODO
 
