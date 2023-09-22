@@ -138,7 +138,7 @@ and other molecular states. The user can also perform network analysis.
 In addition, the **enrichViewNet** package also provides the option to 
 create enrichment maps from functional enrichment results. 
 The enrichment maps have been introduced in the Bioconductor 
-**_enrichplot_** package [@Yu2022]. 
+_enrichplot_ package [@Yu2022]. 
 Enrichment maps enable the visualization of enriched terms into a network 
 with edges connecting overlapping genes. Thus, enriched terms with overlapping 
 genes cluster together. This type of graphs facilitate the 
