@@ -476,7 +476,11 @@ gostres$result[19:22, c("term_id", "source", "term_name")]
 The enrichment map can be created with the _createEnrichMap()_ function. The 
 function generates a _ggplot_ object.
 
-TODO
+In an enrichment map, terms with overlapping significant genes tend to 
+cluster together. The Jaccard correlation coefficient is used as a metric of 
+similarity. Terms with high similarity (similarity metric > 0.2) are linked 
+together be edges. The edges are shorter and thicker when the similarity 
+metric is high. 
 
 ```{r runCreateEmap01, echo=TRUE, eval=TRUE}
 
@@ -486,10 +490,11 @@ set.seed(121)
 
 ## Create network for REACTOME selected terms
 ## The 'source="TERM_ID"' parameter enable to specify a personalized 
-## list of terms of interest
+## list of terms of interest with 'termIDs' argument
 createEnrichMap(gostObject=parentalNapaVsDMSOEnrichment, 
                   query="parental_napa_vs_DMSO", 
                   source="KEGG", title="KEGG")
+    
 ```
 
 
