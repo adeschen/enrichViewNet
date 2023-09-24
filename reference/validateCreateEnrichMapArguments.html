@@ -75,8 +75,8 @@ results.</p>
 <span>  <span class="va">title</span>,</span>
 <span>  <span class="va">showCategory</span>,</span>
 <span>  <span class="va">groupCategory</span>,</span>
-<span>  <span class="va">categoryLabel</span>,</span>
-<span>  <span class="va">categoryNode</span></span>
+<span>  <span class="va">cexLabelCategory</span>,</span>
+<span>  <span class="va">cexCategory</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -132,15 +132,15 @@ the selected terms will be displayed.</p></dd>
 be grouped.</p></dd>
 
 
-<dt>categoryLabel</dt>
+<dt>cexLabelCategory</dt>
 <dd><p>a positive <code>numeric</code> representing the amount by 
 which plotting category nodes label size should be scaled relative 
 to the default (1).</p></dd>
 
 
-<dt>categoryNode</dt>
-<dd><p>a positive <code>numeric</code> representing he amount by 
-which plotting category nodes should be scaled relative to the default (1).</p></dd>
+<dt>cexCategory</dt>
+<dd><p>a positive <code>numeric</code> representing he amount by which 
+plotting category nodes should be scaled relative to the default (1).</p></dd>
 
 </dl></div>
     <div id="value">
@@ -164,7 +164,7 @@ which plotting category nodes should be scaled relative to the default (1).</p><
 <span class="r-in"><span><span class="fu">enrichViewNet</span><span class="fu">:::</span><span class="fu">validateCreateEnrichMapArguments</span><span class="op">(</span>gostObject<span class="op">=</span><span class="va">demoGOST</span>,</span></span>
 <span class="r-in"><span>    query<span class="op">=</span><span class="st">"query_1"</span>, source<span class="op">=</span><span class="st">"GO:BP"</span>, termIDs<span class="op">=</span><span class="cn">NULL</span>, removeRoot<span class="op">=</span><span class="cn">FALSE</span>, </span></span>
 <span class="r-in"><span>    title<span class="op">=</span><span class="st">"GO:BP"</span>, showCategory<span class="op">=</span><span class="fl">20</span>, groupCategory<span class="op">=</span><span class="cn">FALSE</span>, </span></span>
-<span class="r-in"><span>    categoryLabel<span class="op">=</span><span class="fl">1.1</span>, categoryNode<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    cexLabelCategory<span class="op">=</span><span class="fl">1.1</span>, cexCategory<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
