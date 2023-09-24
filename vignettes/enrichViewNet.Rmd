@@ -48,7 +48,7 @@ Artistic license 2.0. You are free to use and redistribute this software.
 If you use this package for a publication, we would ask you to cite the 
 following:
 
-> eschênes A, Belleau P, Faure RL, Fernandes MJ, Tuveson DA (2021). 
+> Deschênes A, Belleau P, Faure RL, Fernandes MJ, Tuveson DA (2021). 
   enrichViewNet: From functional enrichment results to biological networks. 
   https://github.com/adeschen/enrichViewNet,
   https://adeschen.github.io/enrichViewNet/.
