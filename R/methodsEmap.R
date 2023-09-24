@@ -42,12 +42,12 @@
 #' @param groupCategory a \code{logical} indicating if the categories should 
 #' be grouped. Default: \code{FALSE}.
 #' 
-#' @param cexLabelCategory a positive \code{numeric} representing the amount by 
+#' @param categoryLabel a positive \code{numeric} representing the amount by 
 #' which plotting category nodes label size should be scaled relative 
 #' to the default (1). Default: \code{1}.s
 #' 
-#' @param cexCategory a positive \code{numeric} representing the amount by 
-#' which plotting category nodes should be scaled relative to the default (1). 
+#' @param categoryNode a positive \code{numeric} representing the amount by 
+#' which plotting category nodes should be scaled relative to the default (1).
 #' Default: \code{1}.
 #' 
 #' @return a \code{ggplot} object which is the enrichment map for enrichment 
@@ -77,8 +77,8 @@ createEnrichMap <- function(gostObject, query, source=c("TERM_ID", "GO:MF",
         "GO:CC", "GO:BP", "KEGG", "REAC", "TF", "MIRNA", "HPA", "CORUM", 
         "HP", "WP"), 
         termIDs=NULL, removeRoot=TRUE, title="gprofiler network", 
-        showCategory=30, groupCategory=FALSE, cexLabelCategory=1,
-        cexCategory=1) {
+        showCategory=30L, groupCategory=FALSE, categoryLabel=1,
+        categoryNode=1) {
     
     ## Validate source is among the possible choices
     source <- match_arg(source, ignore_case=TRUE)
@@ -86,8 +86,8 @@ createEnrichMap <- function(gostObject, query, source=c("TERM_ID", "GO:MF",
     ## Validate parameters
     validateCreateEnrichMapArguments(gostObject=gostObject, query=query, 
         source=source, termIDs=termIDs, removeRoot=removeRoot, title=title, 
-        showCategory=showCategory, cexLabelCategory=cexLabelCategory,
-        groupCategory=groupCategory, cexCategory=cexCategory)
+        showCategory=showCategory, categoryLabel=categoryLabel,
+        groupCategory=groupCategory, categoryNode=categoryNode)
     
     ## Extract results
     gostResults <- gostObject$result
@@ -120,8 +120,8 @@ createEnrichMap <- function(gostObject, query, source=c("TERM_ID", "GO:MF",
     ## Create basic emap
     emap <- createBasicEmap(gostResults=gostResults, 
                 backgroundGenes=backgroundGenes, title=title, 
-                showCategory=showCategory, cexLabelCategory=cexLabelCategory,
-                groupCategory=groupCategory, cexCategory=cexCategory, 
+                showCategory=showCategory, categoryLabel=categoryLabel,
+                groupCategory=groupCategory, categoryNode=categoryNode, 
                 significantMethod=significantMethod)
     
     return(emap)

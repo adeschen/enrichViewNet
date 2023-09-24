@@ -42,12 +42,12 @@
 #' @param groupCategory a \code{logical} indicating if the categories should 
 #' be grouped.
 #' 
-#' @param cexLabelCategory a positive \code{numeric} representing the amount by 
+#' @param categoryLabel a positive \code{numeric} representing the amount by 
 #' which plotting category nodes label size should be scaled relative 
 #' to the default (1).
 #' 
-#' @param cexCategory a positive \code{numeric} representing he amount by which 
-#' plotting category nodes should be scaled relative to the default (1).
+#' @param categoryNode a positive \code{numeric} representing he amount by 
+#' which plotting category nodes should be scaled relative to the default (1).
 #' 
 #' @return \code{TRUE} when all arguments are valid
 #' 
@@ -60,7 +60,7 @@
 #' enrichViewNet:::validateCreateEnrichMapArguments(gostObject=demoGOST,
 #'     query="query_1", source="GO:BP", termIDs=NULL, removeRoot=FALSE, 
 #'     title="GO:BP", showCategory=20, groupCategory=FALSE, 
-#'     cexLabelCategory=1.1, cexCategory=1)
+#'     categoryLabel=1.1, categoryNode=1)
 #' 
 #' @author Astrid Deschênes
 #' @encoding UTF-8
@@ -69,7 +69,7 @@
 #' @keywords internal
 validateCreateEnrichMapArguments <- function(gostObject, query, source, 
         termIDs, removeRoot, title, showCategory, groupCategory, 
-        cexLabelCategory, cexCategory) {
+        categoryLabel, categoryNode) {
     
     ## Test that gostObject is a gprofiler2 result 
     if (!("list" %in% class(gostObject) && "result" %in% names(gostObject) &&
@@ -122,12 +122,12 @@ validateCreateEnrichMapArguments <- function(gostObject, query, source,
                 "(TRUE or FALSE).")
     }
     
-    if (!is(cexLabelCategory, "numeric") || !(cexLabelCategory > 0)) {
-        stop("The \'cexLabelCategory\' parameter must be a positive numeric.")
+    if (!is(categoryLabel, "numeric") || !(categoryLabel > 0)) {
+        stop("The \'categoryLabel\' parameter must be a positive numeric.")
     }
     
-    if (!is(cexCategory, "numeric") || !(cexCategory > 0)) {
-        stop("The \'cexCategory\' parameter must be a positive numeric.")
+    if (!is(categoryNode, "numeric") || !(categoryNode > 0)) {
+        stop("The \'categoryNode\' parameter must be a positive numeric.")
     }
     
     return(TRUE)   
@@ -153,11 +153,11 @@ validateCreateEnrichMapArguments <- function(gostObject, query, source,
 #' @param groupCategory a \code{logical} indicating if the categories should 
 #' be grouped.
 #' 
-#' @param cexLabelCategory a positive \code{numeric} representing the amount by 
+#' @param categoryLabel a positive \code{numeric} representing the amount by 
 #' which plotting category nodes label size should be scaled relative 
 #' to the default (1).
 #' 
-#' @param cexCategory a positive \code{numeric} representing the amount by 
+#' @param categoryNode a positive \code{numeric} representing the amount by 
 #' which plotting category nodes should be scaled relative to the default (1). 
 #' 
 #' @param significantMethod a \code{character} string representing the name 
@@ -193,59 +193,10 @@ validateCreateEnrichMapArguments <- function(gostObject, query, source,
 #' @keywords internal
 createBasicEmap <- function(gostResults, backgroundGenes, title, 
                                 showCategory, groupCategory, 
-                                cexLabelCategory, cexCategory, 
+                                categoryLabel, categoryNode, 
                                 significantMethod) {
-    # 
-    # mapInfo <- data.frame(Cluster=c(rep(title, nrow(gostResults))), 
-    #                 ID=c(gostResults$term_id), 
-    #                 Description=c(gostResults$term_name), 
-    #                 GeneRatio=c(paste0(gostResults$intersection_size, "/", 
-    #                                         gostResults$query_size)),
-    #                 BgRatio=c(paste0(gostResults$intersection_size, "/", 
-    #                                         gostResults$query_size)),
-    #                 pvalue=c(gostResults$p_value),
-    #                 p.adjust=c(gostResults$p_value),
-    #                 qvalue=c(gostResults$p_value),
-    #                 geneID=c(gostResults$intersection),
-    #                 Count=c(gostResults$intersection_size))
-    # 
-    
-   #  
-   #  mapInfo$Cluster <- factor(mapInfo$Cluster, levels=c(title))
-   # ## mapInfo$ID <- stringr::str_replace(string = mapInfo$ID , pattern = "KEGG:", "hsa") 
-   #  mapInfo$geneID <- stringr::str_replace_all(string = mapInfo$geneID, 
-   #                                                  pattern = ",", "/") 
-   #  
-   #  
-   #  geneClusters <- list()
-   #  geneClusters[[title]] <- mapInfo$EnsemblID
-    # 
-    # setClass("compareClusterResult",
-    #          representation=representation(
-    #              compareClusterResult="data.frame",
-    #              geneClusters="list",
-    #              fun="character",
-    #              gene2Symbol="character",
-    #              keytype        = "character",
-    #              readable       = "logical",
-    #              .call          = "call",
-    #              termsim        = "matrix",
-    #              method         = "character",
-    #              dr             = "list"
-    #          )
-    # )
-    
-    # res <- new("compareClusterResult",
-    #            compareClusterResult=mapInfo,
-    #            geneClusters=geneClusters,
-    #            fun="enrichDEMO",
-    #            .call = call("compareCluster(geneClusters = x, 
-    #                             fun = \"enrichDEMO\", organism = \"hsa\", 
-    #                             pvalueCutoff = 0.05)")
-    # )
     
     geneSets <- list()
-    
     
     for (i in seq_len(nrow(gostResults))) {
         geneSets[[gostResults$term_id[i]]] <- 
@@ -292,9 +243,9 @@ createBasicEmap <- function(gostResults, backgroundGenes, title,
     
     graphEmap <- emapplot(x=comp, 
                         showCategory=showCategory,
-                        cex_label_category=cexLabelCategory,  
-                        group_category=groupCategory,
-                        cex_category=cexCategory)
+                        cluster.params=list(cluster=groupCategory),
+                        cex.params=list(category_node=categoryNode,
+                            category_label=categoryLabel))
     
     return(graphEmap)
 }

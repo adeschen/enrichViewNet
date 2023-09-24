@@ -11,8 +11,8 @@ createBasicEmap(
   title,
   showCategory,
   groupCategory,
-  cexLabelCategory,
-  cexCategory,
+  categoryLabel,
+  categoryNode,
   significantMethod
 )
 }
@@ -33,11 +33,11 @@ the selected terms will be displayed.}
 \item{groupCategory}{a \code{logical} indicating if the categories should 
 be grouped.}
 
-\item{cexLabelCategory}{a positive \code{numeric} representing the amount by 
+\item{categoryLabel}{a positive \code{numeric} representing the amount by 
 which plotting category nodes label size should be scaled relative 
 to the default (1).}
 
-\item{cexCategory}{a positive \code{numeric} representing the amount by 
+\item{categoryNode}{a positive \code{numeric} representing the amount by 
 which plotting category nodes should be scaled relative to the default (1).}
 
 \item{significantMethod}{a \code{character} string representing the name 

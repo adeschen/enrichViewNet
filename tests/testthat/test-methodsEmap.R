@@ -18,9 +18,8 @@ test_that("createEnrichMap() must return error when gostObject is a number", {
     
     expect_error(createEnrichMap(gostObject=33, query="TEST", 
         source="GO:CC", termIDs=NULL, removeRoot=TRUE, title="network", 
-        showCategory=30, groupCategory=FALSE, cexLabelCategory=1,
-        cexCategory=1), 
-        error_message)
+        showCategory=30, groupCategory=FALSE, categoryLabel=1,
+        categoryNode=1), error_message)
 })
 
 
@@ -32,8 +31,8 @@ test_that("createEnrichMap() must return error when gostObject is a string chara
     
     expect_error(createEnrichMap(gostObject="TEST", query="TEST", 
         source="GO:CC", termIDs=NULL, removeRoot=TRUE, title="network", 
-        showCategory=30, groupCategory=FALSE, cexLabelCategory=1,
-        cexCategory=1), 
+        showCategory=30, groupCategory=FALSE, categoryLabel=1,
+        categoryNode=1), 
         error_message)
 })
 
@@ -48,8 +47,8 @@ test_that("createEnrichMap() must return error when query is a number", {
     
     expect_error(createEnrichMap(gostObject=gostObject, query=33, 
         source="KEGG", termIDs=NULL, removeRoot=TRUE, title="network", 
-        showCategory=30, groupCategory=FALSE, cexLabelCategory=1,
-        cexCategory=1), error_message)
+        showCategory=30, groupCategory=FALSE, categoryLabel=1,
+        categoryNode=1), error_message)
 })
 
 
@@ -63,8 +62,8 @@ test_that("createEnrichMap() must return error when query is a vector of strings
     
     expect_error(createEnrichMap(gostObject=gostObject, query=c("1", "2"), 
         source="KEGG", termIDs=NULL, removeRoot=TRUE, title="network", 
-        showCategory=30, groupCategory=FALSE, cexLabelCategory=1,
-        cexCategory=1), error_message)
+        showCategory=30, groupCategory=FALSE, categoryLabel=1,
+        categoryNode=1), error_message)
 })
 
 
@@ -75,8 +74,8 @@ test_that("createEnrichMap() must return error when query is not in gost", {
     
     expect_error(createEnrichMap(gostObject=demoGOST, query="CANADA", 
         source="KEGG", termIDs=NULL, removeRoot=TRUE, title="network", 
-        showCategory=30, groupCategory=FALSE, cexLabelCategory=1,
-        cexCategory=1), error_message)
+        showCategory=30, groupCategory=FALSE, categoryLabel=1,
+        categoryNode=1), error_message)
 })
 
 
@@ -91,8 +90,8 @@ test_that("createEnrichMap() must return error when source is a number", {
     
     expect_error(createEnrichMap(gostObject=gostObject, query="toto", 
         source=333, termIDs=NULL, removeRoot=TRUE, title="network", 
-        showCategory=30, groupCategory=FALSE, cexLabelCategory=1,
-        cexCategory=1), 
+        showCategory=30, groupCategory=FALSE, categoryLabel=1,
+        categoryNode=1), 
         error_message)
 })
 
@@ -104,8 +103,8 @@ test_that("createEnrichMap() must return error when source is a wrong name", {
     
     expect_error(createEnrichMap(gostObject=gostObject, query="toto",  
         source="test", termIDs=NULL, removeRoot=TRUE, title="network", 
-        showCategory=30, groupCategory=FALSE, cexLabelCategory=1,
-        cexCategory=1))
+        showCategory=30, groupCategory=FALSE, categoryLabel=1,
+        categoryNode=1))
 })
 
 
@@ -118,8 +117,8 @@ test_that("createEnrichMap() must return error when source is GO", {
     expect_error(createEnrichMap(gostObject=gostObject, query="toto", 
         source="GO",
         termIDs=NULL, removeRoot=TRUE, title="gprofiler network", 
-        showCategory=30, groupCategory=FALSE, cexLabelCategory=1,
-        cexCategory=1))
+        showCategory=30, groupCategory=FALSE, categoryLabel=1,
+        categoryNode=1))
 })
 
 
@@ -133,8 +132,8 @@ test_that("createEnrichMap() must return error when removeRoot remove last enric
     
     expect_error(createEnrichMap(gostObject=gostTerm, query="query_1", 
                     source="WP", removeRoot=TRUE, title="gprofiler network", 
-                    showCategory=30, groupCategory=FALSE, cexLabelCategory=1,
-                    cexCategory=1), 
+                    showCategory=30, groupCategory=FALSE, categoryLabel=1,
+                    categoryNode=1), 
                     error_message)
 })
 
@@ -150,8 +149,8 @@ test_that("createEnrichMap() must return error when removeRoot remove last enric
     expect_error(createEnrichMap(gostObject=gostTerm, query="query_1", 
         source="TERM_ID",
         termIDs=c("WP:000000"), removeRoot=TRUE, showCategory=30, 
-        groupCategory=FALSE, cexLabelCategory=1,
-        cexCategory=1), error_message)
+        groupCategory=FALSE, categoryLabel=1,
+        categoryNode=1), error_message)
 })
 
 
@@ -164,8 +163,8 @@ test_that("createEnrichMap() must return error when showCategory negative value"
     
     expect_error(createEnrichMap(gostObject=gostTerm, query="query_1", 
                     source="WP", removeRoot=TRUE, showCategory=-30, 
-                    groupCategory=FALSE, cexLabelCategory=1,
-                    cexCategory=1), error_message)
+                    groupCategory=FALSE, categoryLabel=1,
+                    categoryNode=1), error_message)
 })
 
 
@@ -178,8 +177,8 @@ test_that("createEnrichMap() must return error when showCategory is boolean", {
     
     expect_error(createEnrichMap(gostObject=gostTerm, query="query_1", 
                     source="WP", removeRoot=TRUE, showCategory=TRUE, 
-                    groupCategory=FALSE, cexLabelCategory=1,
-                    cexCategory=1), error_message)
+                    groupCategory=FALSE, categoryLabel=1,
+                    categoryNode=1), error_message)
 })
 
 
@@ -192,22 +191,22 @@ test_that("createEnrichMap() must return error when groupCategory is integer", {
     
     expect_error(createEnrichMap(gostObject=gostTerm, query="query_1", 
                     source="WP", removeRoot=TRUE, showCategory=30, 
-                    groupCategory=22, cexLabelCategory=1,
-                    cexCategory=1), error_message, fixed=TRUE)
+                    groupCategory=22, categoryLabel=1,
+                    categoryNode=1), error_message, fixed=TRUE)
 })
 
 
-test_that("createEnrichMap() must return error when cexLabelCategory is string", {
+test_that("createEnrichMap() must return error when categoryLabel is string", {
     
     gostTerm <- demoGOST
     
-    error_message <- paste0("The \'cexLabelCategory\' parameter ", 
+    error_message <- paste0("The \'categoryLabel\' parameter ", 
                                 "must be a positive numeric.")
     
     expect_error(createEnrichMap(gostObject=gostTerm, query="query_1", 
                     source="WP", removeRoot=TRUE, showCategory=30, 
-                    groupCategory=FALSE, cexLabelCategory="test",
-                    cexCategory=1), error_message, fixed=TRUE)
+                    groupCategory=FALSE, categoryLabel="test",
+                    categoryNode=1), error_message, fixed=TRUE)
 })
 
 
@@ -215,39 +214,39 @@ test_that("createEnrichMap() must return error when cexLabelCategory is negative
     
     gostTerm <- demoGOST
     
-    error_message <- paste0("The \'cexLabelCategory\' parameter ", 
+    error_message <- paste0("The \'categoryLabel\' parameter ", 
                                 "must be a positive numeric.")
     
     expect_error(createEnrichMap(gostObject=gostTerm, query="query_1", 
                     source="WP", removeRoot=TRUE, showCategory=30, 
-                    groupCategory=FALSE, cexLabelCategory=-1.1,
-                    cexCategory=1), error_message, fixed=TRUE)
+                    groupCategory=FALSE, categoryLabel=-1.1,
+                    categoryNode=1), error_message, fixed=TRUE)
 })
 
 
-test_that("createEnrichMap() must return error when cexCategory is negative", {
+test_that("createEnrichMap() must return error when categoryNode is negative", {
     
     gostTerm <- demoGOST
     
-    error_message <- paste0("The \'cexCategory\' parameter ", 
+    error_message <- paste0("The \'categoryNode\' parameter ", 
                                 "must be a positive numeric.")
     
     expect_error(createEnrichMap(gostObject=gostTerm, query="query_1", 
                     source="WP", removeRoot=TRUE, showCategory=30, 
-                    groupCategory=FALSE, cexLabelCategory=2,
-                    cexCategory=-1), error_message, fixed=TRUE)
+                    groupCategory=FALSE, categoryLabel=2,
+                    categoryNode=-1), error_message, fixed=TRUE)
 })
 
 
-test_that("createEnrichMap() must return error when cexCategory is string", {
+test_that("createEnrichMap() must return error when categoryNode is string", {
     
     gostTerm <- demoGOST
     
-    error_message <- paste0("The \'cexCategory\' parameter ", 
+    error_message <- paste0("The \'categoryNode\' parameter ", 
                                 "must be a positive numeric.")
     
     expect_error(createEnrichMap(gostObject=gostTerm, query="query_1", 
                     source="WP", removeRoot=TRUE, showCategory=30, 
-                    groupCategory=FALSE, cexLabelCategory=2,
-                    cexCategory="te"), error_message, fixed=TRUE)
+                    groupCategory=FALSE, categoryLabel=2,
+                    categoryNode="te"), error_message, fixed=TRUE)
 })
