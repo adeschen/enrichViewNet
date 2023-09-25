@@ -75,10 +75,10 @@ significant term to graph.</p>
 <span>  termIDs <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  removeRoot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  title <span class="op">=</span> <span class="st">"gprofiler network"</span>,</span>
-<span>  showCategory <span class="op">=</span> <span class="fl">30</span>,</span>
+<span>  showCategory <span class="op">=</span> <span class="fl">30L</span>,</span>
 <span>  groupCategory <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  cexLabelCategory <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  cexCategory <span class="op">=</span> <span class="fl">1</span></span>
+<span>  categoryLabel <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  categoryNode <span class="op">=</span> <span class="fl">1</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -134,15 +134,15 @@ the selected terms will be displayed. Default: <code>30L</code>.</p></dd>
 be grouped. Default: <code>FALSE</code>.</p></dd>
 
 
-<dt>cexLabelCategory</dt>
+<dt>categoryLabel</dt>
 <dd><p>a positive <code>numeric</code> representing the amount by 
 which plotting category nodes label size should be scaled relative 
 to the default (1). Default: <code>1</code>.s</p></dd>
 
 
-<dt>cexCategory</dt>
+<dt>categoryNode</dt>
 <dd><p>a positive <code>numeric</code> representing the amount by 
-which plotting category nodes should be scaled relative to the default (1). 
+which plotting category nodes should be scaled relative to the default (1).
 Default: <code>1</code>.</p></dd>
 
 </dl></div>
@@ -172,12 +172,6 @@ results.</p>
 <span class="r-in"><span><span class="fu">createEnrichMap</span><span class="op">(</span>gostObject<span class="op">=</span><span class="va">parentalNapaVsDMSOEnrichment</span>, </span></span>
 <span class="r-in"><span>    query<span class="op">=</span><span class="va">query</span>, source<span class="op">=</span><span class="st">"GO:CC"</span>, removeRoot<span class="op">=</span><span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>    title<span class="op">=</span><span class="st">"GO Cellular Component"</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Use 'cex.params = list(category_node = your_value)' instead of 'cex_category'.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>  The cex_category parameter will be removed in the next version.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Use 'cex.params = list(category_label = your_value)' instead of 'cex_label_category'.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>  The cex_label_category parameter will be removed in the next version.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Use 'cluster.params = list(cluster = your_value)' instead of 'group_category'.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>  The group_category parameter will be removed in the next version.</span>
 <span class="r-plt img"><img src="createEnrichMap-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
