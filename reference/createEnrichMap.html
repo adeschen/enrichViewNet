@@ -71,7 +71,6 @@ significant term to graph.</p>
 <span>    <span class="st">"CORUM"</span>, <span class="st">"HP"</span>, <span class="st">"WP"</span><span class="op">)</span>,</span>
 <span>  termIDs <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  removeRoot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  title <span class="op">=</span> <span class="st">"gprofiler network"</span>,</span>
 <span>  showCategory <span class="op">=</span> <span class="fl">30L</span>,</span>
 <span>  groupCategory <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  categoryLabel <span class="op">=</span> <span class="fl">1</span>,</span>
@@ -113,10 +112,6 @@ term IDS retained for the creation of the network. Default: <code>NULL</code>.</
 <dt>removeRoot</dt>
 <dd><p>a <code>logical</code> that specified if the root terms of 
 the selected source should be removed (when present). Default: <code>TRUE</code>.</p></dd>
-
-
-<dt>title</dt>
-<dd><p>a <code>character</code> string representing the name TODO</p></dd>
 
 
 <dt>showCategory</dt>
@@ -167,8 +162,7 @@ results.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Create graph for Gene Ontology - Cellular Component related results</span></span></span>
 <span class="r-in"><span><span class="fu">createEnrichMap</span><span class="op">(</span>gostObject<span class="op">=</span><span class="va">parentalNapaVsDMSOEnrichment</span>, </span></span>
-<span class="r-in"><span>    query<span class="op">=</span><span class="va">query</span>, source<span class="op">=</span><span class="st">"GO:CC"</span>, removeRoot<span class="op">=</span><span class="cn">TRUE</span>,</span></span>
-<span class="r-in"><span>    title<span class="op">=</span><span class="st">"GO Cellular Component"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    query<span class="op">=</span><span class="va">query</span>, source<span class="op">=</span><span class="st">"GO:CC"</span>, removeRoot<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="createEnrichMap-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
