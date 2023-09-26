@@ -187,7 +187,7 @@ validateCreateEnrichMapArguments <- function(gostObject, query, source,
 #'
 #' @author Astrid Deschênes
 #' @encoding UTF-8
-#' @importFrom methods is
+#' @importFrom methods is new
 #' @importFrom stringr str_ends
 #' @importFrom enrichplot pairwise_termsim emapplot
 #' @keywords internal
