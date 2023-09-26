@@ -581,7 +581,7 @@ be opened in <em>Cytoscape</em>.</p>
 in <em>Cytoscape</em>. As there are numerous significant Reactome terms, the network
 is a bit hectic.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">## Load demo gprofiler2 enrichment result</span></span>
+<code class="sourceCode R"><span><span class="co">## Load saved enrichment results between parental Napa vs DMSO</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"parentalNapaVsDMSOEnrichment"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">## Create network for REACTOME significant terms</span></span>
@@ -599,15 +599,14 @@ Figure 6: <span class="caption-title">All reactome terms in a gene-term network 
 Reactome terms of interest is created.</p>
 <p><br></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">## Load demo gprofiler2 enrichment result</span></span>
+<code class="sourceCode R"><span><span class="co">## Load saved enrichment results between parental Napa vs DMSO</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"parentalNapaVsDMSOEnrichment"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">## List of terms of interest</span></span>
 <span><span class="va">reactomeSelected</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"REAC:R-HSA-9031628"</span>, <span class="st">"REAC:R-HSA-198725"</span>, </span>
-<span>                        <span class="st">"REAC:R-HSA-9614085"</span>, <span class="st">"REAC:R-HSA-212436"</span>,</span>
+<span>                        <span class="st">"REAC:R-HSA-9614085"</span>, <span class="st">"REAC:R-HSA-9617828"</span>,</span>
 <span>                        <span class="st">"REAC:R-HSA-9614657"</span>, <span class="st">"REAC:R-HSA-73857"</span>,</span>
-<span>                        <span class="st">"REAC:R-HSA-74160"</span>, <span class="st">"REAC:R-HSA-381340"</span>,</span>
-<span>                        <span class="st">"REAC:R-HSA-9617828"</span><span class="op">)</span></span>
+<span>                        <span class="st">"REAC:R-HSA-74160"</span>, <span class="st">"REAC:R-HSA-381340"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">## All enrichment results</span></span>
 <span><span class="va">results</span> <span class="op">&lt;-</span> <span class="va">parentalNapaVsDMSOEnrichment</span><span class="op">$</span><span class="va">result</span></span>
@@ -620,12 +619,11 @@ Reactome terms of interest is created.</p>
 <pre><code><span><span class="co">## [1] "NGF-stimulated transcription"                                 </span></span>
 <span><span class="co">## [2] "Nuclear Events (kinase and transcription factor activation)"  </span></span>
 <span><span class="co">## [3] "FOXO-mediated transcription"                                  </span></span>
-<span><span class="co">## [4] "Generic Transcription Pathway"                                </span></span>
-<span><span class="co">## [5] "FOXO-mediated transcription of cell death genes"              </span></span>
-<span><span class="co">## [6] "RNA Polymerase II Transcription"                              </span></span>
-<span><span class="co">## [7] "Gene expression (Transcription)"                              </span></span>
-<span><span class="co">## [8] "Transcriptional regulation of white adipocyte differentiation"</span></span>
-<span><span class="co">## [9] "FOXO-mediated transcription of cell cycle genes"</span></span></code></pre>
+<span><span class="co">## [4] "FOXO-mediated transcription of cell death genes"              </span></span>
+<span><span class="co">## [5] "RNA Polymerase II Transcription"                              </span></span>
+<span><span class="co">## [6] "Gene expression (Transcription)"                              </span></span>
+<span><span class="co">## [7] "Transcriptional regulation of white adipocyte differentiation"</span></span>
+<span><span class="co">## [8] "FOXO-mediated transcription of cell cycle genes"</span></span></code></pre>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Create network for REACTOME selected terms</span></span>
 <span><span class="co">## The 'source="TERM_ID"' parameter enable to specify a personalized </span></span>
@@ -633,6 +631,20 @@ Reactome terms of interest is created.</p>
 <span><span class="fu"><a href="../reference/createNetwork.html">createNetwork</a></span><span class="op">(</span>gostObject<span class="op">=</span><span class="va">parentalNapaVsDMSOEnrichment</span>,  source<span class="op">=</span><span class="st">"TERM_ID"</span>, </span>
 <span>                  termIDs<span class="op">=</span><span class="va">selectedRes</span><span class="op">$</span><span class="va">term_id</span>, title<span class="op">=</span><span class="st">"REACTOME_Selected"</span>, </span>
 <span>                  collection<span class="op">=</span><span class="st">"parental_napa_vs_DMSO"</span><span class="op">)</span></span></code></pre></div>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:networkInCytoscapeSelected"></span>
+<img src="cytoscape_with_selected_REACTOME_v01.png" alt="Selected Reactome terms in a gene-term network loaded in Cytoscape." width="110%"><p class="caption">
+Figure 7: <span class="caption-title">Selected Reactome terms in a gene-term network loaded in Cytoscape</span><br></p>
+</div>
+<p><br></p>
+<p>In <em>Cytoscape</em>, the appearance of a network is easily customized. As example,
+default color and shape for all nodes can be modified. For this example,
+the nodes have been moved to clarify their relation with the Reactome terms.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:networkFinalReactome"></span>
+<img src="REACTOME_Selected.jpeg" alt="Final Reactome network after cutomization inside Cytoscape." width="100%"><p class="caption">
+Figure 8: <span class="caption-title">Final Reactome network after cutomization inside Cytoscape</span><br></p>
+</div>
 <p><br><br></p>
 </div>
 </div>
