@@ -13,7 +13,6 @@ createEnrichMap(
     "CORUM", "HP", "WP"),
   termIDs = NULL,
   removeRoot = TRUE,
-  title = "gprofiler network",
   showCategory = 30L,
   groupCategory = FALSE,
   categoryLabel = 1,
@@ -44,8 +43,6 @@ term IDS retained for the creation of the network. Default: \code{NULL}.}
 
 \item{removeRoot}{a \code{logical} that specified if the root terms of 
 the selected source should be removed (when present). Default: \code{TRUE}.}
-
-\item{title}{a \code{character} string representing the name TODO}
 
 \item{showCategory}{a positive \code{integer} or a \code{vector} of 
 \code{characters} representing terms.  If a \code{integer}, the first 
@@ -85,8 +82,7 @@ query <- unique(parentalNapaVsDMSOEnrichment$result$query)
 
 ## Create graph for Gene Ontology - Cellular Component related results
 createEnrichMap(gostObject=parentalNapaVsDMSOEnrichment, 
-    query=query, source="GO:CC", removeRoot=TRUE,
-    title="GO Cellular Component")
+    query=query, source="GO:CC", removeRoot=TRUE)
 
 
 }

@@ -32,8 +32,6 @@
 #' @param removeRoot a \code{logical} that specified if the root terms of 
 #' the selected source should be removed (when present). 
 #' 
-#' @param title a \code{character} string representing the name TODO
-#' 
 #' @param showCategory a positive \code{integer} or a \code{vector} of 
 #' \code{characters} representing terms.  If a \code{integer}, the first 
 #' \code{n} terms will be displayed. If \code{vector} of terms, 
@@ -59,7 +57,7 @@
 #' ## Check that all arguments are valid
 #' enrichViewNet:::validateCreateEnrichMapArguments(gostObject=demoGOST,
 #'     query="query_1", source="GO:BP", termIDs=NULL, removeRoot=FALSE, 
-#'     title="GO:BP", showCategory=20, groupCategory=FALSE, 
+#'     showCategory=20, groupCategory=FALSE, 
 #'     categoryLabel=1.1, categoryNode=1)
 #' 
 #' @author Astrid Deschênes
@@ -68,7 +66,7 @@
 #' @importFrom stringr str_ends
 #' @keywords internal
 validateCreateEnrichMapArguments <- function(gostObject, query, source, 
-        termIDs, removeRoot, title, showCategory, groupCategory, 
+        termIDs, removeRoot, showCategory, groupCategory, 
         categoryLabel, categoryNode) {
     
     ## Test that gostObject is a gprofiler2 result 
@@ -107,10 +105,6 @@ validateCreateEnrichMapArguments <- function(gostObject, query, source,
         }
     }
     
-    if (!is(title, "character")) {
-        stop("The \'title\' parameter must a character string.")
-    }
-    
     if (!is(showCategory, "character") && 
             !(is(showCategory, "numeric") && (showCategory > 0))) {
         stop("The \'showCategory\' parameter must an positive integer or a ", 
@@ -135,15 +129,14 @@ validateCreateEnrichMapArguments <- function(gostObject, query, source,
 
 #' @title Create a basic enrichment map
 #' 
-#' @description TODO
+#' @description The function creates a basic enrichment map using functional 
+#' enrichment results.
 #' 
 #' @param gostResults a \code{data.frame} containing the enrichment 
 #' results to be plot.
 #' 
 #' @param backgroundGenes a \code{vector} of \code{character} string 
 #' representing the name of the genes present in the request.
-#' 
-#' @param title a \code{character} string representing TODO
 #' 
 #' @param showCategory a positive \code{integer} or a \code{vector} of 
 #' \code{characters} representing terms.  If a \code{integer}, the first 
@@ -163,7 +156,7 @@ validateCreateEnrichMapArguments <- function(gostObject, query, source,
 #' @param significantMethod a \code{character} string representing the name 
 #' of the multiple testing correction method used on the results.
 #' 
-#' @return TODO
+#' @return a \code{ggplot} object representing the enrichment map.
 #' 
 #' @examples
 #'
@@ -191,7 +184,7 @@ validateCreateEnrichMapArguments <- function(gostObject, query, source,
 #' @importFrom stringr str_ends
 #' @importFrom enrichplot pairwise_termsim emapplot
 #' @keywords internal
-createBasicEmap <- function(gostResults, backgroundGenes, title, 
+createBasicEmap <- function(gostResults, backgroundGenes, 
                                 showCategory, groupCategory, 
                                 categoryLabel, categoryNode, 
                                 significantMethod) {

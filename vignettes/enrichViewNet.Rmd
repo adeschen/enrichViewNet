@@ -497,8 +497,10 @@ metric is high.
 
 ```{r runCreateEmap01, echo=TRUE, eval=TRUE}
 
+## Load saved enrichment results between parental Napa vs DMSO
 data(parentalNapaVsDMSOEnrichment)
 
+## Set seed to ensure reproducible results
 set.seed(121)
 
 ## Create network for REACTOME selected terms
@@ -506,7 +508,7 @@ set.seed(121)
 ## list of terms of interest with 'termIDs' argument
 createEnrichMap(gostObject=parentalNapaVsDMSOEnrichment, 
                   query="parental_napa_vs_DMSO", 
-                  source="KEGG", title="KEGG")
+                  source="KEGG")
     
 ```
 

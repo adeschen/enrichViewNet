@@ -17,7 +17,7 @@ test_that("createEnrichMap() must return error when gostObject is a number", {
                         "to gprofiler2 enrichment output.")
     
     expect_error(createEnrichMap(gostObject=33, query="TEST", 
-        source="GO:CC", termIDs=NULL, removeRoot=TRUE, title="network", 
+        source="GO:CC", termIDs=NULL, removeRoot=TRUE,
         showCategory=30, groupCategory=FALSE, categoryLabel=1,
         categoryNode=1), error_message)
 })
@@ -30,7 +30,7 @@ test_that("createEnrichMap() must return error when gostObject is a string chara
                         "to gprofiler2 enrichment output.")
     
     expect_error(createEnrichMap(gostObject="TEST", query="TEST", 
-        source="GO:CC", termIDs=NULL, removeRoot=TRUE, title="network", 
+        source="GO:CC", termIDs=NULL, removeRoot=TRUE, 
         showCategory=30, groupCategory=FALSE, categoryLabel=1,
         categoryNode=1), 
         error_message)
@@ -46,7 +46,7 @@ test_that("createEnrichMap() must return error when query is a number", {
     error_message <- paste0("The \'query\'must be a character string.")
     
     expect_error(createEnrichMap(gostObject=gostObject, query=33, 
-        source="KEGG", termIDs=NULL, removeRoot=TRUE, title="network", 
+        source="KEGG", termIDs=NULL, removeRoot=TRUE, 
         showCategory=30, groupCategory=FALSE, categoryLabel=1,
         categoryNode=1), error_message)
 })
@@ -61,7 +61,7 @@ test_that("createEnrichMap() must return error when query is a vector of strings
     error_message <- paste0("The \'query\'must be a character string.")
     
     expect_error(createEnrichMap(gostObject=gostObject, query=c("1", "2"), 
-        source="KEGG", termIDs=NULL, removeRoot=TRUE, title="network", 
+        source="KEGG", termIDs=NULL, removeRoot=TRUE, 
         showCategory=30, groupCategory=FALSE, categoryLabel=1,
         categoryNode=1), error_message)
 })
@@ -73,7 +73,7 @@ test_that("createEnrichMap() must return error when query is not in gost", {
                                     "results of the gost object.")
     
     expect_error(createEnrichMap(gostObject=demoGOST, query="CANADA", 
-        source="KEGG", termIDs=NULL, removeRoot=TRUE, title="network", 
+        source="KEGG", termIDs=NULL, removeRoot=TRUE,
         showCategory=30, groupCategory=FALSE, categoryLabel=1,
         categoryNode=1), error_message)
 })
@@ -89,7 +89,7 @@ test_that("createEnrichMap() must return error when source is a number", {
                                 "'character', not 'double'.")
     
     expect_error(createEnrichMap(gostObject=gostObject, query="toto", 
-        source=333, termIDs=NULL, removeRoot=TRUE, title="network", 
+        source=333, termIDs=NULL, removeRoot=TRUE, 
         showCategory=30, groupCategory=FALSE, categoryLabel=1,
         categoryNode=1), 
         error_message)
@@ -116,7 +116,7 @@ test_that("createEnrichMap() must return error when source is GO", {
     
     expect_error(createEnrichMap(gostObject=gostObject, query="toto", 
         source="GO",
-        termIDs=NULL, removeRoot=TRUE, title="gprofiler network", 
+        termIDs=NULL, removeRoot=TRUE, 
         showCategory=30, groupCategory=FALSE, categoryLabel=1,
         categoryNode=1))
 })
@@ -131,7 +131,7 @@ test_that("createEnrichMap() must return error when removeRoot remove last enric
                                 "enrichment term left")
     
     expect_error(createEnrichMap(gostObject=gostTerm, query="query_1", 
-                    source="WP", removeRoot=TRUE, title="gprofiler network", 
+                    source="WP", removeRoot=TRUE, 
                     showCategory=30, groupCategory=FALSE, categoryLabel=1,
                     categoryNode=1), 
                     error_message)

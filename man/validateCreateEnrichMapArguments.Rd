@@ -11,7 +11,6 @@ validateCreateEnrichMapArguments(
   source,
   termIDs,
   removeRoot,
-  title,
   showCategory,
   groupCategory,
   categoryLabel,
@@ -42,8 +41,6 @@ only used when \code{source} is set to "TERM_ID".}
 
 \item{removeRoot}{a \code{logical} that specified if the root terms of 
 the selected source should be removed (when present).}
-
-\item{title}{a \code{character} string representing the name TODO}
 
 \item{showCategory}{a positive \code{integer} or a \code{vector} of 
 \code{characters} representing terms.  If a \code{integer}, the first 
@@ -79,7 +76,7 @@ data(demoGOST)
 ## Check that all arguments are valid
 enrichViewNet:::validateCreateEnrichMapArguments(gostObject=demoGOST,
     query="query_1", source="GO:BP", termIDs=NULL, removeRoot=FALSE, 
-    title="GO:BP", showCategory=20, groupCategory=FALSE, 
+    showCategory=20, groupCategory=FALSE, 
     categoryLabel=1.1, categoryNode=1)
 
 }

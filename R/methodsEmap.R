@@ -32,8 +32,6 @@
 #' @param termIDs a \code{vector} of \code{character} strings that contains the
 #' term IDS retained for the creation of the network. Default: \code{NULL}.
 #' 
-#' @param title a \code{character} string representing the name TODO
-#' 
 #' @param showCategory a positive \code{integer} or a \code{vector} of 
 #' \code{characters} representing terms.  If a \code{integer}, the first 
 #' \code{n} terms will be displayed. If \code{vector} of terms, 
@@ -64,8 +62,7 @@
 #' 
 #' ## Create graph for Gene Ontology - Cellular Component related results
 #' createEnrichMap(gostObject=parentalNapaVsDMSOEnrichment, 
-#'     query=query, source="GO:CC", removeRoot=TRUE,
-#'     title="GO Cellular Component")
+#'     query=query, source="GO:CC", removeRoot=TRUE)
 #' 
 #' 
 #' @author Astrid Deschênes
@@ -75,8 +72,7 @@
 #' @export
 createEnrichMap <- function(gostObject, query, source=c("TERM_ID", "GO:MF", 
         "GO:CC", "GO:BP", "KEGG", "REAC", "TF", "MIRNA", "HPA", "CORUM", 
-        "HP", "WP"), 
-        termIDs=NULL, removeRoot=TRUE, title="gprofiler network", 
+        "HP", "WP"), termIDs=NULL, removeRoot=TRUE,  
         showCategory=30L, groupCategory=FALSE, categoryLabel=1,
         categoryNode=1) {
     
@@ -85,7 +81,7 @@ createEnrichMap <- function(gostObject, query, source=c("TERM_ID", "GO:MF",
     
     ## Validate parameters
     validateCreateEnrichMapArguments(gostObject=gostObject, query=query, 
-        source=source, termIDs=termIDs, removeRoot=removeRoot, title=title, 
+        source=source, termIDs=termIDs, removeRoot=removeRoot, 
         showCategory=showCategory, categoryLabel=categoryLabel,
         groupCategory=groupCategory, categoryNode=categoryNode)
     
@@ -119,7 +115,7 @@ createEnrichMap <- function(gostObject, query, source=c("TERM_ID", "GO:MF",
     
     ## Create basic emap
     emap <- createBasicEmap(gostResults=gostResults, 
-                backgroundGenes=backgroundGenes, title=title, 
+                backgroundGenes=backgroundGenes, 
                 showCategory=showCategory, categoryLabel=categoryLabel,
                 groupCategory=groupCategory, categoryNode=categoryNode, 
                 significantMethod=significantMethod)

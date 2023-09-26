@@ -8,7 +8,6 @@
 createBasicEmap(
   gostResults,
   backgroundGenes,
-  title,
   showCategory,
   groupCategory,
   categoryLabel,
@@ -22,8 +21,6 @@ results to be plot.}
 
 \item{backgroundGenes}{a \code{vector} of \code{character} string 
 representing the name of the genes present in the request.}
-
-\item{title}{a \code{character} string representing TODO}
 
 \item{showCategory}{a positive \code{integer} or a \code{vector} of 
 \code{characters} representing terms.  If a \code{integer}, the first 
@@ -44,10 +41,11 @@ which plotting category nodes should be scaled relative to the default (1).}
 of the multiple testing correction method used on the results.}
 }
 \value{
-TODO
+a \code{ggplot} object representing the enrichment map.
 }
 \description{
-TODO
+The function creates a basic enrichment map using functional 
+enrichment results.
 }
 \examples{
 
