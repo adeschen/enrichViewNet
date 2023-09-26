@@ -326,7 +326,7 @@ in _Cytoscape_. As there are numerous significant Reactome terms, the network
 is a bit hectic.
 
 ```{r runCreateNetwork, echo = TRUE, eval=FALSE}
-## Load demo gprofiler2 enrichment result
+## Load saved enrichment results between parental Napa vs DMSO
 data("parentalNapaVsDMSOEnrichment")
 
 ## Create network for REACTOME significant terms
@@ -349,15 +349,14 @@ Reactome terms of interest is created.
 <br>
 
 ```{r runCreateNetworkSelected, echo=TRUE, eval=TRUE}
-## Load demo gprofiler2 enrichment result
+## Load saved enrichment results between parental Napa vs DMSO
 data("parentalNapaVsDMSOEnrichment")
 
 ## List of terms of interest
 reactomeSelected <- c("REAC:R-HSA-9031628", "REAC:R-HSA-198725", 
-                        "REAC:R-HSA-9614085", "REAC:R-HSA-212436",
+                        "REAC:R-HSA-9614085", "REAC:R-HSA-9617828",
                         "REAC:R-HSA-9614657", "REAC:R-HSA-73857",
-                        "REAC:R-HSA-74160", "REAC:R-HSA-381340",
-                        "REAC:R-HSA-9617828")
+                        "REAC:R-HSA-74160", "REAC:R-HSA-381340")
 
 ## All enrichment results
 results <- parentalNapaVsDMSOEnrichment$result
@@ -382,6 +381,20 @@ createNetwork(gostObject=parentalNapaVsDMSOEnrichment,  source="TERM_ID",
 
 ```
 
+```{r networkInCytoscapeSelected, echo=FALSE, fig.align="center", fig.cap="Selected Reactome terms in a gene-term network loaded in Cytoscape.", out.width = '110%'}
+knitr::include_graphics("cytoscape_with_selected_REACTOME_v01.png")
+```
+
+<br>
+
+In _Cytoscape_, the appearance of a network is easily customized. As example, 
+default color and shape for all nodes can be modified. For this example, 
+the nodes have been moved to clarify their relation with the Reactome terms.
+
+
+```{r networkFinalReactome, echo=FALSE, fig.align="center", fig.cap="Final Reactome network after cutomization inside Cytoscape.", out.width = '100%'}
+knitr::include_graphics("REACTOME_Selected.jpeg")
+```
 
 <br>
 <br>
