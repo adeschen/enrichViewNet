@@ -6,7 +6,7 @@
 <meta name="generator" content="pandoc">
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE">
 <meta name="author" content="Astrid Deschênes, Pascal Belleau, Robert L Faure and Maria J Fernandes">
-<meta name="date" content="2023-09-26">
+<meta name="date" content="2023-09-27">
 <title>From functional enrichment results to biological networks</title>
 <script src="enrichViewNet_files/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="enrichViewNet_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
@@ -243,7 +243,7 @@ function toggle_visibility(id1) {
 
 <h1 class="title toc-ignore">From functional enrichment results to biological networks</h1>
 <p class="author-name">Astrid Deschênes, Pascal Belleau, Robert L Faure and Maria J Fernandes</p>
-<h4 class="date">26 September 2023</h4>
+<h4 class="date">27 September 2023</h4>
 
 </div>
 
@@ -280,7 +280,8 @@ function toggle_visibility(id1) {
 Pascal Belleau [aut] (<a href="https://orcid.org/0000-0002-0802-1071" class="external-link uri">https://orcid.org/0000-0002-0802-1071</a>),
 Robert L. Faure [aut] (<a href="https://orcid.org/0000-0003-1798-4723" class="external-link uri">https://orcid.org/0000-0003-1798-4723</a>),
 Maria J. Fernandes [aut] (<a href="https://orcid.org/0000-0002-3973-025X" class="external-link uri">https://orcid.org/0000-0002-3973-025X</a>),
-David A. Tuveson [aut] (<a href="https://orcid.org/0000-0002-8017-2712" class="external-link uri">https://orcid.org/0000-0002-8017-2712</a>)<br><strong>Version</strong>: 0.0.4<br><strong>Compiled date</strong>: 2023-09-26<br><strong>License</strong>: Artistic-2.0<br></p>
+Alexander Krasnitz [aut],
+David A. Tuveson [aut] (<a href="https://orcid.org/0000-0002-8017-2712" class="external-link uri">https://orcid.org/0000-0002-8017-2712</a>)<br><strong>Version</strong>: 0.0.4<br><strong>Compiled date</strong>: 2023-09-27<br><strong>License</strong>: Artistic-2.0<br></p>
 <div class="section level2" number="1">
 <h2 id="licensing">
 <span class="header-section-number">1</span> Licensing<a class="anchor" aria-label="anchor" href="#licensing"></a>
@@ -297,7 +298,7 @@ Artistic license 2.0. You are free to use and redistribute this software.</p>
 <p>If you use this package for a publication, we would ask you to cite the
 following:</p>
 <blockquote>
-<p>Deschênes A, Belleau P, Faure RL, Fernandes MJ, Tuveson DA (2021).
+<p>Deschênes A, Belleau P, Faure R, Fernandes M, Krasnitz A, Tuveson D (2021).
 enrichViewNet: From functional enrichment results to biological networks.
 <a href="https://github.com/adeschen/enrichViewNet" class="external-link uri">https://github.com/adeschen/enrichViewNet</a>,
 <a href="https://adeschen.github.io/enrichViewNet/" class="external-link uri">https://adeschen.github.io/enrichViewNet/</a>.</p>
@@ -322,9 +323,10 @@ present it in the form of networks.</p>
 <p>Functional enrichment analysis tools, such as <em>Enrichr</em> <span class="citation">(<a href="#ref-Kuleshov2016">Kuleshov et al. 2016</a>)</span> and
 <em>DAVID</em> <span class="citation">(<a href="#ref-Dennis2003">Dennis et al. 2003</a>)</span>, are specialized in positioning novel findings against
 well curated data sources of biological processes and pathways.
-Most specifically, those tools identify functionally coherent gene sets that
-are statistically over- (or under-) represented in a gene list.
-The traditional output of an enrichment analysis tool is a table containing
+Most specifically, those tools identify functional gene sets that
+are statistically over- (or under-) represented in a gene list (functional
+enrichment). The traditional output of a significant enrichment analysis
+tool is a table containing
 the significant gene sets with their associated statistics. While those
 results are extremely useful, their interpretation is challenging. The visual
 representation of these results as a network can greatly facilitate the
@@ -830,7 +832,7 @@ was compiled:</p>
 <span><span class="co">##   [1] splines_4.3.1                 later_1.3.1                  </span></span>
 <span><span class="co">##   [3] pbdZMQ_0.3-10                 bitops_1.0-7                 </span></span>
 <span><span class="co">##   [5] ggplotify_0.1.2               filelock_1.0.2               </span></span>
-<span><span class="co">##   [7] tibble_3.2.1                  polyclip_1.10-4              </span></span>
+<span><span class="co">##   [7] tibble_3.2.1                  polyclip_1.10-6              </span></span>
 <span><span class="co">##   [9] RCy3_2.21.2                   graph_1.79.1                 </span></span>
 <span><span class="co">##  [11] XML_3.99-0.14                 lifecycle_1.0.3              </span></span>
 <span><span class="co">##  [13] lattice_0.21-8                MASS_7.3-60                  </span></span>
@@ -886,7 +888,7 @@ was compiled:</p>
 <span><span class="co">## [113] HDO.db_0.99.1                 AnnotationDbi_1.63.2         </span></span>
 <span><span class="co">## [115] pillar_1.9.0                  grid_4.3.1                   </span></span>
 <span><span class="co">## [117] vctrs_0.6.3                   gplots_3.1.3                 </span></span>
-<span><span class="co">## [119] promises_1.2.1                dbplyr_2.3.3                 </span></span>
+<span><span class="co">## [119] promises_1.2.1                dbplyr_2.3.4                 </span></span>
 <span><span class="co">## [121] xtable_1.8-4                  evaluate_0.21                </span></span>
 <span><span class="co">## [123] cli_3.6.1                     compiler_4.3.1               </span></span>
 <span><span class="co">## [125] rlang_1.1.1                   crayon_1.5.2                 </span></span>
