@@ -30,7 +30,8 @@ with overlapping genes cluster together.
 [Astrid Desch&ecirc;nes](http://ca.linkedin.com/in/astriddeschenes "Astrid Desch&ecirc;nes"), 
 [Pascal Belleau](http://ca.linkedin.com/in/pascalbelleau "Pascal Belleau"), 
 [Robert L Faure](https://www.crchudequebec.ulaval.ca/en/research/researchers/robert-l-faure/), 
-[Maria J Fernandes](https://www.crchudequebec.ulaval.ca/en/research/researchers/maria-fernandes/) and 
+[Maria J Fernandes](https://www.crchudequebec.ulaval.ca/en/research/researchers/maria-fernandes/),
+[Alexander Krasnitz](https://www.cshl.edu/research/faculty-staff/alexander-krasnitz/) and 
 [David A Tuveson](https://tuvesonlab.labsites.cshl.edu/)
 
 ## License ##
