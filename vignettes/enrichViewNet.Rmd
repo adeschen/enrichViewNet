@@ -48,7 +48,7 @@ Artistic license 2.0. You are free to use and redistribute this software.
 If you use this package for a publication, we would ask you to cite the 
 following:
 
-> Deschênes A, Belleau P, Faure RL, Fernandes MJ, Tuveson DA (2021). 
+> Deschênes A, Belleau P, Faure R, Fernandes M, Krasnitz A, Tuveson D (2021). 
   enrichViewNet: From functional enrichment results to biological networks. 
   https://github.com/adeschen/enrichViewNet,
   https://adeschen.github.io/enrichViewNet/.
@@ -73,9 +73,10 @@ present it in the form of networks.
 Functional enrichment analysis tools, such as _Enrichr_ [@Kuleshov2016] and 
 _DAVID_ [@Dennis2003], are specialized in positioning novel findings against 
 well curated data sources of biological processes and pathways. 
-Most specifically, those tools identify functionally coherent gene sets that 
-are statistically over- (or under-) represented in a gene list. 
-The traditional output of an enrichment analysis tool is a table containing 
+Most specifically, those tools identify functional gene sets that 
+are statistically over- (or under-) represented in a gene list (functional 
+enrichment). The traditional output of a significant enrichment analysis 
+tool is a table containing 
 the significant gene sets with their associated statistics. While those 
 results are extremely useful, their interpretation is challenging. The visual 
 representation of these results as a network can greatly facilitate the 

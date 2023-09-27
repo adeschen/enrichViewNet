@@ -22,6 +22,8 @@ Authors@R: c(person("Astrid", "Deschênes", email = "adeschen@hotmail.com",
     person("Maria J.", "Fernandes", 
     email="maria.fernandes@crchudequebec.ulaval.ca", role = c("aut"), 
     comment=c(ORCID="0000-0002-3973-025X")),
+    person(given="Alexander", family="Krasnitz", email="krasnitz@cshl.edu",
+    role=c("aut")),
     person(given="David A.", family="Tuveson",
     email="dtuveson@cshl.edu", 
     role=c("aut"), comment=c(ORCID="0000-0002-8017-2712")))
