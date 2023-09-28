@@ -1,8 +1,8 @@
 
-#' @title Using functional enrichment results in  gprofiler2 format to create a 
-#' enrichment map
+#' @title Using functional enrichment results in  gprofiler2 format to create  
+#' an enrichment map
 #' 
-#' @description User selected enrichment terms are used to create a enrichment 
+#' @description User selected enrichment terms are used to create an enrichment 
 #' map. The selection of the term can by specifying by the 
 #' source of the terms (GO:MF, REAC, TF, etc...) or by listing the selected 
 #' term IDs. The map is only generated when there is at least on 

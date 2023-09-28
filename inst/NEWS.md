@@ -1,3 +1,11 @@
+CHANGES IN VERSION v0.99.0
+------------------------
+
+### NEW FEATURES
+
+* The new 'createEnrichMap()' function enables the creation of an enrichment map from enrichment results.
+
+
 CHANGES IN VERSION v0.0.4
 ------------------------
 

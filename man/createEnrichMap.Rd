@@ -3,8 +3,8 @@
 \encoding{UTF-8}
 \name{createEnrichMap}
 \alias{createEnrichMap}
-\title{Using functional enrichment results in  gprofiler2 format to create a 
-enrichment map}
+\title{Using functional enrichment results in  gprofiler2 format to create  
+an enrichment map}
 \usage{
 createEnrichMap(
   gostObject,
@@ -65,7 +65,7 @@ a \code{ggplot} object which is the enrichment map for enrichment
 results.
 }
 \description{
-User selected enrichment terms are used to create a enrichment 
+User selected enrichment terms are used to create an enrichment 
 map. The selection of the term can by specifying by the 
 source of the terms (GO:MF, REAC, TF, etc...) or by listing the selected 
 term IDs. The map is only generated when there is at least on 
