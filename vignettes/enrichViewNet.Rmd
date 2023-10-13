@@ -393,12 +393,14 @@ default color and shape for all nodes can be modified. For this example,
 the nodes have been moved to clarify their relation with the Reactome terms.
 
 
-```{r networkFinalReactome, echo=FALSE, fig.align="center", fig.cap="Final Reactome network after cutomization inside Cytoscape.", out.width = '100%'}
+```{r networkFinalReactome, echo=FALSE, fig.align="center", fig.cap="Final Reactome network after cutomization inside Cytoscape where the different transcription enriched terms (For example here FOXO-mediated, adipocytes differentiation, RNA polymerase II transcription, NGF-stimulated transcription) are linked through enriched genes.", out.width = '100%'}
 knitr::include_graphics("REACTOME_Selected.jpeg")
 ```
 
 <br>
 <br>
+
+
 
 # Transforming enrichment results into an enrichment map
 
@@ -496,7 +498,7 @@ similarity. Terms with high similarity (similarity metric > 0.2) are linked
 together be edges. The edges are shorter and thicker when the similarity 
 metric is high. 
 
-```{r runCreateEmap01, echo=TRUE, eval=TRUE}
+```{r runCreateEmap01, echo=TRUE, eval=TRUE, fig.cap="A Reactome enrichment map where terms with overlapping significant genes cluster together.", fig.align="center"}
 
 ## Load saved enrichment results between parental Napa vs DMSO
 data(parentalNapaVsDMSOEnrichment)
@@ -514,10 +516,14 @@ createEnrichMap(gostObject=parentalNapaVsDMSOEnrichment,
 ```
 
 
-
 <br>
 <br>
 
+The Reactome enrichment map shows that the MAPK signaling pathway node is 
+highly influential in the network.
+
+<br>
+<br>
 
 # Acknowledgments
 

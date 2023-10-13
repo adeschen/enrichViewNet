@@ -29,7 +29,7 @@ Authors@R: c(person("Astrid", "Deschênes", email = "adeschen@hotmail.com",
     role=c("aut"), comment=c(ORCID="0000-0002-8017-2712")))
 Encoding: UTF-8
 License: Artistic-2.0
-Depends: R (>= 4.3.0)
+Depends: R (>= 4.2.0)
 Imports: gprofiler2,
     strex,
     RCy3,
