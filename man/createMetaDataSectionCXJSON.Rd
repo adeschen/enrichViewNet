@@ -8,7 +8,7 @@
 createMetaDataSectionCXJSON()
 }
 \value{
-a \code{JSON} object that contains the meta data section related 
+a \code{JSON} object that contains the meta data section related
 to the network
 }
 \description{

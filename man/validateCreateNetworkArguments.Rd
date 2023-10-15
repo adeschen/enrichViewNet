@@ -17,25 +17,25 @@ validateCreateNetworkArguments(
 \item{gostObject}{a \code{list} created by \code{gprofiler2} that contains
 the results from an enrichment analysis.}
 
-\item{source}{a \code{character} string representing the selected source 
-that will be used to generate the network. To hand-pick the terms to be 
+\item{source}{a \code{character} string representing the selected source
+that will be used to generate the network. To hand-pick the terms to be
 used, "TERM_ID" should be used and the list of selected term IDs should
-be passed through the \code{termIDs} parameter. The possible sources are 
-"GO:BP" for Gene Ontology Biological Process, "GO:CC" for Gene Ontology  
-Cellular Component, "GO:MF" for Gene Ontology Molecular Function, 
-"KEGG" for Kegg, "REAC" for Reactome, "TF" for TRANSFAC, "MIRNA" for 
+be passed through the \code{termIDs} parameter. The possible sources are
+"GO:BP" for Gene Ontology Biological Process, "GO:CC" for Gene Ontology
+Cellular Component, "GO:MF" for Gene Ontology Molecular Function,
+"KEGG" for Kegg, "REAC" for Reactome, "TF" for TRANSFAC, "MIRNA" for
 miRTarBase, "CORUM" for CORUM database, "HP" for Human phenotype ontology
 and "WP" for WikiPathways.}
 
-\item{termIDs}{a \code{vector} of \code{character} strings that contains 
-the term IDs retained for the creation of the network. This parameter is 
+\item{termIDs}{a \code{vector} of \code{character} strings that contains
+the term IDs retained for the creation of the network. This parameter is
 only used when \code{source} is set to "TERM_ID".}
 
-\item{removeRoot}{a \code{logical} that specified if the root terms of 
+\item{removeRoot}{a \code{logical} that specified if the root terms of
 the selected source should be removed (when present).}
 
 \item{fileName}{a \code{character} string representing the name of the
-CX JSON file that is created when Cytoscape is not running. The name 
+CX JSON file that is created when Cytoscape is not running. The name
 must have a '.cx' extension.}
 }
 \value{
@@ -43,8 +43,8 @@ must have a '.cx' extension.}
 }
 \description{
 Validate the arguments passed to creatNetwork() function.
-First, the object containing the enrichment results must correspond to a 
-object created by  \code{gprofiler2} software. Second, the selected 
+First, the object containing the enrichment results must correspond to a
+object created by  \code{gprofiler2} software. Second, the selected
 source must at least have one enriched term in the results. Then, if the
 source is 'TERM_ID', the listed terms must be present in the enrichment
 results.
