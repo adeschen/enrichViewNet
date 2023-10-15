@@ -197,14 +197,7 @@ createBasicEmap <- function(gostResults, backgroundGenes,
                                 categoryLabel, categoryNode, 
                                 significantMethod) {
     
-    #geneSets <- list()
-    
-    # for (i in seq_len(nrow(gostResults))) {
-    #     geneSets[[gostResults$term_id[i]]] <- 
-    #         unlist(stringr::str_split(gostResults$intersection[i], 
-    #                                     pattern=","))
-    # }
-    
+    ## Extract gene list for each term
     geneSets <- lapply(seq_len(nrow(gostResults)), FUN=function(x, gostData) {
         stringr::str_split(gostData$intersection[x], pattern=",")[[1]]}, 
         gostData=gostResults
