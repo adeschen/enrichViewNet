@@ -26,7 +26,7 @@ data(demoGOST)
 ## Only retained the GO - Molecular Function results
 results <- demoGOST$result[demoGOST$result$source == "WP", ]
 
-## Remove WIKIPATHWAYS root term 
+## Remove WIKIPATHWAYS root term
 enrichViewNet:::removeRootTerm(gostResult=results)
 
 

@@ -14,7 +14,7 @@ for the creation of the network.}
 \item{gostObject}{a \code{list} created by gprofiler2 that contains
 the results from an enrichment analysis.}
 
-\item{title}{a \code{character} string representing the name assigned to 
+\item{title}{a \code{character} string representing the name assigned to
 the network.}
 }
 \value{
@@ -22,7 +22,7 @@ the network.}
 format.
 }
 \description{
-Create a CX JSON text that represent the network which 
+Create a CX JSON text that represent the network which
 includes information about nodes and edges present in the network.
 }
 \examples{
@@ -35,7 +35,7 @@ data(demoGOST)
 results <- demoGOST$result[demoGOST$result$source == "WP", ]
 
 jsonFormat <- enrichViewNet:::createCytoscapeCXJSON(
-                gostResults = results, gostObject = demoGOST, 
+                gostResults = results, gostObject = demoGOST,
                 title = "WikiPathways")
 
 }

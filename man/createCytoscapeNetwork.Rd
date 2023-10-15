@@ -14,17 +14,17 @@ for the creation of the network.}
 \item{gostObject}{a \code{list} created by gprofiler2 that contains
 the results from an enrichment analysis.}
 
-\item{title}{a \code{character} string representing the name assigned to 
+\item{title}{a \code{character} string representing the name assigned to
 the network.}
 
-\item{collection}{a \code{character} string representing the collection 
+\item{collection}{a \code{character} string representing the collection
 name assigned to the network.}
 }
 \value{
 \code{TRUE}
 }
 \description{
-Create network from gprofiler2 results and load it 
+Create network from gprofiler2 results and load it
 into Cytoscape
 }
 \examples{
@@ -38,12 +38,12 @@ results <- demoGOST$result[demoGOST$result$source == "WP", ]
 
 \dontrun{
 
-## The creation of the network can only be done when Cytoscape 
+## The creation of the network can only be done when Cytoscape
 ## is up and running
-## A network using GO - Molecular Function enriched terms will be 
+## A network using GO - Molecular Function enriched terms will be
 ## generated and loaded into Cytoscape
 if (enrichViewNet:::isCytoscapeRunning()) {
-    enrichViewNet:::createCytoscapeNetwork(gostResults=results, 
+    enrichViewNet:::createCytoscapeNetwork(gostResults=results,
         gostObject=demoGOST, title="Test", collection="New Collection")
 }
 
