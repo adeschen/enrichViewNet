@@ -58,15 +58,23 @@ gostResults <- as.data.frame(parentalNapaVsDMSOEnrichment$result)
 ## Limit the results to Wikipathways
 ## and remove the root term
 gostResults <- gostResults[which(gostResults$source == "WP"),]
-gostResults <- gostResults[which(gostResults$term_id != "WILIPATHWAYS"),]
+gostResults <- gostResults[which(gostResults$term_id != "WIKIPATHWAYS"),]
 
 ## Extract meta data information
 meta <- parentalNapaVsDMSOEnrichment$meta
 
+## Get all background genes
 backgroundGenes <- meta$query_metadata$queries[["parental_napa_vs_DMSO"]]
 
+## Get significant method
 significantMethod <- meta$query_metadata$significance_threshold_method
 
+## Create basic enrichment map using Wikipathways terms
+enrichViewNet:::createBasicEmap(gostResults=gostResults, 
+    backgroundGenes=backgroundGenes, showCategory=30L, 
+    groupCategory=FALSE, categoryLabel=1, categoryNode=1,
+    significantMethod=significantMethod)
+    
 }
 \author{
 Astrid Deschênes

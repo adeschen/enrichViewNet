@@ -103,7 +103,7 @@ createEnrichMap <- function(gostObject, query, source=c("TERM_ID", "GO:MF",
         gostResults <- removeRootTerm(gostResults)
         if (nrow(gostResults) == 0) {
             stop("With removal of the root term, there is no ", 
-                 "enrichment term left")
+                    "enrichment term left")
         }
     }
     
