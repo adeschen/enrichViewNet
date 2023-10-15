@@ -71,10 +71,10 @@ validateCreateEnrichMapArguments <- function(gostObject, query, source,
     
     ## Test that gostObject is a gprofiler2 result 
     if (!("list" %in% class(gostObject) && "result" %in% names(gostObject) &&
-          "meta" %in% names(gostObject)))   {
+            "meta" %in% names(gostObject)))   {
         stop("The gostObject object should be a list with meta ", 
-             "and result as entries corresponding to gprofiler2 ", 
-             "enrichment output.")
+                "and result as entries corresponding to gprofiler2 ", 
+                "enrichment output.")
     } 
     
     if (!is.character(query) || length(query) > 1) {
@@ -90,17 +90,17 @@ validateCreateEnrichMapArguments <- function(gostObject, query, source,
     if (source != "TERM_ID") {
         if (sum(gostObject$result$source == source) < 1) {
             stop("There is no enriched term for the selected ", 
-                 "source \'", source, "\'.")    
+                    "source \'", source, "\'.")    
         }
     } else {
         if (is.null(termIDs)) {
             stop("A vector of terms should be given through the ",
-                 "\'termIDs\' parameter when source is \'TERM_ID\'.")  
+                    "\'termIDs\' parameter when source is \'TERM_ID\'.")  
         }
         else {
             if(!all(termIDs %in% gostObject$result$term_id)) {
                 stop("Not all listed terms are present in the  ",
-                     "enrichment results.")
+                        "enrichment results.")
             }
         }
     }
@@ -169,15 +169,23 @@ validateCreateEnrichMapArguments <- function(gostObject, query, source,
 #' ## Limit the results to Wikipathways
 #' ## and remove the root term
 #' gostResults <- gostResults[which(gostResults$source == "WP"),]
-#' gostResults <- gostResults[which(gostResults$term_id != "WILIPATHWAYS"),]
+#' gostResults <- gostResults[which(gostResults$term_id != "WIKIPATHWAYS"),]
 #' 
 #' ## Extract meta data information
 #' meta <- parentalNapaVsDMSOEnrichment$meta
 #' 
+#' ## Get all background genes
 #' backgroundGenes <- meta$query_metadata$queries[["parental_napa_vs_DMSO"]]
 #' 
+#' ## Get significant method
 #' significantMethod <- meta$query_metadata$significance_threshold_method
 #'
+#' ## Create basic enrichment map using Wikipathways terms
+#' enrichViewNet:::createBasicEmap(gostResults=gostResults, 
+#'     backgroundGenes=backgroundGenes, showCategory=30L, 
+#'     groupCategory=FALSE, categoryLabel=1, categoryNode=1,
+#'     significantMethod=significantMethod)
+#'     
 #' @author Astrid Deschênes
 #' @encoding UTF-8
 #' @importFrom methods is new
@@ -189,13 +197,19 @@ createBasicEmap <- function(gostResults, backgroundGenes,
                                 categoryLabel, categoryNode, 
                                 significantMethod) {
     
-    geneSets <- list()
+    #geneSets <- list()
     
-    for (i in seq_len(nrow(gostResults))) {
-        geneSets[[gostResults$term_id[i]]] <- 
-            unlist(stringr::str_split(gostResults$intersection[i], 
-                                        pattern=","))
-    }
+    # for (i in seq_len(nrow(gostResults))) {
+    #     geneSets[[gostResults$term_id[i]]] <- 
+    #         unlist(stringr::str_split(gostResults$intersection[i], 
+    #                                     pattern=","))
+    # }
+    
+    geneSets <- lapply(seq_len(nrow(gostResults)), FUN=function(x, gostData) {
+        stringr::str_split(gostData$intersection[x], pattern=",")[[1]]}, 
+        gostData=gostResults
+    )
+    names(geneSets) <- gostResults$term_id
     
     resultDataFrame <- data.frame(ID=gostResults$term_id, 
         Description=gostResults$term_name,
@@ -214,22 +228,22 @@ createBasicEmap <- function(gostResults, backgroundGenes,
     rownames(resultDataFrame) <- resultDataFrame$ID
     
     res <- new("enrichResult", result=resultDataFrame, pvalueCutoff=1, 
-             pAdjustMethod="UNKNOWN", qvalueCutoff=1, 
-             gene=as.character(backgroundGenes), 
-             universe=as.character(backgroundGenes), 
-             geneSets=geneSets, 
-             organism="UNKNOWN", keytype="UNKNOWN", ontology="UNKNOWN", 
-             readable=FALSE)
+                pAdjustMethod="UNKNOWN", qvalueCutoff=1, 
+                gene=as.character(backgroundGenes), 
+                universe=as.character(backgroundGenes), 
+                geneSets=geneSets, 
+                organism="UNKNOWN", keytype="UNKNOWN", ontology="UNKNOWN", 
+                readable=FALSE)
 
     rownames(resultDataFrame) <- resultDataFrame$ID
     
     res <- new("enrichResult", result=resultDataFrame, pvalueCutoff=1, 
-             pAdjustMethod=significantMethod, qvalueCutoff=1, 
-             gene=as.character(backgroundGenes), 
-             universe=as.character(backgroundGenes), 
-             geneSets=geneSets, 
-             organism="UNKNOWN", keytype="UNKNOWN", ontology="UNKNOWN", 
-             readable=FALSE)
+                pAdjustMethod=significantMethod, qvalueCutoff=1, 
+                gene=as.character(backgroundGenes), 
+                universe=as.character(backgroundGenes), 
+                geneSets=geneSets, 
+                organism="UNKNOWN", keytype="UNKNOWN", ontology="UNKNOWN", 
+                readable=FALSE)
     
     ## Get similarity matrix
     comp <- pairwise_termsim(res)  
