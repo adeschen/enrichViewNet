@@ -154,25 +154,20 @@ knitr::include_graphics("demo_KEGG_emap_v01.jpeg")
 
 # Installation
 
-To install the latest version accessible on the 
-`r Githubpkg("adeschen/enrichViewNet")` Github Website, the 
-`r CRANpkg("devtools")` package is required.
+To install this package 
+from [Bioconductor](https://bioconductor.org), start R 
+(version 4.3 or later) and enter: 
 
-```{r installDemo01, eval=FALSE}
-## Install the latest version of enrichViewNet
-library(devtools)
-devtools::install_github('adeschen/enrichViewNet')
+
+```{r installDemo01, eval=FALSE, warning=FALSE, message=FALSE}
+if (!requireNamespace("BiocManager", quietly = TRUE))
+        install.packages("BiocManager")
+
+BiocManager::install("enrichViewNet")
 ```
 
-It is also possible to install an official release. The list of available 
-releases is posted on the [enrichViewNet Release Website](https://github.com/adeschen/enrichViewNet/releases "enrichViewNet Release Site").
-
-```{r installDemo02, eval=FALSE}
-## Install the version v0.1 of enrichViewNet
-## using 'ref' parameter
-library(devtools)
-devtools::install_github('adeschen/enrichViewNet', ref = "v0.0.4")
-```
+<br>
+<br>
 
 <br>
 <br>
