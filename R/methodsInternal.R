@@ -392,82 +392,104 @@ createMetaDataSectionCXJSON <- function() {
 #' @keywords internal
 extractNodesAndEdgesInfoForCXJSON <- function(gostResults, gostObject) {
 
-    done <- list()
-    nodes <- list()
-    edges <- list()
-    nodeAttributes <- list()
-    edgeAttributes <- list()
+    listQuery <- unique(gostResults$query)
 
-    id <- 0
+    listGenes <- unique(gostObject$meta$query_metadata$queries[[listQuery[1]]])
+    gostQuery <- gostResults[which(gostResults$query == listQuery[1]),]
+    listTerm <- gostQuery[!duplicated(gostQuery$term_id), c("term_id", "term_name")]
+    res <- gconvert(query=c(listTerm$term_id))
 
-    ## Create entries for genes and terms that will be included in the network
-    for (i in seq_len(nrow(gostResults))) {
-        term <- gostResults$term_id[i]
-        termName <- gostResults$term_name[i]
-        query <- gostResults$query[i]
+    query=listQuery[1]
 
-        id <- id + 1
-        term_id <- id
+    ## Create a data.frame linking gene and term
+    resEdge <- do.call(rbind, lapply(seq_len(nrow(listTerm)),
+                FUN=function(x, listTerm, listGenes, resTerm=res, query){
+                    tmp <- which(resTerm$input == listTerm$term_id[x] & resTerm$target %in% listGenes)
+                    df <- NULL
+                    if(length(tmp) > 0){
+                        res <- resTerm[tmp,]
+                        df <- data.frame(term=rep(listTerm$term_id[x],
+                                                    nrow(res)),
+                                termName=rep(listTerm$term_name[x],
+                                                    nrow(res)),
+                                gene=res$target,
+                                geneName=res$name,
+                                query=query)
+                    }
+                    return(df)
+                },
+                listTerm=listTerm,
+                listGenes=listGenes,
+                resTerm=res,
+                query=query))
 
-        ## Create a node entry for the term
-        nodes[[length(nodes) + 1]] <- data.frame('@id' = term_id,
-            n = c(term), stringsAsFactors = FALSE, check.names = FALSE)
+    geneUnique <- resEdge[!duplicated(resEdge$gene),]
 
-        ## Create a node attribute entry for the term alias and the term group
-        nodeAttributes[[length(nodeAttributes) + 1]] <- data.frame(
-            po = rep(term_id, 2), n = c("alias", "group"),
-            v = c(termName, "TERM"), stringsAsFactors = FALSE)
+    ## Create node entries for the gene
+    geneNodes <- data.frame('@id'=seq_len(nrow(geneUnique)),
+                        n=geneUnique$gene,
+                        stringsAsFactors=FALSE,
+                        check.names=FALSE)
 
-        ## Get list of genes associated to the term
-        res <- gconvert(query=c(term))
-        genes <- gostObject$meta$query_metadata$queries[[query]]
+    ## Create node attribute entries for the gene alias and group
+    geneAttributes  <- data.frame(
+        po=rep(seq_len(nrow(geneUnique)), 2),
+        n=c(rep("alias", nrow(geneUnique)),
+            rep("group", nrow(geneUnique))),
+        v=c(geneUnique$geneName,
+            rep("GENE", nrow(geneUnique))),
+        stringsAsFactors=FALSE)
 
-        ## Create entries for genes that will be associated with this term
-        for (g in genes[genes %in% res$target]) {
-            geneName <- res[res$target == g, c("name")]
-            ## No need to create node if already created for this gene
-            gene_id <- NULL
-            if (! g %in% names(done)) {
-                id <- id + 1
-                gene_id <- id
+    rownames(geneNodes) <- geneNodes$n
 
-                ## Create a node entry for the gene
-                nodes[[length(nodes) + 1]] <- data.frame('@id'=gene_id,
-                    n=c(g), stringsAsFactors=FALSE, check.names=FALSE)
+    # Offset for the id
+    termOffSet <- nrow(geneUnique)
 
-                ## Create a node attribute entry for the gene alias and group
-                nodeAttributes[[length(nodeAttributes) + 1]] <- data.frame(
-                    po=rep(gene_id, 2), n=c("alias", "group"),
-                    v=c(geneName, "GENE"), stringsAsFactors=FALSE)
+    termUnique <- resEdge[!duplicated(resEdge$term),]
 
-                done[[g]] <- gene_id
-            } else {
-                gene_id <- done[[g]]
-            }
+    ## Create node entries for the term
+    termNodes <- data.frame('@id'=seq_len(nrow(termUnique)) + termOffSet,
+                        n=termUnique$term,
+                        stringsAsFactors=FALSE,
+                        check.names=FALSE)
 
-            id <- id + 1
+    ## Create node attribute entries for the term alias and the term group
+    termAttributes  <- data.frame(
+        po=rep(seq_len(nrow(termUnique)), 2) + termOffSet,
+        n=c(rep("alias", nrow(geneUnique)),
+            rep("group", nrow(geneUnique))),
+        v=c(termNodes$termName, rep("GENE", nrow(termNodes))),
+        stringsAsFactors=FALSE)
 
-            ## Create an edge connecting term to gene
-            edges[[length(edges) + 1]] <- data.frame('@id'=id, s=term_id,
-                t=gene_id, i = c("contains"), stringsAsFactors=FALSE,
-                check.names=FALSE)
+    rownames(termNodes) <- termNodes$n
 
-            ## Create edge attributes
-            edgeAttributes[[length(edgeAttributes) + 1]] <- data.frame(
-                po=rep(id, 3), n=c("name", "source", "target"),
-                v=c(paste0(term, " (contains) ", g), term, g),
-                stringsAsFactors=FALSE)
-        }
-    }
+    # Offset for the id
+    edgeOffSet <- termOffSet + nrow(termUnique)
 
-    ## Transform results into data.frame
-    nodeInfo <- do.call(rbind, nodes)
-    edgeInfo <- do.call(rbind, edges)
-    nodeAttributesInfo <- do.call(rbind, nodeAttributes)
-    edgeAttributesInfo <- do.call(rbind, edgeAttributes)
+    ## Create an edge connecting term to gene
+    edges <- data.frame('@id'=seq_len(nrow(resEdge)) + edgeOffSet,
+                    s=termNodes[resEdge$term, '@id'],
+                    t=geneNodes[resEdge$gene, '@id'],
+                    i=rep("contains", nrow(resEdge)),
+                    stringsAsFactors=FALSE,
+                    check.names=FALSE)
 
-    return(list(nodes=nodeInfo, edges=edgeInfo,
-        nodeAttributes=nodeAttributesInfo, edgeAttributes=edgeAttributesInfo))
+    ## Create edge attributes
+    edgeAttributes <- data.frame(
+        po=rep(edges[,'@id'], 3),
+        n=c(rep("name", nrow(resEdge)),
+            rep("source", nrow(resEdge)),
+            rep("target", nrow(resEdge))),
+        v=c(paste0(resEdge$term, " (contains) ", resEdge$gene),
+            resEdge$term, resEdge$gene),
+        stringsAsFactors=FALSE)
+
+    rownames(geneNodes) <- NULL
+    rownames(termNodes) <- NULL
+
+    return(list(nodes=rbind(geneNodes, termNodes), edges=edges,
+        nodeAttributes=rbind(geneAttributes, termAttributes),
+        edgeAttributes=edgeAttributes))
 }
 
 
