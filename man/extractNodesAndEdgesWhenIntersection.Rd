@@ -36,7 +36,8 @@ to create the Cytoscape network
 data(parentalNapaVsDMSOEnrichment)
 
 ## Only retained the GO Molecular Function results
-results <- parentalNapaVsDMSOEnrichment$result[parentalNapaVsDMSOEnrichment$result$source == "GO:MF", ]
+results <- parentalNapaVsDMSOEnrichment$result[
+        parentalNapaVsDMSOEnrichment$result$source == "GO:MF", ]
 
 information <-
     enrichViewNet:::extractNodesAndEdgesWhenIntersection(
