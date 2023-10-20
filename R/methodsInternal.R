@@ -170,7 +170,7 @@ validateCreateNetworkArguments <- function(gostObject, source, termIDs,
                                                 removeRoot, fileName) {
 
     ## Test that gostObject is a gprofiler2 result
-    if (!("list" %in% class(gostObject) && "result" %in% names(gostObject) &&
+    if (!(inherits(gostObject, "list") && "result" %in% names(gostObject) &&
             "meta" %in% names(gostObject)))   {
         stop("The gostObject object should be a list with meta ",
                     "and result as entries corresponding to gprofiler2 ",
