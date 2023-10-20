@@ -221,6 +221,8 @@ context("createMetaDataSectionCXJSON() results")
 
 test_that("createMetaDataSectionCXJSON() must return expected text", {
     
+    set.seed(121)
+    
     expected <- paste0(
         "{\"metaData\":[{\"name\":\"nodes\",\"version\":\"1.0\"},", 
         "{\"name\":\"edges\",\"version\":\"1.0\"},",
