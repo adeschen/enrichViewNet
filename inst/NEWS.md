@@ -1,3 +1,12 @@
+CHANGES IN VERSION v0.99.2
+------------------------
+
+### NEW FEATURES
+
+* The man pages are respecting 80 character width.
+
+
+
 CHANGES IN VERSION v0.99.1
 ------------------------
 
