@@ -195,12 +195,12 @@ validateCreateNetworkArguments <- function(gostObject, source, termIDs,
         }
     }
 
-    if (!is(removeRoot, "logical")) {
+    if (!is.logical(removeRoot)) {
         stop("The \'removeRoot\' parameter must be the logical ",
                         "value TRUE or FALSE.")
     }
 
-    if (!is(fileName, "character")) {
+    if (!is.character(fileName)) {
         stop("The \'fileName\' parameter must a character string.")
     }
 
