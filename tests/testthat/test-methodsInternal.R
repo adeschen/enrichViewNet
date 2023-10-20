@@ -251,49 +251,34 @@ test_that("createCytoscapeCXJSON() must return expected text", {
             mirnaDemo$meta$query_metadata$queries[[1]][1:2]
     mirnaData <- demoGOST$result[demoGOST$result$source == "MIRNA", ]
     
+    set.seed(121)
     result <- enrichViewNet:::createCytoscapeCXJSON(
                          gostResults=mirnaData, gostObject=mirnaDemo, 
                          title = "MIRNA")
     
     expected <- paste0(
-        "[{\"metaData\":[{\"name\":\"nodes\",\"version\":\"1.0\"},", 
-        "{\"name\":\"edges\",\"version\":\"1.0\"},{\"name\":\"edgeAttributes\",",
-        "\"version\":\"1.0\"},{\"name\":\"nodeAttributes\",\"version\":\"1.0\"},",
-        "{\"name\":\"cyHiddenAttributes\",\"version\":\"1.0\"},",
-        "{\"name\":\"cyNetworkRelations\",\"version\":\"1.0\"},",
-        "{\"name\":\"cyGroups\",\"version\":\"1.0\"},",
-        "{\"name\":\"networkAttributes\",\"version\":\"1.0\"},",
-        "{\"name\":\"cyTableColumn\",\"version\":\"1.0\"},",
-        "{\"name\":\"cySubNetworks\",\"version\":\"1.0\"}]},",
-        "{\"networkAttributes\":[{\"n\":\"name\",\"v\":\"MIRNA\"}]},",
-        "{\"nodes\":[{\"@id\":1,\"n\":\"ENSG00000051108\"},",
-        "{\"@id\":2,\"n\":\"MIRNA:hsa-miR-335-5p\"},",
-        "{\"@id\":3,\"n\":\"MIRNA:hsa-miR-759\"}]},",
-        "{\"edges\":[{\"@id\":4,\"s\":2,\"t\":1,\"i\":\"contains\"},",
-        "{\"@id\":5,\"s\":3,\"t\":1,\"i\":\"contains\"}]},", 
-        "{\"nodeAttributes\":[{\"po\":1,\"n\":\"alias\",\"v\":\"HERPUD1\"},",
-        "{\"po\":1,\"n\":\"group\",\"v\":\"GENE\"},",
-        "{\"po\":2,\"n\":\"alias\",\"v\":\"GENE\"},",
-        "{\"po\":3,\"n\":\"group\",\"v\":\"GENE\"},",
-        "{\"po\":2,\"n\":\"alias\",\"v\":\"GENE\"},",
-        "{\"po\":3,\"n\":\"group\",\"v\":\"GENE\"}]},",
+        "[{\"metaData\":[{\"name\":\"nodes\",\"version\":\"1.0\"},",
+        "{\"name\":\"edges\",\"version\":\"1.0\"},{\"name\":\"edgeAttributes\",\"version\":\"1.0\"},",
+        "{\"name\":\"nodeAttributes\",\"version\":\"1.0\"},{\"name\":\"cyHiddenAttributes\",\"version\":\"1.0\"},",
+        "{\"name\":\"cyNetworkRelations\",\"version\":\"1.0\"},{\"name\":\"cyGroups\",\"version\":\"1.0\"},",
+        "{\"name\":\"networkAttributes\",\"version\":\"1.0\"},{\"name\":\"cyTableColumn\",\"version\":\"1.0\"},",
+        "{\"name\":\"cySubNetworks\",\"version\":\"1.0\"}]},{\"networkAttributes\":[{\"n\":\"name\",\"v\":\"MIRNA\"}]},",
+        "{\"nodes\":[{\"@id\":1,\"n\":\"ENSG00000051108\"},{\"@id\":2,\"n\":\"MIRNA:hsa-miR-335-5p\"},{\"@id\":3,\"n\":\"MIRNA:hsa-miR-759\"}]},",
+        "{\"edges\":[{\"@id\":4,\"s\":2,\"t\":1,\"i\":\"contains\"},{\"@id\":5,\"s\":3,\"t\":1,\"i\":\"contains\"}]},",
+        "{\"nodeAttributes\":[{\"po\":1,\"n\":\"alias\",\"v\":\"HERPUD1\"},{\"po\":1,\"n\":\"group\",\"v\":\"GENE\"},",
+        "{\"po\":2,\"n\":\"alias\",\"v\":\"hsa-miR-335-5p\"},{\"po\":3,\"n\":\"alias\",\"v\":\"hsa-miR-759\"},",
+        "{\"po\":2,\"n\":\"group\",\"v\":\"GENE\"},{\"po\":3,\"n\":\"group\",\"v\":\"GENE\"}]},",
         "{\"edgeAttributes\":[{\"po\":4,\"n\":\"name\",\"v\":\"MIRNA:hsa-miR-335-5p (contains) ENSG00000051108\"},",
         "{\"po\":5,\"n\":\"name\",\"v\":\"MIRNA:hsa-miR-759 (contains) ENSG00000051108\"},",
-        "{\"po\":4,\"n\":\"source\",\"v\":\"MIRNA:hsa-miR-335-5p\"},",
-        "{\"po\":5,\"n\":\"source\",\"v\":\"MIRNA:hsa-miR-759\"},",
-        "{\"po\":4,\"n\":\"target\",\"v\":\"ENSG00000051108\"},",
-        "{\"po\":5,\"n\":\"target\",\"v\":\"ENSG00000051108\"}]},",
+        "{\"po\":4,\"n\":\"source\",\"v\":\"MIRNA:hsa-miR-335-5p\"},{\"po\":5,\"n\":\"source\",\"v\":\"MIRNA:hsa-miR-759\"},",
+        "{\"po\":4,\"n\":\"target\",\"v\":\"ENSG00000051108\"},{\"po\":5,\"n\":\"target\",\"v\":\"ENSG00000051108\"}]},",
         "{\"cyHiddenAttributes\":[{\"n\":\"layoutAlgorithm\",\"y\":\"yFiles Circular Layout\"}]},",
-        "{\"metaData\":[{\"name\":\"nodes\",\"version\":\"1.0\"},",
-        "{\"name\":\"edges\",\"version\":\"1.0\"},{\"name\":\"edgeAttributes\",\"version\":\"1.0\"},",
-        "{\"name\":\"nodeAttributes\",\"version\":\"1.0\"},",
-        "{\"name\":\"cyHiddenAttributes\",\"version\":\"1.0\"},",
-        "{\"name\":\"cyNetworkRelations\",\"version\":\"1.0\"},",
-        "{\"name\":\"cyGroups\",\"version\":\"1.0\"},",
-        "{\"name\":\"networkAttributes\",\"version\":\"1.0\"},",
+        "{\"metaData\":[{\"name\":\"nodes\",\"version\":\"1.0\"},{\"name\":\"edges\",\"version\":\"1.0\"},",
+        "{\"name\":\"edgeAttributes\",\"version\":\"1.0\"},{\"name\":\"nodeAttributes\",\"version\":\"1.0\"},",
+        "{\"name\":\"cyHiddenAttributes\",\"version\":\"1.0\"},{\"name\":\"cyNetworkRelations\",\"version\":\"1.0\"},",
+        "{\"name\":\"cyGroups\",\"version\":\"1.0\"},{\"name\":\"networkAttributes\",\"version\":\"1.0\"},",
         "{\"name\":\"cyTableColumn\",\"version\":\"1.0\"},",
-        "{\"name\":\"cySubNetworks\",\"version\":\"1.0\"}]},",
-        "{\"status\":[{\"error\":\"\",\"success\":true}]}]")
+        "{\"name\":\"cySubNetworks\",\"version\":\"1.0\"}]},{\"status\":[{\"error\":\"\",\"success\":true}]}]")
     
     expect_equal(result, expected)
 })
@@ -312,7 +297,7 @@ test_that("extractNodesAndEdgesInfoForCXJSON() must return expected text", {
     
     mirnaData <- demoGOST$result[demoGOST$result$source == "MIRNA", ]
     
-    
+    set.seed(121)
     result <- enrichViewNet:::extractNodesAndEdgesInfoForCXJSON(
         gostResults=mirnaData, gostObject=mirnaDemo)
     
