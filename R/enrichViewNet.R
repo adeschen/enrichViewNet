@@ -76,13 +76,13 @@ NULL
 #' ## gprofiler2
 #' data(demoGOST)
 #'
-#' \dontrun{
+#' ## Create network for WikiPathways results 
+#' ## in Cytoscape (if the application is open)
+#' ## Otherwise, create a CX file in the temporary directory
+#' ## The file can be opened in Cytoscape
+#' createNetwork(gostObject=demoGOST, source="WP", title="Wikipathways",
+#'     fileName=file.path(tempdir(), "Wikipathways_Demo.cx"))
 #' 
-#' ## Create network for WikiPathways results
-#' createNetwork(gostObject = demoGOST, source="WP", title="Wikipathways")
-#' 
-#' }
-#'
 #'
 NULL
 

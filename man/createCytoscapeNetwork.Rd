@@ -36,8 +36,6 @@ data(demoGOST)
 ## Only retained the WikiPathways results
 results <- demoGOST$result[demoGOST$result$source == "WP", ]
 
-\dontrun{
-
 ## The creation of the network can only be done when Cytoscape
 ## is up and running
 ## A network using GO - Molecular Function enriched terms will be
@@ -45,8 +43,6 @@ results <- demoGOST$result[demoGOST$result$source == "WP", ]
 if (enrichViewNet:::isCytoscapeRunning()) {
     enrichViewNet:::createCytoscapeNetwork(gostResults=results,
         gostObject=demoGOST, title="Test", collection="New Collection")
-}
-
 }
 
 }
