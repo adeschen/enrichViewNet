@@ -189,7 +189,7 @@ validateCreateEnrichMapArguments <- function(gostObject, query, source,
 #' @author Astrid Deschênes
 #' @encoding UTF-8
 #' @importFrom methods is new
-#' @importFrom stringr str_ends
+#' @importFrom stringr str_ends str_split str_replace_all
 #' @importFrom enrichplot pairwise_termsim emapplot
 #' @keywords internal
 createBasicEmap <- function(gostResults, backgroundGenes, 
@@ -199,7 +199,7 @@ createBasicEmap <- function(gostResults, backgroundGenes,
     
     ## Extract gene list for each term
     geneSets <- lapply(seq_len(nrow(gostResults)), FUN=function(x, gostData) {
-        stringr::str_split(gostData$intersection[x], pattern=",")[[1]]}, 
+        str_split(gostData$intersection[x], pattern=",")[[1]]}, 
         gostData=gostResults
     )
     names(geneSets) <- gostResults$term_id
@@ -213,7 +213,7 @@ createBasicEmap <- function(gostResults, backgroundGenes,
         pvalues=gostResults$p_value,
         p.adjust=gostResults$p_value, 
         qvalue=gostResults$p_value, 
-        geneID=stringr::str_replace_all(gostResults$intersection, ",", "/"),
+        geneID=str_replace_all(gostResults$intersection, ",", "/"),
         Count=c(gostResults$intersection_size), stringsAsFactors=FALSE)
     
     resultDataFrame <- resultDataFrame[order(resultDataFrame$pvalues), ]
