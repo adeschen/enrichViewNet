@@ -539,7 +539,8 @@ extractNodesAndEdgesWhenNoIntersection <- function(gostResults, gostObject) {
     listGenes <- unique(gostObject$meta$genes_metadata$query[[query]]$ensgs)
     # genes <- gostObject$meta$genes_metadata$query[[query]]$ensgs
     gostQuery <- gostResults[which(gostResults$query == query),]
-    listTerm <- gostQuery[!duplicated(gostQuery$term_id), c("term_id", "term_name")]
+    listTerm <- gostQuery[!duplicated(gostQuery$term_id),
+                        c("term_id", "term_name")]
     res <- gconvert(query=c(listTerm$term_id),
                        organism=gostObject$meta$query_metadata$organism)
     # res <- gconvert(query=c(listTerm$term_id))
@@ -548,20 +549,24 @@ extractNodesAndEdgesWhenNoIntersection <- function(gostResults, gostObject) {
 
     ## Create a data.frame linking gene and term
     resEdge <- do.call(rbind, lapply(seq_len(nrow(listTerm)),
-                                     FUN=function(x, listTerm, listGenes, resTerm=res, query){
-                                         tmp <- which(resTerm$input == listTerm$term_id[x] & resTerm$target %in% listGenes)
-                                         df <- NULL
-                                         if(length(tmp) > 0){
-                                             res <- resTerm[tmp,]
-                                             df <- data.frame(term=rep(listTerm$term_id[x],
-                                                                       nrow(res)),
-                                                              termName=rep(listTerm$term_name[x],
-                                                                           nrow(res)),
-                                                              gene=res$target,
-                                                              geneName=res$name,
-                                                              query=query,
-                                                              stringsAsFactors = FALSE)
-                                         }
+                                     FUN=function(x, listTerm, listGenes,
+                                            resTerm, query){
+                                            tmp <- which(resTerm$input ==
+                                                             listTerm$term_id[x]
+                                                         & resTerm$target %in%
+                                                             listGenes)
+                                            df <- NULL
+                                            if(length(tmp) > 0){
+                                                res <- resTerm[tmp,]
+                                                df <- data.frame(term=rep(listTerm$term_id[x],
+                                                            nrow(res)),
+                                                        termName=rep(listTerm$term_name[x],
+                                                            nrow(res)),
+                                                        gene=res$target,
+                                                        geneName=res$name,
+                                                        query=query,
+                                                        stringsAsFactors = FALSE)
+                                            }
                                          return(df)
                                      },
                                      listTerm=listTerm,
