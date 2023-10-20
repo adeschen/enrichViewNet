@@ -414,7 +414,8 @@ extractNodesAndEdgesInfoForCXJSON <- function(gostResults, gostObject) {
                                                     nrow(res)),
                                 gene=res$target,
                                 geneName=res$name,
-                                query=query)
+                                query=query,
+                                stringsAsFactors = FALSE)
                     }
                     return(df)
                 },
@@ -558,7 +559,8 @@ extractNodesAndEdgesWhenNoIntersection <- function(gostResults, gostObject) {
                                                                            nrow(res)),
                                                               gene=res$target,
                                                               geneName=res$name,
-                                                              query=query)
+                                                              query=query,
+                                                              stringsAsFactors = FALSE)
                                          }
                                          return(df)
                                      },
@@ -622,14 +624,14 @@ extractNodesAndEdgesWhenNoIntersection <- function(gostResults, gostObject) {
 #'
 #' ## Loading dataset containing result from an enrichment analysis done with
 #' ## gprofiler2
-#' data(demoGOST)
+#' data(parentalNapaVsDMSODEG)
 #'
 #' ## Only retained the GO Molecular Function results
-#' results <- demoGOST$result[demoGOST$result$source == "GO:MF", ]
+#' results <- parentalNapaVsDMSOEnrichment$result[parentalNapaVsDMSOEnrichment$result$source == "GO:MF", ]
 #'
-#' ##information <-
-#' ##      enrichViewNet:::extractNodesAndEdgesWhenIntersection(
-#' ##                gostResults=results, gostObject=demoGOST)
+#' information <-
+#'     enrichViewNet:::extractNodesAndEdgesWhenIntersection(
+#'         gostResults=results, gostObject=parentalNapaVsDMSOEnrichment)
 #'
 #' @author Astrid Deschênes
 #' @importFrom gprofiler2 gconvert
@@ -638,48 +640,53 @@ extractNodesAndEdgesWhenNoIntersection <- function(gostResults, gostObject) {
 #' @keywords internal
 extractNodesAndEdgesWhenIntersection <- function(gostResults, gostObject) {
 
-    done <- array()
-    nodes <- list()
-    edges <- list()
-
     geneInter <- unique(unlist(str_split(gostResults$intersection, ",")))
 
     res <- gconvert(query=c(geneInter),
                     organism=gostObject$meta$query_metadata$organism)
 
-    ## Create the list of genes and terms that will be included in the network
-    for (i in seq_len(nrow(gostResults))) {
-        term <- gostResults$term_id[i]
-        query <- gostResults$query[i]
-        termName <- gostResults$term_name[i]
+    resEdge <- do.call(rbind, lapply(seq_len(nrow(gostResults)),
+        FUN=function(x, gostResults, res){
+            genes <- res[res$input %in%
+                        unlist(str_split(gostResults$intersection[x], ",")),
+                                c("input", "name") ]
+            df <- NULL
+            if(gostResults$intersection_size[x] > 0){
+                df <- data.frame(term=rep(gostResults$term_id[x],
+                                          nrow(genes)),
+                                 termName=rep(gostResults$term_name[x],
+                                              nrow(genes)),
+                                 gene=genes$input,
+                                 geneName=genes$name,
+                                 query=gostResults$query[x],
+                                 stringsAsFactors = FALSE)
+            }
+            return(df)
+    }, gostResults=gostResults,
+    res=res))
 
-        nodes[[length(nodes) + 1]] <- data.frame(id=c(term),
-            group=c("TERM"), alias=c(termName), stringsAsFactors=FALSE)
+    geneUnique <- resEdge[!duplicated(resEdge$gene),]
 
-        genes <- res[res$input %in%
-                    unlist(str_split(gostResults$intersection[i], ",")),
-                            c("input", "name") ]
+    ## Create node entries for the gene
+    geneNodes <- data.frame(id=geneUnique$gene,
+                            group=rep("GENE", nrow(geneUnique)),
+                            alias=c(geneUnique$geneName),
+                            stringsAsFactors=FALSE)
 
-        for (j in seq_len(nrow(genes))) {
-                g <- genes$input[j]
-                geneName <- genes$name[j]
-                #print(geneName)
-                if (! g %in% done) {
-                    nodes[[length(nodes) + 1]] <- data.frame(id=c(g),
-                                group=c("GENE"), alias=c(geneName),
-                                stringsAsFactors=FALSE)
-                    done <- c(done, g)
-                }
 
-                edges[[length(edges) + 1]] <- data.frame(source=c(term),
-                                target=c(g), interaction=c("contains"),
-                                stringsAsFactors=FALSE)
-        }
-    }
+    termUnique <- resEdge[!duplicated(resEdge$term),]
 
-    ## Create data.frame for nodes and edges by merging all extracted info
-    nodeInfo <- do.call(rbind, nodes)
-    edgeInfo <- do.call(rbind, edges)
+    ## Create node entries for the term
+    termNodes <- data.frame(id=termUnique$term,
+                            group=rep("TERM", nrow(termUnique)),
+                            alias=termUnique$termName,
+                            stringsAsFactors=FALSE)
 
-    return(list(nodes=nodeInfo, edges=edgeInfo))
+    ## Create an edge connecting term to gene
+    edges <- data.frame(source=resEdge$term,
+                        target=resEdge$gene,
+                        interaction=rep("contains", nrow(resEdge)),
+                        stringsAsFactors=FALSE)
+
+    return(list(nodes=rbind(geneNodes, termNodes), edges=edges))
 }

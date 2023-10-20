@@ -33,14 +33,14 @@ to create the Cytoscape network
 
 ## Loading dataset containing result from an enrichment analysis done with
 ## gprofiler2
-data(demoGOST)
+data(parentalNapaVsDMSODEG)
 
 ## Only retained the GO Molecular Function results
-results <- demoGOST$result[demoGOST$result$source == "GO:MF", ]
+results <- parentalNapaVsDMSOEnrichment$result[parentalNapaVsDMSOEnrichment$result$source == "GO:MF", ]
 
-##information <-
-##      enrichViewNet:::extractNodesAndEdgesWhenIntersection(
-##                gostResults=results, gostObject=demoGOST)
+information <-
+    enrichViewNet:::extractNodesAndEdgesWhenIntersection(
+        gostResults=results, gostObject=parentalNapaVsDMSOEnrichment)
 
 }
 \author{
