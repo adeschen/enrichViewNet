@@ -1,3 +1,11 @@
+CHANGES IN VERSION v0.99.1
+------------------------
+
+### NEW FEATURES
+
+* The 'Installation' and 'Introduction' sections of the vignette have been updated.
+
+
 CHANGES IN VERSION v0.99.0
 ------------------------
 
