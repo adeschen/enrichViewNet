@@ -105,22 +105,22 @@ validateCreateEnrichMapArguments <- function(gostObject, query, source,
         }
     }
     
-    if (!is(showCategory, "character") && 
-            !(is(showCategory, "numeric") && (showCategory > 0))) {
+    if (!is.character(showCategory) && 
+            !(is.numeric(showCategory) && (showCategory > 0))) {
         stop("The \'showCategory\' parameter must an positive integer or a ", 
                 "vector of character strings representing terms.")
     }
     
-    if (!is(groupCategory , "logical")) {
+    if (!is.logical(groupCategory)) {
         stop("The \'groupCategory\' parameter must a logical ", 
                 "(TRUE or FALSE).")
     }
     
-    if (!is(categoryLabel, "numeric") || !(categoryLabel > 0)) {
+    if (!is.numeric(categoryLabel) || !(categoryLabel > 0)) {
         stop("The \'categoryLabel\' parameter must be a positive numeric.")
     }
     
-    if (!is(categoryNode, "numeric") || !(categoryNode > 0)) {
+    if (!is.numeric(categoryNode) || !(categoryNode > 0)) {
         stop("The \'categoryNode\' parameter must be a positive numeric.")
     }
     
