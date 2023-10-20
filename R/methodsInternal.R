@@ -533,50 +533,65 @@ extractNodesAndEdgesInfoForCXJSON <- function(gostResults, gostObject) {
 #' @keywords internal
 extractNodesAndEdgesWhenNoIntersection <- function(gostResults, gostObject) {
 
-    done <- array()
-    nodes <- list()
-    edges <- list()
+    listQuery <- unique(gostResults$query)
+    query=listQuery[1]
+    listGenes <- unique(gostObject$meta$genes_metadata$query[[query]]$ensgs)
+    # genes <- gostObject$meta$genes_metadata$query[[query]]$ensgs
+    gostQuery <- gostResults[which(gostResults$query == query),]
+    listTerm <- gostQuery[!duplicated(gostQuery$term_id), c("term_id", "term_name")]
+    res <- gconvert(query=c(listTerm$term_id),
+                       organism=gostObject$meta$query_metadata$organism)
+    # res <- gconvert(query=c(listTerm$term_id))
 
-    resAll <- gconvert(query=c(gostResults$term_id),
-                    organism=gostObject$meta$query_metadata$organism)
 
-    ## Create the list of genes and terms that will be included in the network
-    for (i in seq_len(nrow(gostResults))) {
-        term <- gostResults$term_id[i]
-        query <- gostResults$query[i]
-        termName <- gostResults$term_name[i]
 
-        nodes[[length(nodes) + 1]] <- data.frame(id=c(term),
-            group=c("TERM"), alias=c(termName), stringsAsFactors=FALSE)
+    ## Create a data.frame linking gene and term
+    resEdge <- do.call(rbind, lapply(seq_len(nrow(listTerm)),
+                                     FUN=function(x, listTerm, listGenes, resTerm=res, query){
+                                         tmp <- which(resTerm$input == listTerm$term_id[x] & resTerm$target %in% listGenes)
+                                         df <- NULL
+                                         if(length(tmp) > 0){
+                                             res <- resTerm[tmp,]
+                                             df <- data.frame(term=rep(listTerm$term_id[x],
+                                                                       nrow(res)),
+                                                              termName=rep(listTerm$term_name[x],
+                                                                           nrow(res)),
+                                                              gene=res$target,
+                                                              geneName=res$name,
+                                                              query=query)
+                                         }
+                                         return(df)
+                                     },
+                                     listTerm=listTerm,
+                                     listGenes=listGenes,
+                                     resTerm=res,
+                                     query=query))
 
-        res <- resAll[resAll$input == term, ]
-        genes <- gostObject$meta$genes_metadata$query[[query]]$ensgs
 
-        genesTarget <- genes[genes %in% res$target]
+    geneUnique <- resEdge[!duplicated(resEdge$gene),]
 
-        if (length(genesTarget) > 0) {
-            for (g in genesTarget) {
-                geneName <- res[res$target == g, c("name")]
-
-                if (! g %in% done) {
-                    nodes[[length(nodes) + 1]] <- data.frame(id=c(g),
-                        group=c("GENE"), alias=c(geneName),
+    ## Create node entries for the gene
+    geneNodes <- data.frame(id=geneUnique$gene,
+                        group=rep("GENE", nrow(geneUnique)),
+                        alias=c(geneUnique$geneName),
                         stringsAsFactors=FALSE)
-                    done <- c(done, g)
-                }
 
-                edges[[length(edges) + 1]] <- data.frame(source=c(term),
-                    target=c(g), interaction=c("contains"),
+
+    termUnique <- resEdge[!duplicated(resEdge$term),]
+
+    ## Create node entries for the term
+    termNodes <- data.frame(id=termUnique$term,
+                            group=rep("TERM", nrow(termUnique)),
+                            alias=termUnique$termName,
+                            stringsAsFactors=FALSE)
+
+    ## Create an edge connecting term to gene
+    edges <- data.frame(source=resEdge$term,
+                    target=resEdge$gene,
+                    interaction=rep("contains", nrow(resEdge)),
                     stringsAsFactors=FALSE)
-            }
-        }
-    }
 
-    ## Create data.frame for nodes and edges by merging all extracted info
-    nodeInfo <- do.call(rbind, nodes)
-    edgeInfo <- do.call(rbind, edges)
-
-    return(list(nodes=nodeInfo, edges=edgeInfo))
+    return(list(nodes=rbind(geneNodes, termNodes), edges=edges))
 }
 
 
