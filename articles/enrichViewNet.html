@@ -6,7 +6,7 @@
 <meta name="generator" content="pandoc">
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE">
 <meta name="author" content="Astrid Deschênes, Pascal Belleau, Robert L Faure and Maria J Fernandes">
-<meta name="date" content="2023-10-16">
+<meta name="date" content="2023-10-20">
 <title>From functional enrichment results to biological networks</title>
 <script src="enrichViewNet_files/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="enrichViewNet_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
@@ -243,7 +243,7 @@ function toggle_visibility(id1) {
 
 <h1 class="title toc-ignore">From functional enrichment results to biological networks</h1>
 <p class="author-name">Astrid Deschênes, Pascal Belleau, Robert L Faure and Maria J Fernandes</p>
-<h4 class="date">16 October 2023</h4>
+<h4 class="date">20 October 2023</h4>
 
 </div>
 
@@ -281,7 +281,7 @@ Pascal Belleau [aut] (<a href="https://orcid.org/0000-0002-0802-1071" class="ext
 Robert L. Faure [aut] (<a href="https://orcid.org/0000-0003-1798-4723" class="external-link uri">https://orcid.org/0000-0003-1798-4723</a>),
 Maria J. Fernandes [aut] (<a href="https://orcid.org/0000-0002-3973-025X" class="external-link uri">https://orcid.org/0000-0002-3973-025X</a>),
 Alexander Krasnitz [aut],
-David A. Tuveson [aut] (<a href="https://orcid.org/0000-0002-8017-2712" class="external-link uri">https://orcid.org/0000-0002-8017-2712</a>)<br><strong>Version</strong>: 0.99.0<br><strong>Compiled date</strong>: 2023-10-16<br><strong>License</strong>: Artistic-2.0<br></p>
+David A. Tuveson [aut] (<a href="https://orcid.org/0000-0002-8017-2712" class="external-link uri">https://orcid.org/0000-0002-8017-2712</a>)<br><strong>Version</strong>: 0.99.0<br><strong>Compiled date</strong>: 2023-10-20<br><strong>License</strong>: Artistic-2.0<br></p>
 <div class="section level2" number="1">
 <h2 id="licensing">
 <span class="header-section-number">1</span> Licensing<a class="anchor" aria-label="anchor" href="#licensing"></a>
@@ -393,26 +393,23 @@ identification of functional modules.</p>
 <img src="demo_KEGG_emap_v01.jpeg" alt="An enrichment map using significant Kegg terms." width="95%"><p class="caption">
 Figure 2: <span class="caption-title">An enrichment map using significant Kegg terms</span><br></p>
 </div>
+<p><strong>enrichViewNet</strong> has been submitted to
+<a href="https://www.bioconductor.org/" class="external-link">Bioconductor</a> to aid researchers in carrying
+out reproducible network analyses using functional enrichment results.</p>
 <p><br><br></p>
 </div>
 <div class="section level2" number="4">
 <h2 id="installation">
 <span class="header-section-number">4</span> Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>To install the latest version accessible on the
-<em><a href="https://github.com/adeschen/enrichViewNet" class="external-link">enrichViewNet</a></em> Github Website, the
-<em><a href="https://CRAN.R-project.org/package=devtools" class="external-link">devtools</a></em> package is required.</p>
+<p>To install this package
+from <a href="https://bioconductor.org" class="external-link">Bioconductor</a>, start R
+(version 4.3 or later) and enter:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">## Install the latest version of enrichViewNet</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/" class="external-link">devtools</a></span><span class="op">)</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">'adeschen/enrichViewNet'</span><span class="op">)</span></span></code></pre></div>
-<p>It is also possible to install an official release. The list of available
-releases is posted on the <a href="https://github.com/adeschen/enrichViewNet/releases" title="enrichViewNet Release Site" class="external-link">enrichViewNet Release Website</a>.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">## Install the version v0.1 of enrichViewNet</span></span>
-<span><span class="co">## using 'ref' parameter</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/" class="external-link">devtools</a></span><span class="op">)</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">'adeschen/enrichViewNet'</span>, ref <span class="op">=</span> <span class="st">"v0.0.4"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"enrichViewNet"</span><span class="op">)</span></span></code></pre></div>
 <p><br><br></p>
 </div>
 <div class="section level2" number="5">
@@ -484,7 +481,7 @@ Figure 4: <span class="caption-title">From an enrichment list to a Cytoscape net
 <p>The first step consists in running an enrichment analysis with
 <em><a href="https://CRAN.R-project.org/package=gprofiler2" class="external-link">gprofiler2</a></em> package. The output of the <em>gprofiler2::gost()</em>
 is a <em>list</em> and should be saved.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Required library</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">gprofiler2</span><span class="op">)</span></span>
 <span></span>
@@ -521,7 +518,7 @@ is a <em>list</em> and should be saved.</p>
 <li>The <strong>meta</strong> entry contains the metadata information.</li>
 </ul>
 <p><br></p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## The 'gostres' object is a list of 2 entries</span></span>
 <span><span class="co">## The 'result' entry contains the enrichment results</span></span>
 <span><span class="co">## The 'meta' entry contains the metadata information</span></span>
@@ -539,7 +536,7 @@ is a <em>list</em> and should be saved.</p>
 <span><span class="co">## 2 WP:WP3613</span></span>
 <span><span class="co">## 3 WP:WP4925</span></span>
 <span><span class="co">## 4 WP:WP3888</span></span></code></pre>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## The term names can be longer than the one shown</span></span>
 <span><span class="va">gostres</span><span class="op">$</span><span class="va">result</span><span class="op">[</span><span class="fl">19</span><span class="op">:</span><span class="fl">22</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"term_id"</span>, <span class="st">"source"</span>, <span class="st">"term_name"</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
 <pre><code><span><span class="co">##      term_id source                          term_name</span></span>
@@ -582,15 +579,21 @@ be opened in <em>Cytoscape</em>.</p>
 <p>The following figure shows what the gene-term network looks like
 in <em>Cytoscape</em>. As there are numerous significant Reactome terms, the network
 is a bit hectic.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Load saved enrichment results between parental Napa vs DMSO</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"parentalNapaVsDMSOEnrichment"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">## Create network for REACTOME significant terms</span></span>
 <span><span class="co">## The 'removeRoot=TRUE' parameter removes the root term from the network</span></span>
+<span><span class="co">## The network will either by created in Cytoscape (if the application is open)</span></span>
+<span><span class="co">## or a CX file will be created in the temporary directory</span></span>
 <span><span class="fu"><a href="../reference/createNetwork.html">createNetwork</a></span><span class="op">(</span>gostObject<span class="op">=</span><span class="va">parentalNapaVsDMSOEnrichment</span>,  source<span class="op">=</span><span class="st">"REAC"</span>, </span>
-<span>                  removeRoot<span class="op">=</span><span class="cn">TRUE</span>, title<span class="op">=</span><span class="st">"REACTOME_All"</span>, </span>
-<span>                  collection<span class="op">=</span><span class="st">"parental_napa_vs_DMSO"</span><span class="op">)</span></span></code></pre></div>
+<span>        removeRoot<span class="op">=</span><span class="cn">TRUE</span>, title<span class="op">=</span><span class="st">"REACTOME_All"</span>, </span>
+<span>        collection<span class="op">=</span><span class="st">"parental_napa_vs_DMSO"</span>, </span>
+<span>        fileName<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"parentalNapaVsDMSOEnrichment.cx"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] TRUE</span></span></code></pre>
+<p><br></p>
+<p>This is an example of the Reactome network in <em>Cytoscape</em>.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:networkInCytoscape"></span>
 <img src="cytoscape_reactome_all_parental_napa_vs_DMSO.png" alt="All reactome terms in a gene-term network loaded in Cytoscape." width="110%"><p class="caption">
@@ -626,13 +629,21 @@ Reactome terms of interest is created.</p>
 <span><span class="co">## [6] "Gene expression (Transcription)"                              </span></span>
 <span><span class="co">## [7] "Transcriptional regulation of white adipocyte differentiation"</span></span>
 <span><span class="co">## [8] "FOXO-mediated transcription of cell cycle genes"</span></span></code></pre>
+<p><br></p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Create network for REACTOME selected terms</span></span>
 <span><span class="co">## The 'source="TERM_ID"' parameter enable to specify a personalized </span></span>
 <span><span class="co">## list of terms of interest</span></span>
+<span><span class="co">## The network will either by created in Cytoscape (if the application is open)</span></span>
+<span><span class="co">## or a CX file will be created in the temporary directory</span></span>
 <span><span class="fu"><a href="../reference/createNetwork.html">createNetwork</a></span><span class="op">(</span>gostObject<span class="op">=</span><span class="va">parentalNapaVsDMSOEnrichment</span>,  source<span class="op">=</span><span class="st">"TERM_ID"</span>, </span>
-<span>                  termIDs<span class="op">=</span><span class="va">selectedRes</span><span class="op">$</span><span class="va">term_id</span>, title<span class="op">=</span><span class="st">"REACTOME_Selected"</span>, </span>
-<span>                  collection<span class="op">=</span><span class="st">"parental_napa_vs_DMSO"</span><span class="op">)</span></span></code></pre></div>
+<span>          termIDs<span class="op">=</span><span class="va">selectedRes</span><span class="op">$</span><span class="va">term_id</span>, title<span class="op">=</span><span class="st">"REACTOME_Selected"</span>, </span>
+<span>          collection<span class="op">=</span><span class="st">"parental_napa_vs_DMSO"</span>,</span>
+<span>          fileName<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, </span>
+<span>            <span class="st">"parentalNapaVsDMSOEnrichment_REACTOME.cx"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] TRUE</span></span></code></pre>
+<p><br></p>
+<p>The updated Reactome network in <em>Cytoscape</em>.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:networkInCytoscapeSelected"></span>
 <img src="cytoscape_with_selected_REACTOME_v01.png" alt="Selected Reactome terms in a gene-term network loaded in Cytoscape." width="110%"><p class="caption">
@@ -644,9 +655,16 @@ default color and shape for all nodes can be modified. For this example,
 the nodes have been moved to clarify their relation with the Reactome terms.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:networkFinalReactome"></span>
-<img src="REACTOME_Selected.jpeg" alt="Final Reactome network after cutomization inside Cytoscape where the different transcription enriched terms (For example here FOXO-mediated, adipocytes differentiation, RNA polymerase II transcription, NGF-stimulated transcription) are linked through enriched genes." width="100%"><p class="caption">
-Figure 8: <span class="caption-title">Final Reactome network after cutomization inside Cytoscape where the different transcription enriched terms (For example here FOXO-mediated, adipocytes differentiation, RNA polymerase II transcription, NGF-stimulated transcription) are linked through enriched genes</span><br></p>
+<img src="REACTOME_Selected.jpeg" alt="Final Reactome network after customization inside Cytoscape." width="100%"><p class="caption">
+Figure 8: <span class="caption-title">Final Reactome network after customization inside Cytoscape</span><br></p>
 </div>
+<p><br></p>
+<p>The final Reactome network, after customization inside Cytoscape, shows that
+multiple transcription enriched terms (<em>FOXO-mediated transcription</em>,
+<em>FOXO-mediated transcription of cell cycle genes</em>,
+<em>transcription regulation of white adipocyte differentiation</em>,
+<em>RNA polymerase II transcription</em> and
+<em>NGF-stimulated transcription</em> terms) are linked through enriched genes.</p>
 <p><br><br></p>
 </div>
 </div>
@@ -686,7 +704,7 @@ creation of an enrichment map.</p>
 <p>The first step consists in running an enrichment analysis with
 <em><a href="https://CRAN.R-project.org/package=gprofiler2" class="external-link">gprofiler2</a></em> package. The output of the <em>gprofiler2::gost()</em>
 is a <em>list</em> and should be saved.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Required library</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">gprofiler2</span><span class="op">)</span></span>
 <span></span>
@@ -723,7 +741,7 @@ is a <em>list</em> and should be saved.</p>
 <li>The <strong>meta</strong> entry contains the metadata information.</li>
 </ul>
 <p><br></p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## The 'gostres' object is a list of 2 entries</span></span>
 <span><span class="co">## The 'result' entry contains the enrichment results</span></span>
 <span><span class="co">## The 'meta' entry contains the metadata information</span></span>
@@ -741,7 +759,7 @@ is a <em>list</em> and should be saved.</p>
 <span><span class="co">## 2 WP:WP3613</span></span>
 <span><span class="co">## 3 WP:WP4925</span></span>
 <span><span class="co">## 4 WP:WP3888</span></span></code></pre>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## The term names can be longer than the one shown</span></span>
 <span><span class="va">gostres</span><span class="op">$</span><span class="va">result</span><span class="op">[</span><span class="fl">19</span><span class="op">:</span><span class="fl">22</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"term_id"</span>, <span class="st">"source"</span>, <span class="st">"term_name"</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
 <pre><code><span><span class="co">##      term_id source                          term_name</span></span>
@@ -762,14 +780,14 @@ cluster together. The Jaccard correlation coefficient is used as a metric of
 similarity. Terms with high similarity (similarity metric &gt; 0.2) are linked
 together be edges. The edges are shorter and thicker when the similarity
 metric is high.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Load saved enrichment results between parental Napa vs DMSO</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">parentalNapaVsDMSOEnrichment</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">## Set seed to ensure reproducible results</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">121</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">## Create network for REACTOME selected terms</span></span>
+<span><span class="co">## Create network for Kegg selected terms</span></span>
 <span><span class="co">## The 'source="TERM_ID"' parameter enable to specify a personalized </span></span>
 <span><span class="co">## list of terms of interest with 'termIDs' argument</span></span>
 <span><span class="fu"><a href="../reference/createEnrichMap.html">createEnrichMap</a></span><span class="op">(</span>gostObject<span class="op">=</span><span class="va">parentalNapaVsDMSOEnrichment</span>, </span>
@@ -777,12 +795,13 @@ metric is high.</p>
 <span>                  source<span class="op">=</span><span class="st">"KEGG"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:runCreateEmap01"></span>
-<img src="enrichViewNet_files/figure-html/runCreateEmap01-1.png" alt="A Reactome enrichment map where terms with overlapping significant genes cluster together." width="100%"><p class="caption">
-Figure 9: <span class="caption-title">A Reactome enrichment map where terms with overlapping significant genes cluster together</span><br></p>
+<img src="enrichViewNet_files/figure-html/runCreateEmap01-1.png" alt="A Kegg enrichment map where terms with overlapping significant genes cluster together." width="100%"><p class="caption">
+Figure 9: <span class="caption-title">A Kegg enrichment map where terms with overlapping significant genes cluster together</span><br></p>
 </div>
 <p><br><br></p>
-<p>The Reactome enrichment map shows that the MAPK signaling pathway node is
-highly influential in the network.</p>
+<p>The Kegg enrichment map shows that the <em>MAPK signaling pathway</em> term is
+highly influential in the network. In addition, the
+<em>Transcriptional misregulation in cancer</em> term is the only isolated node.</p>
 <p><br><br></p>
 </div>
 </div>
@@ -882,7 +901,7 @@ was compiled:</p>
 <span><span class="co">##  [87] pkgconfig_2.0.3               gtable_0.3.4                 </span></span>
 <span><span class="co">##  [89] blob_1.2.4                    XVector_0.41.1               </span></span>
 <span><span class="co">##  [91] shadowtext_0.1.2              htmltools_0.5.6.1            </span></span>
-<span><span class="co">##  [93] bookdown_0.35                 fgsea_1.27.1                 </span></span>
+<span><span class="co">##  [93] bookdown_0.36                 fgsea_1.27.1                 </span></span>
 <span><span class="co">##  [95] base64url_1.4                 strex_1.6.0                  </span></span>
 <span><span class="co">##  [97] scales_1.2.1                  Biobase_2.61.0               </span></span>
 <span><span class="co">##  [99] png_0.1-8                     ggfun_0.1.3                  </span></span>
