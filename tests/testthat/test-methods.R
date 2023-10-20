@@ -33,7 +33,7 @@ test_that("createNetwork() must return error when source is a number", {
     gostObject[["result"]] <- list()
     
     error_message <- paste0("Assertion on 'arg' failed: Must be of type ", 
-                            "'character', not 'double'.")
+                                "'character', not 'double'.")
     
     expect_error(createNetwork(gostObject=gostObject, source=33), 
                     error_message)

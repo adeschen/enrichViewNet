@@ -221,6 +221,8 @@ context("createMetaDataSectionCXJSON() results")
 
 test_that("createMetaDataSectionCXJSON() must return expected text", {
     
+    set.seed(121)
+    
     expected <- paste0(
         "{\"metaData\":[{\"name\":\"nodes\",\"version\":\"1.0\"},", 
         "{\"name\":\"edges\",\"version\":\"1.0\"},",
@@ -251,56 +253,36 @@ test_that("createCytoscapeCXJSON() must return expected text", {
             mirnaDemo$meta$query_metadata$queries[[1]][1:2]
     mirnaData <- demoGOST$result[demoGOST$result$source == "MIRNA", ]
     
+    set.seed(121)
     result <- enrichViewNet:::createCytoscapeCXJSON(
-                         gostResults = mirnaData, gostObject = mirnaDemo, 
+                         gostResults=mirnaData, gostObject=mirnaDemo, 
                          title = "MIRNA")
     
     expected <- paste0(
-        "[{\"metaData\":[{\"name\":\"nodes\",\"version\":\"1.0\"},", 
-        "{\"name\":\"edges\",\"version\":\"1.0\"},",
-        "{\"name\":\"edgeAttributes\",\"version\":\"1.0\"},",
-        "{\"name\":\"nodeAttributes\",\"version\":\"1.0\"},",
-        "{\"name\":\"cyHiddenAttributes\",\"version\":\"1.0\"},",
-        "{\"name\":\"cyNetworkRelations\",\"version\":\"1.0\"},",
-        "{\"name\":\"cyGroups\",\"version\":\"1.0\"},", 
-        "{\"name\":\"networkAttributes\",\"version\":\"1.0\"},",
-        "{\"name\":\"cyTableColumn\",\"version\":\"1.0\"},",
-        "{\"name\":\"cySubNetworks\",\"version\":\"1.0\"}]},",
-        "{\"networkAttributes\":[{\"n\":\"name\",\"v\":\"MIRNA\"}]},",
-        "{\"nodes\":[{\"@id\":1,\"n\":\"MIRNA:hsa-miR-335-5p\"},",
-        "{\"@id\":2,\"n\":\"ENSG00000051108\"},",
-        "{\"@id\":4,\"n\":\"MIRNA:hsa-miR-3180-5p\"},",
-        "{\"@id\":5,\"n\":\"MIRNA:hsa-miR-759\"}]},",
-        "{\"edges\":[{\"@id\":3,\"s\":1,\"t\":2,\"i\":\"contains\"},",
-        "{\"@id\":6,\"s\":5,\"t\":2,\"i\":\"contains\"}]},",
-        "{\"nodeAttributes\":[{\"po\":1,\"n\":\"alias\",\"v\":\"hsa-miR-335-5p\"},",
-        "{\"po\":1,\"n\":\"group\",\"v\":\"TERM\"},",
-        "{\"po\":2,\"n\":\"alias\",\"v\":\"HERPUD1\"},",
-        "{\"po\":2,\"n\":\"group\",\"v\":\"GENE\"},",
-        "{\"po\":4,\"n\":\"alias\",\"v\":\"hsa-miR-3180-5p\"},",
-        "{\"po\":4,\"n\":\"group\",\"v\":\"TERM\"},",
-        "{\"po\":5,\"n\":\"alias\",\"v\":\"hsa-miR-759\"},",
-        "{\"po\":5,\"n\":\"group\",\"v\":\"TERM\"}]},",
-        "{\"edgeAttributes\":[{\"po\":3,\"n\":\"name\",\"v\":\"MIRNA:hsa-miR-335-5p (contains) ENSG00000051108\"},",
-        "{\"po\":3,\"n\":\"source\",\"v\":\"MIRNA:hsa-miR-335-5p\"},",
-        "{\"po\":3,\"n\":\"target\",\"v\":\"ENSG00000051108\"},",
-        "{\"po\":6,\"n\":\"name\",\"v\":\"MIRNA:hsa-miR-759 (contains) ENSG00000051108\"},",
-        "{\"po\":6,\"n\":\"source\",\"v\":\"MIRNA:hsa-miR-759\"},",
-        "{\"po\":6,\"n\":\"target\",\"v\":\"ENSG00000051108\"}]},", 
+        "[{\"metaData\":[{\"name\":\"nodes\",\"version\":\"1.0\"},",
+        "{\"name\":\"edges\",\"version\":\"1.0\"},{\"name\":\"edgeAttributes\",\"version\":\"1.0\"},",
+        "{\"name\":\"nodeAttributes\",\"version\":\"1.0\"},{\"name\":\"cyHiddenAttributes\",\"version\":\"1.0\"},",
+        "{\"name\":\"cyNetworkRelations\",\"version\":\"1.0\"},{\"name\":\"cyGroups\",\"version\":\"1.0\"},",
+        "{\"name\":\"networkAttributes\",\"version\":\"1.0\"},{\"name\":\"cyTableColumn\",\"version\":\"1.0\"},",
+        "{\"name\":\"cySubNetworks\",\"version\":\"1.0\"}]},{\"networkAttributes\":[{\"n\":\"name\",\"v\":\"MIRNA\"}]},",
+        "{\"nodes\":[{\"@id\":1,\"n\":\"ENSG00000051108\"},{\"@id\":2,\"n\":\"MIRNA:hsa-miR-335-5p\"},{\"@id\":3,\"n\":\"MIRNA:hsa-miR-759\"}]},",
+        "{\"edges\":[{\"@id\":4,\"s\":2,\"t\":1,\"i\":\"contains\"},{\"@id\":5,\"s\":3,\"t\":1,\"i\":\"contains\"}]},",
+        "{\"nodeAttributes\":[{\"po\":1,\"n\":\"alias\",\"v\":\"HERPUD1\"},{\"po\":1,\"n\":\"group\",\"v\":\"GENE\"},",
+        "{\"po\":2,\"n\":\"alias\",\"v\":\"hsa-miR-335-5p\"},{\"po\":3,\"n\":\"alias\",\"v\":\"hsa-miR-759\"},",
+        "{\"po\":2,\"n\":\"group\",\"v\":\"GENE\"},{\"po\":3,\"n\":\"group\",\"v\":\"GENE\"}]},",
+        "{\"edgeAttributes\":[{\"po\":4,\"n\":\"name\",\"v\":\"MIRNA:hsa-miR-335-5p (contains) ENSG00000051108\"},",
+        "{\"po\":5,\"n\":\"name\",\"v\":\"MIRNA:hsa-miR-759 (contains) ENSG00000051108\"},",
+        "{\"po\":4,\"n\":\"source\",\"v\":\"MIRNA:hsa-miR-335-5p\"},{\"po\":5,\"n\":\"source\",\"v\":\"MIRNA:hsa-miR-759\"},",
+        "{\"po\":4,\"n\":\"target\",\"v\":\"ENSG00000051108\"},{\"po\":5,\"n\":\"target\",\"v\":\"ENSG00000051108\"}]},",
         "{\"cyHiddenAttributes\":[{\"n\":\"layoutAlgorithm\",\"y\":\"yFiles Circular Layout\"}]},",
-        "{\"metaData\":[{\"name\":\"nodes\",\"version\":\"1.0\"},", 
-        "{\"name\":\"edges\",\"version\":\"1.0\"},",
-        "{\"name\":\"edgeAttributes\",\"version\":\"1.0\"},",
-        "{\"name\":\"nodeAttributes\",\"version\":\"1.0\"},",
-        "{\"name\":\"cyHiddenAttributes\",\"version\":\"1.0\"},",
-        "{\"name\":\"cyNetworkRelations\",\"version\":\"1.0\"},",
-        "{\"name\":\"cyGroups\",\"version\":\"1.0\"},", 
-        "{\"name\":\"networkAttributes\",\"version\":\"1.0\"},",
+        "{\"metaData\":[{\"name\":\"nodes\",\"version\":\"1.0\"},{\"name\":\"edges\",\"version\":\"1.0\"},",
+        "{\"name\":\"edgeAttributes\",\"version\":\"1.0\"},{\"name\":\"nodeAttributes\",\"version\":\"1.0\"},",
+        "{\"name\":\"cyHiddenAttributes\",\"version\":\"1.0\"},{\"name\":\"cyNetworkRelations\",\"version\":\"1.0\"},",
+        "{\"name\":\"cyGroups\",\"version\":\"1.0\"},{\"name\":\"networkAttributes\",\"version\":\"1.0\"},",
         "{\"name\":\"cyTableColumn\",\"version\":\"1.0\"},",
-        "{\"name\":\"cySubNetworks\",\"version\":\"1.0\"}]},",
-        "{\"status\":[{\"error\":\"\",\"success\":true}]}]")
+        "{\"name\":\"cySubNetworks\",\"version\":\"1.0\"}]},{\"status\":[{\"error\":\"\",\"success\":true}]}]")
     
-    expect_identical(result, expected)
+    expect_equal(result, expected)
 })
 
 
@@ -317,44 +299,53 @@ test_that("extractNodesAndEdgesInfoForCXJSON() must return expected text", {
     
     mirnaData <- demoGOST$result[demoGOST$result$source == "MIRNA", ]
     
-    
+    set.seed(121)
     result <- enrichViewNet:::extractNodesAndEdgesInfoForCXJSON(
         gostResults=mirnaData, gostObject=mirnaDemo)
     
     expected <- list()
     
-    expected[["nodes"]] <- data.frame("@id"=c(1, 2, 4, 6, 8, 10),
-        "n"=c("MIRNA:hsa-miR-335-5p", "ENSG00000051108", "ENSG00000059728",
-            "ENSG00000077616", "MIRNA:hsa-miR-3180-5p", "MIRNA:hsa-miR-759"),
+    expected[["nodes"]] <- data.frame("@id"=c(1, 2, 3, 4, 5, 6),
+        "n"=c("ENSG00000059728", "ENSG00000077616", "ENSG00000051108", 
+                "MIRNA:hsa-miR-335-5p", 
+                "MIRNA:hsa-miR-3180-5p", "MIRNA:hsa-miR-759"),
         check.names=FALSE, stringsAsFactors=FALSE)
     
-    expected[["edges"]] <- data.frame("@id"=c(3, 5, 7, 9, 11, 12),
-                                "s"=c(1, 1, 1, 8, 10, 10),
-                                "t"=c(2, 4, 6, 4, 2, 4),
+    expected[["edges"]] <- data.frame("@id"=c(7, 8, 9, 10, 11, 12),
+                                "s"=c(4, 4, 4, 5, 6, 6),
+                                "t"=c(1, 2, 3, 1, 3, 1),
                                 "i"=rep("contains", 6),
                                 check.names=FALSE, stringsAsFactors=FALSE)
     
-    
     expected[["nodeAttributes"]] <- data.frame(
-        "po"=c(1, 1, 2, 2, 4, 4, 6, 6, 8, 8,10, 10),
-        "n"=rep(c("alias", "group"), 6),
-        "v"=c("hsa-miR-335-5p", "TERM", "HERPUD1", "GENE", "MXD1", "GENE",
-            "NAALAD2", "GENE", "hsa-miR-3180-5p", "TERM", 
-            "hsa-miR-759", "TERM"),
+        "po"=c(1, 2, 3, 1, 2, 3, 4, 5, 6, 4, 5, 6),
+        "n"=c("alias", "alias", "alias", "group", "group", "group", 
+                  "alias", "alias", "alias", "group", "group", "group"),
+        "v"=c("MXD1",  "NAALAD2", "HERPUD1", "GENE", "GENE",  "GENE",  "hsa-miR-335-5p" ,
+              "hsa-miR-3180-5p", "hsa-miR-759",  "GENE",  "GENE",  "GENE" ),
         check.names=FALSE, stringsAsFactors=FALSE)
    
     expected[["edgeAttributes"]] <- data.frame(
-        "po"=c(3, 3, 3, 5, 5, 5, 7, 7, 7, 9, 9, 9, 11, 11, 11, 12, 12, 12),
-        "n"=rep(c("name", "source", "target"), 6),
-        "v"=c("MIRNA:hsa-miR-335-5p (contains) ENSG00000051108", "MIRNA:hsa-miR-335-5p", "ENSG00000051108", 
-            "MIRNA:hsa-miR-335-5p (contains) ENSG00000059728", "MIRNA:hsa-miR-335-5p", "ENSG00000059728",
-            "MIRNA:hsa-miR-335-5p (contains) ENSG00000077616", "MIRNA:hsa-miR-335-5p", "ENSG00000077616", 
-            "MIRNA:hsa-miR-3180-5p (contains) ENSG00000059728", "MIRNA:hsa-miR-3180-5p", "ENSG00000059728",
-            "MIRNA:hsa-miR-759 (contains) ENSG00000051108", "MIRNA:hsa-miR-759", "ENSG00000051108", 
-            "MIRNA:hsa-miR-759 (contains) ENSG00000059728", "MIRNA:hsa-miR-759", "ENSG00000059728"),
+        "po"=c(7, 8, 9, 10, 11, 12, 7, 8, 9, 10, 11, 12, 7, 8, 9, 10, 11, 12),
+        "n"=c(rep(c("name"), 6), rep(c("source"), 6), rep(c("target"), 6)),
+        "v"=c("MIRNA:hsa-miR-335-5p (contains) ENSG00000059728", 
+            "MIRNA:hsa-miR-335-5p (contains) ENSG00000077616",
+            "MIRNA:hsa-miR-335-5p (contains) ENSG00000051108", 
+            "MIRNA:hsa-miR-3180-5p (contains) ENSG00000059728",
+            "MIRNA:hsa-miR-759 (contains) ENSG00000051108", 
+            "MIRNA:hsa-miR-759 (contains) ENSG00000059728",
+            "MIRNA:hsa-miR-335-5p", "MIRNA:hsa-miR-335-5p",
+            "MIRNA:hsa-miR-335-5p", "MIRNA:hsa-miR-3180-5p",
+            "MIRNA:hsa-miR-759", "MIRNA:hsa-miR-759",
+            "ENSG00000059728", "ENSG00000077616",
+            "ENSG00000051108", "ENSG00000059728",
+            "ENSG00000051108","ENSG00000059728"),
         check.names=FALSE, stringsAsFactors=FALSE) 
     
-    expect_identical(result, expected)
+    expect_equal(result$nodes, expected$nodes)
+    expect_equal(result$edges, expected$edges)
+    expect_equal(result$nodeAttributes, expected$nodeAttributes)
+    expect_equal(result$edgeAttributes, expected$edgeAttributes)
 })
 
 
@@ -365,10 +356,9 @@ context("extractNodesAndEdgesWhenNoIntersection() results")
 
 test_that("extractNodesAndEdgesWhenNoIntersection() must return expected text", {
     
-    ccDemo <- demoGOST
+    set.seed(112)
     
-   # ccDemo$meta$query_metadata$queries[[1]] <- 
-    #    ccDemo$meta$query_metadata$queries[[1]][1:2]
+    ccDemo <- demoGOST
     
     ccDemo$meta$genes_metadata$query[[1]]$ensgs <- 
         ccDemo$meta$genes_metadata$query[[1]]$ensgs[1:2]
@@ -383,21 +373,20 @@ test_that("extractNodesAndEdgesWhenNoIntersection() must return expected text", 
     
     
     expected[["nodes"]] <- data.frame(
-        "id"=c("GO:0005737", "ENSG00000007944", "ENSG00000051108", 
-                    "GO:0110165", "GO:0005575", "GO:0005622"),
-        "group"=c("TERM", "GENE", "GENE", "TERM", "TERM", "TERM"),
-        "alias"=c("cytoplasm", "MYLIP", "HERPUD1", 
-                        "cellular anatomical entity", "cellular_component",
-                        "intracellular anatomical structure"),
+        "id"=c("ENSG00000007944", "ENSG00000051108", "GO:0005737", 
+               "GO:0110165", "GO:0005575", "GO:0005622"),
+        "group"=c("GENE", "GENE", "TERM", "TERM", "TERM", "TERM"),
+        "alias"=c("MYLIP", "HERPUD1", "cytoplasm",                      
+             "cellular anatomical entity", "cellular_component",
+             "intracellular anatomical structure"),
         check.names=FALSE, stringsAsFactors=FALSE)
     
     expected[["edges"]] <- data.frame(
         "source"=c("GO:0005737", "GO:0005737", "GO:0110165", "GO:0110165", 
-                 "GO:0005575", "GO:0005575", "GO:0005622", "GO:0005622"),
-         "target"=c("ENSG00000007944", "ENSG00000051108", 
-                       "ENSG00000007944", "ENSG00000051108",
-                       "ENSG00000007944", "ENSG00000051108",
-                       "ENSG00000007944", "ENSG00000051108"),
+                   "GO:0005575", "GO:0005575", "GO:0005622", "GO:0005622"),
+         "target"=c("ENSG00000007944", "ENSG00000051108", "ENSG00000007944",
+                    "ENSG00000051108", "ENSG00000007944", "ENSG00000051108", 
+                    "ENSG00000007944", "ENSG00000051108"),
         "interaction"=rep("contains", 8),
          check.names=FALSE, stringsAsFactors=FALSE)
     

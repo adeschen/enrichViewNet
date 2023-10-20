@@ -18,14 +18,14 @@ the results from an enrichment analysis.}
 \value{
 \code{list} containing 2 entries:
 \itemize{
-\item{"nodes"}{a \code{data.frame} containing the information about 
+\item{"nodes"}{a \code{data.frame} containing the information about
 the nodes present in the network.}
-\item{"edges"}{a \code{data.frame} containing the information about 
+\item{"edges"}{a \code{data.frame} containing the information about
 the edges present in the network.}
 }
 }
 \description{
-Create a list containing all node and edge information needed 
+Create a list containing all node and edge information needed
 to create the Cytoscape network
 }
 \examples{
@@ -37,7 +37,7 @@ data(demoGOST)
 ## Only retained the GO Molecular Function results
 results <- demoGOST$result[demoGOST$result$source == "GO:MF", ]
 
-information <- 
+information <-
     enrichViewNet:::extractNodesAndEdgesWhenNoIntersection(
                 gostResults=results, gostObject=demoGOST)
 

@@ -10,7 +10,7 @@ extractNodesAndEdgesWhenIntersection(gostResults, gostObject)
 }
 \arguments{
 \item{gostResults}{a \code{data.frame} containing the terms retained
-for the creation of the network. The \code{data.frame} does not contain a   
+for the creation of the network. The \code{data.frame} does not contain a
 column called "intersection".}
 
 \item{gostObject}{a \code{list} created by gprofiler2 that contains
@@ -19,28 +19,28 @@ the results from an enrichment analysis.}
 \value{
 \code{list} containing 2 entries:
 \itemize{
-\item{"nodes"}{a \code{data.frame} containing the information about 
+\item{"nodes"}{a \code{data.frame} containing the information about
 the nodes present in the network.}
-\item{"edges"}{a \code{data.frame} containing the information about 
+\item{"edges"}{a \code{data.frame} containing the information about
 the edges present in the network.}
 }
 }
 \description{
-Create a list containing all node and edge information needed 
+Create a list containing all node and edge information needed
 to create the Cytoscape network
 }
 \examples{
 
 ## Loading dataset containing result from an enrichment analysis done with
 ## gprofiler2
-data(demoGOST)
+data(parentalNapaVsDMSOEnrichment)
 
 ## Only retained the GO Molecular Function results
-results <- demoGOST$result[demoGOST$result$source == "GO:MF", ]
+results <- parentalNapaVsDMSOEnrichment$result[parentalNapaVsDMSOEnrichment$result$source == "GO:MF", ]
 
-##information <- 
-##      enrichViewNet:::extractNodesAndEdgesWhenIntersection(
-##                gostResults=results, gostObject=demoGOST)
+information <-
+    enrichViewNet:::extractNodesAndEdgesWhenIntersection(
+        gostResults=results, gostObject=parentalNapaVsDMSOEnrichment)
 
 }
 \author{

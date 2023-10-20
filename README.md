@@ -63,6 +63,16 @@ package is required.
      devtools::install_github('adeschen/enrichViewNet')
 
 
+To install this package 
+from [Bioconductor](https://bioconductor.org), start R 
+(version 4.3 or later) and enter: 
+
+     if (!requireNamespace("BiocManager", quietly = TRUE))
+        install.packages("BiocManager")
+
+     BiocManager::install("enrichViewNet")
+
+
 ## Bugs/Feature requests ##
 
 If you have any bugs or feature requests, 
