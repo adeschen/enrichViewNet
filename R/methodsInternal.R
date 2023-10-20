@@ -27,8 +27,6 @@
 #' ## Only retained the WikiPathways results
 #' results <- demoGOST$result[demoGOST$result$source == "WP", ]
 #'
-#' \dontrun{
-#'
 #' ## The creation of the network can only be done when Cytoscape
 #' ## is up and running
 #' ## A network using GO - Molecular Function enriched terms will be
@@ -38,8 +36,6 @@
 #'         gostObject=demoGOST, title="Test", collection="New Collection")
 #' }
 #'
-#' }
-#'
 #' @author Astrid Deschênes
 #' @importFrom RCy3 createNetworkFromDataFrames setNodeColorMapping
 #' @importFrom RCy3 setNodeLabelBypass setNodeWidthMapping
@@ -47,7 +43,7 @@
 #' @keywords internal
 createCytoscapeNetwork <- function(gostResults, gostObject, title, collection) {
 
-    message("Perparing information for Cytoscape.")
+    message("Preparing information for Cytoscape.")
 
     ## Extract node and edge information to be used to create network
     if (! "intersection" %in% colnames(gostResults)) {
@@ -103,7 +99,6 @@ isCytoscapeRunning <- function() {
     out <- tryCatch(
         {
             cytoscapePing()
-            #message("Cytoscape is running.\n")
             return(TRUE)
         },
         error=function(cond) {

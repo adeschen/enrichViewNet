@@ -66,13 +66,14 @@ significant term to graph.
 ## gprofiler2
 data(demoGOST)
 
-\dontrun{
-
 ## Create network for Gene Ontology - Molecular Function related results
+## in Cytoscape (when the application is opened)
+## Otherwise, create a CX file in the temporary directory
+## The file can be opened in Cytoscape
 createNetwork(gostObject=demoGOST, source="GO:MF", removeRoot=FALSE,
-    title="GO Molecular Function Graph")
+    title="GO Molecular Function Graph", 
+    fileName=file.path(tempdir(), "GO_MF_demo.cx"))
 
-}
 
 }
 \author{

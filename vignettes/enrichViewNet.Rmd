@@ -145,7 +145,7 @@ with edges connecting overlapping genes. Thus, enriched terms with overlapping
 genes cluster together. This type of graphs facilitate the 
 identification of functional modules.
 
-```{r graphDemo02, echo = FALSE, fig.align="center", fig.cap="An enrichment map using significant Kegg terms.", out.width = '95%'}
+```{r graphDemo02, echo=FALSE, fig.align="center", fig.cap="An enrichment map using significant Kegg terms.", out.width = '95%'}
 knitr::include_graphics("demo_KEGG_emap_v01.jpeg")
 ```
 
@@ -154,28 +154,21 @@ knitr::include_graphics("demo_KEGG_emap_v01.jpeg")
 
 # Installation
 
-To install the latest version accessible on the 
-`r Githubpkg("adeschen/enrichViewNet")` Github Website, the 
-`r CRANpkg("devtools")` package is required.
+To install this package 
+from [Bioconductor](https://bioconductor.org), start R 
+(version 4.3 or later) and enter: 
 
-```{r installDemo01, eval=FALSE}
-## Install the latest version of enrichViewNet
-library(devtools)
-devtools::install_github('adeschen/enrichViewNet')
-```
 
-It is also possible to install an official release. The list of available 
-releases is posted on the [enrichViewNet Release Website](https://github.com/adeschen/enrichViewNet/releases "enrichViewNet Release Site").
+```{r installDemo01, eval=FALSE, warning=FALSE, message=FALSE}
+if (!requireNamespace("BiocManager", quietly = TRUE))
+        install.packages("BiocManager")
 
-```{r installDemo02, eval=FALSE}
-## Install the version v0.1 of enrichViewNet
-## using 'ref' parameter
-library(devtools)
-devtools::install_github('adeschen/enrichViewNet', ref = "v0.0.4")
+BiocManager::install("enrichViewNet")
 ```
 
 <br>
 <br>
+
 
 # General workflow
 
@@ -326,17 +319,23 @@ The following figure shows what the gene-term network looks like
 in _Cytoscape_. As there are numerous significant Reactome terms, the network 
 is a bit hectic.
 
-```{r runCreateNetwork, echo = TRUE, eval=FALSE}
+```{r runCreateNetwork, echo=TRUE, eval=TRUE, message=FALSE}
 ## Load saved enrichment results between parental Napa vs DMSO
 data("parentalNapaVsDMSOEnrichment")
 
 ## Create network for REACTOME significant terms
 ## The 'removeRoot=TRUE' parameter removes the root term from the network
+## The network will either by created in Cytoscape (if the application is open)
+## or a CX file will be created in the temporary directory
 createNetwork(gostObject=parentalNapaVsDMSOEnrichment,  source="REAC", 
-                  removeRoot=TRUE, title="REACTOME_All", 
-                  collection="parental_napa_vs_DMSO")
+        removeRoot=TRUE, title="REACTOME_All", 
+        collection="parental_napa_vs_DMSO", 
+        fileName=file.path(tempdir(), "parentalNapaVsDMSOEnrichment.cx"))
 ```
 
+<br>
+
+This is an example of the Reactome network in _Cytoscape_.
 
 ```{r networkInCytoscape, echo=FALSE, fig.align="center", fig.cap="All reactome terms in a gene-term network loaded in Cytoscape.", out.width = '110%'}
 knitr::include_graphics("cytoscape_reactome_all_parental_napa_vs_DMSO.png")
@@ -349,7 +348,7 @@ Reactome terms of interest is created.
 
 <br>
 
-```{r runCreateNetworkSelected, echo=TRUE, eval=TRUE}
+```{r runCreateNetworkSelected, echo=TRUE, eval=TRUE, message=FALSE}
 ## Load saved enrichment results between parental Napa vs DMSO
 data("parentalNapaVsDMSOEnrichment")
 
@@ -370,17 +369,25 @@ selectedRes[, c("term_name")]
 
 ```
 
+<br>
 
-```{r runCreateNetworkSelected2, echo=TRUE, eval=FALSE, fig.align="center", fig.cap="Enrichment map."}
+```{r runCreateNetworkSelected2, echo=TRUE, eval=TRUE, message=FALSE, fig.align="center", fig.cap="Enrichment map."}
 
 ## Create network for REACTOME selected terms
 ## The 'source="TERM_ID"' parameter enable to specify a personalized 
 ## list of terms of interest
+## The network will either by created in Cytoscape (if the application is open)
+## or a CX file will be created in the temporary directory
 createNetwork(gostObject=parentalNapaVsDMSOEnrichment,  source="TERM_ID", 
-                  termIDs=selectedRes$term_id, title="REACTOME_Selected", 
-                  collection="parental_napa_vs_DMSO")
-
+          termIDs=selectedRes$term_id, title="REACTOME_Selected", 
+          collection="parental_napa_vs_DMSO",
+          fileName=file.path(tempdir(), 
+            "parentalNapaVsDMSOEnrichment_REACTOME.cx"))
 ```
+
+<br>
+
+The updated Reactome network in _Cytoscape_.
 
 ```{r networkInCytoscapeSelected, echo=FALSE, fig.align="center", fig.cap="Selected Reactome terms in a gene-term network loaded in Cytoscape.", out.width = '110%'}
 knitr::include_graphics("cytoscape_with_selected_REACTOME_v01.png")
