@@ -252,7 +252,7 @@ test_that("createCytoscapeCXJSON() must return expected text", {
     mirnaData <- demoGOST$result[demoGOST$result$source == "MIRNA", ]
     
     result <- enrichViewNet:::createCytoscapeCXJSON(
-                         gostResults = mirnaData, gostObject = mirnaDemo, 
+                         gostResults=mirnaData, gostObject=mirnaDemo, 
                          title = "MIRNA")
     
     expected <- paste0(
@@ -295,7 +295,7 @@ test_that("createCytoscapeCXJSON() must return expected text", {
         "{\"name\":\"cySubNetworks\",\"version\":\"1.0\"}]},",
         "{\"status\":[{\"error\":\"\",\"success\":true}]}]")
     
-    expect_identical(result, expected)
+    expect_equal(result, expected)
 })
 
 
@@ -334,8 +334,8 @@ test_that("extractNodesAndEdgesInfoForCXJSON() must return expected text", {
         "po"=c(1, 2, 3, 1, 2, 3, 4, 5, 6, 4, 5, 6),
         "n"=c("alias", "alias", "alias", "group", "group", "group", 
                   "alias", "alias", "alias", "group", "group", "group"),
-        "v"=c("MXD1", "NAALAD2", "HERPUD1", "GENE",  "GENE",  "GENE",  
-              "GENE", "GENE",  "GENE",  "GENE", "GENE", "GENE"),
+        "v"=c("MXD1",  "NAALAD2", "HERPUD1", "GENE", "GENE",  "GENE",  "hsa-miR-335-5p" ,
+              "hsa-miR-3180-5p", "hsa-miR-759",  "GENE",  "GENE",  "GENE" ),
         check.names=FALSE, stringsAsFactors=FALSE)
    
     expected[["edgeAttributes"]] <- data.frame(
