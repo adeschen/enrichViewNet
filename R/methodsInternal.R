@@ -99,7 +99,6 @@ isCytoscapeRunning <- function() {
     out <- tryCatch(
         {
             cytoscapePing()
-            #message("Cytoscape is running.\n")
             return(TRUE)
         },
         error=function(cond) {
