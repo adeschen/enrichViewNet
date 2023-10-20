@@ -4,6 +4,7 @@ author: Astrid Deschênes, Pascal Belleau, Robert L Faure and Maria J Fernandes
 output:
   BiocStyle::html_document:
     toc: true
+    toc_depth: 2
 pkgdown:
   as_is: true
 bibliography: enrichViewNet.bibtex
@@ -148,6 +149,11 @@ identification of functional modules.
 ```{r graphDemo02, echo=FALSE, fig.align="center", fig.cap="An enrichment map using significant Kegg terms.", out.width = '95%'}
 knitr::include_graphics("demo_KEGG_emap_v01.jpeg")
 ```
+
+
+**enrichViewNet** has been submitted to 
+[Bioconductor](https://www.bioconductor.org/) to aid researchers in carrying 
+out reproducible network analyses using functional enrichment results.
 
 <br>
 <br>
