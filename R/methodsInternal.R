@@ -455,10 +455,10 @@ extractNodesAndEdgesInfoForCXJSON <- function(gostResults, gostObject) {
 
     ## Create node attribute entries for the term alias and the term group
     termAttributes  <- data.frame(
-        po=rep(seq_len(nrow(termUnique)), 2) + termOffSet,
-        n=c(rep("alias", nrow(geneUnique)),
-            rep("group", nrow(geneUnique))),
-        v=c(termNodes$termName, rep("GENE", nrow(termNodes))),
+        po=rep(seq_len(nrow(termUnique)) + termOffSet, 2) ,
+        n=c(rep("alias", nrow(termUnique)),
+            rep("group", nrow(termUnique))),
+        v=c(termUnique$termName, rep("GENE", nrow(termUnique))),
         stringsAsFactors=FALSE)
 
     rownames(termNodes) <- termNodes$n
