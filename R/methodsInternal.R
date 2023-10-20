@@ -640,51 +640,6 @@ extractNodesAndEdgesWhenNoIntersection <- function(gostResults, gostObject) {
 #' @keywords internal
 extractNodesAndEdgesWhenIntersection <- function(gostResults, gostObject) {
 
-    # done <- array()
-    # nodes <- list()
-    # edges <- list()
-    #
-    # geneInter <- unique(unlist(str_split(gostResults$intersection, ",")))
-    #
-    # res <- gconvert(query=c(geneInter),
-    #                 organism=gostObject$meta$query_metadata$organism)
-    #
-    # ## Create the list of genes and terms that will be included in the network
-    # for (i in seq_len(nrow(gostResults))) {
-    #     term <- gostResults$term_id[i]
-    #     query <- gostResults$query[i]
-    #     termName <- gostResults$term_name[i]
-    #
-    #     nodes[[length(nodes) + 1]] <- data.frame(id=c(term),
-    #         group=c("TERM"), alias=c(termName), stringsAsFactors=FALSE)
-    #
-    #     genes <- res[res$input %in%
-    #                 unlist(str_split(gostResults$intersection[i], ",")),
-    #                         c("input", "name") ]
-    #
-    #     for (j in seq_len(nrow(genes))) {
-    #             g <- genes$input[j]
-    #             geneName <- genes$name[j]
-    #             #print(geneName)
-    #             if (! g %in% done) {
-    #                 nodes[[length(nodes) + 1]] <- data.frame(id=c(g),
-    #                             group=c("GENE"), alias=c(geneName),
-    #                             stringsAsFactors=FALSE)
-    #                 done <- c(done, g)
-    #             }
-    #
-    #             edges[[length(edges) + 1]] <- data.frame(source=c(term),
-    #                             target=c(g), interaction=c("contains"),
-    #                             stringsAsFactors=FALSE)
-    #     }
-    # }
-    #
-    # ## Create data.frame for nodes and edges by merging all extracted info
-    # nodeInfo <- do.call(rbind, nodes)
-    # edgeInfo <- do.call(rbind, edges)
-    #
-    # return(list(nodes=nodeInfo, edges=edgeInfo))
-
     geneInter <- unique(unlist(str_split(gostResults$intersection, ",")))
 
     res <- gconvert(query=c(geneInter),
