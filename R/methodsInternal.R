@@ -632,7 +632,8 @@ extractNodesAndEdgesWhenNoIntersection <- function(gostResults, gostObject) {
 #' data(parentalNapaVsDMSOEnrichment)
 #'
 #' ## Only retained the GO Molecular Function results
-#' results <- parentalNapaVsDMSOEnrichment$result[parentalNapaVsDMSOEnrichment$result$source == "GO:MF", ]
+#' results <- parentalNapaVsDMSOEnrichment$result[
+#'         parentalNapaVsDMSOEnrichment$result$source == "GO:MF", ]
 #'
 #' information <-
 #'     enrichViewNet:::extractNodesAndEdgesWhenIntersection(
