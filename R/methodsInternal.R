@@ -170,7 +170,7 @@ validateCreateNetworkArguments <- function(gostObject, source, termIDs,
                                                 removeRoot, fileName) {
 
     ## Test that gostObject is a gprofiler2 result
-    if (!("list" %in% class(gostObject) && "result" %in% names(gostObject) &&
+    if (!(inherits(gostObject, "list") && "result" %in% names(gostObject) &&
             "meta" %in% names(gostObject)))   {
         stop("The gostObject object should be a list with meta ",
                     "and result as entries corresponding to gprofiler2 ",
@@ -195,12 +195,12 @@ validateCreateNetworkArguments <- function(gostObject, source, termIDs,
         }
     }
 
-    if (!is(removeRoot, "logical")) {
+    if (!is.logical(removeRoot)) {
         stop("The \'removeRoot\' parameter must be the logical ",
                         "value TRUE or FALSE.")
     }
 
-    if (!is(fileName, "character")) {
+    if (!is.character(fileName)) {
         stop("The \'fileName\' parameter must a character string.")
     }
 
