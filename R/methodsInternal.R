@@ -624,7 +624,7 @@ extractNodesAndEdgesWhenNoIntersection <- function(gostResults, gostObject) {
 #'
 #' ## Loading dataset containing result from an enrichment analysis done with
 #' ## gprofiler2
-#' data(parentalNapaVsDMSODEG)
+#' data(parentalNapaVsDMSOEnrichment)
 #'
 #' ## Only retained the GO Molecular Function results
 #' results <- parentalNapaVsDMSOEnrichment$result[parentalNapaVsDMSOEnrichment$result$source == "GO:MF", ]
