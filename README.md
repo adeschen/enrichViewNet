@@ -24,6 +24,16 @@ enable the visualization of enriched terms
 into a network with edges connecting overlapping genes. Thus, enriched terms 
 with overlapping genes cluster together.
 
+## Bioconductor Package ##
+
+[![Bioconductor Time](https://bioconductor.org/shields/years-in-bioc/enrichViewNet.svg)](https://bioconductor.org/packages/enrichViewNet)
+
+The **enrichViewNet** package is now an official package 
+of [Bioconductor](http://bioconductor.org/). 
+
+The current Bioconductor release can be directly downloaded from their website:
+[Current release](https://bioconductor.org/packages/enrichViewNet/)
+
 
 ## Authors ##
 
