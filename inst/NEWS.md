@@ -1,3 +1,11 @@
+CHANGES IN VERSION v1.1.1
+------------------------
+
+### SIGNIFICANT USER-VISIBLE CHANGE
+
+* The enrichViewNet workflow figure, in the vignette, has been updated.
+
+
 CHANGES IN VERSION v0.99.2
 ------------------------
 
