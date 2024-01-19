@@ -183,7 +183,7 @@ The following workflow gives an overview of the capabilities of
  **enrichViewNet**:
 
 ```{r graphWorkflow, echo=FALSE, fig.align="center", fig.cap="The enrichViewNet workflow", out.width = '100%'}
-knitr::include_graphics("Figure_workflow_v04.jpg")
+knitr::include_graphics("Figure_enrichViewNet_workflow_v05.jpg")
 ```
 
 
