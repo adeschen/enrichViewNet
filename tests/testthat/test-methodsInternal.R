@@ -28,12 +28,13 @@ test_that("validateCreateNetworkArguments() must return TRUE when all parameters
     
     result <- enrichViewNet:::validateCreateNetworkArguments(
         gostObject=gostObj, source="GO:BP", termIDs=NULL, removeRoot=FALSE,
+        query="test", title="Network", collection="test collection", 
         fileName="new.cx")
     
     expect_true(result)
 })
 
-test_that("validateCreateNetworkArguments() must return error when source is  when all parameters are good", {
+test_that("validateCreateNetworkArguments() must return error when source is when all parameters are good", {
     
     gostObj <- list()
     gostObj[["result"]] <- data.frame(source=c(rep("GO:BP"), 2), 
@@ -47,7 +48,7 @@ test_that("validateCreateNetworkArguments() must return error when source is  wh
     
     expect_error(enrichViewNet:::validateCreateNetworkArguments(
         gostObject=gostObj, source=source, termIDs=NULL, removeRoot=FALSE,
-        fileName="hello.cx"), error_message)
+        fileName="hello.cx", query=NULL), error_message)
     
 })
 
@@ -65,7 +66,7 @@ test_that("validateCreateNetworkArguments() must return error when source is TER
     
     expect_error(enrichViewNet:::validateCreateNetworkArguments(
         gostObject=gostObj, source=source, termIDs=NULL, removeRoot=FALSE, 
-        fileName="toto.cx"), error_message)
+        fileName="toto.cx", query=NULL), error_message)
     
 })
 
@@ -84,7 +85,7 @@ test_that("validateCreateNetworkArguments() must return error when not all term 
     expect_error(enrichViewNet:::validateCreateNetworkArguments(
         gostObject=gostObj, source=source, 
         termIDs=c("GO:0051171","GO:0010999"), removeRoot=FALSE, 
-        fileName="toto.cx"), error_message)
+        fileName="toto.cx", query=NULL), error_message)
 })
 
 
@@ -102,7 +103,7 @@ test_that("validateCreateNetworkArguments() must return error when removeRoot is
     
     expect_error(enrichViewNet:::validateCreateNetworkArguments(
         gostObject=gostObj, source=source, termIDs=c("GO:0051171"), 
-        removeRoot="HI", fileName="test.cx"), error_message)
+        removeRoot="HI", fileName="test.cx", query=NULL), error_message)
 })
 
 
@@ -114,11 +115,27 @@ test_that("validateCreateNetworkArguments() must return term IDs are good", {
     gostObj[["meta"]] <- list()
     
     result <- enrichViewNet:::validateCreateNetworkArguments(
-                gostObject=gostObj, source="TERM_ID", 
-                termIDs=c("GO:0051171", "GO:0010604"), fileName="test.cx", 
-                removeRoot=FALSE)
+            gostObject=gostObj, source="TERM_ID", 
+            termIDs=c("GO:0051171", "GO:0010604"), removeRoot=FALSE, query=NULL, 
+            collection="Collection", title="Network", fileName="test.cx")
     
     expect_true(result)
+})
+
+
+test_that("validateCreateNetworkArguments() must return error when Collection is not a string character", {
+    
+    gostObj <- list()
+    gostObj[["result"]] <- data.frame(source=c(rep("GO:BP"), 2), 
+                                      term_id=c("GO:0051171", "GO:0010604"))
+    gostObj[["meta"]] <- list()
+    
+    error_message <- "The \'collection\' parameter must a character string."
+    
+    expect_error(enrichViewNet:::validateCreateNetworkArguments(
+        gostObject = gostObj, source = "GO:BP", termIDs = NULL, 
+        removeRoot = FALSE, query=NULL, collection=22,
+        title="Test", fileName = "file.cx"), error_message)
 })
 
 
@@ -133,7 +150,8 @@ test_that("validateCreateNetworkArguments() must return error when fileName is n
     
     expect_error(enrichViewNet:::validateCreateNetworkArguments(
         gostObject = gostObj, source = "GO:BP", termIDs = NULL, 
-        removeRoot = FALSE, fileName = 231), error_message)
+        removeRoot = FALSE, query=NULL, collection="Collection test",
+        title="Test", fileName = 231), error_message)
 })
 
 
@@ -148,7 +166,8 @@ test_that("validateCreateNetworkArguments() must return error when fileName not 
     
     expect_error(enrichViewNet:::validateCreateNetworkArguments(
         gostObject=gostObj, source="GO:BP", termIDs=NULL, 
-        removeRoot=FALSE, fileName="toto.txt"), error_message)
+        removeRoot=FALSE, query=NULL, collection="Collection test", 
+        title="Test", fileName="toto.txt"), error_message)
 })
 
 

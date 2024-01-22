@@ -146,10 +146,20 @@ isCytoscapeRunning <- function() {
 #' @param removeRoot a \code{logical} that specified if the root terms of
 #' the selected source should be removed (when present).
 #'
+#' @param query a \code{character} string that specified the retained query to 
+#' generate the network or \code{NULL}. 
+#' 
+#' @param title a \code{character} string representing the name assigned to 
+#' the network.
+#' 
+#' @param collection a \code{character} string representing the collection 
+#' name assigned to the network.
+#' 
 #' @param fileName a \code{character} string representing the name of the
 #' CX JSON file that is created when Cytoscape is not running. The name
 #' must have a '.cx' extension.
-#'
+#' 
+#' 
 #' @return \code{TRUE} when all arguments are valid
 #'
 #' @examples
@@ -159,7 +169,9 @@ isCytoscapeRunning <- function() {
 #'
 #' ## Check that all arguments are valid
 #' enrichViewNet:::validateCreateNetworkArguments(gostObject=demoGOST,
-#'     source="GO:BP", termIDs=NULL, removeRoot=FALSE, fileName="test.cx")
+#'     source="GO:BP", termIDs=NULL, removeRoot=FALSE, query=NULL, 
+#'     title="Network graph Test",
+#'     collection="test collection", fileName="test.cx")
 #'
 #' @author Astrid Deschênes
 #' @encoding UTF-8
@@ -167,7 +179,7 @@ isCytoscapeRunning <- function() {
 #' @importFrom stringr str_ends
 #' @keywords internal
 validateCreateNetworkArguments <- function(gostObject, source, termIDs,
-                                                removeRoot, fileName) {
+                    removeRoot, query, title, collection, fileName) {
 
     ## Test that gostObject is a gprofiler2 result
     if (!(inherits(gostObject, "list") && "result" %in% names(gostObject) &&
@@ -177,6 +189,10 @@ validateCreateNetworkArguments <- function(gostObject, source, termIDs,
                     "enrichment output.")
     }
 
+    if (!is.null(query) & !is.character(query)) {
+        stop("The \'query\' parameter must be a character string or \'NULL\'.")
+    }
+    
     if (source != "TERM_ID") {
         if (sum(gostObject$result$source == source) < 1) {
             stop("There is no enriched term for the selected ",
@@ -199,7 +215,15 @@ validateCreateNetworkArguments <- function(gostObject, source, termIDs,
         stop("The \'removeRoot\' parameter must be the logical ",
                         "value TRUE or FALSE.")
     }
-
+    
+    if (!is.character(title)) {
+        stop("The \'title\' parameter must a character string.")
+    }
+    
+    if (!is.character(collection)) {
+        stop("The \'collection\' parameter must a character string.")
+    }
+    
     if (!is.character(fileName)) {
         stop("The \'fileName\' parameter must a character string.")
     }
@@ -207,7 +231,7 @@ validateCreateNetworkArguments <- function(gostObject, source, termIDs,
     if (str_ends(fileName, ".cx", negate = TRUE)) {
         stop("The \'fileName\' parameter must have \'.cx\' extension.")
     }
-
+    
     return(TRUE)
 }
 

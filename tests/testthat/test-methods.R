@@ -59,6 +59,30 @@ test_that("createNetwork() must return error when source is GO", {
 })
 
 
+test_that("createNetwork() must return error when query not present in the GOST object", {
+    
+    gostTerm <- demoGOST
+    
+    error_message <- paste0("With selected query, there is no enrichment term")
+    
+    expect_error(createNetwork(gostObject=gostTerm, source="WP", 
+                               query="Information",
+                               removeRoot=TRUE), error_message)
+})
+
+
+test_that("createNetwork() must return error when query is a number", {
+    
+    gostTerm <- demoGOST
+    
+    error_message <- paste0("The \'query\' parameter must be a character ", 
+                            "string or \'NULL\'.")
+    
+    expect_error(createNetwork(gostObject=gostTerm, source="WP", query=33, 
+                               removeRoot=TRUE), error_message)
+})
+
+
 test_that("createNetwork() must return error when removeRoot remove last enriched term", {
     
     gostTerm <- demoGOST
@@ -82,6 +106,18 @@ test_that("createNetwork() must return error when removeRoot remove last enriche
     
     expect_error(createNetwork(gostObject=gostTerm, source="TERM_ID",
         termIDs=c("WP:000000"), removeRoot=TRUE), error_message)
+})
+
+
+test_that("createNetwork() must return error when collection is a number", {
+    
+    gostTerm <- demoGOST
+    gostTerm$result <- demoGOST$result[54,]
+    
+    error_message <- "The \'collection\' parameter must a character string."
+    
+    expect_error(createNetwork(gostObject=gostTerm, source="TERM_ID",
+        termIDs=c("WP:000000"), removeRoot=FALSE, collection=33), error_message)
 })
 
 

@@ -8,7 +8,8 @@
 #' genes to their terms. The selection of the term can by specifying  the 
 #' source of the terms (GO:MF, REAC, TF, etc...) or by listing the selected 
 #' term IDs. The network is only generated when there is at least on 
-#' significant term to graph.
+#' significant term to graph. When the enrichment analysis contains more than 
+#' one query, only one query can be selected to generate the network.
 #' 
 #' @param gostObject a \code{list} created by gprofiler2 that contains
 #' the results from an enrichment analysis.
@@ -25,6 +26,11 @@
 #' 
 #' @param removeRoot a \code{logical} that specified if the root terms of 
 #' the selected source should be removed (when present). Default: \code{TRUE}.
+#' 
+#' @param query a \code{character} string that specified the retained query to 
+#' generate the network. When \code{NULL}, the query present in the result 
+#' is retained; \code{NULL} cannot be used when more than one query is present. 
+#' Default: \code{NULL}.
 #' 
 #' @param termIDs a \code{vector} of \code{character} strings that contains the
 #' term IDS retained for the creation of the network. Default: \code{NULL}.
@@ -47,6 +53,9 @@
 #' ## Loading dataset containing result from an enrichment analysis done with
 #' ## gprofiler2
 #' data(demoGOST)
+#' 
+#' ## Some of the enrichment results present in the dataset
+#' head(demoGOST$result)
 #'
 #' ## Create network for Gene Ontology - Molecular Function related results
 #' ## in Cytoscape (when the application is opened)
@@ -65,7 +74,7 @@
 #' @export
 createNetwork <- function(gostObject, source=c("TERM_ID", "GO:MF", "GO:CC",
     "GO:BP", "KEGG", "REAC", "TF", "MIRNA", "HPA", "CORUM", "HP", "WP"), 
-    termIDs=NULL, removeRoot=TRUE, title="gprofiler network", 
+    termIDs=NULL, removeRoot=TRUE, query=NULL, title="gprofiler network", 
     collection="enrichment results", fileName="gprofilerNetwork.cx") {
     
     ## Validate source is among the possible choices
@@ -73,10 +82,26 @@ createNetwork <- function(gostObject, source=c("TERM_ID", "GO:MF", "GO:CC",
     
     ## Validate parameters
     validateCreateNetworkArguments(gostObject=gostObject, source=source,
-        termIDs = termIDs, removeRoot=removeRoot, fileName=fileName)
+        termIDs = termIDs, removeRoot=removeRoot,  
+        query=query, title=title, collection=collection, fileName=fileName)
     
     ## Extract results
     gostResults <- gostObject$result
+    
+    ## Filter on query
+    if (!is.null(query)) {
+        gostResults <- gostResults[gostResults$query  == query,]
+        if (nrow(gostResults) == 0) {
+            stop("With selected query, there is no enrichment term")
+        }
+    } else {
+        queries <- unique(gostResults$query)
+        if (length(queries) > 1) {
+            
+            stop("Multiple queries are present in the results, ",
+                "the \'query\' parameter should be used to select one")
+        }
+    }
     
     ## Filter results
     if (source == "TERM_ID") {

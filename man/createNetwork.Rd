@@ -12,6 +12,7 @@ createNetwork(
     "CORUM", "HP", "WP"),
   termIDs = NULL,
   removeRoot = TRUE,
+  query = NULL,
   title = "gprofiler network",
   collection = "enrichment results",
   fileName = "gprofilerNetwork.cx"
@@ -37,6 +38,11 @@ term IDS retained for the creation of the network. Default: \code{NULL}.}
 \item{removeRoot}{a \code{logical} that specified if the root terms of 
 the selected source should be removed (when present). Default: \code{TRUE}.}
 
+\item{query}{a \code{character} string that specified the retained query to 
+generate the network. When \code{NULL}, the query present in the result 
+is retained; \code{NULL} cannot be used when more than one query is present. 
+Default: \code{NULL}.}
+
 \item{title}{a \code{character} string representing the name assigned to 
 the network. Default: "gprofiler network".}
 
@@ -58,13 +64,17 @@ enrichment analysis are all represented as nodes. Edges are linking the
 genes to their terms. The selection of the term can by specifying  the 
 source of the terms (GO:MF, REAC, TF, etc...) or by listing the selected 
 term IDs. The network is only generated when there is at least on 
-significant term to graph.
+significant term to graph. When the enrichment analysis contains more than 
+one query, only one query can be selected to generate the network.
 }
 \examples{
 
 ## Loading dataset containing result from an enrichment analysis done with
 ## gprofiler2
 data(demoGOST)
+
+## Some of the enrichment results present in the dataset
+head(demoGOST$result)
 
 ## Create network for Gene Ontology - Molecular Function related results
 ## in Cytoscape (when the application is opened)

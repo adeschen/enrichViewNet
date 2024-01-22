@@ -10,6 +10,9 @@ validateCreateNetworkArguments(
   source,
   termIDs,
   removeRoot,
+  query,
+  title,
+  collection,
   fileName
 )
 }
@@ -34,6 +37,15 @@ only used when \code{source} is set to "TERM_ID".}
 \item{removeRoot}{a \code{logical} that specified if the root terms of
 the selected source should be removed (when present).}
 
+\item{query}{a \code{character} string that specified the retained query to 
+generate the network or \code{NULL}.}
+
+\item{title}{a \code{character} string representing the name assigned to 
+the network.}
+
+\item{collection}{a \code{character} string representing the collection 
+name assigned to the network.}
+
 \item{fileName}{a \code{character} string representing the name of the
 CX JSON file that is created when Cytoscape is not running. The name
 must have a '.cx' extension.}
@@ -56,7 +68,9 @@ data(demoGOST)
 
 ## Check that all arguments are valid
 enrichViewNet:::validateCreateNetworkArguments(gostObject=demoGOST,
-    source="GO:BP", termIDs=NULL, removeRoot=FALSE, fileName="test.cx")
+    source="GO:BP", termIDs=NULL, removeRoot=FALSE, query=NULL, 
+    title="Network graph Test",
+    collection="test collection", fileName="test.cx")
 
 }
 \author{
