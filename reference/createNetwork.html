@@ -7,7 +7,8 @@ enrichment analysis are all represented as nodes. Edges are linking the
 genes to their terms. The selection of the term can by specifying  the 
 source of the terms (GO:MF, REAC, TF, etc...) or by listing the selected 
 term IDs. The network is only generated when there is at least on 
-significant term to graph."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
+significant term to graph. When the enrichment analysis contains more than 
+one query, only one query can be selected to generate the network."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
@@ -64,7 +65,8 @@ enrichment analysis are all represented as nodes. Edges are linking the
 genes to their terms. The selection of the term can by specifying  the 
 source of the terms (GO:MF, REAC, TF, etc...) or by listing the selected 
 term IDs. The network is only generated when there is at least on 
-significant term to graph.</p>
+significant term to graph. When the enrichment analysis contains more than 
+one query, only one query can be selected to generate the network.</p>
     </div>
 
     <div id="ref-usage">
@@ -74,6 +76,7 @@ significant term to graph.</p>
 <span>    <span class="st">"CORUM"</span>, <span class="st">"HP"</span>, <span class="st">"WP"</span><span class="op">)</span>,</span>
 <span>  termIDs <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  removeRoot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  query <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  title <span class="op">=</span> <span class="st">"gprofiler network"</span>,</span>
 <span>  collection <span class="op">=</span> <span class="st">"enrichment results"</span>,</span>
 <span>  fileName <span class="op">=</span> <span class="st">"gprofilerNetwork.cx"</span></span>
@@ -107,6 +110,13 @@ term IDS retained for the creation of the network. Default: <code>NULL</code>.</
 <dt>removeRoot</dt>
 <dd><p>a <code>logical</code> that specified if the root terms of 
 the selected source should be removed (when present). Default: <code>TRUE</code>.</p></dd>
+
+
+<dt>query</dt>
+<dd><p>a <code>character</code> string that specified the retained query to 
+generate the network. When <code>NULL</code>, the query present in the result 
+is retained; <code>NULL</code> cannot be used when more than one query is present. 
+Default: <code>NULL</code>.</p></dd>
 
 
 <dt>title</dt>
@@ -146,6 +156,37 @@ Default: "gprofilerNetwork_01.cx".</p></dd>
 <span class="r-in"><span><span class="co">## gprofiler2</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">demoGOST</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Some of the enrichment results present in the dataset</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">demoGOST</span><span class="op">$</span><span class="va">result</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     query significant      p_value term_size query_size intersection_size</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 query_1        TRUE 2.777564e-02         1         15                 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 query_1        TRUE 6.010214e-05      4700         15                13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 query_1        TRUE 6.836641e-05      2812         15                11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 query_1        TRUE 9.082557e-05      4857         15                13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 query_1        TRUE 1.466212e-04      5046         15                13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 query_1        TRUE 1.484313e-04      2264         15                10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    precision      recall    term_id source</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.06666667 1.000000000 CORUM:7486  CORUM</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 0.86666667 0.002765957 GO:0051171  GO:BP</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.73333333 0.003911807 GO:0010604  GO:BP</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 0.86666667 0.002676549 GO:0080090  GO:BP</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 0.86666667 0.002576298 GO:0031323  GO:BP</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 0.66666667 0.004416961 GO:0035556  GO:BP</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                term_name effective_domain_size</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                                              HAS2-HAS3                 24109</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      regulation of nitrogen compound metabolic process                 24109</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 positive regulation of macromolecule metabolic process                 24109</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4                regulation of primary metabolic process                 24109</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5               regulation of cellular metabolic process                 24109</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6                      intracellular signal transduction                 24109</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   source_order      parents</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1         2858 CORUM:00....</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2        15706 GO:00068....</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3         4771 GO:00098....</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4        20968 GO:00192....</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5         8293 GO:00192....</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6        10508   GO:0007165</span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Create network for Gene Ontology - Molecular Function related results</span></span></span>
 <span class="r-in"><span><span class="co">## in Cytoscape (when the application is opened)</span></span></span>
 <span class="r-in"><span><span class="co">## Otherwise, create a CX file in the temporary directory</span></span></span>
@@ -157,7 +198,7 @@ Default: "gprofilerNetwork_01.cx".</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Please check that Cytoscape is running, CyREST is installed and your base.url parameter is correct.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Unable to connect to Cytoscape. </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> CX JSON file will be created.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> CX JSON file "/tmp/Rtmpd4yyI9/GO_MF_demo.cx" has been created.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> CX JSON file "/tmp/RtmpTyFtM4/GO_MF_demo.cx" has been created.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
