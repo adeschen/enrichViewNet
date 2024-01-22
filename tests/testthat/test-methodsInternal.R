@@ -135,7 +135,23 @@ test_that("validateCreateNetworkArguments() must return error when Collection is
     expect_error(enrichViewNet:::validateCreateNetworkArguments(
         gostObject = gostObj, source = "GO:BP", termIDs = NULL, 
         removeRoot = FALSE, query=NULL, collection=22,
-        title="Test", fileName = "file.cx"), error_message)
+        title="Test", fileName="file.cx"), error_message)
+})
+
+
+test_that("validateCreateNetworkArguments() must return error when title is not a string character", {
+    
+    gostObj <- list()
+    gostObj[["result"]] <- data.frame(source=c(rep("GO:BP"), 2), 
+                                      term_id=c("GO:0051171", "GO:0010604"))
+    gostObj[["meta"]] <- list()
+    
+    error_message <- "The \'title\' parameter must a character string."
+    
+    expect_error(enrichViewNet:::validateCreateNetworkArguments(
+        gostObject = gostObj, source = "GO:BP", termIDs = NULL, 
+        removeRoot = FALSE, query=NULL, collection="Test",
+        title=111, fileName="file.cx"), error_message)
 })
 
 
