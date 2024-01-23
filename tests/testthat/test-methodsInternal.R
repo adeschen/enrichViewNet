@@ -34,7 +34,7 @@ test_that("validateCreateNetworkArguments() must return TRUE when all parameters
     expect_true(result)
 })
 
-test_that("validateCreateNetworkArguments() must return error when source is when all parameters are good", {
+test_that("validateCreateNetworkArguments() must return error when no enriched term and all parameters are good", {
     
     gostObj <- list()
     gostObj[["result"]] <- data.frame(source=c(rep("GO:BP"), 2), 

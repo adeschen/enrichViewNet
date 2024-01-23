@@ -70,6 +70,7 @@
 #' @importFrom gprofiler2 gconvert
 #' @importFrom RCy3 cytoscapePing 
 #' @importFrom strex match_arg
+#' @importFrom stringr str_remove
 #' @encoding UTF-8
 #' @export
 createNetwork <- function(gostObject, source=c("TERM_ID", "GO:MF", "GO:CC",
@@ -113,10 +114,11 @@ createNetwork <- function(gostObject, source=c("TERM_ID", "GO:MF", "GO:CC",
     ## Remove root term if required
     if (removeRoot) {
         gostResults <- removeRootTerm(gostResults)
-        if (nrow(gostResults) == 0) {
-            stop("With removal of the root term, there is no ", 
-                    "enrichment term left")
-        }
+    }
+    
+    if (nrow(gostResults) == 0) {
+        stop("After filtering on the enriched terms, there is no ", 
+             "enrichment term left")
     }
     
     ## Test that Cytoscape is running
@@ -139,9 +141,10 @@ createNetwork <- function(gostObject, source=c("TERM_ID", "GO:MF", "GO:CC",
         } else {
             id <- 0
             done <- FALSE
+            shortFileName <- str_remove(fileName, ".cx$")
             while(!done || id > 99) {
                 id <- id + 1
-                newFileName <- paste0("gprofilerNetwork_", 
+                newFileName <- paste0(shortFileName, "_",
                                         sprintf("%02d", id), ".cx")
                 if (!file.exists(newFileName)) {
                     write(final, file=newFileName, append=FALSE)

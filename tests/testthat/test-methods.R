@@ -76,7 +76,7 @@ test_that("createNetwork() must return error when query is a number", {
     gostTerm <- demoGOST
     
     error_message <- paste0("The \'query\' parameter must be a character ", 
-                            "string or \'NULL\'.")
+                                "string or \'NULL\'.")
     
     expect_error(createNetwork(gostObject=gostTerm, source="WP", query=33, 
                                removeRoot=TRUE), error_message)
@@ -88,8 +88,8 @@ test_that("createNetwork() must return error when removeRoot remove last enriche
     gostTerm <- demoGOST
     gostTerm$result <- demoGOST$result[54,]
     
-    error_message <- paste0("With removal of the root term, there is no ", 
-                                "enrichment term left")
+    error_message <- paste0("After filtering on the enriched terms, there is ", 
+                                    "no enrichment term left")
     
     expect_error(createNetwork(gostObject=gostTerm, source="WP", 
                     removeRoot=TRUE), error_message)
@@ -101,8 +101,8 @@ test_that("createNetwork() must return error when removeRoot remove last enriche
     gostTerm <- demoGOST
     gostTerm$result <- demoGOST$result[54,]
     
-    error_message <- paste0("With removal of the root term, there is no ", 
-                                "enrichment term left")
+    error_message <- paste0("After filtering on the enriched terms, there is ", 
+                                "no enrichment term left")
     
     expect_error(createNetwork(gostObject=gostTerm, source="TERM_ID",
         termIDs=c("WP:000000"), removeRoot=TRUE), error_message)
@@ -159,4 +159,37 @@ test_that("createNetwork() must return error when fileName has .txt extension", 
 })
 
 
+test_that("createNetwork() must return error when no query set and more than one query present", {
+    
+    gostTerm <- demoGOST
+    gostTerm$result$query[1] <- "Test negative"
+    
+    error_message <- paste0("Multiple queries are present in the results, ",
+        "the \'query\' parameter should be used to select one")
+    
+    expect_error(createNetwork(gostObject=gostTerm, source="CORUM", 
+        removeRoot=FALSE, fileName="toto.cx"), error_message)
+})
+
+
+test_that("createNetwork() must return TRUE when all parameters ok and not cytoscape open", {
+    
+    gostTerm <- demoGOST
+    
+    tmpDir <- tempdir()
+    tmpFile <- paste0(tmpDir, "/toto_0001.cx")
+    
+    
+    if (!isCytoscapeRunning() && !file.exists(tmpFile)) {
+        result <- createNetwork(gostObject=gostTerm, source="CORUM", 
+                            removeRoot=FALSE, fileName=tmpFile)
+    
+        expect_true(result)
+        expect_true(file.exists(tmpFile))
+    }
+    
+    if (file.exists(tmpFile)) {
+        file.remove(tmpFile)
+    }
+})
 
