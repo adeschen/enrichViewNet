@@ -40,13 +40,19 @@
     <loc>/reference/enrichViewNet-package.html</loc>
   </url>
   <url>
-    <loc>/reference/extractNodesAndEdgesInfoForCXJSON.html</loc>
+    <loc>/reference/extractNodesAndEdgesInfoWhenIntersection.html</loc>
   </url>
   <url>
     <loc>/reference/extractNodesAndEdgesWhenIntersection.html</loc>
   </url>
   <url>
+    <loc>/reference/extractNodesAndEdgesWhenIntersectionForCXJSON.html</loc>
+  </url>
+  <url>
     <loc>/reference/extractNodesAndEdgesWhenNoIntersection.html</loc>
+  </url>
+  <url>
+    <loc>/reference/extractNodesAndEdgesWhenNoIntersectionForCXJSON.html</loc>
   </url>
   <url>
     <loc>/reference/index.html</loc>
