@@ -321,11 +321,11 @@ test_that("createCytoscapeCXJSON() must return expected text", {
 })
 
 
-### Tests extractNodesAndEdgesInfoForCXJSON() results
+### Tests extractNodesAndEdgesWhenNoIntersectionForCXJSON() results
 
-context("extractNodesAndEdgesInfoForCXJSON() results")
+context("extractNodesAndEdgesWhenNoIntersectionForCXJSON() results")
 
-test_that("extractNodesAndEdgesInfoForCXJSON() must return expected text", {
+test_that("extractNodesAndEdgesWhenNoIntersectionForCXJSON() must return expected text", {
     
     mirnaDemo <- demoGOST
     
@@ -335,7 +335,7 @@ test_that("extractNodesAndEdgesInfoForCXJSON() must return expected text", {
     mirnaData <- demoGOST$result[demoGOST$result$source == "MIRNA", ]
     
     set.seed(121)
-    result <- enrichViewNet:::extractNodesAndEdgesInfoForCXJSON(
+    result <- enrichViewNet:::extractNodesAndEdgesWhenNoIntersectionForCXJSON(
         gostResults=mirnaData, gostObject=mirnaDemo)
     
     expected <- list()
@@ -356,8 +356,9 @@ test_that("extractNodesAndEdgesInfoForCXJSON() must return expected text", {
         "po"=c(1, 2, 3, 1, 2, 3, 4, 5, 6, 4, 5, 6),
         "n"=c("alias", "alias", "alias", "group", "group", "group", 
                   "alias", "alias", "alias", "group", "group", "group"),
-        "v"=c("MXD1",  "NAALAD2", "HERPUD1", "GENE", "GENE",  "GENE",  "hsa-miR-335-5p" ,
-              "hsa-miR-3180-5p", "hsa-miR-759",  "GENE",  "GENE",  "GENE" ),
+        "v"=c("MXD1",  "NAALAD2", "HERPUD1", "GENE", "GENE",  
+                "GENE",  "hsa-miR-335-5p" ,
+                "hsa-miR-3180-5p", "hsa-miR-759",  "GENE",  "GENE",  "GENE" ),
         check.names=FALSE, stringsAsFactors=FALSE)
    
     expected[["edgeAttributes"]] <- data.frame(

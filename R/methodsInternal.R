@@ -524,8 +524,16 @@ extractNodesAndEdgesWhenIntersection <- function(gostResults, gostObject) {
 #' @keywords internal
 createCytoscapeCXJSON <- function(gostResults, gostObject, title) {
     
-    entriesL <- extractNodesAndEdgesInfoForCXJSON(gostResults=gostResults,
-                                                    gostObject = gostObject)
+    message("Preparing information for generating CX JSON file.")
+    
+    ## Extract node and edge information to be used to create network
+    if (! "intersection" %in% colnames(gostResults)) {
+        entriesL <- extractNodesAndEdgesWhenNoIntersectionForCXJSON(
+                    gostResults=gostResults, gostObject=gostObject)
+    } else {
+        entriesL <- extractNodesAndEdgesWhenIntersectionForCXJSON(
+                    gostResults=gostResults, gostObject=gostObject)
+    }
     
     networkAttributes <- data.frame(n=c("name"), v=c(title),
                                     stringsAsFactors=FALSE)
@@ -611,14 +619,15 @@ createMetaDataSectionCXJSON <- function() {
 #' ## Only retained the WikiPathways results
 #' results <- demoGOST$result[demoGOST$result$source == "WP", ]
 #'
-#' information <- enrichViewNet:::extractNodesAndEdgesInfoForCXJSON(
+#' information <- enrichViewNet:::extractNodesAndEdgesWhenNoIntersectionForCXJSON(
 #'                 gostResults=results, gostObject=demoGOST)
 #'
 #' @author Astrid Deschênes
 #' @importFrom gprofiler2 gconvert
 #' @encoding UTF-8
 #' @keywords internal
-extractNodesAndEdgesInfoForCXJSON <- function(gostResults, gostObject) {
+extractNodesAndEdgesWhenNoIntersectionForCXJSON <- function(gostResults, 
+                                                                gostObject) {
     
     listQuery <- unique(gostResults$query)
     
@@ -720,4 +729,216 @@ extractNodesAndEdgesInfoForCXJSON <- function(gostResults, gostObject) {
                     edgeAttributes=edgeAttributes))
 }
 
+
+#' @title Extract information about nodes and edges
+#'
+#' @description Extract information about nodes and edges that is necessary
+#' to create the CX JSON text representing the network
+#'
+#' @param gostResults a \code{data.frame} containing the terms retained
+#' for the creation of the network.
+#'
+#' @param gostObject a \code{list} created by gprofiler2 that contains
+#' the results from an enrichment analysis.
+#'
+#' @return a \code{list} containing 4 entries:
+#' \itemize{
+#' \item{"nodes"}{a \code{data.frame} containing the information about
+#' the nodes present in the network.}
+#' \item{"edges"}{a \code{data.frame} containing the information about
+#' the edges present in the network.}
+#' \item{"nodeAttributes"}{a \code{data.frame} containing the attributes
+#' associated to the nodes present in the network.}
+#' \item{"edgesAttributes"}{a \code{data.frame} containing the attributes
+#' associated to the edges present in the network}
+#' }
+#'
+#' @examples
+#'
+#' ## Loading dataset containing result from an enrichment analysis done with
+#' ## gprofiler2
+#' data(demoGOST)
+#'
+#' ## Only retained the WikiPathways results
+#' results <- demoGOST$result[demoGOST$result$source == "WP", ]
+#'
+#' information <- enrichViewNet:::extractNodesAndEdgesWhenIntersectionForCXJSON(
+#'                 gostResults=results, gostObject=demoGOST)
+#'
+#' @author Astrid Deschênes
+#' @importFrom gprofiler2 gconvert
+#' @encoding UTF-8
+#' @keywords internal
+extractNodesAndEdgesWhenIntersectionForCXJSON <- function(gostResults, 
+                                                              gostObject) {
+    
+    results <- extractNodesAndEdgesInfoWhenIntersection(
+                    gostResults=gostResults, gostObject=gostObject)
+    
+    nbGenes <- nrow(results$geneNodes)
+    
+    results$geneNodes$gene_id <- seq_len(nbGenes)
+    
+    ## Create node entries for the gene
+    geneNodes <- data.frame('@id'=results$geneNodes$gene_id,
+                            n=results$geneNodes$id,
+                            stringsAsFactors=FALSE,
+                            check.names=FALSE)
+    
+    ## Create node attribute entries for the gene alias and group
+    geneAttributes  <- data.frame(
+        po=rep(seq_len(nbGenes), 2),
+        n=c(rep("alias", nbGenes),
+            rep("group", nbGenes)),
+        v=c(results$geneNodes$alias,
+            rep("GENE", nbGenes)),
+        stringsAsFactors=FALSE)
+    
+    rownames(geneNodes) <- geneNodes$n
+    
+    # Offset for the id
+    termOffSet <- nbGenes
+    
+    nbTerms <- nrow(results$termNodes)
+    
+    results$termNodes$term_id <- seq_len(nbTerms) + termOffSet
+    
+    ## Create node entries for the term
+    termNodes <- data.frame('@id'= results$termNodes$term_id,
+                            n=results$termNodes$id,
+                            stringsAsFactors=FALSE,
+                            check.names=FALSE)
+    
+    ## Create node attribute entries for the term alias and the term group
+    termAttributes  <- data.frame(
+        po=rep(results$termNodes$term_id, 2) ,
+        n=c(rep("alias", nbTerms),
+            rep("group", nbTerms)),
+        v=c(results$termNodes$id, rep("TERM", nbTerms)),
+        stringsAsFactors=FALSE)
+    
+    rownames(termNodes) <- termNodes$n
+    
+    
+    nbEdges <- nrow(results$edges)
+    
+    # Offset for the id
+    edgeOffSet <- termOffSet + nbTerms
+    
+    edge_gene <- merge(results$edges, results$geneNodes[, c("id", "gene_id")], 
+                        by.x="target", by.y="id", all.x=T)
+    edge_term <- merge(results$edges, results$termNodes[, c("id", "term_id")], 
+                        by.x="source", by.y="id", all.x=T)
+    
+    ## Create an edge connecting term to gene
+    edges <- data.frame('@id'=seq_len(nbEdges) + edgeOffSet,
+                        s=edge_term$term_id,
+                        t=edge_gene$gene_id,
+                        i=rep("contains", nbEdges),
+                        stringsAsFactors=FALSE,
+                        check.names=FALSE)
+    
+    ## Create edge attributes
+    edgeAttributes <- data.frame(
+        po=rep(edges[,'@id'], 3),
+        n=c(rep("name", nbEdges),
+            rep("source", nbEdges),
+            rep("target", nbEdges)),
+        v=c(paste0(results$edges$source, " (contains) ", results$edges$target),
+            results$edges$source, results$edges$target),
+        stringsAsFactors=FALSE)
+    
+    rownames(geneNodes) <- NULL
+    rownames(termNodes) <- NULL
+    
+    return(list(nodes=rbind(geneNodes, termNodes), edges=edges,
+                    nodeAttributes=rbind(geneAttributes, termAttributes),
+                    edgeAttributes=edgeAttributes))
+}
+
+
+#' @title Extract node and edge information to be used to create Cytoscape
+#' network
+#'
+#' @description Create a list containing all node and edge information needed
+#' to create the Cytoscape network
+#'
+#' @param gostResults a \code{data.frame} containing the terms retained
+#' for the creation of the network. The \code{data.frame} does not contain a
+#' column called "intersection".
+#'
+#' @param gostObject a \code{list} created by gprofiler2 that contains
+#' the results from an enrichment analysis.
+#'
+#' @return \code{list} containing 2 entries:
+#' \itemize{
+#' \item{"geneNodes"}{a \code{data.frame} containing the information about
+#' the nodes present in the network. The nodes are genes.}
+#' \item{"termNodes"}{a \code{data.frame} containing the information about
+#' the nodes present in the network. The nodes are terms.}
+#' \item{"edges"}{a \code{data.frame} containing the information about
+#' the edges present in the network. The edges connect one gene to one term.}
+#' }
+#'
+#' @examples
+#'
+#' ## Loading dataset containing result from an enrichment analysis done with
+#' ## gprofiler2
+#' data(parentalNapaVsDMSOEnrichment)
+#'
+#' ## Only retained the GO Molecular Function results
+#' results <- parentalNapaVsDMSOEnrichment$result[
+#'         parentalNapaVsDMSOEnrichment$result$source == "GO:MF", ]
+#'
+#' ## Extract node and edge information
+#' information <-
+#'     enrichViewNet:::extractNodesAndEdgesInfoWhenIntersection(
+#'         gostResults=results, gostObject=parentalNapaVsDMSOEnrichment)
+#'
+#' @author Astrid Deschênes
+#' @importFrom stringr str_split
+#' @encoding UTF-8
+#' @keywords internal
+extractNodesAndEdgesInfoWhenIntersection <- function(gostResults, gostObject) {
+    
+    geneInter <- unique(unlist(str_split(gostResults$intersection, ",")))
+    
+    resEdge <- do.call(rbind, lapply(seq_len(nrow(gostResults)),
+        FUN=function(x, gostResults){
+            genes <- geneInter[geneInter %in% 
+                        unlist(str_split(gostResults$intersection[x], ","))]
+            nbEntries <- length(genes)
+            df <- NULL
+            if (gostResults$intersection_size[x] > 0) {
+                df <- data.frame(term=rep(gostResults$term_id[x], nbEntries),
+                       termName=rep(gostResults$term_name[x], nbEntries),
+                        gene=genes,
+                        geneName=genes,
+                        query=gostResults$query[x], stringsAsFactors=FALSE)
+            }
+            return(df)
+        }, gostResults=gostResults))
+    
+    ## Create node entries for the genes
+    geneUnique <- resEdge[!duplicated(resEdge$gene),]
+    geneNodes <- data.frame(id=geneUnique$gene,
+                                group=rep("GENE", nrow(geneUnique)),
+                                alias=c(geneUnique$geneName),
+                                stringsAsFactors=FALSE)
+    
+    ## Create node entries for the term
+    termUnique <- resEdge[!duplicated(resEdge$term),]
+    termNodes <- data.frame(id=termUnique$term,
+                                group=rep("TERM", nrow(termUnique)),
+                                alias=termUnique$termName,
+                                stringsAsFactors=FALSE)
+    
+    ## Create an edge connecting term (source) to gene (target)
+    edges <- data.frame(source=resEdge$term,
+                            target=resEdge$gene,
+                            interaction=rep("contains", nrow(resEdge)),
+                            stringsAsFactors=FALSE)
+    
+    return(list(geneNodes=geneNodes, termNodes=termNodes, edges=edges))
+}
 
