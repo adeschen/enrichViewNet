@@ -3,6 +3,7 @@
 library(enrichViewNet)
 
 data(demoGOST)
+data(parentalNapaVsDMSOEnrichment)
 
 
 ### Tests isCytoscapeRunning() results
@@ -431,4 +432,90 @@ test_that("extractNodesAndEdgesWhenNoIntersection() must return expected text", 
 
 
 
+### Tests extractNodesAndEdgesInfoWhenIntersection() results
 
+context("extractNodesAndEdgesInfoWhenIntersection() results")
+
+test_that("extractNodesAndEdgesInfoWhenIntersection() must return expected text", {
+    
+    set.seed(1212)
+    
+    ccDemo <- parentalNapaVsDMSOEnrichment
+    
+    ccData <- ccDemo$result[ccDemo$result$term_id %in% 
+                                            c("WP:WP1742", "WP:WP410"), ]
+    
+    result <- enrichViewNet:::extractNodesAndEdgesInfoWhenIntersection(
+        gostResults=ccData, gostObject=ccDemo)
+    
+    expected <- list()
+    
+    expected[["geneNodes"]] <- data.frame(
+        "id"=c("ENSG00000105327", "ENSG00000124762", "ENSG00000141682",
+               "ENSG00000051108", "ENSG00000133639", "ENSG00000141232", 
+               "ENSG00000172216"),
+        "group"=rep("GENE", 7),
+        "alias"=c("ENSG00000105327", "ENSG00000124762", "ENSG00000141682",
+                  "ENSG00000051108", "ENSG00000133639", "ENSG00000141232", 
+                  "ENSG00000172216"),
+        check.names=FALSE, stringsAsFactors=FALSE)
+    
+    expected[["termNodes"]] <- data.frame(
+        "id"=c("WP:WP1742", "WP:WP410"),
+        "group"=c("TERM", "TERM"),
+        "alias"=c("TP53 network", "Exercise-induced circadian regulation"),
+        check.names=FALSE, stringsAsFactors=FALSE)
+    
+    expected[["edges"]] <- data.frame(
+        "source"=c("WP:WP1742", "WP:WP1742", "WP:WP1742", "WP:WP410", 
+                   "WP:WP410", "WP:WP410", "WP:WP410"),
+        "target"=c("ENSG00000105327", "ENSG00000124762", "ENSG00000141682",
+                   "ENSG00000051108", "ENSG00000133639", "ENSG00000141232", 
+                   "ENSG00000172216"),
+        "interaction"=rep("contains", 7),
+        check.names=FALSE, stringsAsFactors=FALSE)
+    
+    expect_identical(result, expected)
+})
+
+
+test_that("extractNodesAndEdgesInfoWhenIntersection() must return expected text", {
+    
+    set.seed(1212)
+    
+    ccDemo <- parentalNapaVsDMSOEnrichment
+    
+    ccData <- ccDemo$result[ccDemo$result$term_id %in% 
+                                c("WP:WP4879", "WP:WP395"), ]
+    
+    result <- enrichViewNet:::extractNodesAndEdgesInfoWhenIntersection(
+        gostResults=ccData, gostObject=ccDemo)
+    
+    expected <- list()
+    
+    expected[["geneNodes"]] <- data.frame(
+        "id"=c("ENSG00000124762", "ENSG00000171223", "ENSG00000172216",
+               "ENSG00000245848", "ENSG00000170345", "ENSG00000184557"),
+        "group"=rep("GENE", 6),
+        "alias"=c("ENSG00000124762", "ENSG00000171223", "ENSG00000172216",
+                  "ENSG00000245848", "ENSG00000170345", "ENSG00000184557"),
+        check.names=FALSE, stringsAsFactors=FALSE)
+    
+    expected[["termNodes"]] <- data.frame(
+        "id"=c("WP:WP4879", "WP:WP395"),
+        "group"=c("TERM", "TERM"),
+        "alias"=c(paste0("Overlap between signal transduction pathways", 
+            " contributing to LMNA laminopathies"), "IL-4 signaling pathway"),
+        check.names=FALSE, stringsAsFactors=FALSE)
+    
+    expected[["edges"]] <- data.frame(
+        "source"=c("WP:WP4879", "WP:WP4879", "WP:WP4879", "WP:WP4879", 
+                   "WP:WP395", "WP:WP395", "WP:WP395", "WP:WP395"),
+        "target"=c("ENSG00000124762", "ENSG00000171223", "ENSG00000172216",
+                   "ENSG00000245848", "ENSG00000172216", "ENSG00000245848",
+                   "ENSG00000170345", "ENSG00000184557"),
+        "interaction"=rep("contains", 8),
+        check.names=FALSE, stringsAsFactors=FALSE)
+    
+    expect_identical(result, expected)
+})
