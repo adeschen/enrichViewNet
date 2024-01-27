@@ -431,7 +431,6 @@ test_that("extractNodesAndEdgesWhenNoIntersection() must return expected text", 
 })
 
 
-
 ### Tests extractNodesAndEdgesInfoWhenIntersection() results
 
 context("extractNodesAndEdgesInfoWhenIntersection() results")
@@ -519,3 +518,66 @@ test_that("extractNodesAndEdgesInfoWhenIntersection() must return expected text"
     
     expect_identical(result, expected)
 })
+
+
+### Tests extractNodesAndEdgesWhenIntersectionForCXJSON() results
+
+context("extractNodesAndEdgesWhenIntersectionForCXJSON() results")
+
+test_that("extractNodesAndEdgesWhenIntersectionForCXJSON() must return expected text", {
+    
+    set.seed(1212)
+    
+    ccDemo <- parentalNapaVsDMSOEnrichment
+    
+    ccData <- ccDemo$result[ccDemo$result$term_id %in% 
+                                c("WP:WP1742", "WP:WP410"), ]
+    
+    result <- enrichViewNet:::extractNodesAndEdgesWhenIntersectionForCXJSON(
+        gostResults=ccData, gostObject=ccDemo)
+    
+    expected <- list()
+    
+    expected[["nodes"]] <- data.frame(
+        "@id"=seq_len(9),
+        "n"=c("ENSG00000105327", "ENSG00000124762", "ENSG00000141682",
+               "ENSG00000051108", "ENSG00000133639", "ENSG00000141232", 
+               "ENSG00000172216", "WP:WP1742", "WP:WP410"),
+        check.names=FALSE, stringsAsFactors=FALSE)
+    
+    expected[["edges"]] <- data.frame(
+        "@id"=seq_len(7) + 9,
+        "s"=c(8, 8, 8, 9, 9, 9, 9),
+        "t"=c(4, 1, 2, 5, 6, 3, 7),
+        "i"=rep("contains", 7),
+        check.names=FALSE, stringsAsFactors=FALSE)
+    
+    expected[["nodeAttributes"]] <- data.frame(
+        "po"=c(seq_len(7), seq_len(7), 8, 9, 8, 9),
+        "n"=c(rep("alias", 7), rep("group", 7), "alias", "alias", "group",
+                "group"),
+        "v"=c("ENSG00000105327", "ENSG00000124762", "ENSG00000141682",
+                "ENSG00000051108", "ENSG00000133639", "ENSG00000141232", 
+                "ENSG00000172216", rep("GENE", 7), "WP:WP1742", "WP:WP410",
+                rep("TERM", 2)),
+        check.names=FALSE, stringsAsFactors=FALSE)
+    
+    expected[["edgeAttributes"]] <- data.frame(
+        "po"=c(seq_len(7)+9, seq_len(7)+9, seq_len(7)+9),
+        "n"=c(rep("name", 7), rep("source", 7), rep("target", 7)),
+        "v"=c("WP:WP1742 (contains) ENSG00000105327",
+              "WP:WP1742 (contains) ENSG00000124762",
+              "WP:WP1742 (contains) ENSG00000141682",
+              "WP:WP410 (contains) ENSG00000051108",
+              "WP:WP410 (contains) ENSG00000133639",
+              "WP:WP410 (contains) ENSG00000141232",
+              "WP:WP410 (contains) ENSG00000172216",
+              rep("WP:WP1742", 3), rep("WP:WP410", 4),
+              "ENSG00000105327", "ENSG00000124762", "ENSG00000141682",
+              "ENSG00000051108", "ENSG00000133639", "ENSG00000141232", 
+              "ENSG00000172216"),
+        check.names=FALSE, stringsAsFactors=FALSE)
+    
+    expect_equal(result, expected)
+})
+

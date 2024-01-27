@@ -766,7 +766,6 @@ extractNodesAndEdgesWhenNoIntersectionForCXJSON <- function(gostResults,
 #'                 gostResults=results, gostObject=demoGOST)
 #'
 #' @author Astrid Deschênes
-#' @importFrom gprofiler2 gconvert
 #' @encoding UTF-8
 #' @keywords internal
 extractNodesAndEdgesWhenIntersectionForCXJSON <- function(gostResults, 
@@ -781,17 +780,14 @@ extractNodesAndEdgesWhenIntersectionForCXJSON <- function(gostResults,
     
     ## Create node entries for the gene
     geneNodes <- data.frame('@id'=results$geneNodes$gene_id,
-                            n=results$geneNodes$id,
-                            stringsAsFactors=FALSE,
-                            check.names=FALSE)
+                                n=results$geneNodes$id,
+                                stringsAsFactors=FALSE, check.names=FALSE)
     
     ## Create node attribute entries for the gene alias and group
     geneAttributes  <- data.frame(
         po=rep(seq_len(nbGenes), 2),
-        n=c(rep("alias", nbGenes),
-            rep("group", nbGenes)),
-        v=c(results$geneNodes$alias,
-            rep("GENE", nbGenes)),
+        n=c(rep("alias", nbGenes), rep("group", nbGenes)),
+        v=c(results$geneNodes$alias, rep("GENE", nbGenes)),
         stringsAsFactors=FALSE)
     
     rownames(geneNodes) <- geneNodes$n
@@ -805,20 +801,17 @@ extractNodesAndEdgesWhenIntersectionForCXJSON <- function(gostResults,
     
     ## Create node entries for the term
     termNodes <- data.frame('@id'= results$termNodes$term_id,
-                            n=results$termNodes$id,
-                            stringsAsFactors=FALSE,
-                            check.names=FALSE)
+                                n=results$termNodes$id,
+                                stringsAsFactors=FALSE, check.names=FALSE)
     
     ## Create node attribute entries for the term alias and the term group
     termAttributes  <- data.frame(
         po=rep(results$termNodes$term_id, 2) ,
-        n=c(rep("alias", nbTerms),
-            rep("group", nbTerms)),
+        n=c(rep("alias", nbTerms), rep("group", nbTerms)),
         v=c(results$termNodes$id, rep("TERM", nbTerms)),
         stringsAsFactors=FALSE)
     
     rownames(termNodes) <- termNodes$n
-    
     
     nbEdges <- nrow(results$edges)
     
@@ -832,20 +825,18 @@ extractNodesAndEdgesWhenIntersectionForCXJSON <- function(gostResults,
     
     ## Create an edge connecting term to gene
     edges <- data.frame('@id'=seq_len(nbEdges) + edgeOffSet,
-                        s=edge_term$term_id,
-                        t=edge_gene$gene_id,
-                        i=rep("contains", nbEdges),
-                        stringsAsFactors=FALSE,
-                        check.names=FALSE)
+                            s=edge_term$term_id,
+                            t=edge_gene$gene_id,
+                            i=rep("contains", nbEdges),
+                            stringsAsFactors=FALSE, check.names=FALSE)
     
     ## Create edge attributes
     edgeAttributes <- data.frame(
         po=rep(edges[,'@id'], 3),
-        n=c(rep("name", nbEdges),
-            rep("source", nbEdges),
-            rep("target", nbEdges)),
+        n=c(rep("name", nbEdges), rep("source", nbEdges),
+                rep("target", nbEdges)),
         v=c(paste0(results$edges$source, " (contains) ", results$edges$target),
-            results$edges$source, results$edges$target),
+                results$edges$source, results$edges$target),
         stringsAsFactors=FALSE)
     
     rownames(geneNodes) <- NULL
