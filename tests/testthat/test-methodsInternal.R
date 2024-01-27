@@ -322,6 +322,86 @@ test_that("createCytoscapeCXJSON() must return expected text", {
 })
 
 
+test_that("createCytoscapeCXJSON() must return expected text when intersection column present", {
+    
+    demo <- parentalNapaVsDMSOEnrichment
+    demoData <- demo$result[demo$result$source == "REAC", ][c(11, 18, 20),]
+    
+    set.seed(121)
+    result <- enrichViewNet:::createCytoscapeCXJSON(
+        gostResults=demoData, gostObject=demo, 
+        title = "DEMO")
+    
+    expected <- paste0("[{\"metaData\":[{\"name\":\"nodes\",\"version\":\"1.0\"},",
+        "{\"name\":\"edges\",\"version\":\"1.0\"},{\"name\":\"edgeAttributes\",\"version\":\"1.0\"},",
+        "{\"name\":\"nodeAttributes\",\"version\":\"1.0\"},{\"name\":\"cyHiddenAttributes\",\"version\":\"1.0\"},",
+        "{\"name\":\"cyNetworkRelations\",\"version\":\"1.0\"},{\"name\":\"cyGroups\",\"version\":\"1.0\"},",
+        "{\"name\":\"networkAttributes\",\"version\":\"1.0\"},{\"name\":\"cyTableColumn\",\"version\":\"1.0\"},",
+        "{\"name\":\"cySubNetworks\",\"version\":\"1.0\"}]},{\"networkAttributes\":[{\"n\":\"name\",\"v\":\"DEMO\"}]},",
+        "{\"nodes\":[{\"@id\":1,\"n\":\"ENSG00000105327\"},{\"@id\":2,\"n\":\"ENSG00000113916\"},",
+        "{\"@id\":3,\"n\":\"ENSG00000153094\"},{\"@id\":4,\"n\":\"ENSG00000175197\"},{\"@id\":5,\"n\":\"ENSG00000100292\"},",
+        "{\"@id\":6,\"n\":\"ENSG00000124762\"},{\"@id\":7,\"n\":\"ENSG00000170345\"},{\"@id\":8,\"n\":\"ENSG00000171223\"},",
+        "{\"@id\":9,\"n\":\"ENSG00000184557\"},{\"@id\":10,\"n\":\"ENSG00000141682\"},{\"@id\":11,\"n\":\"REAC:R-HSA-9614657\"},",
+        "{\"@id\":12,\"n\":\"REAC:R-HSA-6785807\"},{\"@id\":13,\"n\":\"REAC:R-HSA-111453\"}]},",
+        "{\"edges\":[{\"@id\":14,\"s\":13,\"t\":5,\"i\":\"contains\"},{\"@id\":15,\"s\":13,\"t\":1,\"i\":\"contains\"},",
+        "{\"@id\":16,\"s\":13,\"t\":1,\"i\":\"contains\"},{\"@id\":17,\"s\":12,\"t\":2,\"i\":\"contains\"},",
+        "{\"@id\":18,\"s\":12,\"t\":2,\"i\":\"contains\"},{\"@id\":19,\"s\":12,\"t\":6,\"i\":\"contains\"},",
+        "{\"@id\":20,\"s\":12,\"t\":10,\"i\":\"contains\"},{\"@id\":21,\"s\":12,\"t\":3,\"i\":\"contains\"},",
+        "{\"@id\":22,\"s\":12,\"t\":3,\"i\":\"contains\"},{\"@id\":23,\"s\":11,\"t\":7,\"i\":\"contains\"},",
+        "{\"@id\":24,\"s\":11,\"t\":8,\"i\":\"contains\"},{\"@id\":25,\"s\":11,\"t\":4,\"i\":\"contains\"},",
+        "{\"@id\":26,\"s\":11,\"t\":9,\"i\":\"contains\"}]},",
+        "{\"nodeAttributes\":[{\"po\":1,\"n\":\"alias\",\"v\":\"ENSG00000105327\"},{\"po\":2,\"n\":\"alias\",\"v\":\"ENSG00000113916\"},",
+        "{\"po\":3,\"n\":\"alias\",\"v\":\"ENSG00000153094\"},{\"po\":4,\"n\":\"alias\",\"v\":\"ENSG00000175197\"},",
+        "{\"po\":5,\"n\":\"alias\",\"v\":\"ENSG00000100292\"},{\"po\":6,\"n\":\"alias\",\"v\":\"ENSG00000124762\"},",
+        "{\"po\":7,\"n\":\"alias\",\"v\":\"ENSG00000170345\"},{\"po\":8,\"n\":\"alias\",\"v\":\"ENSG00000171223\"},",
+        "{\"po\":9,\"n\":\"alias\",\"v\":\"ENSG00000184557\"},{\"po\":10,\"n\":\"alias\",\"v\":\"ENSG00000141682\"},",
+        "{\"po\":1,\"n\":\"group\",\"v\":\"GENE\"},{\"po\":2,\"n\":\"group\",\"v\":\"GENE\"},",
+        "{\"po\":3,\"n\":\"group\",\"v\":\"GENE\"},{\"po\":4,\"n\":\"group\",\"v\":\"GENE\"},",
+        "{\"po\":5,\"n\":\"group\",\"v\":\"GENE\"},{\"po\":6,\"n\":\"group\",\"v\":\"GENE\"},",
+        "{\"po\":7,\"n\":\"group\",\"v\":\"GENE\"},{\"po\":8,\"n\":\"group\",\"v\":\"GENE\"},",
+        "{\"po\":9,\"n\":\"group\",\"v\":\"GENE\"},{\"po\":10,\"n\":\"group\",\"v\":\"GENE\"},",
+        "{\"po\":11,\"n\":\"alias\",\"v\":\"REAC:R-HSA-9614657\"},{\"po\":12,\"n\":\"alias\",\"v\":\"REAC:R-HSA-6785807\"},",
+        "{\"po\":13,\"n\":\"alias\",\"v\":\"REAC:R-HSA-111453\"},{\"po\":11,\"n\":\"group\",\"v\":\"TERM\"},",
+        "{\"po\":12,\"n\":\"group\",\"v\":\"TERM\"},{\"po\":13,\"n\":\"group\",\"v\":\"TERM\"}]},",
+        "{\"edgeAttributes\":[{\"po\":14,\"n\":\"name\",\"v\":\"REAC:R-HSA-9614657 (contains) ENSG00000105327\"},",
+        "{\"po\":15,\"n\":\"name\",\"v\":\"REAC:R-HSA-9614657 (contains) ENSG00000113916\"},",
+        "{\"po\":16,\"n\":\"name\",\"v\":\"REAC:R-HSA-9614657 (contains) ENSG00000153094\"},",
+        "{\"po\":17,\"n\":\"name\",\"v\":\"REAC:R-HSA-9614657 (contains) ENSG00000175197\"},",
+        "{\"po\":18,\"n\":\"name\",\"v\":\"REAC:R-HSA-6785807 (contains) ENSG00000113916\"},",
+        "{\"po\":19,\"n\":\"name\",\"v\":\"REAC:R-HSA-6785807 (contains) ENSG00000100292\"},",
+        "{\"po\":20,\"n\":\"name\",\"v\":\"REAC:R-HSA-6785807 (contains) ENSG00000124762\"},",
+        "{\"po\":21,\"n\":\"name\",\"v\":\"REAC:R-HSA-6785807 (contains) ENSG00000170345\"},",
+        "{\"po\":22,\"n\":\"name\",\"v\":\"REAC:R-HSA-6785807 (contains) ENSG00000171223\"},",
+        "{\"po\":23,\"n\":\"name\",\"v\":\"REAC:R-HSA-6785807 (contains) ENSG00000184557\"},",
+        "{\"po\":24,\"n\":\"name\",\"v\":\"REAC:R-HSA-111453 (contains) ENSG00000105327\"},",
+        "{\"po\":25,\"n\":\"name\",\"v\":\"REAC:R-HSA-111453 (contains) ENSG00000153094\"},",
+        "{\"po\":26,\"n\":\"name\",\"v\":\"REAC:R-HSA-111453 (contains) ENSG00000141682\"},",
+        "{\"po\":14,\"n\":\"source\",\"v\":\"REAC:R-HSA-9614657\"},{\"po\":15,\"n\":\"source\",\"v\":\"REAC:R-HSA-9614657\"},",
+        "{\"po\":16,\"n\":\"source\",\"v\":\"REAC:R-HSA-9614657\"},{\"po\":17,\"n\":\"source\",\"v\":\"REAC:R-HSA-9614657\"},",
+        "{\"po\":18,\"n\":\"source\",\"v\":\"REAC:R-HSA-6785807\"},{\"po\":19,\"n\":\"source\",\"v\":\"REAC:R-HSA-6785807\"},",
+        "{\"po\":20,\"n\":\"source\",\"v\":\"REAC:R-HSA-6785807\"},{\"po\":21,\"n\":\"source\",\"v\":\"REAC:R-HSA-6785807\"},",
+        "{\"po\":22,\"n\":\"source\",\"v\":\"REAC:R-HSA-6785807\"},{\"po\":23,\"n\":\"source\",\"v\":\"REAC:R-HSA-6785807\"},",
+        "{\"po\":24,\"n\":\"source\",\"v\":\"REAC:R-HSA-111453\"},{\"po\":25,\"n\":\"source\",\"v\":\"REAC:R-HSA-111453\"},",
+        "{\"po\":26,\"n\":\"source\",\"v\":\"REAC:R-HSA-111453\"},{\"po\":14,\"n\":\"target\",\"v\":\"ENSG00000105327\"},",
+        "{\"po\":15,\"n\":\"target\",\"v\":\"ENSG00000113916\"},{\"po\":16,\"n\":\"target\",\"v\":\"ENSG00000153094\"},",
+        "{\"po\":17,\"n\":\"target\",\"v\":\"ENSG00000175197\"},{\"po\":18,\"n\":\"target\",\"v\":\"ENSG00000113916\"},",
+        "{\"po\":19,\"n\":\"target\",\"v\":\"ENSG00000100292\"},{\"po\":20,\"n\":\"target\",\"v\":\"ENSG00000124762\"},",
+        "{\"po\":21,\"n\":\"target\",\"v\":\"ENSG00000170345\"},{\"po\":22,\"n\":\"target\",\"v\":\"ENSG00000171223\"},",
+        "{\"po\":23,\"n\":\"target\",\"v\":\"ENSG00000184557\"},{\"po\":24,\"n\":\"target\",\"v\":\"ENSG00000105327\"},",
+        "{\"po\":25,\"n\":\"target\",\"v\":\"ENSG00000153094\"},{\"po\":26,\"n\":\"target\",\"v\":\"ENSG00000141682\"}]},",
+        "{\"cyHiddenAttributes\":[{\"n\":\"layoutAlgorithm\",\"y\":\"yFiles Circular Layout\"}]},",
+        "{\"metaData\":[{\"name\":\"nodes\",\"version\":\"1.0\"},",
+        "{\"name\":\"edges\",\"version\":\"1.0\"},{\"name\":\"edgeAttributes\",\"version\":\"1.0\"},",
+        "{\"name\":\"nodeAttributes\",\"version\":\"1.0\"},",
+        "{\"name\":\"cyHiddenAttributes\",\"version\":\"1.0\"},{\"name\":\"cyNetworkRelations\",\"version\":\"1.0\"},",
+        "{\"name\":\"cyGroups\",\"version\":\"1.0\"},{\"name\":\"networkAttributes\",\"version\":\"1.0\"},",
+        "{\"name\":\"cyTableColumn\",\"version\":\"1.0\"},{\"name\":\"cySubNetworks\",\"version\":\"1.0\"}]},",
+        "{\"status\":[{\"error\":\"\",\"success\":true}]}]")
+    
+    expect_equal(result, expected)
+})
+
+
 ### Tests extractNodesAndEdgesWhenNoIntersectionForCXJSON() results
 
 context("extractNodesAndEdgesWhenNoIntersectionForCXJSON() results")
