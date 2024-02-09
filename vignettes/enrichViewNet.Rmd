@@ -517,7 +517,7 @@ function generates a _ggplot_ object.
 In an enrichment map, terms with overlapping significant genes tend to 
 cluster together. The Jaccard correlation coefficient is used as a metric of 
 similarity. Terms with high similarity (similarity metric > 0.2) are linked 
-together be edges. The edges are shorter and thicker when the similarity 
+together by edges. The edges are shorter and thicker when the similarity 
 metric is high. 
 
 ```{r runCreateEmap01, echo=TRUE, eval=TRUE, fig.cap="A Kegg enrichment map where terms with overlapping significant genes cluster together.", fig.align="center"}
