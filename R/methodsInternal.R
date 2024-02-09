@@ -102,7 +102,7 @@ validateCreateNetworkArguments <- function(gostObject, source, termIDs,
     
     ## Test that gostObject is a gprofiler2 result
     if (!(inherits(gostObject, "list") && "result" %in% names(gostObject) &&
-          "meta" %in% names(gostObject)))   {
+            "meta" %in% names(gostObject))) {
         stop("The gostObject object should be a list with meta ",
                 "and result as entries corresponding to gprofiler2 ",
                 "enrichment output.")
@@ -253,7 +253,7 @@ createCytoscapeNetwork <- function(gostResults, gostObject, title, collection) {
                                                     gostObject=gostObject)
     } else {
         info <- extractNodesAndEdgesWhenIntersection(gostResults=gostResults,
-                                                  gostObject=gostObject)
+                                                    gostObject=gostObject)
     }
 
     ## Create the network using JSON data format and posting it to Cytoscape
@@ -327,38 +327,30 @@ extractNodesAndEdgesWhenNoIntersection <- function(gostResults, gostObject) {
     listTerm <- gostQuery[!duplicated(gostQuery$term_id),
                         c("term_id", "term_name")]
     res <- gconvert(query=c(listTerm$term_id),
-                       organism=gostObject$meta$query_metadata$organism)
+                        organism=gostObject$meta$query_metadata$organism)
     # res <- gconvert(query=c(listTerm$term_id))
 
 
 
     ## Create a data.frame linking gene and term
     resEdge <- do.call(rbind, lapply(seq_len(nrow(listTerm)),
-                                     FUN=function(x, listTerm, listGenes,
-                                            resTerm, query){
-                                            tmp <- which(resTerm$input ==
-                                                             listTerm$term_id[x]
-                                                         & resTerm$target %in%
-                                                             listGenes)
-                                            df <- NULL
-                                            if(length(tmp) > 0){
-                                                res <- resTerm[tmp,]
-                                                df <- data.frame(term=rep(listTerm$term_id[x],
-                                                            nrow(res)),
-                                                        termName=rep(listTerm$term_name[x],
-                                                            nrow(res)),
-                                                        gene=res$target,
-                                                        geneName=res$name,
-                                                        query=query,
-                                                        stringsAsFactors = FALSE)
-                                            }
-                                         return(df)
-                                     },
-                                     listTerm=listTerm,
-                                     listGenes=listGenes,
-                                     resTerm=res,
-                                     query=query))
-
+            FUN=function(x, listTerm, listGenes, resTerm, query){
+                tmp <- which(resTerm$input == listTerm$term_id[x] & 
+                                 resTerm$target %in% listGenes)
+                df <- NULL
+                if(length(tmp) > 0) {
+                    res <- resTerm[tmp,]
+                    df <- data.frame(term=rep(listTerm$term_id[x], nrow(res)),
+                            termName=rep(listTerm$term_name[x], nrow(res)),
+                            gene=res$target, geneName=res$name,
+                            query=query, stringsAsFactors = FALSE)
+                }
+                return(df)
+            },
+            listTerm=listTerm,
+            listGenes=listGenes,
+            resTerm=res,
+            query=query))
 
     geneUnique <- resEdge[!duplicated(resEdge$gene),]
 
@@ -445,12 +437,11 @@ extractNodesAndEdgesWhenIntersection <- function(gostResults, gostObject) {
             if(gostResults$intersection_size[x] > 0){
                 df <- data.frame(term=rep(gostResults$term_id[x],
                                           nrow(genes)),
-                                 termName=rep(gostResults$term_name[x],
-                                              nrow(genes)),
-                                 gene=genes$input,
-                                 geneName=genes$name,
-                                 query=gostResults$query[x],
-                                 stringsAsFactors = FALSE)
+                        termName=rep(gostResults$term_name[x], nrow(genes)),
+                        gene=genes$input,
+                        geneName=genes$name,
+                        query=gostResults$query[x],
+                        stringsAsFactors = FALSE)
             }
             return(df)
     }, gostResults=gostResults,
@@ -460,24 +451,24 @@ extractNodesAndEdgesWhenIntersection <- function(gostResults, gostObject) {
 
     ## Create node entries for the gene
     geneNodes <- data.frame(id=geneUnique$gene,
-                            group=rep("GENE", nrow(geneUnique)),
-                            alias=c(geneUnique$geneName),
-                            stringsAsFactors=FALSE)
+                                group=rep("GENE", nrow(geneUnique)),
+                                alias=c(geneUnique$geneName),
+                                stringsAsFactors=FALSE)
 
 
     termUnique <- resEdge[!duplicated(resEdge$term),]
 
     ## Create node entries for the term
     termNodes <- data.frame(id=termUnique$term,
-                            group=rep("TERM", nrow(termUnique)),
-                            alias=termUnique$termName,
-                            stringsAsFactors=FALSE)
+                                group=rep("TERM", nrow(termUnique)),
+                                alias=termUnique$termName,
+                                stringsAsFactors=FALSE)
 
     ## Create an edge connecting term to gene
     edges <- data.frame(source=resEdge$term,
-                        target=resEdge$gene,
-                        interaction=rep("contains", nrow(resEdge)),
-                        stringsAsFactors=FALSE)
+                            target=resEdge$gene,
+                            interaction=rep("contains", nrow(resEdge)),
+                            stringsAsFactors=FALSE)
 
     return(list(nodes=rbind(geneNodes, termNodes), edges=edges))
 }
@@ -529,10 +520,10 @@ createCytoscapeCXJSON <- function(gostResults, gostObject, title) {
     ## Extract node and edge information to be used to create network
     if (! "intersection" %in% colnames(gostResults)) {
         entriesL <- extractNodesAndEdgesWhenNoIntersectionForCXJSON(
-                    gostResults=gostResults, gostObject=gostObject)
+                        gostResults=gostResults, gostObject=gostObject)
     } else {
         entriesL <- extractNodesAndEdgesWhenIntersectionForCXJSON(
-                    gostResults=gostResults, gostObject=gostObject)
+                        gostResults=gostResults, gostObject=gostObject)
     }
     
     networkAttributes <- data.frame(n=c("name"), v=c(title),
@@ -819,9 +810,9 @@ extractNodesAndEdgesWhenIntersectionForCXJSON <- function(gostResults,
     edgeOffSet <- termOffSet + nbTerms
     
     edge_gene <- merge(results$edges, results$geneNodes[, c("id", "gene_id")], 
-                        by.x="target", by.y="id", all.x=T)
+                        by.x="target", by.y="id", all.x=TRUE)
     edge_term <- merge(results$edges, results$termNodes[, c("id", "term_id")], 
-                        by.x="source", by.y="id", all.x=T)
+                        by.x="source", by.y="id", all.x=TRUE)
     
     ## Create an edge connecting term to gene
     edges <- data.frame('@id'=seq_len(nbEdges) + edgeOffSet,
