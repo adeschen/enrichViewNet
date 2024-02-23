@@ -6,7 +6,7 @@
 <meta name="generator" content="pandoc">
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE">
 <meta name="author" content="Astrid Deschênes, Pascal Belleau, Robert L Faure and Maria J Fernandes">
-<meta name="date" content="2024-02-09">
+<meta name="date" content="2024-02-23">
 <title>From functional enrichment results to biological networks</title>
 <script src="enrichViewNet_files/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="enrichViewNet_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
@@ -243,7 +243,7 @@ function toggle_visibility(id1) {
 
 <h1 class="title toc-ignore">From functional enrichment results to biological networks</h1>
 <p class="author-name">Astrid Deschênes, Pascal Belleau, Robert L Faure and Maria J Fernandes</p>
-<h4 class="date">9 February 2024</h4>
+<h4 class="date">23 February 2024</h4>
 
 </div>
 
@@ -281,7 +281,7 @@ Pascal Belleau [aut] (<a href="https://orcid.org/0000-0002-0802-1071" class="ext
 Robert L. Faure [aut] (<a href="https://orcid.org/0000-0003-1798-4723" class="external-link uri">https://orcid.org/0000-0003-1798-4723</a>),
 Maria J. Fernandes [aut] (<a href="https://orcid.org/0000-0002-3973-025X" class="external-link uri">https://orcid.org/0000-0002-3973-025X</a>),
 Alexander Krasnitz [aut],
-David A. Tuveson [aut] (<a href="https://orcid.org/0000-0002-8017-2712" class="external-link uri">https://orcid.org/0000-0002-8017-2712</a>)<br><strong>Version</strong>: 1.1.1<br><strong>Compiled date</strong>: 2024-02-09<br><strong>License</strong>: Artistic-2.0<br></p>
+David A. Tuveson [aut] (<a href="https://orcid.org/0000-0002-8017-2712" class="external-link uri">https://orcid.org/0000-0002-8017-2712</a>)<br><strong>Version</strong>: 1.1.1<br><strong>Compiled date</strong>: 2024-02-23<br><strong>License</strong>: Artistic-2.0<br></p>
 <div class="section level2" number="1">
 <h2 id="licensing">
 <span class="header-section-number">1</span> Licensing<a class="anchor" aria-label="anchor" href="#licensing"></a>
@@ -527,23 +527,28 @@ is a <em>list</em> and should be saved.</p>
 <span><span class="va">gostres</span><span class="op">$</span><span class="va">result</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"query"</span>, <span class="st">"p_value"</span>, <span class="st">"term_size"</span>, </span>
 <span>                    <span class="st">"query_size"</span>, <span class="st">"intersection_size"</span>, <span class="st">"term_id"</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
 <pre><code><span><span class="co">##                   query      p_value term_size query_size intersection_size</span></span>
-<span><span class="co">## 1 parental_napa_vs_DMSO 3.234502e-14       153        157                17</span></span>
-<span><span class="co">## 2 parental_napa_vs_DMSO 2.900542e-08        25        157                 7</span></span>
-<span><span class="co">## 3 parental_napa_vs_DMSO 9.750556e-07        23        157                 6</span></span>
-<span><span class="co">## 4 parental_napa_vs_DMSO 9.829403e-07       391        157                16</span></span>
+<span><span class="co">## 1 parental_napa_vs_DMSO 2.905549e-08        25        157                 7</span></span>
+<span><span class="co">## 2 parental_napa_vs_DMSO 9.764963e-07        23        157                 6</span></span>
+<span><span class="co">## 3 parental_napa_vs_DMSO 9.863615e-07       391        157                16</span></span>
+<span><span class="co">## 4 parental_napa_vs_DMSO 2.065842e-06        13        157                 5</span></span>
 <span><span class="co">##     term_id</span></span>
-<span><span class="co">## 1 WP:WP5094</span></span>
-<span><span class="co">## 2 WP:WP3613</span></span>
-<span><span class="co">## 3 WP:WP4925</span></span>
-<span><span class="co">## 4 WP:WP3888</span></span></code></pre>
+<span><span class="co">## 1 WP:WP3613</span></span>
+<span><span class="co">## 2 WP:WP4925</span></span>
+<span><span class="co">## 3 WP:WP3888</span></span>
+<span><span class="co">## 4 WP:WP4211</span></span></code></pre>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## The term names can be longer than the one shown</span></span>
 <span><span class="va">gostres</span><span class="op">$</span><span class="va">result</span><span class="op">[</span><span class="fl">19</span><span class="op">:</span><span class="fl">22</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"term_id"</span>, <span class="st">"source"</span>, <span class="st">"term_name"</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
-<pre><code><span><span class="co">##      term_id source                          term_name</span></span>
-<span><span class="co">## 19 WP:WP1772     WP Apoptosis modulation and signaling</span></span>
-<span><span class="co">## 20 WP:WP2374     WP     Oncostatin M signaling pathway</span></span>
-<span><span class="co">## 21 WP:WP4970     WP           Galanin receptor pathway</span></span>
-<span><span class="co">## 22 WP:WP2877     WP         Vitamin D receptor pathway</span></span></code></pre>
+<pre><code><span><span class="co">##      term_id source</span></span>
+<span><span class="co">## 19 WP:WP2877     WP</span></span>
+<span><span class="co">## 20 WP:WP5373     WP</span></span>
+<span><span class="co">## 21  WP:WP516     WP</span></span>
+<span><span class="co">## 22 WP:WP1742     WP</span></span>
+<span><span class="co">##                                                                     term_name</span></span>
+<span><span class="co">## 19                                                 Vitamin D receptor pathway</span></span>
+<span><span class="co">## 20 Role of hypoxia angiogenesis and FGF pathway in OA chondrocyte hypertrophy</span></span>
+<span><span class="co">## 21                                                          Hypertrophy model</span></span>
+<span><span class="co">## 22                                                               TP53 network</span></span></code></pre>
 <p><br></p>
 </div>
 <div class="section level3" number="6.2">
@@ -750,23 +755,28 @@ is a <em>list</em> and should be saved.</p>
 <span><span class="va">gostres</span><span class="op">$</span><span class="va">result</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"query"</span>, <span class="st">"p_value"</span>, <span class="st">"term_size"</span>, </span>
 <span>                    <span class="st">"query_size"</span>, <span class="st">"intersection_size"</span>, <span class="st">"term_id"</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
 <pre><code><span><span class="co">##                   query      p_value term_size query_size intersection_size</span></span>
-<span><span class="co">## 1 parental_napa_vs_DMSO 3.234502e-14       153        157                17</span></span>
-<span><span class="co">## 2 parental_napa_vs_DMSO 2.900542e-08        25        157                 7</span></span>
-<span><span class="co">## 3 parental_napa_vs_DMSO 9.750556e-07        23        157                 6</span></span>
-<span><span class="co">## 4 parental_napa_vs_DMSO 9.829403e-07       391        157                16</span></span>
+<span><span class="co">## 1 parental_napa_vs_DMSO 2.905549e-08        25        157                 7</span></span>
+<span><span class="co">## 2 parental_napa_vs_DMSO 9.764963e-07        23        157                 6</span></span>
+<span><span class="co">## 3 parental_napa_vs_DMSO 9.863615e-07       391        157                16</span></span>
+<span><span class="co">## 4 parental_napa_vs_DMSO 2.065842e-06        13        157                 5</span></span>
 <span><span class="co">##     term_id</span></span>
-<span><span class="co">## 1 WP:WP5094</span></span>
-<span><span class="co">## 2 WP:WP3613</span></span>
-<span><span class="co">## 3 WP:WP4925</span></span>
-<span><span class="co">## 4 WP:WP3888</span></span></code></pre>
+<span><span class="co">## 1 WP:WP3613</span></span>
+<span><span class="co">## 2 WP:WP4925</span></span>
+<span><span class="co">## 3 WP:WP3888</span></span>
+<span><span class="co">## 4 WP:WP4211</span></span></code></pre>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## The term names can be longer than the one shown</span></span>
 <span><span class="va">gostres</span><span class="op">$</span><span class="va">result</span><span class="op">[</span><span class="fl">19</span><span class="op">:</span><span class="fl">22</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"term_id"</span>, <span class="st">"source"</span>, <span class="st">"term_name"</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
-<pre><code><span><span class="co">##      term_id source                          term_name</span></span>
-<span><span class="co">## 19 WP:WP1772     WP Apoptosis modulation and signaling</span></span>
-<span><span class="co">## 20 WP:WP2374     WP     Oncostatin M signaling pathway</span></span>
-<span><span class="co">## 21 WP:WP4970     WP           Galanin receptor pathway</span></span>
-<span><span class="co">## 22 WP:WP2877     WP         Vitamin D receptor pathway</span></span></code></pre>
+<pre><code><span><span class="co">##      term_id source</span></span>
+<span><span class="co">## 19 WP:WP2877     WP</span></span>
+<span><span class="co">## 20 WP:WP5373     WP</span></span>
+<span><span class="co">## 21  WP:WP516     WP</span></span>
+<span><span class="co">## 22 WP:WP1742     WP</span></span>
+<span><span class="co">##                                                                     term_name</span></span>
+<span><span class="co">## 19                                                 Vitamin D receptor pathway</span></span>
+<span><span class="co">## 20 Role of hypoxia angiogenesis and FGF pathway in OA chondrocyte hypertrophy</span></span>
+<span><span class="co">## 21                                                          Hypertrophy model</span></span>
+<span><span class="co">## 22                                                               TP53 network</span></span></code></pre>
 <p><br></p>
 </div>
 <div class="section level3" number="7.2">
@@ -778,7 +788,7 @@ function generates a <em>ggplot</em> object.</p>
 <p>In an enrichment map, terms with overlapping significant genes tend to
 cluster together. The Jaccard correlation coefficient is used as a metric of
 similarity. Terms with high similarity (similarity metric &gt; 0.2) are linked
-together be edges. The edges are shorter and thicker when the similarity
+together by edges. The edges are shorter and thicker when the similarity
 metric is high.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Load saved enrichment results between parental Napa vs DMSO</span></span>
@@ -828,7 +838,7 @@ Research Council of Canada (NSERCC): 155751-1501.</p>
 </h2>
 <p>Here is the output of sessionInfo() on the system on which this document
 was compiled:</p>
-<pre><code><span><span class="co">## R Under development (unstable) (2024-02-07 r85873)</span></span>
+<pre><code><span><span class="co">## R Under development (unstable) (2024-02-19 r85946)</span></span>
 <span><span class="co">## Platform: x86_64-pc-linux-gnu</span></span>
 <span><span class="co">## Running under: Ubuntu 22.04.3 LTS</span></span>
 <span><span class="co">## </span></span>
@@ -863,7 +873,7 @@ was compiled:</p>
 <span><span class="co">##  [16] strex_2.0.0             sass_0.4.8              KernSmooth_2.23-22     </span></span>
 <span><span class="co">##  [19] bslib_0.6.1             htmlwidgets_1.6.4       plyr_1.8.9             </span></span>
 <span><span class="co">##  [22] plotly_4.10.4           cachem_1.0.8            uuid_1.2-0             </span></span>
-<span><span class="co">##  [25] igraph_2.0.1.1          lifecycle_1.0.4         pkgconfig_2.0.3        </span></span>
+<span><span class="co">##  [25] igraph_2.0.2            lifecycle_1.0.4         pkgconfig_2.0.3        </span></span>
 <span><span class="co">##  [28] Matrix_1.6-5            R6_2.5.1                fastmap_1.1.1          </span></span>
 <span><span class="co">##  [31] GenomeInfoDbData_1.2.11 digest_0.6.34           aplot_0.2.2            </span></span>
 <span><span class="co">##  [34] enrichplot_1.23.1       ggnewscale_0.4.10       colorspace_2.1-0       </span></span>
@@ -872,8 +882,8 @@ was compiled:</p>
 <span><span class="co">##  [43] fansi_1.0.6             RJSONIO_1.3-1.9         httr_1.4.7             </span></span>
 <span><span class="co">##  [46] polyclip_1.10-6         compiler_4.4.0          bit64_4.0.5            </span></span>
 <span><span class="co">##  [49] withr_3.0.0             backports_1.4.1         BiocParallel_1.37.0    </span></span>
-<span><span class="co">##  [52] viridis_0.6.5           RCy3_2.23.2             DBI_1.2.1              </span></span>
-<span><span class="co">##  [55] highr_0.10              ggforce_0.4.1           gplots_3.1.3.1         </span></span>
+<span><span class="co">##  [52] viridis_0.6.5           RCy3_2.23.2             DBI_1.2.2              </span></span>
+<span><span class="co">##  [55] highr_0.10              ggforce_0.4.2           gplots_3.1.3.1         </span></span>
 <span><span class="co">##  [58] MASS_7.3-60.2           HDO.db_0.99.1           gtools_3.9.5           </span></span>
 <span><span class="co">##  [61] caTools_1.18.2          tools_4.4.0             scatterpie_0.2.1       </span></span>
 <span><span class="co">##  [64] ape_5.7-1               glue_1.7.0              nlme_3.1-164           </span></span>
