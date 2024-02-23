@@ -320,7 +320,7 @@ createCytoscapeNetwork <- function(gostResults, gostObject, title, collection) {
 extractNodesAndEdgesWhenNoIntersection <- function(gostResults, gostObject) {
 
     listQuery <- unique(gostResults$query)
-    query=listQuery[1]
+    query <- listQuery[1]
     listGenes <- unique(gostObject$meta$genes_metadata$query[[query]]$ensgs)
     # genes <- gostObject$meta$genes_metadata$query[[query]]$ensgs
     gostQuery <- gostResults[which(gostResults$query == query),]
@@ -330,13 +330,11 @@ extractNodesAndEdgesWhenNoIntersection <- function(gostResults, gostObject) {
                         organism=gostObject$meta$query_metadata$organism)
     # res <- gconvert(query=c(listTerm$term_id))
 
-
-
     ## Create a data.frame linking gene and term
     resEdge <- do.call(rbind, lapply(seq_len(nrow(listTerm)),
             FUN=function(x, listTerm, listGenes, resTerm, query){
                 tmp <- which(resTerm$input == listTerm$term_id[x] & 
-                                 resTerm$target %in% listGenes)
+                                    resTerm$target %in% listGenes)
                 df <- NULL
                 if(length(tmp) > 0) {
                     res <- resTerm[tmp,]
@@ -436,7 +434,7 @@ extractNodesAndEdgesWhenIntersection <- function(gostResults, gostObject) {
             df <- NULL
             if(gostResults$intersection_size[x] > 0){
                 df <- data.frame(term=rep(gostResults$term_id[x],
-                                          nrow(genes)),
+                                                nrow(genes)),
                         termName=rep(gostResults$term_name[x], nrow(genes)),
                         gene=genes$input,
                         geneName=genes$name,
@@ -627,7 +625,7 @@ extractNodesAndEdgesWhenNoIntersectionForCXJSON <- function(gostResults,
     listTerm <- gostQuery[!duplicated(gostQuery$term_id), c("term_id", "term_name")]
     res <- gconvert(query=c(listTerm$term_id))
     
-    query=listQuery[1]
+    query <- listQuery[1]
     
     ## Create a data.frame linking gene and term
     resEdge <- do.call(rbind, lapply(seq_len(nrow(listTerm)),
@@ -760,7 +758,7 @@ extractNodesAndEdgesWhenNoIntersectionForCXJSON <- function(gostResults,
 #' @encoding UTF-8
 #' @keywords internal
 extractNodesAndEdgesWhenIntersectionForCXJSON <- function(gostResults, 
-                                                              gostObject) {
+                                                            gostObject) {
     
     results <- extractNodesAndEdgesInfoWhenIntersection(
                     gostResults=gostResults, gostObject=gostObject)
@@ -893,7 +891,7 @@ extractNodesAndEdgesInfoWhenIntersection <- function(gostResults, gostObject) {
             df <- NULL
             if (gostResults$intersection_size[x] > 0) {
                 df <- data.frame(term=rep(gostResults$term_id[x], nbEntries),
-                       termName=rep(gostResults$term_name[x], nbEntries),
+                        termName=rep(gostResults$term_name[x], nbEntries),
                         gene=genes,
                         geneName=genes,
                         query=gostResults$query[x], stringsAsFactors=FALSE)

@@ -118,7 +118,7 @@ createNetwork <- function(gostObject, source=c("TERM_ID", "GO:MF", "GO:CC",
     
     if (nrow(gostResults) == 0) {
         stop("After filtering on the enriched terms, there is no ", 
-             "enrichment term left")
+                    "enrichment term left")
     }
     
     ## Test that Cytoscape is running
