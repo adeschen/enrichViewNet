@@ -98,23 +98,14 @@ createNetwork <- function(gostObject, source=c("TERM_ID", "GO:MF", "GO:CC",
     } else {
         queries <- unique(gostResults$query)
         if (length(queries) > 1) {
-            
             stop("Multiple queries are present in the results, ",
                 "the \'query\' parameter should be used to select one")
         }
     }
     
     ## Filter results
-    if (source == "TERM_ID") {
-        gostResults <- gostResults[gostResults$term_id %in% termIDs,]
-    } else {
-        gostResults <- gostResults[gostResults$source == source,]
-    }
-    
-    ## Remove root term if required
-    if (removeRoot) {
-        gostResults <- removeRootTerm(gostResults)
-    }
+    gostResults <- filterResults(gostResults=gostResults, source=source, 
+                                    termIDs=termIDs, removeRoot=removeRoot)
     
     if (nrow(gostResults) == 0) {
         stop("After filtering on the enriched terms, there is no ", 

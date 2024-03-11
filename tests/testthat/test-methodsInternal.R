@@ -661,3 +661,22 @@ test_that("extractNodesAndEdgesWhenIntersectionForCXJSON() must return expected 
     expect_equal(result, expected)
 })
 
+
+### Tests filterResults() results
+
+context("filterResults() results")
+
+test_that("filterResults() must return expected text", {
+  
+    results <- parentalNapaVsDMSOEnrichment$result
+    
+    expected <- results[results$source == "WP" & 
+                                results$term_id != "WP:000000", ]
+    row.names(expected) <- NULL
+    
+    selected <- enrichViewNet:::filterResults(gostResults=results, source="WP", 
+                         termIDs=NULL, removeRoot=TRUE)
+    row.names(selected) <- NULL
+    
+    expect_equal(selected, expected)
+})

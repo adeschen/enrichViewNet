@@ -155,6 +155,67 @@ validateCreateNetworkArguments <- function(gostObject, source, termIDs,
 }
 
 
+#' @title Filter the results to retain only the selected terms
+#'
+#' @description Filter the enrichment results to retain only the selected 
+#' terms and remove root term if requested.
+#'
+#' @param gostResults a \code{data.frame} containing the enriched terms that 
+#' should be filtered.
+#' 
+#' @param source a \code{character} string representing the selected source 
+#' that will be used to generate the network. To hand-pick the terms to be 
+#' used, "TERM_ID" should be used and the list of selected term IDs should
+#' be passed through the \code{termIDs} parameter. The possible sources are 
+#' "GO:BP" for Gene Ontology Biological Process, "GO:CC" for Gene Ontology  
+#' Cellular Component, "GO:MF" for Gene Ontology Molecular Function, 
+#' "KEGG" for Kegg, "REAC" for Reactome, "TF" for TRANSFAC, "MIRNA" for 
+#' miRTarBase, "CORUM" for CORUM database, "HP" for Human phenotype ontology
+#' and "WP" for WikiPathways.
+#' 
+#' @param termIDs a \code{vector} of \code{character} strings that contains the
+#' term IDS retained for the creation of the network or \code{NULL}.
+#' 
+#' @param removeRoot a \code{logical} that specified if the root terms of 
+#' the selected source should be removed (when present).
+#'
+#' @return a \code{data.frame} of filtered terms with or without the root term.
+#'
+#' @examples
+#'
+#' ## Loading dataset containing result from an enrichment analysis done with
+#' ## gprofiler2
+#' data(demoGOST)
+#'
+#' ## Only retained the GO - Molecular Function results
+#' results <- demoGOST$result
+#'
+#' ## Remove WIKIPATHWAYS root term
+#' selected <- enrichViewNet:::filterResults(gostResults=results, source="WP", 
+#'     termIDs=NULL, removeRoot=TRUE)
+#'
+#'
+#' @author Astrid Deschênes
+#' @encoding UTF-8
+#' @keywords internal
+filterResults <- function(gostResults, source, termIDs, removeRoot) {
+    
+    ## Filter results
+    if (source == "TERM_ID") {
+        gostResults <- gostResults[gostResults$term_id %in% termIDs,]
+    } else {
+        gostResults <- gostResults[gostResults$source == source,]
+    }
+    
+    ## Remove root term if required
+    if (removeRoot) {
+        gostResults <- removeRootTerm(gostResults)
+    }
+    
+    return(gostResults)
+}
+
+
 #' @title Remove root term if present in the list of selected terms
 #'
 #' @description Remove root term if present in the list of selected terms
@@ -170,7 +231,7 @@ validateCreateNetworkArguments <- function(gostObject, source, termIDs,
 #' ## gprofiler2
 #' data(demoGOST)
 #'
-#' ## Only retained the GO - Molecular Function results
+#' ## Only retained the WikiPathways results
 #' results <- demoGOST$result[demoGOST$result$source == "WP", ]
 #'
 #' ## Remove WIKIPATHWAYS root term

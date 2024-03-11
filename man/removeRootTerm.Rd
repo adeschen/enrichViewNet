@@ -23,7 +23,7 @@ Remove root term if present in the list of selected terms
 ## gprofiler2
 data(demoGOST)
 
-## Only retained the GO - Molecular Function results
+## Only retained the WikiPathways results
 results <- demoGOST$result[demoGOST$result$source == "WP", ]
 
 ## Remove WIKIPATHWAYS root term
