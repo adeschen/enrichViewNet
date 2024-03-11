@@ -94,7 +94,7 @@ test_that("validateCreateNetworkArguments() must return error when removeRoot is
     
     gostObj <- list()
     gostObj[["result"]] <- data.frame(source=c(rep("GO:BP"),2), 
-                                      term_id=c("GO:0051171","GO:0010604"))
+                                        term_id=c("GO:0051171","GO:0010604"))
     gostObj[["meta"]] <- list()
     
     source <- "TERM_ID"
@@ -128,7 +128,7 @@ test_that("validateCreateNetworkArguments() must return error when Collection is
     
     gostObj <- list()
     gostObj[["result"]] <- data.frame(source=c(rep("GO:BP"), 2), 
-                                      term_id=c("GO:0051171", "GO:0010604"))
+                                        term_id=c("GO:0051171", "GO:0010604"))
     gostObj[["meta"]] <- list()
     
     error_message <- "The \'collection\' parameter must a character string."
