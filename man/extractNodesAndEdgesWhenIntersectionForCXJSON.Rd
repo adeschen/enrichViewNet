@@ -5,14 +5,11 @@
 \alias{extractNodesAndEdgesWhenIntersectionForCXJSON}
 \title{Extract information about nodes and edges}
 \usage{
-extractNodesAndEdgesWhenIntersectionForCXJSON(gostResults, gostObject)
+extractNodesAndEdgesWhenIntersectionForCXJSON(gostResults)
 }
 \arguments{
 \item{gostResults}{a \code{data.frame} containing the terms retained
 for the creation of the network.}
-
-\item{gostObject}{a \code{list} created by gprofiler2 that contains
-the results from an enrichment analysis.}
 }
 \value{
 a \code{list} containing 4 entries:
@@ -41,7 +38,7 @@ data(demoGOST)
 results <- demoGOST$result[demoGOST$result$source == "WP", ]
 
 information <- enrichViewNet:::extractNodesAndEdgesWhenIntersectionForCXJSON(
-                gostResults=results, gostObject=demoGOST)
+                gostResults=results)
 
 }
 \author{

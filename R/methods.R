@@ -52,18 +52,18 @@
 #'
 #' ## Loading dataset containing result from an enrichment analysis done with
 #' ## gprofiler2
-#' data(demoGOST)
+#' data(parentalNapaVsDMSOEnrichment)
 #' 
 #' ## Some of the enrichment results present in the dataset
-#' head(demoGOST$result)
+#' head(parentalNapaVsDMSOEnrichment$result)
 #'
 #' ## Create network for Gene Ontology - Molecular Function related results
 #' ## in Cytoscape (when the application is opened)
 #' ## Otherwise, create a CX file in the temporary directory
 #' ## The file can be opened in Cytoscape
-#' createNetwork(gostObject=demoGOST, source="GO:MF", removeRoot=FALSE,
-#'     title="GO Molecular Function Graph", 
-#'     fileName=file.path(tempdir(), "GO_MF_demo.cx"))
+#' createNetwork(gostObject=parentalNapaVsDMSOEnrichment, source="KEGG", 
+#'     removeRoot=FALSE, title="KEGG Graph", 
+#'     fileName=file.path(tempdir(), "KEGG_demo.cx"))
 #' 
 #' 
 #' @author Astrid Deschênes
@@ -83,8 +83,8 @@ createNetwork <- function(gostObject, source=c("TERM_ID", "GO:MF", "GO:CC",
     
     ## Validate parameters
     validateCreateNetworkArguments(gostObject=gostObject, source=source,
-        termIDs = termIDs, removeRoot=removeRoot,  
-        query=query, title=title, collection=collection, fileName=fileName)
+        termIDs = termIDs, removeRoot=removeRoot, query=query, title=title, 
+        collection=collection, fileName=fileName)
     
     ## Extract results
     gostResults <- gostObject$result
@@ -111,6 +111,17 @@ createNetwork <- function(gostObject, source=c("TERM_ID", "GO:MF", "GO:CC",
         stop("After filtering on the enriched terms, there is no ", 
                 "enrichment term left")
     }
+    
+    ## Extract information
+    info <- extractNodesAndEdgesInformation(gostResults=gostResults, 
+                                                    gostObject=gostObject)
+    
+    
+    
+    
+    
+    
+    
     
     ## Test that Cytoscape is running
     isRunning <- isCytoscapeRunning()

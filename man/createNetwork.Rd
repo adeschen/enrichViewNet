@@ -71,18 +71,18 @@ one query, only one query can be selected to generate the network.
 
 ## Loading dataset containing result from an enrichment analysis done with
 ## gprofiler2
-data(demoGOST)
+data(parentalNapaVsDMSOEnrichment)
 
 ## Some of the enrichment results present in the dataset
-head(demoGOST$result)
+head(parentalNapaVsDMSOEnrichment$result)
 
 ## Create network for Gene Ontology - Molecular Function related results
 ## in Cytoscape (when the application is opened)
 ## Otherwise, create a CX file in the temporary directory
 ## The file can be opened in Cytoscape
-createNetwork(gostObject=demoGOST, source="GO:MF", removeRoot=FALSE,
-    title="GO Molecular Function Graph", 
-    fileName=file.path(tempdir(), "GO_MF_demo.cx"))
+createNetwork(gostObject=parentalNapaVsDMSOEnrichment, source="KEGG", 
+    removeRoot=FALSE, title="KEGG Graph", 
+    fileName=file.path(tempdir(), "KEGG_demo.cx"))
 
 
 }

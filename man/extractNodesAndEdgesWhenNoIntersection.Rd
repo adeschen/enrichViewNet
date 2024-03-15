@@ -35,7 +35,7 @@ to create the Cytoscape network
 data(demoGOST)
 
 ## Only retained the GO Molecular Function results
-results <- demoGOST$result[demoGOST$result$source == "GO:MF", ]
+results <- demoGOST$result[demoGOST$result$term_id == "WP:WP4925", ]
 
 information <-
     enrichViewNet:::extractNodesAndEdgesWhenNoIntersection(
