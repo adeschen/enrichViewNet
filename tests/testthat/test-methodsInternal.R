@@ -278,21 +278,139 @@ test_that("createMetaDataSectionCXJSON() must return expected text", {
 })
 
 
-### Tests createCytoscapeCXJSON() results
+### Tests filterResults() results
 
-context("createCytoscapeCXJSON() results")
+context("filterResults() results")
 
-test_that("createCytoscapeCXJSON() must return expected text", {
+test_that("filterResults() must return expected text", {
+  
+    results <- parentalNapaVsDMSOEnrichment$result
+    
+    expected <- results[results$source == "WP" & 
+                                results$term_id != "WP:000000", ]
+    row.names(expected) <- NULL
+    
+    selected <- enrichViewNet:::filterResults(gostResults=results, source="WP", 
+                         termIDs=NULL, removeRoot=TRUE)
+    row.names(selected) <- NULL
+    
+    expect_equal(selected, expected)
+})
+
+
+### Tests extractInformationWhenIntersection() results
+
+context("extractInformationWhenIntersection() results")
+
+test_that("extractInformationWhenIntersection() must return expected text", {
+    
+    set.seed(1212)
+    
+    ccDemo <- parentalNapaVsDMSOEnrichment
+    
+    ccData <- ccDemo$result[ccDemo$result$term_id %in% 
+                                    c("WP:WP1742", "WP:WP410"), ]
+    
+    result <- enrichViewNet:::extractInformationWhenIntersection(
+        gostResults=ccData)
+    
+    expected <- list()
+    
+    expected[["geneNodes"]] <- data.frame(
+        "id"=c("ENSG00000105327", "ENSG00000124762", "ENSG00000141682",
+                "ENSG00000051108", "ENSG00000133639", "ENSG00000141232", 
+                "ENSG00000172216"),
+        "group"=rep("GENE", 7),
+        "alias"=c("ENSG00000105327", "ENSG00000124762", "ENSG00000141682",
+                    "ENSG00000051108", "ENSG00000133639", "ENSG00000141232", 
+                    "ENSG00000172216"),
+        check.names=FALSE, stringsAsFactors=FALSE)
+    
+    expected[["termNodes"]] <- data.frame(
+        "id"=c("WP:WP1742", "WP:WP410"),
+        "group"=c("TERM", "TERM"),
+        "alias"=c("TP53 network", "Exercise-induced circadian regulation"),
+        check.names=FALSE, stringsAsFactors=FALSE)
+    
+    expected[["edges"]] <- data.frame(
+        "source"=c("WP:WP1742", "WP:WP1742", "WP:WP1742", "WP:WP410", 
+                    "WP:WP410", "WP:WP410", "WP:WP410"),
+        "target"=c("ENSG00000105327", "ENSG00000124762", "ENSG00000141682",
+                    "ENSG00000051108", "ENSG00000133639", "ENSG00000141232", 
+                    "ENSG00000172216"),
+        "interaction"=rep("contains", 7),
+        check.names=FALSE, stringsAsFactors=FALSE)
+    
+    expect_identical(result, expected)
+})
+
+
+### Tests extractInformationWhenNoIntersection() results
+
+context("extractInformationWhenNoIntersection() results")
+
+test_that("extractInformationWhenNoIntersection() must return expected text", {
     
     mirnaDemo <- demoGOST
+    
     mirnaDemo$meta$query_metadata$queries[[1]] <- 
-            mirnaDemo$meta$query_metadata$queries[[1]][1:2]
+        mirnaDemo$meta$query_metadata$queries[[1]][1:4]
+    
     mirnaData <- demoGOST$result[demoGOST$result$source == "MIRNA", ]
     
     set.seed(121)
-    result <- enrichViewNet:::createCytoscapeCXJSON(
-                         gostResults=mirnaData, gostObject=mirnaDemo, 
-                         title = "MIRNA")
+    result <- enrichViewNet:::extractInformationWhenNoIntersection(
+                    gostResults=mirnaData, gostObject=mirnaDemo)
+    
+    expected <- list()
+    
+    expected[["geneNodes"]] <- data.frame("id"=c("ENSG00000059728", 
+                    "ENSG00000077616", "ENSG00000051108"),
+                    group=rep("GENE", 3), 
+                    alias=c("MXD1", "NAALAD2", "HERPUD1"),
+                    check.names=FALSE, stringsAsFactors=FALSE)
+    
+    expected[["termNode"]] <- data.frame(id=c("MIRNA:hsa-miR-335-5p", 
+                    "MIRNA:hsa-miR-3180-5p", "MIRNA:hsa-miR-759"),
+                    target=c("ENSG00000059728", "ENSG00000077616", 
+                        "ENSG00000051108", "ENSG00000059728", "ENSG00000051108", 
+                        "ENSG00000059728"),
+                    interaction=rep("contains", 6),
+                    check.names=FALSE, stringsAsFactors=FALSE)
+    
+    expected[["edges"]] <- data.frame(
+        "source"=c("MIRNA:hsa-miR-335-5p", "MIRNA:hsa-miR-335-5p", 
+            "MIRNA:hsa-miR-335-5p", "MIRNA:hsa-miR-3180-5p", 
+            "MIRNA:hsa-miR-759", "MIRNA:hsa-miR-759"),
+        target=c("ENSG00000059728", "ENSG00000077616", "ENSG00000051108", 
+                    "ENSG00000059728", "ENSG00000051108", "ENSG00000059728"),
+        interaction=rep("contains", 6),
+        check.names=FALSE, stringsAsFactors=FALSE)
+        
+    expect_equal(result$nodes, expected$nodes)
+    expect_equal(result$edges, expected$edges)
+    expect_equal(result$nodeAttributes, expected$nodeAttributes)
+    expect_equal(result$edgeAttributes, expected$edgeAttributes)
+})
+
+
+### Tests createCXJSONForCytoscape() results
+
+context("createCXJSONForCytoscape() results")
+
+test_that("createCXJSONForCytoscape() must return expected text", {
+    
+    mirnaDemo <- demoGOST
+    mirnaDemo$meta$query_metadata$queries[[1]] <- 
+        mirnaDemo$meta$query_metadata$queries[[1]][1:2]
+    mirnaData <- demoGOST$result[demoGOST$result$source == "MIRNA", ]
+    
+    set.seed(121)
+    
+    info <- enrichViewNet:::extractNodesAndEdgesInformation(gostResults=mirnaData, 
+                                                gostObject=mirnaDemo)
+    result <- enrichViewNet:::createCXJSONForCytoscape(
+        nodeEdgeInfo=info, title = "MIRNA")
     
     expected <- paste0(
         "[{\"metaData\":[{\"name\":\"nodes\",\"version\":\"1.0\"},",
@@ -305,7 +423,7 @@ test_that("createCytoscapeCXJSON() must return expected text", {
         "{\"edges\":[{\"@id\":4,\"s\":2,\"t\":1,\"i\":\"contains\"},{\"@id\":5,\"s\":3,\"t\":1,\"i\":\"contains\"}]},",
         "{\"nodeAttributes\":[{\"po\":1,\"n\":\"alias\",\"v\":\"HERPUD1\"},{\"po\":1,\"n\":\"group\",\"v\":\"GENE\"},",
         "{\"po\":2,\"n\":\"alias\",\"v\":\"hsa-miR-335-5p\"},{\"po\":3,\"n\":\"alias\",\"v\":\"hsa-miR-759\"},",
-        "{\"po\":2,\"n\":\"group\",\"v\":\"GENE\"},{\"po\":3,\"n\":\"group\",\"v\":\"GENE\"}]},",
+        "{\"po\":2,\"n\":\"group\",\"v\":\"TERM\"},{\"po\":3,\"n\":\"group\",\"v\":\"TERM\"}]},",
         "{\"edgeAttributes\":[{\"po\":4,\"n\":\"name\",\"v\":\"MIRNA:hsa-miR-335-5p (contains) ENSG00000051108\"},",
         "{\"po\":5,\"n\":\"name\",\"v\":\"MIRNA:hsa-miR-759 (contains) ENSG00000051108\"},",
         "{\"po\":4,\"n\":\"source\",\"v\":\"MIRNA:hsa-miR-335-5p\"},{\"po\":5,\"n\":\"source\",\"v\":\"MIRNA:hsa-miR-759\"},",
@@ -322,15 +440,18 @@ test_that("createCytoscapeCXJSON() must return expected text", {
 })
 
 
-test_that("createCytoscapeCXJSON() must return expected text when intersection column present", {
+test_that("createCXJSONForCytoscape() must return expected text when intersection column present", {
     
     demo <- parentalNapaVsDMSOEnrichment
     demoData <- demo$result[demo$result$source == "REAC", ][c(11, 18, 20),]
     
     set.seed(121)
-    result <- enrichViewNet:::createCytoscapeCXJSON(
-        gostResults=demoData, gostObject=demo, 
-        title = "DEMO")
+    
+    info <- enrichViewNet:::extractNodesAndEdgesInformation(gostResults=demoData, 
+                                                    gostObject=demo)
+    
+    result <- enrichViewNet:::createCXJSONForCytoscape(
+        nodeEdgeInfo = info, title = "DEMO")
     
     expected <- paste0("[{\"metaData\":[{\"name\":\"nodes\",\"version\":\"1.0\"},",
         "{\"name\":\"edges\",\"version\":\"1.0\"},{\"name\":\"edgeAttributes\",\"version\":\"1.0\"},",
@@ -360,8 +481,10 @@ test_that("createCytoscapeCXJSON() must return expected text when intersection c
         "{\"po\":5,\"n\":\"group\",\"v\":\"GENE\"},{\"po\":6,\"n\":\"group\",\"v\":\"GENE\"},",
         "{\"po\":7,\"n\":\"group\",\"v\":\"GENE\"},{\"po\":8,\"n\":\"group\",\"v\":\"GENE\"},",
         "{\"po\":9,\"n\":\"group\",\"v\":\"GENE\"},{\"po\":10,\"n\":\"group\",\"v\":\"GENE\"},",
-        "{\"po\":11,\"n\":\"alias\",\"v\":\"REAC:R-HSA-9614657\"},{\"po\":12,\"n\":\"alias\",\"v\":\"REAC:R-HSA-6785807\"},",
-        "{\"po\":13,\"n\":\"alias\",\"v\":\"REAC:R-HSA-111453\"},{\"po\":11,\"n\":\"group\",\"v\":\"TERM\"},",
+        "{\"po\":11,\"n\":\"alias\",\"v\":\"FOXO-mediated transcription of cell death genes\"},", 
+        "{\"po\":12,\"n\":\"alias\",\"v\":\"Interleukin-4 and Interleukin-13 signaling\"},",
+        "{\"po\":13,\"n\":\"alias\",\"v\":\"BH3-only proteins associate with and inactivate anti-apoptotic BCL-2 members\"},",
+        "{\"po\":11,\"n\":\"group\",\"v\":\"TERM\"},",
         "{\"po\":12,\"n\":\"group\",\"v\":\"TERM\"},{\"po\":13,\"n\":\"group\",\"v\":\"TERM\"}]},",
         "{\"edgeAttributes\":[{\"po\":14,\"n\":\"name\",\"v\":\"REAC:R-HSA-9614657 (contains) ENSG00000105327\"},",
         "{\"po\":15,\"n\":\"name\",\"v\":\"REAC:R-HSA-9614657 (contains) ENSG00000113916\"},",
@@ -390,142 +513,33 @@ test_that("createCytoscapeCXJSON() must return expected text when intersection c
         "{\"po\":23,\"n\":\"target\",\"v\":\"ENSG00000184557\"},{\"po\":24,\"n\":\"target\",\"v\":\"ENSG00000105327\"},",
         "{\"po\":25,\"n\":\"target\",\"v\":\"ENSG00000153094\"},{\"po\":26,\"n\":\"target\",\"v\":\"ENSG00000141682\"}]},",
         "{\"cyHiddenAttributes\":[{\"n\":\"layoutAlgorithm\",\"y\":\"yFiles Circular Layout\"}]},",
-        "{\"metaData\":[{\"name\":\"nodes\",\"version\":\"1.0\"},",
-        "{\"name\":\"edges\",\"version\":\"1.0\"},{\"name\":\"edgeAttributes\",\"version\":\"1.0\"},",
-        "{\"name\":\"nodeAttributes\",\"version\":\"1.0\"},",
-        "{\"name\":\"cyHiddenAttributes\",\"version\":\"1.0\"},{\"name\":\"cyNetworkRelations\",\"version\":\"1.0\"},",
-        "{\"name\":\"cyGroups\",\"version\":\"1.0\"},{\"name\":\"networkAttributes\",\"version\":\"1.0\"},",
-        "{\"name\":\"cyTableColumn\",\"version\":\"1.0\"},{\"name\":\"cySubNetworks\",\"version\":\"1.0\"}]},",
-        "{\"status\":[{\"error\":\"\",\"success\":true}]}]")
+                       "{\"metaData\":[{\"name\":\"nodes\",\"version\":\"1.0\"},",
+                       "{\"name\":\"edges\",\"version\":\"1.0\"},{\"name\":\"edgeAttributes\",\"version\":\"1.0\"},",
+                       "{\"name\":\"nodeAttributes\",\"version\":\"1.0\"},",
+                       "{\"name\":\"cyHiddenAttributes\",\"version\":\"1.0\"},{\"name\":\"cyNetworkRelations\",\"version\":\"1.0\"},",
+                       "{\"name\":\"cyGroups\",\"version\":\"1.0\"},{\"name\":\"networkAttributes\",\"version\":\"1.0\"},",
+                       "{\"name\":\"cyTableColumn\",\"version\":\"1.0\"},{\"name\":\"cySubNetworks\",\"version\":\"1.0\"}]},",
+                       "{\"status\":[{\"error\":\"\",\"success\":true}]}]")
     
     expect_equal(result, expected)
 })
 
 
-### Tests extractNodesAndEdgesWhenNoIntersectionForCXJSON() results
+### Tests extractInformationWhenIntersection() results
 
-context("extractNodesAndEdgesWhenNoIntersectionForCXJSON() results")
+context("extractInformationWhenIntersection() results")
 
-test_that("extractNodesAndEdgesWhenNoIntersectionForCXJSON() must return expected text", {
-    
-    mirnaDemo <- demoGOST
-    
-    mirnaDemo$meta$query_metadata$queries[[1]] <- 
-        mirnaDemo$meta$query_metadata$queries[[1]][1:4]
-    
-    mirnaData <- demoGOST$result[demoGOST$result$source == "MIRNA", ]
-    
-    set.seed(121)
-    result <- enrichViewNet:::extractNodesAndEdgesWhenNoIntersectionForCXJSON(
-        gostResults=mirnaData, gostObject=mirnaDemo)
-    
-    expected <- list()
-    
-    expected[["nodes"]] <- data.frame("@id"=c(1, 2, 3, 4, 5, 6),
-        "n"=c("ENSG00000059728", "ENSG00000077616", "ENSG00000051108", 
-                "MIRNA:hsa-miR-335-5p", 
-                "MIRNA:hsa-miR-3180-5p", "MIRNA:hsa-miR-759"),
-        check.names=FALSE, stringsAsFactors=FALSE)
-    
-    expected[["edges"]] <- data.frame("@id"=c(7, 8, 9, 10, 11, 12),
-                                "s"=c(4, 4, 4, 5, 6, 6),
-                                "t"=c(1, 2, 3, 1, 3, 1),
-                                "i"=rep("contains", 6),
-                                check.names=FALSE, stringsAsFactors=FALSE)
-    
-    expected[["nodeAttributes"]] <- data.frame(
-        "po"=c(1, 2, 3, 1, 2, 3, 4, 5, 6, 4, 5, 6),
-        "n"=c("alias", "alias", "alias", "group", "group", "group", 
-                  "alias", "alias", "alias", "group", "group", "group"),
-        "v"=c("MXD1",  "NAALAD2", "HERPUD1", "GENE", "GENE",  
-                "GENE",  "hsa-miR-335-5p" ,
-                "hsa-miR-3180-5p", "hsa-miR-759",  "GENE",  "GENE",  "GENE" ),
-        check.names=FALSE, stringsAsFactors=FALSE)
-   
-    expected[["edgeAttributes"]] <- data.frame(
-        "po"=c(7, 8, 9, 10, 11, 12, 7, 8, 9, 10, 11, 12, 7, 8, 9, 10, 11, 12),
-        "n"=c(rep(c("name"), 6), rep(c("source"), 6), rep(c("target"), 6)),
-        "v"=c("MIRNA:hsa-miR-335-5p (contains) ENSG00000059728", 
-            "MIRNA:hsa-miR-335-5p (contains) ENSG00000077616",
-            "MIRNA:hsa-miR-335-5p (contains) ENSG00000051108", 
-            "MIRNA:hsa-miR-3180-5p (contains) ENSG00000059728",
-            "MIRNA:hsa-miR-759 (contains) ENSG00000051108", 
-            "MIRNA:hsa-miR-759 (contains) ENSG00000059728",
-            "MIRNA:hsa-miR-335-5p", "MIRNA:hsa-miR-335-5p",
-            "MIRNA:hsa-miR-335-5p", "MIRNA:hsa-miR-3180-5p",
-            "MIRNA:hsa-miR-759", "MIRNA:hsa-miR-759",
-            "ENSG00000059728", "ENSG00000077616",
-            "ENSG00000051108", "ENSG00000059728",
-            "ENSG00000051108","ENSG00000059728"),
-        check.names=FALSE, stringsAsFactors=FALSE) 
-    
-    expect_equal(result$nodes, expected$nodes)
-    expect_equal(result$edges, expected$edges)
-    expect_equal(result$nodeAttributes, expected$nodeAttributes)
-    expect_equal(result$edgeAttributes, expected$edgeAttributes)
-})
-
-
-
-### Tests extractNodesAndEdgesWhenNoIntersection() results
-
-context("extractNodesAndEdgesWhenNoIntersection() results")
-
-test_that("extractNodesAndEdgesWhenNoIntersection() must return expected text", {
-    
-    set.seed(112)
-    
-    ccDemo <- demoGOST
-    
-    ccDemo$meta$genes_metadata$query[[1]]$ensgs <- 
-        ccDemo$meta$genes_metadata$query[[1]]$ensgs[1:2]
-    
-    ccData <- ccDemo$result[ccDemo$result$source == "GO:CC", ]
-    
-    
-    result <- enrichViewNet:::extractNodesAndEdgesWhenNoIntersection(
-        gostResults=ccData, gostObject=ccDemo)
-    
-    expected <- list()
-    
-    
-    expected[["nodes"]] <- data.frame(
-        "id"=c("ENSG00000007944", "ENSG00000051108", "GO:0005737", 
-               "GO:0110165", "GO:0005575", "GO:0005622"),
-        "group"=c("GENE", "GENE", "TERM", "TERM", "TERM", "TERM"),
-        "alias"=c("MYLIP", "HERPUD1", "cytoplasm",                      
-             "cellular anatomical entity", "cellular_component",
-             "intracellular anatomical structure"),
-        check.names=FALSE, stringsAsFactors=FALSE)
-    
-    expected[["edges"]] <- data.frame(
-        "source"=c("GO:0005737", "GO:0005737", "GO:0110165", "GO:0110165", 
-                   "GO:0005575", "GO:0005575", "GO:0005622", "GO:0005622"),
-         "target"=c("ENSG00000007944", "ENSG00000051108", "ENSG00000007944",
-                    "ENSG00000051108", "ENSG00000007944", "ENSG00000051108", 
-                    "ENSG00000007944", "ENSG00000051108"),
-        "interaction"=rep("contains", 8),
-         check.names=FALSE, stringsAsFactors=FALSE)
-    
-    expect_identical(result, expected)
-})
-
-
-### Tests extractNodesAndEdgesInfoWhenIntersection() results
-
-context("extractNodesAndEdgesInfoWhenIntersection() results")
-
-test_that("extractNodesAndEdgesInfoWhenIntersection() must return expected text", {
+test_that("extractInformationWhenIntersection() must return expected text", {
     
     set.seed(1212)
     
     ccDemo <- parentalNapaVsDMSOEnrichment
     
     ccData <- ccDemo$result[ccDemo$result$term_id %in% 
-                                            c("WP:WP1742", "WP:WP410"), ]
+                                c("WP:WP1742", "WP:WP410"), ]
     
-    result <- enrichViewNet:::extractNodesAndEdgesInfoWhenIntersection(
-        gostResults=ccData, gostObject=ccDemo)
+    result <- enrichViewNet:::extractInformationWhenIntersection(
+        gostResults=ccData)
     
     expected <- list()
     
@@ -558,125 +572,3 @@ test_that("extractNodesAndEdgesInfoWhenIntersection() must return expected text"
 })
 
 
-test_that("extractNodesAndEdgesInfoWhenIntersection() must return expected text", {
-    
-    set.seed(1212)
-    
-    ccDemo <- parentalNapaVsDMSOEnrichment
-    
-    ccData <- ccDemo$result[ccDemo$result$term_id %in% 
-                                c("WP:WP4879", "WP:WP395"), ]
-    
-    result <- enrichViewNet:::extractNodesAndEdgesInfoWhenIntersection(
-        gostResults=ccData, gostObject=ccDemo)
-    
-    expected <- list()
-    
-    expected[["geneNodes"]] <- data.frame(
-        "id"=c("ENSG00000124762", "ENSG00000171223", "ENSG00000172216",
-               "ENSG00000245848", "ENSG00000170345", "ENSG00000184557"),
-        "group"=rep("GENE", 6),
-        "alias"=c("ENSG00000124762", "ENSG00000171223", "ENSG00000172216",
-                  "ENSG00000245848", "ENSG00000170345", "ENSG00000184557"),
-        check.names=FALSE, stringsAsFactors=FALSE)
-    
-    expected[["termNodes"]] <- data.frame(
-        "id"=c("WP:WP4879", "WP:WP395"),
-        "group"=c("TERM", "TERM"),
-        "alias"=c(paste0("Overlap between signal transduction pathways", 
-            " contributing to LMNA laminopathies"), "IL-4 signaling pathway"),
-        check.names=FALSE, stringsAsFactors=FALSE)
-    
-    expected[["edges"]] <- data.frame(
-        "source"=c("WP:WP4879", "WP:WP4879", "WP:WP4879", "WP:WP4879", 
-                   "WP:WP395", "WP:WP395", "WP:WP395", "WP:WP395"),
-        "target"=c("ENSG00000124762", "ENSG00000171223", "ENSG00000172216",
-                   "ENSG00000245848", "ENSG00000172216", "ENSG00000245848",
-                   "ENSG00000170345", "ENSG00000184557"),
-        "interaction"=rep("contains", 8),
-        check.names=FALSE, stringsAsFactors=FALSE)
-    
-    expect_identical(result, expected)
-})
-
-
-### Tests extractNodesAndEdgesWhenIntersectionForCXJSON() results
-
-context("extractNodesAndEdgesWhenIntersectionForCXJSON() results")
-
-test_that("extractNodesAndEdgesWhenIntersectionForCXJSON() must return expected text", {
-    
-    set.seed(1212)
-    
-    ccDemo <- parentalNapaVsDMSOEnrichment
-    
-    ccData <- ccDemo$result[ccDemo$result$term_id %in% 
-                                c("WP:WP1742", "WP:WP410"), ]
-    
-    result <- enrichViewNet:::extractNodesAndEdgesWhenIntersectionForCXJSON(
-        gostResults=ccData, gostObject=ccDemo)
-    
-    expected <- list()
-    
-    expected[["nodes"]] <- data.frame(
-        "@id"=seq_len(9),
-        "n"=c("ENSG00000105327", "ENSG00000124762", "ENSG00000141682",
-               "ENSG00000051108", "ENSG00000133639", "ENSG00000141232", 
-               "ENSG00000172216", "WP:WP1742", "WP:WP410"),
-        check.names=FALSE, stringsAsFactors=FALSE)
-    
-    expected[["edges"]] <- data.frame(
-        "@id"=seq_len(7) + 9,
-        "s"=c(8, 8, 8, 9, 9, 9, 9),
-        "t"=c(4, 1, 2, 5, 6, 3, 7),
-        "i"=rep("contains", 7),
-        check.names=FALSE, stringsAsFactors=FALSE)
-    
-    expected[["nodeAttributes"]] <- data.frame(
-        "po"=c(seq_len(7), seq_len(7), 8, 9, 8, 9),
-        "n"=c(rep("alias", 7), rep("group", 7), "alias", "alias", "group",
-                "group"),
-        "v"=c("ENSG00000105327", "ENSG00000124762", "ENSG00000141682",
-                "ENSG00000051108", "ENSG00000133639", "ENSG00000141232", 
-                "ENSG00000172216", rep("GENE", 7), "WP:WP1742", "WP:WP410",
-                rep("TERM", 2)),
-        check.names=FALSE, stringsAsFactors=FALSE)
-    
-    expected[["edgeAttributes"]] <- data.frame(
-        "po"=c(seq_len(7)+9, seq_len(7)+9, seq_len(7)+9),
-        "n"=c(rep("name", 7), rep("source", 7), rep("target", 7)),
-        "v"=c("WP:WP1742 (contains) ENSG00000105327",
-              "WP:WP1742 (contains) ENSG00000124762",
-              "WP:WP1742 (contains) ENSG00000141682",
-              "WP:WP410 (contains) ENSG00000051108",
-              "WP:WP410 (contains) ENSG00000133639",
-              "WP:WP410 (contains) ENSG00000141232",
-              "WP:WP410 (contains) ENSG00000172216",
-              rep("WP:WP1742", 3), rep("WP:WP410", 4),
-              "ENSG00000105327", "ENSG00000124762", "ENSG00000141682",
-              "ENSG00000051108", "ENSG00000133639", "ENSG00000141232", 
-              "ENSG00000172216"),
-        check.names=FALSE, stringsAsFactors=FALSE)
-    
-    expect_equal(result, expected)
-})
-
-
-### Tests filterResults() results
-
-context("filterResults() results")
-
-test_that("filterResults() must return expected text", {
-  
-    results <- parentalNapaVsDMSOEnrichment$result
-    
-    expected <- results[results$source == "WP" & 
-                                results$term_id != "WP:000000", ]
-    row.names(expected) <- NULL
-    
-    selected <- enrichViewNet:::filterResults(gostResults=results, source="WP", 
-                         termIDs=NULL, removeRoot=TRUE)
-    row.names(selected) <- NULL
-    
-    expect_equal(selected, expected)
-})

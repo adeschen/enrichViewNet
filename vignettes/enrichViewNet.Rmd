@@ -37,8 +37,8 @@ set.seed(1214)
 
 # Licensing 
 
-The `r Githubpkg("adeschen/enrichViewNet")` package and the underlying 
-`r Githubpkg("adeschen/enrichViewNet")` code are distributed under the 
+The `r Biocpkg("enrichViewNet")` package and the underlying 
+`r Biocpkg("enrichViewNet")` code are distributed under the 
 Artistic license 2.0. You are free to use and redistribute this software. 
 
 <br>
@@ -49,10 +49,10 @@ Artistic license 2.0. You are free to use and redistribute this software.
 If you use this package for a publication, we would ask you to cite the 
 following:
 
-> Deschênes A, Belleau P, Faure R, Fernandes M, Krasnitz A, Tuveson D (2021). 
+> Deschênes A, Belleau P, Faure R, Fernandes M, Krasnitz A, Tuveson D (2023). 
   enrichViewNet: From functional enrichment results to biological networks. 
-  https://github.com/adeschen/enrichViewNet,
-  https://adeschen.github.io/enrichViewNet/.
+  doi:10.18129/B9.bioc.enrichViewNet, 
+  https://bioconductor.org/packages/enrichViewNet. 
 
 <br>
 <br>

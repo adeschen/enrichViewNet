@@ -52,18 +52,18 @@
 #'
 #' ## Loading dataset containing result from an enrichment analysis done with
 #' ## gprofiler2
-#' data(demoGOST)
+#' data(parentalNapaVsDMSOEnrichment)
 #' 
 #' ## Some of the enrichment results present in the dataset
-#' head(demoGOST$result)
+#' head(parentalNapaVsDMSOEnrichment$result)
 #'
 #' ## Create network for Gene Ontology - Molecular Function related results
 #' ## in Cytoscape (when the application is opened)
 #' ## Otherwise, create a CX file in the temporary directory
 #' ## The file can be opened in Cytoscape
-#' createNetwork(gostObject=demoGOST, source="GO:MF", removeRoot=FALSE,
-#'     title="GO Molecular Function Graph", 
-#'     fileName=file.path(tempdir(), "GO_MF_demo.cx"))
+#' createNetwork(gostObject=parentalNapaVsDMSOEnrichment, source="KEGG", 
+#'     removeRoot=FALSE, title="KEGG Graph", 
+#'     fileName=file.path(tempdir(), "KEGG_demo.cx"))
 #' 
 #' 
 #' @author Astrid Deschênes
@@ -83,8 +83,8 @@ createNetwork <- function(gostObject, source=c("TERM_ID", "GO:MF", "GO:CC",
     
     ## Validate parameters
     validateCreateNetworkArguments(gostObject=gostObject, source=source,
-        termIDs = termIDs, removeRoot=removeRoot,  
-        query=query, title=title, collection=collection, fileName=fileName)
+        termIDs = termIDs, removeRoot=removeRoot, query=query, title=title, 
+        collection=collection, fileName=fileName)
     
     ## Extract results
     gostResults <- gostObject$result
@@ -112,6 +112,10 @@ createNetwork <- function(gostObject, source=c("TERM_ID", "GO:MF", "GO:CC",
                 "enrichment term left")
     }
     
+    ## Extract information required to generate network
+    info <- extractNodesAndEdgesInformation(gostResults=gostResults, 
+                                                    gostObject=gostObject)
+    
     ## Test that Cytoscape is running
     isRunning <- isCytoscapeRunning()
     
@@ -119,16 +123,15 @@ createNetwork <- function(gostObject, source=c("TERM_ID", "GO:MF", "GO:CC",
     ## Otherwise, create CX JSON file
     final <- FALSE
     if (isRunning) {
-        final <- createCytoscapeNetwork(gostResults=gostResults, 
-            gostObject=gostObject, title=title, collection=collection)
+        message("Preparing information for Cytoscape.")
+        final <- createNetworkForCytoscape(nodeEdgeInfo=info, title=title, 
+                                                collection=collection)
         message("Cystocape Network created.")
     } else {
-        final <- createCytoscapeCXJSON(gostResults=gostResults, 
-            gostObject=gostObject, title=title) 
+        message("Preparing information for generating CX JSON file.")
+        json <- createCXJSONForCytoscape(nodeEdgeInfo=info, title=title) 
         if (!file.exists(fileName)) {
-            write(final, file=fileName, append=FALSE)
-            message("CX JSON file \"", fileName, 
-                            "\" has been created.\n")
+            write(json, file=fileName, append=FALSE)
         } else {
             id <- 0
             done <- FALSE
@@ -138,15 +141,15 @@ createNetwork <- function(gostObject, source=c("TERM_ID", "GO:MF", "GO:CC",
                 newFileName <- paste0(shortFileName, "_",
                                         sprintf("%02d", id), ".cx")
                 if (!file.exists(newFileName)) {
-                    write(final, file=newFileName, append=FALSE)
+                    write(json, file=newFileName, append=FALSE)
                     done <- TRUE
                 }
-                message("CX JSON file \"", newFileName, 
-                                    "\" has been created.\n")
             }
         }
+        message("CX JSON file \"", fileName, "\" has been created.\n")
+        final <- TRUE
     }
     
-    return(TRUE)
+    return(final)
 }
         
