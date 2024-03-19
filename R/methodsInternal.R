@@ -262,46 +262,6 @@ removeRootTerm <- function(gostResult) {
 }
 
 
-#########################################################################
-## CX JSON section
-#########################################################################
-
-
-#' @title Create meta data section for the CX JSON file
-#'
-#' @description Create meta data section for the CX JSON file that contains
-#' the network information
-#'
-#' @return a \code{JSON} object that contains the meta data section related
-#' to the network
-#'
-#' @examples
-#'
-#' ## Create the JSON object that contains the meta data information
-#' enrichViewNet:::createMetaDataSectionCXJSON()
-#'
-#' @author Astrid Deschênes
-#' @importFrom jsonlite toJSON
-#' @encoding UTF-8
-#' @keywords internal
-createMetaDataSectionCXJSON <- function() {
-    
-    name <- c("nodes", "edges", "edgeAttributes", "nodeAttributes",
-                "cyHiddenAttributes", "cyNetworkRelations", "cyGroups",
-                "networkAttributes", "cyTableColumn", "cySubNetworks")
-    
-    metaData <- data.frame(name=name, version=rep("1.0", length(name)),
-                            stringsAsFactors=FALSE)
-    
-    return(toJSON(list(metaData=metaData)))
-}
-
-
-###############
-### NEW CODE
-###############
-
-
 #' @title Extract node and edge information from the enrichment results
 #'
 #' @description Create a list containing all node and edge information needed
@@ -545,6 +505,40 @@ extractInformationWhenNoIntersection <- function(gostResults, gostObject) {
 }
 
 
+#########################################################################
+## CX JSON section
+#########################################################################
+
+
+#' @title Create meta data section for the CX JSON file
+#'
+#' @description Create meta data section for the CX JSON file that contains
+#' the network information
+#'
+#' @return a \code{JSON} object that contains the meta data section related
+#' to the network
+#'
+#' @examples
+#'
+#' ## Create the JSON object that contains the meta data information
+#' enrichViewNet:::createMetaDataSectionCXJSON()
+#'
+#' @author Astrid Deschênes
+#' @importFrom jsonlite toJSON
+#' @encoding UTF-8
+#' @keywords internal
+createMetaDataSectionCXJSON <- function() {
+    
+    name <- c("nodes", "edges", "edgeAttributes", "nodeAttributes",
+                "cyHiddenAttributes", "cyNetworkRelations", "cyGroups",
+                "networkAttributes", "cyTableColumn", "cySubNetworks")
+    
+    metaData <- data.frame(name=name, version=rep("1.0", length(name)),
+                            stringsAsFactors=FALSE)
+    
+    return(toJSON(list(metaData=metaData)))
+}
+
 
 #' @title Create network and load it into Cytoscape
 #'
@@ -590,7 +584,6 @@ extractInformationWhenNoIntersection <- function(gostResults, gostObject) {
 #' @keywords internal
 createNetworkForCytoscape <- function(nodeEdgeInfo, title, collection) {
     
-    
     nodes <- rbind(nodeEdgeInfo$termNodes, nodeEdgeInfo$geneNodes)
     
     ## Create the network using JSON data format and posting it to Cytoscape
@@ -614,7 +607,6 @@ createNetworkForCytoscape <- function(nodeEdgeInfo, title, collection) {
     
     return(TRUE)
 }
-
 
 
 #' @title Transform the node and edge information into a format easy to process 
