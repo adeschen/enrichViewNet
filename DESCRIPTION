@@ -36,6 +36,7 @@ Imports: gprofiler2,
     jsonlite,
     stringr,
     enrichplot,
+    DOSE,
     methods
 Suggests: 
     BiocStyle,

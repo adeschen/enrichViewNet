@@ -651,11 +651,10 @@ createNetworkForCytoscape <- function(nodeEdgeInfo, title, collection) {
 #' @encoding UTF-8
 #' @keywords internal
 formatInformationForCXJSON <- function(results) {
-    
-   ## extractNodesAndEdgesWhenIntersectionForCXJSON <- function(gostResults) {
    
     #####################    
     ## Gene section
+    
     nbGenes <- nrow(results$geneNodes)
     results$geneNodes$gene_id <- seq_len(nbGenes)
         

@@ -570,5 +570,3 @@ test_that("extractInformationWhenIntersection() must return expected text", {
     
     expect_identical(result, expected)
 })
-
-
