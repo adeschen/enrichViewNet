@@ -484,16 +484,16 @@ createBasicEmap <- function(gostResults, backgroundGenes,
 #' ## Only retain the results section
 #' gostResults <- as.data.frame(parentalNapaVsDMSOEnrichment$result)
 #' 
-#' ## Limit the results to Wikipathways and KEGG
-#' gostResultsWP <- gostResults[which(gostResults$source == "WP"),]
+#' ## Limit the results subsection of REACTOME and KEGG
+#' gostResultsREAC <- gostResults[which(gostResults$source == "REAC"),]
+#' gostResultsREAC <- gostResultsREAC[1:13, ]
 #' gostResultsKEGG <- gostResults[which(gostResults$source == "KEGG"),]
 #' 
 #' ## Extract meta data information
-#' queryList <- list("parental_napa_vs_DMSO - WP", 
-#'         "parental_napa_vs_DMSO - KEGG")
+#' queryList <- list("parental - REACTOME", "parental - KEGG")
 #' 
 #' ## Create basic enrichment map using Wikipathways terms
-#' enrichViewNet:::createMultiEmap(gostResultsList=list(gostResultsWP, 
+#' enrichViewNet:::createMultiEmap(gostResultsList=list(gostResultsREAC, 
 #'     gostResultsKEGG), queryList=queryList, showCategory=30L, 
 #'     groupCategory=FALSE, categoryLabel=1, categoryNode=1, force=TRUE)
 #'     
