@@ -90,7 +90,7 @@ enrichViewNet:::validateCreateEnrichMapMultiArguments(
     queryList=list("parental_napa_vs_DMSO", "rosa_napa_vs_DMSO"), 
     source="GO:BP", termIDs=NULL, removeRoot=FALSE, 
     showCategory=20, groupCategory=FALSE, 
-    categoryLabel=1.1, categoryNode=1)
+    categoryLabel=1.1, categoryNode=1, force=FALSE)
 
 }
 \author{

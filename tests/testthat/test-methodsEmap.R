@@ -323,7 +323,6 @@ test_that("createEnrichMapMulti() must return error when queryList is longer tha
 })
 
 
-
 test_that("createEnrichMapMulti() must return error when one query in queryList is not in gostObject", {
     
     gostTerm <- demoGOST

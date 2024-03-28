@@ -187,7 +187,7 @@ validateCreateEnrichMapArguments <- function(gostObject, query, source,
 #'     queryList=list("parental_napa_vs_DMSO", "rosa_napa_vs_DMSO"), 
 #'     source="GO:BP", termIDs=NULL, removeRoot=FALSE, 
 #'     showCategory=20, groupCategory=FALSE, 
-#'     categoryLabel=1.1, categoryNode=1)
+#'     categoryLabel=1.1, categoryNode=1, force=FALSE)
 #' 
 #' @author Astrid Deschênes
 #' @encoding UTF-8
@@ -489,7 +489,8 @@ createBasicEmap <- function(gostResults, backgroundGenes,
 #' gostResultsKEGG <- gostResults[which(gostResults$source == "KEGG"),]
 #' 
 #' ## Extract meta data information
-#' queryList <- list("parental_napa_vs_DMS", "parental_napa_vs_DMS")
+#' queryList <- list("parental_napa_vs_DMSO - WP", 
+#'         "parental_napa_vs_DMSO - KEGG")
 #' 
 #' ## Create basic enrichment map using Wikipathways terms
 #' enrichViewNet:::createMultiEmap(gostResultsList=list(gostResultsWP, 
@@ -505,17 +506,6 @@ createBasicEmap <- function(gostResults, backgroundGenes,
 #' @keywords internal
 createMultiEmap <- function(gostResultsList, queryList, showCategory, 
     groupCategory, categoryLabel, categoryNode, force) {
-    
-    ## Extract gene list for each term
-    info <- lapply(gostResultsList, FUN = function(gostResults) {
-        geneSets <- lapply(seq_len(nrow(gostResults)), 
-            FUN=function(x, gostData) {
-                str_split(gostData$intersection[x], pattern=",")[[1]]
-            }, gostData=gostResults
-        )
-        names(geneSets) <- gostResults$term_id
-        return(geneSets)
-    })
     
     resF <- list()
     geneClusters <- list()
@@ -537,13 +527,26 @@ createMultiEmap <- function(gostResultsList, queryList, showCategory,
         resF[[i]] <- resultDF
         
         geneClusters[[queryList[[i]]]] <- 
-            unique(unlist(stringr::str_split(resultDF$intersection, ",")))
+            unique(unlist(stringr::str_split(gostResults$intersection, ",")))
     }
     clProfDF <- do.call(rbind, resF)
     
     clProfDF$Cluster = factor(clProfDF$Cluster)
     clProfDF$geneID <- stringr::str_replace_all(string = clProfDF$geneID,
-                                                    pattern = ",", "/") 
+                                                pattern = ",", "/") 
+    
+    ## Problem when identical description 
+    if (any(table(clProfDF$Description) > 1)) {
+        test <- which(table(clProfDF$Description) > 1)
+        for (i in names(test)) {
+            resTest <- clProfDF[clProfDF$Description == i, ]
+            if (length(unique(resTest$ID)) != 1) {
+                clProfDF$Description[clProfDF$Description == i] <- 
+                    paste0(clProfDF$Description[clProfDF$Description == i], 
+                            " (", clProfDF$ID[clProfDF$Description == i], ")")   
+            }
+        }
+    }
     
     res <- new("compareClusterResult",
                compareClusterResult = clProfDF,
@@ -556,9 +559,11 @@ createMultiEmap <- function(gostResultsList, queryList, showCategory,
     
     kegg_compar <- pairwise_termsim(res)  
     
-    graphEmap <- emapplot(kegg_compar, showCategory=length(table(clProfDF$Description)),
-        cluster.params=list(cluster = FALSE),
-        cex.params=list(category_node=categoryNode, category_label=categoryLabel),
+    graphEmap <- emapplot(kegg_compar, 
+        showCategory=length(table(clProfDF$Description)),
+        cluster.params=list(cluster=FALSE),
+        cex.params=list(category_node=categoryNode, 
+                            category_label=categoryLabel),
         force=force, alpha=0.9, repel=TRUE)
     
     return(graphEmap)

@@ -63,7 +63,8 @@ gostResultsWP <- gostResults[which(gostResults$source == "WP"),]
 gostResultsKEGG <- gostResults[which(gostResults$source == "KEGG"),]
 
 ## Extract meta data information
-queryList <- list("parental_napa_vs_DMS", "parental_napa_vs_DMS")
+queryList <- list("parental_napa_vs_DMSO - WP", 
+        "parental_napa_vs_DMSO - KEGG")
 
 ## Create basic enrichment map using Wikipathways terms
 enrichViewNet:::createMultiEmap(gostResultsList=list(gostResultsWP, 
