@@ -531,21 +531,13 @@ createMultiEmap <- function(gostResultsList, queryList, showCategory,
     }
     clProfDF <- do.call(rbind, resF)
     
-    clProfDF$Cluster = factor(clProfDF$Cluster)
+    clProfDF$Cluster  <- factor(clProfDF$Cluster)
     clProfDF$geneID <- stringr::str_replace_all(string = clProfDF$geneID,
                                                 pattern = ",", "/") 
     
     ## Problem when identical description 
     if (any(table(clProfDF$Description) > 1)) {
-        test <- which(table(clProfDF$Description) > 1)
-        for (i in names(test)) {
-            resTest <- clProfDF[clProfDF$Description == i, ]
-            if (length(unique(resTest$ID)) != 1) {
-                clProfDF$Description[clProfDF$Description == i] <- 
-                    paste0(clProfDF$Description[clProfDF$Description == i], 
-                            " (", clProfDF$ID[clProfDF$Description == i], ")")   
-            }
-        }
+        clProfDF <- manageNameDuplicationInEmap(clProfDF=clProfDF)
     }
     
     res <- new("compareClusterResult",
@@ -567,4 +559,58 @@ createMultiEmap <- function(gostResultsList, queryList, showCategory,
         force=force, alpha=0.9, repel=TRUE)
     
     return(graphEmap)
+}
+
+
+#' @title Change name description in data frame when more than one term as 
+#' the same name
+#' 
+#' @description The function adds the ID of the term at the name of the name 
+#' description when terms with different ID share the same name. For example, 
+#' "MAPK pathway" would become "MAPK pathway (KEGG:04010)". 
+#' 
+#' @param clProfDF a \code{data.frame} containing the enrichment 
+#' terms that are going to be graphed as an enrichment map. The 
+#' \code{data.frame} must contain at least one case of duplicated name 
+#' descriptions for different term IDs.
+#' 
+#' @return a \code{data.frame} with the name descriptions modified for terms 
+#' with duplicated name descriptions but different term IDs.
+#' 
+#' @examples
+#'
+#' ## Data frame with duplicated name descriptions for different IDs
+#' clustData <- data.frame(Cluster=c("group 1" , "group 1", "group 2"), 
+#'     ID=c("WP:WP4925", "WP:WP382", "KEGG:04010"),
+#'     Description=c("Unfolded protein response", 
+#'                     rep("MAPK signaling pathway", 2)),
+#'     GeneRatio=c("4/157", "3/157", "3/157"),
+#'     BgRatio=c("4/24022", "3/24022", "3/24022"),
+#'     pvalues=c(1.55e-4, 8.13e-8, 4.33e-5),
+#'     p.adjust=c(1e-3, 1e-3, 1.4e-3), qvalue=c(1e-3, 1e-3, 1.4e-3), 
+#'     geneID=c("ENSG000107968/ENSG000120129/ENSG000123358/ENSG000158050",
+#'         "ENSG000107968/ENSG000120129/ENSG000158050",
+#'         "ENSG000107968/ENSG000120129/ENSG000158050"),
+#'     Count=c(4, 3, 3))
+#' 
+#' ## Change the name descriptions for the duplicated terms
+#' enrichViewNet:::manageNameDuplicationInEmap(clProfDF=clustData)
+#'     
+#' @author Astrid Deschênes
+#' @encoding UTF-8
+#' @keywords internal
+manageNameDuplicationInEmap <- function(clProfDF) {
+    
+    ## Problem when identical description 
+    test <- which(table(clProfDF$Description) > 1)
+    for (i in names(test)) {
+        resTest <- clProfDF[clProfDF$Description == i, ]
+        if (length(unique(resTest$ID)) != 1) {
+            clProfDF$Description[clProfDF$Description == i] <- 
+                paste0(clProfDF$Description[clProfDF$Description == i], 
+                        " (", clProfDF$ID[clProfDF$Description == i], ")")   
+        }
+    }
+    
+    return(clProfDF)
 }
