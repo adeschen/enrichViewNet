@@ -22,13 +22,13 @@ createEnrichMapMulti(
 )
 }
 \arguments{
-\item{gostObjectList}{a \code{list} corresponding to gprofiler2 enrichment 
+\item{gostObjectList}{a TODO \code{list} corresponding to gprofiler2 enrichment 
 output that contains and that contains 
 the results from an enrichment analysis.}
 
 \item{queryList}{TODO a \code{character} string representing the name of the query 
 that is going to be used to generate the graph. The query must exist in the 
-\code{gostObject} object.}
+\code{gostObjectList} object.}
 
 \item{source}{a \code{character} string representing the selected source 
 that will be used to generate the network. To hand-pick the terms to be 

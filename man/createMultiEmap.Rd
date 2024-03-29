@@ -17,6 +17,12 @@ createMultiEmap(
 )
 }
 \arguments{
+\item{gostResultsList}{a TODO \code{data.frame} containing the enrichment 
+results to be plot.}
+
+\item{queryList}{a TODO \code{vector} of \code{character} string 
+representing the name of the genes present in the request.}
+
 \item{showCategory}{a positive \code{integer} or a \code{vector} of 
 \code{characters} representing terms.  If a \code{integer}, the first 
 \code{n} terms will be displayed. If \code{vector} of terms, 
@@ -37,15 +43,6 @@ width.}
 
 \item{force}{a \code{logical} indicating if the repulsion between 
 overlapping text labels should be forced.}
-
-\item{gostResults}{a \code{data.frame} containing the enrichment 
-results to be plot.}
-
-\item{backgroundGenes}{a \code{vector} of \code{character} string 
-representing the name of the genes present in the request.}
-
-\item{significantMethod}{a \code{character} string representing the name 
-of the multiple testing correction method used on the results.}
 }
 \value{
 a \code{ggplot} object representing the enrichment map.

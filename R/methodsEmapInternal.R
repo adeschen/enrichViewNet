@@ -194,7 +194,7 @@ validateCreateEnrichMapArguments <- function(gostObject, query, source,
 #'     queryList=list("parental_napa_vs_DMSO", "rosa_napa_vs_DMSO"), 
 #'     source="GO:BP", termIDs=NULL, removeRoot=FALSE, 
 #'     showCategory=20, groupCategory=FALSE, 
-#'     categoryLabel=1.1, categoryNode=1, force=FALSE)
+#'     categoryLabel=1.1, categoryNode=1, line=1.2, force=FALSE)
 #' 
 #' @author Astrid Deschênes
 #' @encoding UTF-8
@@ -465,10 +465,10 @@ createBasicEmap <- function(gostResults, backgroundGenes,
 #' @description The function creates a basic enrichment map using functional 
 #' enrichment results.
 #' 
-#' @param gostResults a \code{data.frame} containing the enrichment 
+#' @param gostResultsList a TODO \code{data.frame} containing the enrichment 
 #' results to be plot.
 #' 
-#' @param backgroundGenes a \code{vector} of \code{character} string 
+#' @param queryList a TODO \code{vector} of \code{character} string 
 #' representing the name of the genes present in the request.
 #' 
 #' @param showCategory a positive \code{integer} or a \code{vector} of 
@@ -485,9 +485,6 @@ createBasicEmap <- function(gostResults, backgroundGenes,
 #' 
 #' @param categoryNode a positive \code{numeric} representing the amount by 
 #' which plotting category nodes should be scaled relative to the default (1). 
-#' 
-#' @param significantMethod a \code{character} string representing the name 
-#' of the multiple testing correction method used on the results.
 #' 
 #' @param line a non-negative \code{numeric} representing the scale of line 
 #' width.

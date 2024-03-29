@@ -140,13 +140,13 @@ createEnrichMap <- function(gostObject, query, source=c("TERM_ID", "GO:MF",
 #' term IDs. The map is only generated when there is at least on 
 #' significant term to graph.
 #' 
-#' @param gostObjectList a \code{list} corresponding to gprofiler2 enrichment 
+#' @param gostObjectList a TODO \code{list} corresponding to gprofiler2 enrichment 
 #' output that contains and that contains 
 #' the results from an enrichment analysis.
 #' 
 #' @param queryList TODO a \code{character} string representing the name of the query 
 #' that is going to be used to generate the graph. The query must exist in the 
-#' \code{gostObject} object.
+#' \code{gostObjectList} object.
 #' 
 #' @param source a \code{character} string representing the selected source 
 #' that will be used to generate the network. To hand-pick the terms to be 
