@@ -17,11 +17,13 @@ createMultiEmap(
 )
 }
 \arguments{
-\item{gostResultsList}{a TODO \code{data.frame} containing the enrichment 
-results to be plot.}
+\item{gostResultsList}{a \code{list} of \code{data.frame} containing 
+the enrichment results to be plot with different group identification.}
 
-\item{queryList}{a TODO \code{vector} of \code{character} string 
-representing the name of the genes present in the request.}
+\item{queryList}{a \code{list} of \code{character} string 
+representing the name of query retained for each enrichment results present 
+in the \code{gostResultsList} parameter. The query should be present in its 
+associated enrichment results.}
 
 \item{showCategory}{a positive \code{integer} or a \code{vector} of 
 \code{characters} representing terms.  If a \code{integer}, the first 
@@ -45,7 +47,8 @@ width.}
 overlapping text labels should be forced.}
 }
 \value{
-a \code{ggplot} object representing the enrichment map.
+a \code{ggplot} object representing the enrichment map with 
+different colors for each group of enrichment results.
 }
 \description{
 The function creates a basic enrichment map using functional 
