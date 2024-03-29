@@ -402,3 +402,20 @@ test_that("createEnrichMapMulti() must return error when one query in queryList 
         removeRoot=TRUE, showCategory=30, groupCategory=FALSE, categoryLabel=1,
         categoryNode=1, force=FALSE), error_message, fixed=TRUE)
 })
+
+
+
+test_that("createEnrichMapMulti() must return error when one object in gostObjectList in a number", {
+    
+    gostTerm <- demoGOST
+    
+    error_message <- paste0("The gostObjectList should only contain a list ", 
+        "of enrichment results. Enrichment results are lists with meta ", 
+        "and result as entries corresponding to gprofiler2 ", 
+        "enrichment output.")
+    
+    expect_error(createEnrichMapMulti(gostObjectList=list(gostTerm, 33), 
+        queryList=list("query_1", "query_1"), source="GO:CC", termIDs=NULL, 
+        removeRoot=TRUE, showCategory=30, groupCategory=FALSE, categoryLabel=1,
+        categoryNode=1, force=FALSE), error_message, fixed=TRUE)
+})
