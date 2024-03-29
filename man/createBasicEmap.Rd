@@ -13,6 +13,7 @@ createBasicEmap(
   categoryLabel,
   categoryNode,
   significantMethod,
+  line,
   force
 )
 }
@@ -40,6 +41,9 @@ which plotting category nodes should be scaled relative to the default (1).}
 
 \item{significantMethod}{a \code{character} string representing the name 
 of the multiple testing correction method used on the results.}
+
+\item{line}{a non-negative \code{numeric} representing the scale of line 
+width.}
 
 \item{force}{a \code{logical} indicating if the repulsion between 
 overlapping text labels should be forced.}
@@ -77,7 +81,7 @@ significantMethod <- meta$query_metadata$significance_threshold_method
 enrichViewNet:::createBasicEmap(gostResults=gostResults, 
     backgroundGenes=backgroundGenes, showCategory=30L, 
     groupCategory=FALSE, categoryLabel=1, categoryNode=1,
-    significantMethod=significantMethod)
+    significantMethod=significantMethod, line=1, force=FALSE)
     
 }
 \author{

@@ -48,6 +48,9 @@
 #' which plotting category nodes should be scaled relative to the default (1).
 #' Default: \code{1}.
 #'
+#' @param line a non-negative \code{numeric} representing the scale of line 
+#' width. Default: \code{1}.
+#' 
 #' @param force a \code{logical} indicating if the repulsion between 
 #' overlapping text labels should be forced. Default: \code{TRUE}.
 #'
@@ -77,7 +80,7 @@ createEnrichMap <- function(gostObject, query, source=c("TERM_ID", "GO:MF",
         "GO:CC", "GO:BP", "KEGG", "REAC", "TF", "MIRNA", "HPA", "CORUM", 
         "HP", "WP"), termIDs=NULL, removeRoot=TRUE,  
         showCategory=30L, groupCategory=FALSE, categoryLabel=1,
-        categoryNode=1, force=TRUE) {
+        categoryNode=1, line=1, force=TRUE) {
     
     ## Validate source is among the possible choices
     source <- match_arg(source, ignore_case=TRUE)
@@ -86,7 +89,8 @@ createEnrichMap <- function(gostObject, query, source=c("TERM_ID", "GO:MF",
     validateCreateEnrichMapArguments(gostObject=gostObject, query=query, 
         source=source, termIDs=termIDs, removeRoot=removeRoot, 
         showCategory=showCategory, categoryLabel=categoryLabel,
-        groupCategory=groupCategory, categoryNode=categoryNode, force=force)
+        groupCategory=groupCategory, categoryNode=categoryNode, 
+        line=line, force=force)
     
     ## Extract results
     gostResults <- gostObject$result
@@ -121,7 +125,7 @@ createEnrichMap <- function(gostObject, query, source=c("TERM_ID", "GO:MF",
                 backgroundGenes=backgroundGenes, 
                 showCategory=showCategory, categoryLabel=categoryLabel,
                 groupCategory=groupCategory, categoryNode=categoryNode, 
-                significantMethod=significantMethod)
+                significantMethod=significantMethod, line=line, force=force)
     
     return(emap)
 }
@@ -176,6 +180,9 @@ createEnrichMap <- function(gostObject, query, source=c("TERM_ID", "GO:MF",
 #' which plotting category nodes should be scaled relative to the default (1).
 #' Default: \code{1}.
 #' 
+#' @param line a non-negative \code{numeric} representing the scale of line 
+#' width. Default: \code{1}.
+#'
 #' @param force a \code{logical} indicating if the repulsion between 
 #' overlapping text labels should be forced. Default: \code{TRUE}.
 #' 
@@ -208,7 +215,7 @@ createEnrichMap <- function(gostObject, query, source=c("TERM_ID", "GO:MF",
 createEnrichMapMulti <- function(gostObjectList, queryList, source=c("TERM_ID", 
     "GO:MF", "GO:CC", "GO:BP", "KEGG", "REAC", "TF", "MIRNA", "HPA", "CORUM", 
     "HP", "WP"), termIDs=NULL, removeRoot=TRUE, showCategory=30L, 
-    groupCategory=FALSE, categoryLabel=1, categoryNode=1, force=TRUE) {
+    groupCategory=FALSE, categoryLabel=1, categoryNode=1, line=1, force=TRUE) {
     
     ## Validate source is among the possible choices
     source <- match_arg(source, ignore_case=TRUE)
@@ -218,7 +225,7 @@ createEnrichMapMulti <- function(gostObjectList, queryList, source=c("TERM_ID",
         queryList=queryList, source=source, termIDs=termIDs, 
         removeRoot=removeRoot, showCategory=showCategory, 
         categoryLabel=categoryLabel, groupCategory=groupCategory, 
-        categoryNode=categoryNode, force=force)
+        categoryNode=categoryNode, line=line, force=force)
     
     ## Extract results
     gostResultsList <- lapply(gostObjectList, FUN=function(x) {x$result})
@@ -255,7 +262,7 @@ createEnrichMapMulti <- function(gostObjectList, queryList, source=c("TERM_ID",
     emap <- createMultiEmap(gostResultsList=gostResultsList, 
                 queryList=queryList, showCategory=showCategory, 
                 categoryLabel=categoryLabel, groupCategory=groupCategory, 
-                categoryNode=categoryNode, force=force)
+                categoryNode=categoryNode, line=line, force=force)
     
     return(emap)
 }

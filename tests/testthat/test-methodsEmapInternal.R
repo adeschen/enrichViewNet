@@ -16,7 +16,7 @@ test_that("validateCreateEnrichMapArguments() must return expected result", {
         gostObject=parentalNapaVsDMSOEnrichment, query="parental_napa_vs_DMSO", 
         source="GO:CC", termIDs=NULL, removeRoot=TRUE, 
         showCategory=30, groupCategory=FALSE, categoryLabel=1, categoryNode=1, 
-        force=TRUE)
+        line=1, force=TRUE)
     
     expect_true(result)
 })
@@ -33,7 +33,8 @@ test_that("validateCreateEnrichMapMultiArguments() must return expected result",
                                         rosaNapaVsDMSOEnrichment), 
         queryList=list("parental_napa_vs_DMSO", "rosa_napa_vs_DMSO"), 
         source="GO:CC", termIDs=NULL, removeRoot=TRUE, showCategory=30, 
-        groupCategory=FALSE, categoryLabel=1, categoryNode=1, force=TRUE)
+        groupCategory=FALSE, categoryLabel=1, categoryNode=1, line=1, 
+        force=TRUE)
     
     expect_true(result)
 })
@@ -47,7 +48,7 @@ test_that("validateCreateEnrichMapSubSectionArguments() must return expected res
     
     result <- enrichViewNet:::validateCreateEnrichMapSubSectionArguments(
         showCategory=30, groupCategory=FALSE, categoryLabel=1, categoryNode=1,
-        force=TRUE)
+        line=2, force=TRUE)
     
     expect_true(result)
 })
