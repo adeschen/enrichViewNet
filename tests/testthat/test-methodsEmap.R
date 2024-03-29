@@ -428,7 +428,6 @@ test_that("createEnrichMapMulti() must return error when no enriched term for se
         categoryNode=1, force=FALSE), error_message, fixed=TRUE)
 })
 
-
 test_that("createEnrichMapMulti() must return error when number in queryList", {
     
     gostTerm <- demoGOST
@@ -438,6 +437,19 @@ test_that("createEnrichMapMulti() must return error when number in queryList", {
     
     expect_error(createEnrichMapMulti(gostObjectList=list(gostTerm, gostTerm), 
         queryList=list("query_1", 33), source="WP", termIDs=NULL, 
+        removeRoot=TRUE, showCategory=30, groupCategory=FALSE, categoryLabel=1,
+        categoryNode=1, force=FALSE), error_message, fixed=TRUE)
+})
+
+test_that("createEnrichMapMulti() must return error when number in queryList", {
+    
+    gostTerm <- demoGOST
+    
+    error_message <- paste0("A vector of terms should be given through the ",
+                "\'termIDs\' parameter when source is \'TERM_ID\'.")
+    
+    expect_error(createEnrichMapMulti(gostObjectList=list(gostTerm, gostTerm), 
+        queryList=list("query_1", "query_1"), source="TERM_ID", termIDs=NULL, 
         removeRoot=TRUE, showCategory=30, groupCategory=FALSE, categoryLabel=1,
         categoryNode=1, force=FALSE), error_message, fixed=TRUE)
 })
