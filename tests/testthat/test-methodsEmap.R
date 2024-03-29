@@ -287,6 +287,47 @@ test_that("createEnrichMap() must return error when force is a string", {
         fixed=TRUE)
 })
 
+test_that("createEnrichMap() must return error when not term for selected source", {
+    
+    gostTerm <- demoGOST
+    gostTerm$result <- gostTerm$result[gostTerm$result$source != "WP", ]
+    
+    error_message <- paste0("There is no enriched term for the selected ", 
+                                "source \'WP'.")
+    
+    expect_error(createEnrichMap(gostObject=gostTerm, query="query_1", 
+        source="WP", removeRoot=TRUE,  showCategory=30, groupCategory=FALSE, 
+        categoryLabel=1, categoryNode=1, line=1, force=TRUE), error_message, 
+                 fixed=TRUE)
+})
+
+test_that("createEnrichMap() must return error when not term id and TERM_ID selected", {
+    
+    gostTerm <- demoGOST
+    
+    error_message <- paste0("A vector of terms should be given through the ",
+                        "\'termIDs\' parameter when source is \'TERM_ID\'.")
+    
+    expect_error(createEnrichMap(gostObject=gostTerm, query="query_1", 
+        source="TERM_ID", removeRoot=TRUE,  showCategory=30, 
+        groupCategory=FALSE, categoryLabel=1, categoryNode=1, line=1, 
+        force=TRUE), error_message, fixed=TRUE)
+})
+
+test_that("createEnrichMap() must return error when not all term ids are present", {
+    
+    gostTerm <- demoGOST
+    
+    error_message <- paste0("Not all listed terms are present in the  ",
+                                    "enrichment results.")
+    
+    expect_error(createEnrichMap(gostObject=gostTerm, query="query_1", 
+        source="TERM_ID", termIDs = c("GO:0051173", "GO:0065004", "GO:1905898"), 
+        removeRoot=TRUE,  showCategory=30, 
+        groupCategory=FALSE, categoryLabel=1, categoryNode=1, line=1, 
+        force=TRUE), error_message, fixed=TRUE)
+})
+
 
 ### Tests createEnrichMapMulti() results
 

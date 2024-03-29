@@ -240,8 +240,8 @@ validateCreateEnrichMapMultiArguments <- function(gostObjectList, queryList,
         queryL, gostL) {res <- as.data.frame(gostL[[x]]$result); 
         queryL[[x]] %in% unique(res$query)}, queryL=queryList, 
         gostL=gostObjectList)))) {
-        stop("Each query name present in the \'queryList'\ parameter must be ", 
-                "present in the associated enrichment object.")
+            stop("Each query name present in the \'queryList'\ parameter ", 
+                "must be present in the associated enrichment object.")
     }
     
     if (source != "TERM_ID") {
