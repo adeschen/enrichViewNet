@@ -574,7 +574,8 @@ createMultiEmap <- function(gostResultsList, queryList, showCategory,
     kegg_compar <- pairwise_termsim(res)  
     
     graphEmap <- emapplot(kegg_compar, 
-        showCategory=showCategory, group_category=groupCategory,
+        showCategory=showCategory, 
+        cluster.params = list(cluster = groupCategory),
         cex.params=list(category_node=categoryNode, line=line,
                             category_label=categoryLabel),
         force=force)
