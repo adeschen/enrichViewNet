@@ -42,6 +42,7 @@ Suggests:
     BiocStyle,
     knitr,
     rmarkdown,
+    ggplot2,
     testthat
 biocViews: BiologicalQuestion, 
     Software,

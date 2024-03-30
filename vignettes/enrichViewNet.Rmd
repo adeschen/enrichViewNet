@@ -4,7 +4,7 @@ author: Astrid Deschênes, Pascal Belleau, Robert L Faure and Maria J Fernandes
 output:
   BiocStyle::html_document:
     toc: true
-    toc_depth: 2
+    toc_depth: 3
 pkgdown:
   as_is: true
 bibliography: enrichViewNet.bibtex
@@ -22,6 +22,7 @@ suppressPackageStartupMessages({
   library(knitr)
   library(enrichViewNet)
   library(gprofiler2)
+  library(ggplot2)
 })
 
 set.seed(1214)
@@ -423,7 +424,6 @@ _NGF-stimulated transcription_ terms) are linked through enriched genes.
 <br>
 
 
-
 # Transforming enrichment results into an enrichment map
 
 
@@ -435,7 +435,7 @@ The key steps for the workflow are:
 Step                              | Function                    
 --------------------------------- | ---------------------------------------------
  Run an enrichment analysis       | `gprofiler2::gost()`
- Create an enrichment map          | `createEnrichMap()`
+ Create an enrichment map         | `createEnrichMap()`
 
 The `package::function()` notation is used for functions from other packages.
 
@@ -528,9 +528,7 @@ data(parentalNapaVsDMSOEnrichment)
 ## Set seed to ensure reproducible results
 set.seed(121)
 
-## Create network for Kegg selected terms
-## The 'source="TERM_ID"' parameter enable to specify a personalized 
-## list of terms of interest with 'termIDs' argument
+## Create network for all Kegg terms
 createEnrichMap(gostObject=parentalNapaVsDMSOEnrichment, 
                   query="parental_napa_vs_DMSO", 
                   source="KEGG")
@@ -539,11 +537,61 @@ createEnrichMap(gostObject=parentalNapaVsDMSOEnrichment,
 
 
 <br>
-<br>
 
 The Kegg enrichment map shows that the _MAPK signaling pathway_ term is 
 highly influential in the network. In addition, the 
 _Transcriptional misregulation in cancer_ term is the only isolated node.
+
+<br>
+
+### Effect of _seed_ value
+
+The layering of the nodes is not always optimal. As the layering is affected by 
+the _seed_ value, you might want to test few _seed_ values, using the 
+_set.seed()_ function, before selecting the final graph.
+
+
+```{r runCreateEmap02, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE, fig.cap="An enrichment map with personalized colors.", fig.align="center"}
+
+## Set seed to ensure reproducible results
+set.seed(91)
+
+## Create network for all Kegg terms
+createEnrichMap(gostObject=parentalNapaVsDMSOEnrichment, 
+                  query="parental_napa_vs_DMSO", 
+                  source="KEGG")
+    
+```
+
+<br>
+
+### Enrichment map customization
+
+
+The output of the _createEnrichMap()_ function is a _ggplot_ object. 
+This means that the graph can be personalized. For example, the default 
+colors can be changed:
+
+
+```{r runCreateEmap03, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE, fig.cap="An enrichment map with personalized colors.", fig.align="center"}
+
+## The ggplot2 library is required
+library(ggplot2)
+
+## Set seed to ensure reproducible results
+set.seed(91)
+
+## Create network for all Kegg terms
+graphKegg <- createEnrichMap(gostObject=parentalNapaVsDMSOEnrichment, 
+                  query="parental_napa_vs_DMSO", 
+                  source="KEGG")
+
+## Nodes with lowest p-values will be in orange and highest p-values in black
+## The title of the legend is also modified
+graphKegg + scale_fill_gradient(name="P-value adjusted", low="orange", 
+                                    high="black")
+    
+```
 
 <br>
 <br>
