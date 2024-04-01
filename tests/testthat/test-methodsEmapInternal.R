@@ -1,6 +1,7 @@
 ### Unit tests for methodsEmapInternal.R functions
 
 library(enrichViewNet)
+library(ggplot2)
 
 data(parentalNapaVsDMSOEnrichment)
 data(rosaNapaVsDMSOEnrichment)
@@ -89,3 +90,32 @@ test_that("manageNameDuplicationInEmap() must return expected result", {
 
     expect_equal(result$Description, expected)
 })
+
+
+### Tests createBasicEmap() results
+
+context("createBasicEmap() results")
+
+test_that("createBasicEmap() must return expected result", {
+    
+    gostResults <- as.data.frame(parentalNapaVsDMSOEnrichment$result)
+    gostResults <- gostResults[which(gostResults$source == "KEGG"),]
+    gostResults <- gostResults[which(gostResults$term_id != "KEGG:00000"),]
+    
+    backgroundGenes <- parentalNapaVsDMSOEnrichment$meta$query_metadata$queries[["parental_napa_vs_DMSO"]]
+    
+    set.seed(111)
+    
+    graphRes <- enrichViewNet:::createBasicEmap(gostResults=gostResults, 
+        backgroundGenes=backgroundGenes, showCategory=30L, 
+        groupCategory=FALSE, categoryLabel=1, categoryNode=1,
+        significantMethod="FDR", line=1, force=FALSE)
+    
+    expect_true(is.ggplot(graphRes))
+    
+    expect_true(all(graphRes$data$name == gostResults$term_name))
+    
+    expect_true(all(graphRes$data$size == gostResults$intersection_size))
+})
+    
+    
