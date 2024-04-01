@@ -657,6 +657,11 @@ createEnrichMapMulti(gostObjectList=gostObjectList,
 
 <br>
 
+There are 4 KEEG enrichment terms that are shared by the 2 experiments. 
+In additions, the _Viral carinogenesis_ term is the only one that is not 
+related to the other KEGG terms.
+
+<br>
 
 ### Effect of _seed_ value
 
