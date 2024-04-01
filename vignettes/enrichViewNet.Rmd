@@ -240,7 +240,7 @@ library(gprofiler2)
 
 ## The dataset of differentially expressed genes done between 
 ## napabucasin treated and DMSO control parental (Froeling et al 2019)
-## All genes testd are present
+## All genes tested are present
 data("parentalNapaVsDMSODEG")
 
 ## Retain significant results 
@@ -456,7 +456,7 @@ library(gprofiler2)
 
 ## The dataset of differentially expressed genes done between 
 ## napabucasin treated and DMSO control parental (Froeling et al 2019)
-## All genes testd are present
+## All genes tested are present
 data("parentalNapaVsDMSODEG")
 
 ## Retain significant results 
@@ -595,6 +595,123 @@ graphKegg + scale_fill_gradient(name="P-value adjusted", low="orange",
 
 <br>
 <br>
+
+
+# Transforming enrichment results into an enrichment map with groups
+
+
+The following workflow gives an overview of the steps associated to the 
+creation of an enrichment map with groups. Groups can be created from the 
+same enrichment analysis or can come from different enrichment analyses.
+
+The key steps for the workflow are:
+
+Step                                           | Function                    
+---------------------------------------------- | ------------------------------
+ Run one or multiple enrichment analyses       | `gprofiler2::gost()`
+ Create an enrichment map                      | `createEnrichMapMulti()`
+
+The `package::function()` notation is used for functions from other packages.
+
+<br>
+
+The first step has been presented in the previous section.
+
+<br>
+
+## Create an enrichment map using multiple enrichment analyses
+
+
+```{r emapMulti01, echo=TRUE, warning=FALSE, message=FALSE, collapse=F, eval=TRUE}
+
+## Set seed to ensure reproducible results
+set.seed(2121)
+
+## The dataset of functional enriched terms for two experiments:
+## napabucasin treated and DMSO control parental and
+## napabucasin treated and DMSO control expressing Rosa26 control vector
+## (Froeling et al 2019)
+data("parentalNapaVsDMSOEnrichment")
+data("rosaNapaVsDMSOEnrichment")
+
+## The gostObjectList is a list containing all 
+## the functional enrichment objects
+gostObjectList <- list(parentalNapaVsDMSOEnrichment, 
+    rosaNapaVsDMSOEnrichment)
+
+## The queryList is a list of query names retained for each of the enrichment 
+## object (same order). Beware that a enrichment object can contain more than 
+## one query.
+query_01 <- unique(parentalNapaVsDMSOEnrichment$result$query)[1]
+query_02 <- unique(rosaNapaVsDMSOEnrichment$result$query)[1]
+queryList <- list(query_01, query_02)
+
+## Enrichment map where the groups are the KEGG results for the 2 different
+## experiments
+createEnrichMapMulti(gostObjectList=gostObjectList,
+    queryList=queryList, source="KEGG", removeRoot=TRUE)
+    
+
+```
+
+
+<br>
+
+
+### Effect of _seed_ value
+
+The layering of the nodes is not always optimal. As the layering is affected by 
+the _seed_ value, you might want to test few _seed_ values, using the 
+_set.seed()_ function, before selecting the final graph.
+
+
+```{r emapMulti02, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE, fig.cap="An enrichment map with a different seed.", fig.align="center"}
+
+
+## Set seed to ensure reproducible results
+set.seed(5)
+
+## Enrichment map where the groups are the KEGG results for the 2 different
+## experiments
+createEnrichMapMulti(gostObjectList=gostObjectList,
+    queryList=queryList, source="KEGG", removeRoot=TRUE)
+    
+```
+
+<br>
+
+### Enrichment map customization
+
+
+The output of the _createEnrichMapMulti()_ function is a _ggplot_ object. 
+This means that the graph can be personalized. For example, the default 
+colors, legend title and legend font can be changed:
+
+```{r emapMulti03, echo=TRUE, warning=FALSE, message=FALSE, collapse=F, eval=TRUE, fig.cap="An enrichment map with different colors."}
+
+## Required library
+library(ggplot2)
+
+## Set seed to ensure reproducible results
+set.seed(2121)
+
+## Enrichment map where the groups are the KEGG results for the 2 different
+## experiments
+createEnrichMapMulti(gostObjectList=gostObjectList,
+    queryList=queryList, source="KEGG", removeRoot=TRUE) + 
+        scale_fill_manual(name="Groups",
+                            breaks = queryList,
+                            values = c("cyan4", "bisque3"),
+                            labels = c("parental", "rosa")) +
+        theme(legend.title = element_text(face="bold"))
+
+```
+
+
+<br>
+<br>
+
+
 
 # Acknowledgments
 
