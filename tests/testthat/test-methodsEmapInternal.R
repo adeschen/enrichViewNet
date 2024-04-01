@@ -123,7 +123,7 @@ test_that("createBasicEmap() must return expected result", {
 
 context("createMultiEmap() results")
 
-test_that("createMultiEmap() must return expected result", {
+test_that("createMultiEmap() must return expected result when 2 different enrichment analyses", {
     
     gostResults1 <- as.data.frame(parentalNapaVsDMSOEnrichment$result)
     gostResults1 <- gostResults1[which(gostResults1$source == "KEGG"),]
@@ -145,7 +145,8 @@ test_that("createMultiEmap() must return expected result", {
     expect_true(is.ggplot(graphRes))
     
     expected_terms <- c("MAPK signaling pathway", 
-        "Transcriptional misregulation in cancer", "Parathyroid hormone synthesis, secretion and action",
+        "Transcriptional misregulation in cancer", 
+        "Parathyroid hormone synthesis, secretion and action",
         "Apoptosis", "Colorectal cancer", "TNF signaling pathway", 
         "p53 signaling pathway", "Human T-cell leukemia virus 1 infection", 
         "Non-alcoholic fatty liver disease", "Amphetamine addiction",
@@ -154,6 +155,51 @@ test_that("createMultiEmap() must return expected result", {
         "Hepatitis B")
     
     expected_term_size <- c(14, 9, 6, 7, 6, 6, 5, 7, 7, 4, 5, 4, 3, 3, 3)
+    
+    expect_true(all(graphRes$data$name == expected_terms))
+    
+    expect_true(all(graphRes$data$size == expected_term_size))
+    
+    expect_identical(graphRes$labels$fill, "Cluster")
+})
+
+test_that("createMultiEmap() must return expected result when same different enrichment analysis", {
+    
+    gostResults1 <- as.data.frame(parentalNapaVsDMSOEnrichment$result)
+    gostResults1 <- gostResults1[which(gostResults1$source == "KEGG"),]
+    gostResults1 <- gostResults1[which(gostResults1$term_id != "KEGG:00000"),]
+    
+    gostResults2 <- as.data.frame(parentalNapaVsDMSOEnrichment$result)
+    gostResults2 <- gostResults2[which(gostResults2$source == "REAC"),]
+    gostResults2 <- gostResults2[1:10,]
+    
+    queryList <- list("parental_napa_vs_DMSO (1)", "parental_napa_vs_DMSO (2)")
+    
+    set.seed(111)
+    
+    graphRes <- enrichViewNet:::createMultiEmap(gostResults=list(gostResults1, 
+        gostResults2), queryList=queryList, showCategory=30L, 
+        groupCategory=FALSE, categoryLabel=1, categoryNode=1,
+        line=1, force=FALSE)
+    
+    expect_true(is.ggplot(graphRes))
+    
+    expected_terms <- c("MAPK signaling pathway", 
+        "Transcriptional misregulation in cancer", 
+        "Parathyroid hormone synthesis, secretion and action",
+        "Apoptosis", "Colorectal cancer", "TNF signaling pathway", 
+        "p53 signaling pathway", "Human T-cell leukemia virus 1 infection", 
+        "Non-alcoholic fatty liver disease", "Amphetamine addiction",
+        "Estrogen signaling pathway", "NGF-stimulated transcription",
+        "Nuclear Events (kinase and transcription factor activation)",
+        "Response of EIF2AK1 (HRI) to heme deficiency",                    
+        "Signaling by NTRK1 (TRKA)", "FOXO-mediated transcription",                                     
+        "Signaling by NTRKs", "Signal Transduction",                                              
+        "ATF4 activates genes in response to endoplasmic reticulum  stress", 
+        "Generic Transcription Pathway", "PERK regulates gene expression" )
+    
+    expected_term_size <- c(14, 8, 6, 7, 6, 6, 5, 7, 6, 4, 5, 9, 9, 6, 9, 
+                                7, 9, 34, 5, 23, 5)
     
     expect_true(all(graphRes$data$name == expected_terms))
     
