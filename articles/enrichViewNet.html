@@ -6,7 +6,7 @@
 <meta name="generator" content="pandoc">
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE">
 <meta name="author" content="Astrid Deschênes, Pascal Belleau, Robert L Faure and Maria J Fernandes">
-<meta name="date" content="2024-03-11">
+<meta name="date" content="2024-04-01">
 <title>From functional enrichment results to biological networks</title>
 <script src="enrichViewNet_files/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="enrichViewNet_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
@@ -243,7 +243,7 @@ function toggle_visibility(id1) {
 
 <h1 class="title toc-ignore">From functional enrichment results to biological networks</h1>
 <p class="author-name">Astrid Deschênes, Pascal Belleau, Robert L Faure and Maria J Fernandes</p>
-<h4 class="date">11 March 2024</h4>
+<h4 class="date">1 April 2024</h4>
 
 </div>
 
@@ -267,11 +267,29 @@ function toggle_visibility(id1) {
 <a href="#transforming-enrichment-results-into-an-enrichment-map" id="toc-transforming-enrichment-results-into-an-enrichment-map"><span class="toc-section-number">7</span> Transforming enrichment results into an enrichment map</a>
 <ul>
 <li><a href="#run-an-enrichment-analysis-1" id="toc-run-an-enrichment-analysis-1"><span class="toc-section-number">7.1</span> Run an enrichment analysis</a></li>
-<li><a href="#create-an-enrichment-map" id="toc-create-an-enrichment-map"><span class="toc-section-number">7.2</span> Create an enrichment map</a></li>
+<li>
+<a href="#create-an-enrichment-map" id="toc-create-an-enrichment-map"><span class="toc-section-number">7.2</span> Create an enrichment map</a>
+<ul>
+<li><a href="#effect-of-seed-value" id="toc-effect-of-seed-value"><span class="toc-section-number">7.2.1</span> Effect of <em>seed</em> value</a></li>
+<li><a href="#enrichment-map-customization" id="toc-enrichment-map-customization"><span class="toc-section-number">7.2.2</span> Enrichment map customization</a></li>
 </ul>
 </li>
-<li><a href="#acknowledgments" id="toc-acknowledgments"><span class="toc-section-number">8</span> Acknowledgments</a></li>
-<li><a href="#session-info" id="toc-session-info"><span class="toc-section-number">9</span> Session info</a></li>
+</ul>
+</li>
+<li>
+<a href="#transforming-enrichment-results-into-an-enrichment-map-with-groups" id="toc-transforming-enrichment-results-into-an-enrichment-map-with-groups"><span class="toc-section-number">8</span> Transforming enrichment results into an enrichment map with groups</a>
+<ul>
+<li>
+<a href="#create-an-enrichment-map-using-multiple-enrichment-analyses" id="toc-create-an-enrichment-map-using-multiple-enrichment-analyses"><span class="toc-section-number">8.1</span> Create an enrichment map using multiple enrichment analyses</a>
+<ul>
+<li><a href="#effect-of-seed-value-1" id="toc-effect-of-seed-value-1"><span class="toc-section-number">8.1.1</span> Effect of <em>seed</em> value</a></li>
+<li><a href="#enrichment-map-customization-1" id="toc-enrichment-map-customization-1"><span class="toc-section-number">8.1.2</span> Enrichment map customization</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#acknowledgments" id="toc-acknowledgments"><span class="toc-section-number">9</span> Acknowledgments</a></li>
+<li><a href="#session-info" id="toc-session-info"><span class="toc-section-number">10</span> Session info</a></li>
 <li><a href="#references" id="toc-references">References</a></li>
 </ul>
 </div>
@@ -281,13 +299,13 @@ Pascal Belleau [aut] (<a href="https://orcid.org/0000-0002-0802-1071" class="ext
 Robert L. Faure [aut] (<a href="https://orcid.org/0000-0003-1798-4723" class="external-link uri">https://orcid.org/0000-0003-1798-4723</a>),
 Maria J. Fernandes [aut] (<a href="https://orcid.org/0000-0002-3973-025X" class="external-link uri">https://orcid.org/0000-0002-3973-025X</a>),
 Alexander Krasnitz [aut],
-David A. Tuveson [aut] (<a href="https://orcid.org/0000-0002-8017-2712" class="external-link uri">https://orcid.org/0000-0002-8017-2712</a>)<br><strong>Version</strong>: 1.1.1<br><strong>Compiled date</strong>: 2024-03-11<br><strong>License</strong>: Artistic-2.0<br></p>
+David A. Tuveson [aut] (<a href="https://orcid.org/0000-0002-8017-2712" class="external-link uri">https://orcid.org/0000-0002-8017-2712</a>)<br><strong>Version</strong>: 1.1.1<br><strong>Compiled date</strong>: 2024-04-01<br><strong>License</strong>: Artistic-2.0<br></p>
 <div class="section level2" number="1">
 <h2 id="licensing">
 <span class="header-section-number">1</span> Licensing<a class="anchor" aria-label="anchor" href="#licensing"></a>
 </h2>
-<p>The <em><a href="https://github.com/adeschen/enrichViewNet" class="external-link">enrichViewNet</a></em> package and the underlying
-<em><a href="https://github.com/adeschen/enrichViewNet" class="external-link">enrichViewNet</a></em> code are distributed under the
+<p>The <em><a href="https://bioconductor.org/packages/3.19/enrichViewNet" class="external-link">enrichViewNet</a></em> package and the underlying
+<em><a href="https://bioconductor.org/packages/3.19/enrichViewNet" class="external-link">enrichViewNet</a></em> code are distributed under the
 Artistic license 2.0. You are free to use and redistribute this software.</p>
 <p><br><br></p>
 </div>
@@ -298,10 +316,10 @@ Artistic license 2.0. You are free to use and redistribute this software.</p>
 <p>If you use this package for a publication, we would ask you to cite the
 following:</p>
 <blockquote>
-<p>Deschênes A, Belleau P, Faure R, Fernandes M, Krasnitz A, Tuveson D (2021).
+<p>Deschênes A, Belleau P, Faure R, Fernandes M, Krasnitz A, Tuveson D (2023).
 enrichViewNet: From functional enrichment results to biological networks.
-<a href="https://github.com/adeschen/enrichViewNet" class="external-link uri">https://github.com/adeschen/enrichViewNet</a>,
-<a href="https://adeschen.github.io/enrichViewNet/" class="external-link uri">https://adeschen.github.io/enrichViewNet/</a>.</p>
+<a href="doi:10.18129/B9.bioc.enrichViewNet" class="uri">doi:10.18129/B9.bioc.enrichViewNet</a>,
+<a href="https://bioconductor.org/packages/enrichViewNet" class="external-link uri">https://bioconductor.org/packages/enrichViewNet</a>.</p>
 </blockquote>
 <p><br><br></p>
 </div>
@@ -487,7 +505,7 @@ is a <em>list</em> and should be saved.</p>
 <span></span>
 <span><span class="co">## The dataset of differentially expressed genes done between </span></span>
 <span><span class="co">## napabucasin treated and DMSO control parental (Froeling et al 2019)</span></span>
-<span><span class="co">## All genes testd are present</span></span>
+<span><span class="co">## All genes tested are present</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"parentalNapaVsDMSODEG"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">## Retain significant results </span></span>
@@ -715,7 +733,7 @@ is a <em>list</em> and should be saved.</p>
 <span></span>
 <span><span class="co">## The dataset of differentially expressed genes done between </span></span>
 <span><span class="co">## napabucasin treated and DMSO control parental (Froeling et al 2019)</span></span>
-<span><span class="co">## All genes testd are present</span></span>
+<span><span class="co">## All genes tested are present</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"parentalNapaVsDMSODEG"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">## Retain significant results </span></span>
@@ -797,9 +815,7 @@ metric is high.</p>
 <span><span class="co">## Set seed to ensure reproducible results</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">121</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">## Create network for Kegg selected terms</span></span>
-<span><span class="co">## The 'source="TERM_ID"' parameter enable to specify a personalized </span></span>
-<span><span class="co">## list of terms of interest with 'termIDs' argument</span></span>
+<span><span class="co">## Create network for all Kegg terms</span></span>
 <span><span class="fu"><a href="../reference/createEnrichMap.html">createEnrichMap</a></span><span class="op">(</span>gostObject<span class="op">=</span><span class="va">parentalNapaVsDMSOEnrichment</span>, </span>
 <span>                  query<span class="op">=</span><span class="st">"parental_napa_vs_DMSO"</span>, </span>
 <span>                  source<span class="op">=</span><span class="st">"KEGG"</span><span class="op">)</span></span></code></pre></div>
@@ -808,16 +824,191 @@ metric is high.</p>
 <img src="enrichViewNet_files/figure-html/runCreateEmap01-1.png" alt="A Kegg enrichment map where terms with overlapping significant genes cluster together." width="100%"><p class="caption">
 Figure 9: <span class="caption-title">A Kegg enrichment map where terms with overlapping significant genes cluster together</span><br></p>
 </div>
-<p><br><br></p>
+<p><br></p>
 <p>The Kegg enrichment map shows that the <em>MAPK signaling pathway</em> term is
 highly influential in the network. In addition, the
 <em>Transcriptional misregulation in cancer</em> term is the only isolated node.</p>
+<p><br></p>
+<div class="section level4" number="7.2.1">
+<h4 id="effect-of-seed-value">
+<span class="header-section-number">7.2.1</span> Effect of <em>seed</em> value<a class="anchor" aria-label="anchor" href="#effect-of-seed-value"></a>
+</h4>
+<p>The layering of the nodes is not always optimal. As the layering is affected by
+the <em>seed</em> value, you might want to test few <em>seed</em> values, using the
+<em>set.seed()</em> function, before selecting the final graph.</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## Set seed to ensure reproducible results</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">91</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Create network for all Kegg terms</span></span>
+<span><span class="fu"><a href="../reference/createEnrichMap.html">createEnrichMap</a></span><span class="op">(</span>gostObject<span class="op">=</span><span class="va">parentalNapaVsDMSOEnrichment</span>, </span>
+<span>                  query<span class="op">=</span><span class="st">"parental_napa_vs_DMSO"</span>, </span>
+<span>                  source<span class="op">=</span><span class="st">"KEGG"</span><span class="op">)</span></span></code></pre></div>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:runCreateEmap02"></span>
+<img src="enrichViewNet_files/figure-html/runCreateEmap02-1.png" alt="An enrichment map with personalized colors." width="100%"><p class="caption">
+Figure 10: <span class="caption-title">An enrichment map with personalized colors</span><br></p>
+</div>
+<p><br></p>
+</div>
+<div class="section level4" number="7.2.2">
+<h4 id="enrichment-map-customization">
+<span class="header-section-number">7.2.2</span> Enrichment map customization<a class="anchor" aria-label="anchor" href="#enrichment-map-customization"></a>
+</h4>
+<p>The output of the <em>createEnrichMap()</em> function is a <em>ggplot</em> object.
+This means that the graph can be personalized. For example, the default
+colors can be changed:</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## The ggplot2 library is required</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Set seed to ensure reproducible results</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">91</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Create network for all Kegg terms</span></span>
+<span><span class="va">graphKegg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createEnrichMap.html">createEnrichMap</a></span><span class="op">(</span>gostObject<span class="op">=</span><span class="va">parentalNapaVsDMSOEnrichment</span>, </span>
+<span>                  query<span class="op">=</span><span class="st">"parental_napa_vs_DMSO"</span>, </span>
+<span>                  source<span class="op">=</span><span class="st">"KEGG"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Nodes with lowest p-values will be in orange and highest p-values in black</span></span>
+<span><span class="co">## The title of the legend is also modified</span></span>
+<span><span class="va">graphKegg</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html" class="external-link">scale_fill_gradient</a></span><span class="op">(</span>name<span class="op">=</span><span class="st">"P-value adjusted"</span>, low<span class="op">=</span><span class="st">"orange"</span>, </span>
+<span>                                    high<span class="op">=</span><span class="st">"black"</span><span class="op">)</span></span></code></pre></div>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:runCreateEmap03"></span>
+<img src="enrichViewNet_files/figure-html/runCreateEmap03-1.png" alt="An enrichment map with personalized colors." width="100%"><p class="caption">
+Figure 11: <span class="caption-title">An enrichment map with personalized colors</span><br></p>
+</div>
 <p><br><br></p>
 </div>
 </div>
+</div>
 <div class="section level2" number="8">
+<h2 id="transforming-enrichment-results-into-an-enrichment-map-with-groups">
+<span class="header-section-number">8</span> Transforming enrichment results into an enrichment map with groups<a class="anchor" aria-label="anchor" href="#transforming-enrichment-results-into-an-enrichment-map-with-groups"></a>
+</h2>
+<p>The following workflow gives an overview of the steps associated to the
+creation of an enrichment map with groups. Groups can be created from the
+same enrichment analysis or can come from different enrichment analyses.</p>
+<p>The key steps for the workflow are:</p>
+<div class="horizontal-scroll"><table class="table">
+<colgroup>
+<col width="60%">
+<col width="39%">
+</colgroup>
+<thead><tr class="header">
+<th>Step</th>
+<th>Function</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Run one or multiple enrichment analyses</td>
+<td><code><a href="https://rdrr.io/pkg/gprofiler2/man/gost.html" class="external-link">gprofiler2::gost()</a></code></td>
+</tr>
+<tr class="even">
+<td>Create an enrichment map</td>
+<td><code><a href="../reference/createEnrichMapMulti.html">createEnrichMapMulti()</a></code></td>
+</tr>
+</tbody>
+</table></div>
+<p>The <code>package::function()</code> notation is used for functions from other packages.</p>
+<p><br></p>
+<p>The first step has been presented in the previous section.</p>
+<p><br></p>
+<div class="section level3" number="8.1">
+<h3 id="create-an-enrichment-map-using-multiple-enrichment-analyses">
+<span class="header-section-number">8.1</span> Create an enrichment map using multiple enrichment analyses<a class="anchor" aria-label="anchor" href="#create-an-enrichment-map-using-multiple-enrichment-analyses"></a>
+</h3>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## Set seed to ensure reproducible results</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">2121</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## The dataset of functional enriched terms for two experiments:</span></span>
+<span><span class="co">## napabucasin treated and DMSO control parental and</span></span>
+<span><span class="co">## napabucasin treated and DMSO control expressing Rosa26 control vector</span></span>
+<span><span class="co">## (Froeling et al 2019)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"parentalNapaVsDMSOEnrichment"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"rosaNapaVsDMSOEnrichment"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## The gostObjectList is a list containing all </span></span>
+<span><span class="co">## the functional enrichment objects</span></span>
+<span><span class="va">gostObjectList</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">parentalNapaVsDMSOEnrichment</span>, </span>
+<span>    <span class="va">rosaNapaVsDMSOEnrichment</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## The queryList is a list of query names retained for each of the enrichment </span></span>
+<span><span class="co">## object (same order). Beware that a enrichment object can contain more than </span></span>
+<span><span class="co">## one query.</span></span>
+<span><span class="va">query_01</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">parentalNapaVsDMSOEnrichment</span><span class="op">$</span><span class="va">result</span><span class="op">$</span><span class="va">query</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span><span class="va">query_02</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">rosaNapaVsDMSOEnrichment</span><span class="op">$</span><span class="va">result</span><span class="op">$</span><span class="va">query</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span><span class="va">queryList</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">query_01</span>, <span class="va">query_02</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Enrichment map where the groups are the KEGG results for the 2 different</span></span>
+<span><span class="co">## experiments</span></span>
+<span><span class="fu"><a href="../reference/createEnrichMapMulti.html">createEnrichMapMulti</a></span><span class="op">(</span>gostObjectList<span class="op">=</span><span class="va">gostObjectList</span>,</span>
+<span>    queryList<span class="op">=</span><span class="va">queryList</span>, source<span class="op">=</span><span class="st">"KEGG"</span>, removeRoot<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p><img src="enrichViewNet_files/figure-html/emapMulti01-1.png" width="100%"></p>
+<p><br></p>
+<p>There are 4 KEEG enrichment terms that are shared by the 2 experiments.
+In additions, the <em>Viral carinogenesis</em> term is the only one that is not
+related to the other KEGG terms.</p>
+<p><br></p>
+<div class="section level4" number="8.1.1">
+<h4 id="effect-of-seed-value-1">
+<span class="header-section-number">8.1.1</span> Effect of <em>seed</em> value<a class="anchor" aria-label="anchor" href="#effect-of-seed-value-1"></a>
+</h4>
+<p>The layering of the nodes is not always optimal. As the layering is affected by
+the <em>seed</em> value, you might want to test few <em>seed</em> values, using the
+<em>set.seed()</em> function, before selecting the final graph.</p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## Set seed to ensure reproducible results</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Enrichment map where the groups are the KEGG results for the 2 different</span></span>
+<span><span class="co">## experiments</span></span>
+<span><span class="fu"><a href="../reference/createEnrichMapMulti.html">createEnrichMapMulti</a></span><span class="op">(</span>gostObjectList<span class="op">=</span><span class="va">gostObjectList</span>,</span>
+<span>    queryList<span class="op">=</span><span class="va">queryList</span>, source<span class="op">=</span><span class="st">"KEGG"</span>, removeRoot<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:emapMulti02"></span>
+<img src="enrichViewNet_files/figure-html/emapMulti02-1.png" alt="An enrichment map with a different seed." width="100%"><p class="caption">
+Figure 12: <span class="caption-title">An enrichment map with a different seed</span><br></p>
+</div>
+<p><br></p>
+</div>
+<div class="section level4" number="8.1.2">
+<h4 id="enrichment-map-customization-1">
+<span class="header-section-number">8.1.2</span> Enrichment map customization<a class="anchor" aria-label="anchor" href="#enrichment-map-customization-1"></a>
+</h4>
+<p>The output of the <em>createEnrichMapMulti()</em> function is a <em>ggplot</em> object.
+This means that the graph can be personalized. For example, the default
+colors, legend title and legend font can be changed:</p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## Required library</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Set seed to ensure reproducible results</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">2121</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Enrichment map where the groups are the KEGG results for the 2 different</span></span>
+<span><span class="co">## experiments</span></span>
+<span><span class="fu"><a href="../reference/createEnrichMapMulti.html">createEnrichMapMulti</a></span><span class="op">(</span>gostObjectList<span class="op">=</span><span class="va">gostObjectList</span>,</span>
+<span>    queryList<span class="op">=</span><span class="va">queryList</span>, source<span class="op">=</span><span class="st">"KEGG"</span>, removeRoot<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>name<span class="op">=</span><span class="st">"Groups"</span>,</span>
+<span>                            breaks <span class="op">=</span> <span class="va">queryList</span>,</span>
+<span>                            values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cyan4"</span>, <span class="st">"bisque3"</span><span class="op">)</span>,</span>
+<span>                            labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"parental"</span>, <span class="st">"rosa"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>face<span class="op">=</span><span class="st">"bold"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:emapMulti03"></span>
+<img src="enrichViewNet_files/figure-html/emapMulti03-1.png" alt="An enrichment map with different colors." width="100%"><p class="caption">
+Figure 13: <span class="caption-title">An enrichment map with different colors</span><br></p>
+</div>
+<p><br><br></p>
+</div>
+</div>
+</div>
+<div class="section level2" number="9">
 <h2 id="acknowledgments">
-<span class="header-section-number">8</span> Acknowledgments<a class="anchor" aria-label="anchor" href="#acknowledgments"></a>
+<span class="header-section-number">9</span> Acknowledgments<a class="anchor" aria-label="anchor" href="#acknowledgments"></a>
 </h2>
 <p>The differentially expressed genes between napabucasin-treated cells (0.5 uM)
 and DMSO as vehicle control are reprinted from
@@ -832,13 +1023,13 @@ cancer cell death, with permission from AACR.</p>
 Research Council of Canada (NSERCC): 155751-1501.</p>
 <p><br><br></p>
 </div>
-<div class="section level2" number="9">
+<div class="section level2" number="10">
 <h2 id="session-info">
-<span class="header-section-number">9</span> Session info<a class="anchor" aria-label="anchor" href="#session-info"></a>
+<span class="header-section-number">10</span> Session info<a class="anchor" aria-label="anchor" href="#session-info"></a>
 </h2>
 <p>Here is the output of sessionInfo() on the system on which this document
 was compiled:</p>
-<pre><code><span><span class="co">## R Under development (unstable) (2024-03-06 r86056)</span></span>
+<pre><code><span><span class="co">## R Under development (unstable) (2024-03-28 r86224)</span></span>
 <span><span class="co">## Platform: x86_64-pc-linux-gnu</span></span>
 <span><span class="co">## Running under: Ubuntu 22.04.4 LTS</span></span>
 <span><span class="co">## </span></span>
@@ -861,56 +1052,56 @@ was compiled:</p>
 <span><span class="co">## [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">## [1] gprofiler2_0.2.3    enrichViewNet_1.1.1 knitr_1.45         </span></span>
-<span><span class="co">## [4] BiocStyle_2.31.0   </span></span>
+<span><span class="co">## [1] ggplot2_3.5.0       gprofiler2_0.2.3    enrichViewNet_1.1.1</span></span>
+<span><span class="co">## [4] knitr_1.45          BiocStyle_2.31.0   </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
 <span><span class="co">##   [1] RColorBrewer_1.1-3      jsonlite_1.8.8          magrittr_2.0.3         </span></span>
 <span><span class="co">##   [4] farver_2.1.1            rmarkdown_2.26          fs_1.6.3               </span></span>
-<span><span class="co">##   [7] zlibbioc_1.49.0         vctrs_0.6.5             memoise_2.0.1          </span></span>
+<span><span class="co">##   [7] zlibbioc_1.49.3         vctrs_0.6.5             memoise_2.0.1          </span></span>
 <span><span class="co">##  [10] RCurl_1.98-1.14         ggtree_3.11.1           base64enc_0.1-3        </span></span>
-<span><span class="co">##  [13] htmltools_0.5.7         curl_5.2.1              gridGraphics_0.5-1     </span></span>
-<span><span class="co">##  [16] strex_2.0.0             sass_0.4.8              KernSmooth_2.23-22     </span></span>
-<span><span class="co">##  [19] bslib_0.6.1             htmlwidgets_1.6.4       plyr_1.8.9             </span></span>
+<span><span class="co">##  [13] htmltools_0.5.8         curl_5.2.1              gridGraphics_0.5-1     </span></span>
+<span><span class="co">##  [16] strex_2.0.0             sass_0.4.9              KernSmooth_2.23-22     </span></span>
+<span><span class="co">##  [19] bslib_0.7.0             htmlwidgets_1.6.4       plyr_1.8.9             </span></span>
 <span><span class="co">##  [22] plotly_4.10.4           cachem_1.0.8            uuid_1.2-0             </span></span>
-<span><span class="co">##  [25] igraph_2.0.2            lifecycle_1.0.4         pkgconfig_2.0.3        </span></span>
-<span><span class="co">##  [28] Matrix_1.6-5            R6_2.5.1                fastmap_1.1.1          </span></span>
-<span><span class="co">##  [31] GenomeInfoDbData_1.2.11 digest_0.6.35           aplot_0.2.2            </span></span>
+<span><span class="co">##  [25] igraph_2.0.3            lifecycle_1.0.4         pkgconfig_2.0.3        </span></span>
+<span><span class="co">##  [28] Matrix_1.7-0            R6_2.5.1                fastmap_1.1.1          </span></span>
+<span><span class="co">##  [31] GenomeInfoDbData_1.2.12 digest_0.6.35           aplot_0.2.2            </span></span>
 <span><span class="co">##  [34] enrichplot_1.23.1       ggnewscale_0.4.10       colorspace_2.1-0       </span></span>
-<span><span class="co">##  [37] patchwork_1.2.0         AnnotationDbi_1.65.2    S4Vectors_0.41.4       </span></span>
-<span><span class="co">##  [40] RSQLite_2.3.5           base64url_1.4           labeling_0.4.3         </span></span>
+<span><span class="co">##  [37] patchwork_1.2.0         AnnotationDbi_1.65.2    S4Vectors_0.41.5       </span></span>
+<span><span class="co">##  [40] RSQLite_2.3.6           base64url_1.4           labeling_0.4.3         </span></span>
 <span><span class="co">##  [43] fansi_1.0.6             RJSONIO_1.3-1.9         httr_1.4.7             </span></span>
-<span><span class="co">##  [46] polyclip_1.10-6         compiler_4.4.0          bit64_4.0.5            </span></span>
+<span><span class="co">##  [46] polyclip_1.10-6         compiler_4.5.0          bit64_4.0.5            </span></span>
 <span><span class="co">##  [49] withr_3.0.0             backports_1.4.1         BiocParallel_1.37.1    </span></span>
 <span><span class="co">##  [52] viridis_0.6.5           RCy3_2.23.2             DBI_1.2.2              </span></span>
 <span><span class="co">##  [55] highr_0.10              ggforce_0.4.2           gplots_3.1.3.1         </span></span>
 <span><span class="co">##  [58] MASS_7.3-60.2           HDO.db_0.99.1           gtools_3.9.5           </span></span>
-<span><span class="co">##  [61] caTools_1.18.2          tools_4.4.0             scatterpie_0.2.1       </span></span>
+<span><span class="co">##  [61] caTools_1.18.2          tools_4.5.0             scatterpie_0.2.1       </span></span>
 <span><span class="co">##  [64] ape_5.7-1               glue_1.7.0              nlme_3.1-164           </span></span>
-<span><span class="co">##  [67] GOSemSim_2.29.1         shadowtext_0.1.3        grid_4.4.0             </span></span>
+<span><span class="co">##  [67] GOSemSim_2.29.1         shadowtext_0.1.3        grid_4.5.0             </span></span>
 <span><span class="co">##  [70] checkmate_2.3.1         pbdZMQ_0.3-11           reshape2_1.4.4         </span></span>
 <span><span class="co">##  [73] fgsea_1.29.0            generics_0.1.3          gtable_0.3.4           </span></span>
-<span><span class="co">##  [76] tidyr_1.3.1             data.table_1.15.2       tidygraph_1.3.1        </span></span>
+<span><span class="co">##  [76] tidyr_1.3.1             data.table_1.15.4       tidygraph_1.3.1        </span></span>
 <span><span class="co">##  [79] utf8_1.2.4              XVector_0.43.1          BiocGenerics_0.49.1    </span></span>
 <span><span class="co">##  [82] ggrepel_0.9.5           pillar_1.9.0            stringr_1.5.1          </span></span>
-<span><span class="co">##  [85] yulab.utils_0.1.4       IRdisplay_1.1           splines_4.4.0          </span></span>
+<span><span class="co">##  [85] yulab.utils_0.1.4       IRdisplay_1.1           splines_4.5.0          </span></span>
 <span><span class="co">##  [88] dplyr_1.1.4             tweenr_2.0.3            treeio_1.27.0          </span></span>
-<span><span class="co">##  [91] lattice_0.22-5          bit_4.0.5               tidyselect_1.2.1       </span></span>
-<span><span class="co">##  [94] GO.db_3.18.0            Biostrings_2.71.3       gridExtra_2.3          </span></span>
-<span><span class="co">##  [97] bookdown_0.38           IRanges_2.37.1          stats4_4.4.0           </span></span>
-<span><span class="co">## [100] xfun_0.42               graphlayouts_1.1.1      Biobase_2.63.0         </span></span>
+<span><span class="co">##  [91] lattice_0.22-6          bit_4.0.5               tidyselect_1.2.1       </span></span>
+<span><span class="co">##  [94] GO.db_3.19.0            Biostrings_2.71.5       gridExtra_2.3          </span></span>
+<span><span class="co">##  [97] bookdown_0.38           IRanges_2.37.1          stats4_4.5.0           </span></span>
+<span><span class="co">## [100] xfun_0.43               graphlayouts_1.1.1      Biobase_2.63.1         </span></span>
 <span><span class="co">## [103] stringi_1.8.3           lazyeval_0.2.2          ggfun_0.1.4            </span></span>
-<span><span class="co">## [106] yaml_2.3.8              evaluate_0.23           codetools_0.2-19       </span></span>
+<span><span class="co">## [106] yaml_2.3.8              evaluate_0.23           codetools_0.2-20       </span></span>
 <span><span class="co">## [109] ggraph_2.2.1            tibble_3.2.1            qvalue_2.35.0          </span></span>
 <span><span class="co">## [112] BiocManager_1.30.22     graph_1.81.0            ggplotify_0.1.2        </span></span>
-<span><span class="co">## [115] cli_3.6.2               IRkernel_1.3.2          repr_1.1.6             </span></span>
+<span><span class="co">## [115] cli_3.6.2               IRkernel_1.3.2          repr_1.1.7             </span></span>
 <span><span class="co">## [118] munsell_0.5.0           jquerylib_0.1.4         Rcpp_1.0.12            </span></span>
-<span><span class="co">## [121] GenomeInfoDb_1.39.8     png_0.1-8               XML_3.99-0.16.1        </span></span>
-<span><span class="co">## [124] parallel_4.4.0          ggplot2_3.5.0           blob_1.2.4             </span></span>
-<span><span class="co">## [127] DOSE_3.29.2             bitops_1.0-7            viridisLite_0.4.2      </span></span>
-<span><span class="co">## [130] tidytree_0.4.6          scales_1.3.0            purrr_1.0.2            </span></span>
-<span><span class="co">## [133] crayon_1.5.2            rlang_1.1.3             cowplot_1.1.3          </span></span>
-<span><span class="co">## [136] fastmatch_1.1-4         KEGGREST_1.43.0</span></span></code></pre>
+<span><span class="co">## [121] GenomeInfoDb_1.39.9     png_0.1-8               XML_3.99-0.16.1        </span></span>
+<span><span class="co">## [124] parallel_4.5.0          blob_1.2.4              DOSE_3.29.2            </span></span>
+<span><span class="co">## [127] bitops_1.0-7            viridisLite_0.4.2       tidytree_0.4.6         </span></span>
+<span><span class="co">## [130] scales_1.3.0            purrr_1.0.2             crayon_1.5.2           </span></span>
+<span><span class="co">## [133] rlang_1.1.3             cowplot_1.1.3           fastmatch_1.1-4        </span></span>
+<span><span class="co">## [136] KEGGREST_1.43.0</span></span></code></pre>
 <p><br><br></p>
 </div>
 <div class="section level2">

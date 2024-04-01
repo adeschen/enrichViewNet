@@ -62,7 +62,9 @@ enrichment results.</p>
 <span>  <span class="va">groupCategory</span>,</span>
 <span>  <span class="va">categoryLabel</span>,</span>
 <span>  <span class="va">categoryNode</span>,</span>
-<span>  <span class="va">significantMethod</span></span>
+<span>  <span class="va">significantMethod</span>,</span>
+<span>  <span class="va">line</span>,</span>
+<span>  <span class="va">force</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -105,6 +107,16 @@ which plotting category nodes should be scaled relative to the default (1).</p><
 <dd><p>a <code>character</code> string representing the name 
 of the multiple testing correction method used on the results.</p></dd>
 
+
+<dt>line</dt>
+<dd><p>a non-negative <code>numeric</code> representing the scale of line 
+width.</p></dd>
+
+
+<dt>force</dt>
+<dd><p>a <code>logical</code> indicating if the repulsion between 
+overlapping text labels should be forced.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
@@ -144,7 +156,7 @@ of the multiple testing correction method used on the results.</p></dd>
 <span class="r-in"><span><span class="fu">enrichViewNet</span><span class="fu">:::</span><span class="fu">createBasicEmap</span><span class="op">(</span>gostResults<span class="op">=</span><span class="va">gostResults</span>, </span></span>
 <span class="r-in"><span>    backgroundGenes<span class="op">=</span><span class="va">backgroundGenes</span>, showCategory<span class="op">=</span><span class="fl">30L</span>, </span></span>
 <span class="r-in"><span>    groupCategory<span class="op">=</span><span class="cn">FALSE</span>, categoryLabel<span class="op">=</span><span class="fl">1</span>, categoryNode<span class="op">=</span><span class="fl">1</span>,</span></span>
-<span class="r-in"><span>    significantMethod<span class="op">=</span><span class="va">significantMethod</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    significantMethod<span class="op">=</span><span class="va">significantMethod</span>, line<span class="op">=</span><span class="fl">1</span>, force<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="createBasicEmap-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span>    </span></span>
 </code></pre></div>

@@ -19,19 +19,25 @@
     <loc>/reference/createBasicEmap.html</loc>
   </url>
   <url>
-    <loc>/reference/createCytoscapeCXJSON.html</loc>
-  </url>
-  <url>
-    <loc>/reference/createCytoscapeNetwork.html</loc>
+    <loc>/reference/createCXJSONForCytoscape.html</loc>
   </url>
   <url>
     <loc>/reference/createEnrichMap.html</loc>
   </url>
   <url>
+    <loc>/reference/createEnrichMapMulti.html</loc>
+  </url>
+  <url>
     <loc>/reference/createMetaDataSectionCXJSON.html</loc>
   </url>
   <url>
+    <loc>/reference/createMultiEmap.html</loc>
+  </url>
+  <url>
     <loc>/reference/createNetwork.html</loc>
+  </url>
+  <url>
+    <loc>/reference/createNetworkForCytoscape.html</loc>
   </url>
   <url>
     <loc>/reference/demoGOST.html</loc>
@@ -40,28 +46,28 @@
     <loc>/reference/enrichViewNet-package.html</loc>
   </url>
   <url>
-    <loc>/reference/extractNodesAndEdgesInfoWhenIntersection.html</loc>
+    <loc>/reference/extractInformationWhenIntersection.html</loc>
   </url>
   <url>
-    <loc>/reference/extractNodesAndEdgesWhenIntersection.html</loc>
+    <loc>/reference/extractInformationWhenNoIntersection.html</loc>
   </url>
   <url>
-    <loc>/reference/extractNodesAndEdgesWhenIntersectionForCXJSON.html</loc>
-  </url>
-  <url>
-    <loc>/reference/extractNodesAndEdgesWhenNoIntersection.html</loc>
-  </url>
-  <url>
-    <loc>/reference/extractNodesAndEdgesWhenNoIntersectionForCXJSON.html</loc>
+    <loc>/reference/extractNodesAndEdgesInformation.html</loc>
   </url>
   <url>
     <loc>/reference/filterResults.html</loc>
+  </url>
+  <url>
+    <loc>/reference/formatInformationForCXJSON.html</loc>
   </url>
   <url>
     <loc>/reference/index.html</loc>
   </url>
   <url>
     <loc>/reference/isCytoscapeRunning.html</loc>
+  </url>
+  <url>
+    <loc>/reference/manageNameDuplicationInEmap.html</loc>
   </url>
   <url>
     <loc>/reference/parentalNapaVsDMSODEG.html</loc>
@@ -80,6 +86,12 @@
   </url>
   <url>
     <loc>/reference/validateCreateEnrichMapArguments.html</loc>
+  </url>
+  <url>
+    <loc>/reference/validateCreateEnrichMapMultiArguments.html</loc>
+  </url>
+  <url>
+    <loc>/reference/validateCreateEnrichMapSubSectionArguments.html</loc>
   </url>
   <url>
     <loc>/reference/validateCreateNetworkArguments.html</loc>
