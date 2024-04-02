@@ -3,8 +3,8 @@
 \encoding{UTF-8}
 \name{extractInformationWhenNoIntersection}
 \alias{extractInformationWhenNoIntersection}
-\title{Extract information about nodes and edges to be used to create network 
-when interaction column is missing}
+\title{Extract information about nodes and edges to be used to create 
+network when interaction column is missing}
 \usage{
 extractInformationWhenNoIntersection(gostResults, gostObject)
 }

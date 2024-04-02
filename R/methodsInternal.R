@@ -314,7 +314,7 @@ extractNodesAndEdgesInformation <- function(gostResults, gostObject) {
         entriesL <- extractInformationWhenIntersection(
             gostResults=gostResults)
     }
- 
+
     return(entriesL)       
 }
 
@@ -400,8 +400,8 @@ extractInformationWhenIntersection <- function(gostResults) {
     return(list(geneNodes=geneNodes, termNodes=termNodes, edges=edges))
 }
 
-#' @title Extract information about nodes and edges to be used to create network 
-#' when interaction column is missing
+#' @title Extract information about nodes and edges to be used to create 
+#' network when interaction column is missing
 #'
 #' @description Create a list containing all node and edge information needed
 #' to create the network
@@ -651,7 +651,7 @@ createNetworkForCytoscape <- function(nodeEdgeInfo, title, collection) {
 #' @encoding UTF-8
 #' @keywords internal
 formatInformationForCXJSON <- function(results) {
-   
+
     #####################    
     ## Gene section
     
@@ -698,9 +698,9 @@ formatInformationForCXJSON <- function(results) {
     nbEdges <- nrow(results$edges)
     
     edge_gene <- merge(results$edges, results$geneNodes[, c("id", "gene_id")], 
-                       by.x="target", by.y="id", all.x=TRUE)
+                        by.x="target", by.y="id", all.x=TRUE)
     edge_term <- merge(results$edges, results$termNodes[, c("id", "term_id")], 
-                       by.x="source", by.y="id", all.x=TRUE)
+                        by.x="source", by.y="id", all.x=TRUE)
     
     ## Create an edge connecting term to gene
     edges <- data.frame('@id'=seq_len(nbEdges) + edgeOffSet,

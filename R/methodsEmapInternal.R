@@ -225,8 +225,8 @@ validateCreateEnrichMapMultiArguments <- function(gostObjectList, queryList,
     if (!inherits(queryList, "list") || !(length(queryList) > 1) || 
             length(queryList) != length(gostObjectList)) {
         stop("The queryList object should be a list of query names. At least ", 
-                "2 query names are required. The number of query names should ", 
-                "correspond to the number of enrichment objects.")
+                "2 query names are required. The number of query names should", 
+                " correspond to the number of enrichment objects.")
     }
     
     ## Test that queryList is a list of character strings
