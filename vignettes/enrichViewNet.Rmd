@@ -19,10 +19,10 @@ vignette: >
 BiocStyle::markdown()
 
 suppressPackageStartupMessages({
-  library(knitr)
-  library(enrichViewNet)
-  library(gprofiler2)
-  library(ggplot2)
+    library(knitr)
+    library(enrichViewNet)
+    library(gprofiler2)
+    library(ggplot2)
 })
 
 set.seed(1214)
@@ -50,10 +50,11 @@ Artistic license 2.0. You are free to use and redistribute this software.
 If you use this package for a publication, we would ask you to cite the 
 following:
 
-> Deschênes A, Belleau P, Faure R, Fernandes M, Krasnitz A, Tuveson D (2023). 
-  enrichViewNet: From functional enrichment results to biological networks. 
-  doi:10.18129/B9.bioc.enrichViewNet, 
-  https://bioconductor.org/packages/enrichViewNet. 
+> Deschênes A, Belleau P, Faure RL, Fernandes MJ, Krasnitz A, 
+    Tuveson DA (2023). 
+    enrichViewNet: From functional enrichment results to biological networks. 
+    doi:10.18129/B9.bioc.enrichViewNet, 
+    https://bioconductor.org/packages/enrichViewNet. 
 
 <br>
 <br>
@@ -181,7 +182,7 @@ BiocManager::install("enrichViewNet")
 
 
 The following workflow gives an overview of the capabilities of 
- **enrichViewNet**:
+**enrichViewNet**:
 
 ```{r graphWorkflow, echo=FALSE, fig.align="center", fig.cap="The enrichViewNet workflow", out.width = '100%'}
 knitr::include_graphics("Figure_enrichViewNet_workflow_v05.jpg")
@@ -216,11 +217,11 @@ knitr::include_graphics("FromListToGraph_v01.jpg")
 
 The key steps for the workflow are:
 
-Step                              | Function                    
---------------------------------- | ---------------------------------------------
- Run an enrichment analysis       | `gprofiler2::gost()`
- Start *Cytoscape*                |  outside R   
- Create a gene-term network       | `createNetwork()`
+Step                             | Function                    
+-------------------------------- | --------------------------------------------
+Run an enrichment analysis       | `gprofiler2::gost()`
+Start *Cytoscape*                |  outside R   
+Create a gene-term network       | `createNetwork()`
 
 The `package::function()` notation is used for functions from other packages.
 
@@ -433,7 +434,7 @@ creation of an enrichment map.
 The key steps for the workflow are:
 
 Step                              | Function                    
---------------------------------- | ---------------------------------------------
+--------------------------------- | ------------------------------------------
  Run an enrichment analysis       | `gprofiler2::gost()`
  Create an enrichment map         | `createEnrichMap()`
 
