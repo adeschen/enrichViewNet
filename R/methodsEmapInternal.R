@@ -532,6 +532,9 @@ createMultiEmap <- function(gostResultsList, queryList, showCategory,
     resF <- list()
     geneClusters <- list()
     
+    ## Rename query names when duplicated names
+    queryList <- manageQueryDuplicationInEmap(queryList=queryList)
+    
     for(i in seq_len(length(gostResultsList))) {
         gostResults <- gostResultsList[[i]]
         resultDF <- data.frame(
@@ -635,4 +638,46 @@ manageNameDuplicationInEmap <- function(clProfDF) {
     }
     
     return(clProfDF)
+}
+
+
+#' @title Change query name when more than one queries have  
+#' the same name
+#' 
+#' @description The function adds an unique ID at the name of the query when 
+#' more than one query have the same name.
+#' 
+#' @param queryList a \code{list} containing the query names.
+#' 
+#' @return a \code{list} with the query names modified for queries   
+#' with duplicated names.
+#' 
+#' @examples
+#'
+#' ## List of query names with duplicated names
+#' queryList <- list("parental_vs_DMSO", "rosa_vs_DMSO", "parental_vs_DMSO", 
+#'     "rosa_vs_DMSO", "parental_vs_Control", "rosa_vs_DMSO")
+#' 
+#' ## Change the query names for the duplicated names
+#' enrichViewNet:::manageQueryDuplicationInEmap(queryList=queryList)
+#'     
+#' @author Astrid Deschênes
+#' @encoding UTF-8
+#' @keywords internal
+manageQueryDuplicationInEmap <- function(queryList) {
+    
+    ## Problem when identical query names
+    test <- which(table(unlist(queryList)) > 1)
+    if (length(test) > 0) {
+        for (i in names(test)) {
+            pos <- which(queryList == i)
+            id <- 1
+            for (j in pos) {
+                queryList[[j]] <- paste0(queryList[[j]], " (", id, ")")
+                id <- id + 1
+            }
+        }
+    }
+    
+    return(queryList)
 }

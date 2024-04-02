@@ -92,6 +92,27 @@ test_that("manageNameDuplicationInEmap() must return expected result", {
 })
 
 
+### Tests manageQueryDuplicationInEmap() results
+
+context("manageQueryDuplicationInEmap() results")
+
+test_that("manageQueryDuplicationInEmap() must return expected result", {
+    
+    queryList <- list("parental_vs_DMSO", "rosa_vs_DMSO", "parental_vs_DMSO", 
+                    "rosa_vs_DMSO", "parental_vs_Control", "rosa_vs_DMSO", 
+                    "Mia_vs_DMSO", "parental_vs_Control", "rosa_vs_DMSO")
+    
+    expected <- list("parental_vs_DMSO (1)", "rosa_vs_DMSO (1)", 
+        "parental_vs_DMSO (2)", "rosa_vs_DMSO (2)", "parental_vs_Control (1)", 
+        "rosa_vs_DMSO (3)", "Mia_vs_DMSO", "parental_vs_Control (2)", 
+        "rosa_vs_DMSO (4)")
+    
+    result <- enrichViewNet:::manageQueryDuplicationInEmap(queryList=queryList)
+    
+    expect_equal(result, expected)
+})
+
+
 ### Tests createBasicEmap() results
 
 context("createBasicEmap() results")
