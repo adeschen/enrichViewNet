@@ -566,10 +566,10 @@ createMultiEmap <- function(gostResultsList, queryList, showCategory,
     }
     
     res <- new("compareClusterResult",
-               compareClusterResult = clProfDF,
-               geneClusters = geneClusters,
-               fun = "createMultiEmap",
-               .call = call("createMultiEmap()")
+                compareClusterResult = clProfDF,
+                geneClusters = geneClusters,
+                fun = "createMultiEmap",
+                .call = call("createMultiEmap()")
     )
     res@keytype <- "UNKNOWN"
     res@readable <- FALSE
