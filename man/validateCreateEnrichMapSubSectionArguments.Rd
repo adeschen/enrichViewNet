@@ -4,7 +4,7 @@
 \name{validateCreateEnrichMapSubSectionArguments}
 \alias{validateCreateEnrichMapSubSectionArguments}
 \title{Validate common arguments passed to createEnrichMap() and 
-createEnrichMapMulti() functions}
+createEnrichMapMultiBasic() functions}
 \usage{
 validateCreateEnrichMapSubSectionArguments(
   showCategory,
@@ -42,7 +42,7 @@ overlapping text labels should be forced.}
 }
 \description{
 Validate the common arguments passed to createEnrichMap() and 
-createEnrichMapMulti() functions.
+createEnrichMapMultiBasic() functions.
 }
 \examples{
 

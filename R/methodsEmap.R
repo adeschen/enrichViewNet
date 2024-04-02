@@ -205,7 +205,7 @@ createEnrichMap <- function(gostObject, query, source=c("TERM_ID", "GO:MF",
 #' 
 #' ## Create graph for KEGG related results from 
 #' ## 2 enrichment analyses
-#' createEnrichMapMulti(gostObjectList=list(parentalNapaVsDMSOEnrichment, 
+#' createEnrichMapMultiBasic(gostObjectList=list(parentalNapaVsDMSOEnrichment, 
 #'     rosaNapaVsDMSOEnrichment), 
 #'     queryList=list(query1, query2), source="KEGG", removeRoot=TRUE)
 #' 
@@ -215,10 +215,11 @@ createEnrichMap <- function(gostObject, query, source=c("TERM_ID", "GO:MF",
 #' @importFrom strex match_arg
 #' @encoding UTF-8
 #' @export
-createEnrichMapMulti <- function(gostObjectList, queryList, source=c("TERM_ID", 
-    "GO:MF", "GO:CC", "GO:BP", "KEGG", "REAC", "TF", "MIRNA", "HPA", "CORUM", 
-    "HP", "WP"), termIDs=NULL, removeRoot=TRUE, showCategory=30L, 
-    groupCategory=FALSE, categoryLabel=1, categoryNode=1, line=1, force=TRUE) {
+createEnrichMapMultiBasic <- function(gostObjectList, queryList, 
+    source=c("TERM_ID", "GO:MF", "GO:CC", "GO:BP", "KEGG", "REAC", "TF", 
+    "MIRNA", "HPA", "CORUM", "HP", "WP"), termIDs=NULL, removeRoot=TRUE, 
+    showCategory=30L, groupCategory=FALSE, categoryLabel=1, 
+    categoryNode=1, line=1, force=TRUE) {
     
     ## Validate source is among the possible choices
     source <- match_arg(source, ignore_case=TRUE)

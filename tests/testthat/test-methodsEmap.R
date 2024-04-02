@@ -329,49 +329,35 @@ test_that("createEnrichMap() must return error when not all term ids are present
 })
 
 
-### Tests createEnrichMapMulti() results
+### Tests createEnrichMapMultiBasic() results
 
-context("createEnrichMapMulti() results")
+context("createEnrichMapMultiBasic() results")
 
-test_that("createEnrichMapMulti() must return error when gostObjectList is a number", {
+test_that("createEnrichMapMultiBasic() must return error when gostObjectList is a number", {
     
     error_message <- paste0("The gostObjectList object should be a list ", 
         "of enrichment objects. At least 2 enrichment objects are required.")
     
-    expect_error(createEnrichMapMulti(gostObjectList=33, 
+    expect_error(createEnrichMapMultiBasic(gostObjectList=33, 
         queryList=c("TEST", "Test2"),  source="GO:CC", termIDs=NULL, 
         removeRoot=TRUE, showCategory=30, groupCategory=FALSE, categoryLabel=1,
         categoryNode=1, line=1, force=FALSE), error_message)
 })
 
-test_that("createEnrichMapMulti() must return error when gostObjectList has only one element", {
+test_that("createEnrichMapMultiBasic() must return error when gostObjectList has only one element", {
     
     gostTerm <- demoGOST
     
     error_message <- paste0("The gostObjectList object should be a list ", 
         "of enrichment objects. At least 2 enrichment objects are required.")
     
-    expect_error(createEnrichMapMulti(gostObjectList=list(gostTerm), 
+    expect_error(createEnrichMapMultiBasic(gostObjectList=list(gostTerm), 
         queryList=list("TEST"), source="GO:CC", termIDs=NULL, removeRoot=TRUE, 
         showCategory=30, groupCategory=FALSE, categoryLabel=1,
         categoryNode=1, force=FALSE), error_message)
 })
 
-test_that("createEnrichMapMulti() must return error when queryList is a number", {
-    
-    gostTerm <- demoGOST
-    
-    error_message <- paste0("he queryList object should be a list of query ", 
-        "names. At least 2 query names are required. The number of query ", 
-        "names should correspond to the number of enrichment objects.")
-    
-    expect_error(createEnrichMapMulti(gostObjectList=list(gostTerm, gostTerm), 
-        queryList=33, source="GO:CC", termIDs=NULL, removeRoot=TRUE, 
-        showCategory=30, groupCategory=FALSE, categoryLabel=1,
-        categoryNode=1, force=FALSE), error_message)
-})
-
-test_that("createEnrichMapMulti() must return error when queryList is longer than gostObjectList", {
+test_that("createEnrichMapMultiBasic() must return error when queryList is a number", {
     
     gostTerm <- demoGOST
     
@@ -379,13 +365,27 @@ test_that("createEnrichMapMulti() must return error when queryList is longer tha
         "names. At least 2 query names are required. The number of query ", 
         "names should correspond to the number of enrichment objects.")
     
-    expect_error(createEnrichMapMulti(gostObjectList=list(gostTerm, gostTerm), 
+    expect_error(createEnrichMapMultiBasic(gostObjectList=list(gostTerm, gostTerm), 
+        queryList=33, source="GO:CC", termIDs=NULL, removeRoot=TRUE, 
+        showCategory=30, groupCategory=FALSE, categoryLabel=1,
+        categoryNode=1, force=FALSE), error_message)
+})
+
+test_that("createEnrichMapMultiBasic() must return error when queryList is longer than gostObjectList", {
+    
+    gostTerm <- demoGOST
+    
+    error_message <- paste0("The queryList object should be a list of query ", 
+        "names. At least 2 query names are required. The number of query ", 
+        "names should correspond to the number of enrichment objects.")
+    
+    expect_error(createEnrichMapMultiBasic(gostObjectList=list(gostTerm, gostTerm), 
     queryList=list("TEST", "TEST2", "TEST3"), source="GO:CC", termIDs=NULL, 
     removeRoot=TRUE, showCategory=30, groupCategory=FALSE, categoryLabel=1,
     categoryNode=1, force=FALSE), error_message)
 })
 
-test_that("createEnrichMapMulti() must return error when one query in queryList is not in gostObject", {
+test_that("createEnrichMapMultiBasic() must return error when one query in queryList is not in gostObject", {
     
     gostTerm <- demoGOST
     
@@ -393,13 +393,13 @@ test_that("createEnrichMapMulti() must return error when one query in queryList 
         "\'queryList\' parameter must be present in the associated ", 
         "enrichment object.")
     
-    expect_error(createEnrichMapMulti(gostObjectList=list(gostTerm, gostTerm), 
+    expect_error(createEnrichMapMultiBasic(gostObjectList=list(gostTerm, gostTerm), 
         queryList=list("query_1", "TEST"), source="GO:CC", termIDs=NULL, 
         removeRoot=TRUE, showCategory=30, groupCategory=FALSE, categoryLabel=1,
         categoryNode=1, force=FALSE), error_message, fixed=TRUE)
 })
 
-test_that("createEnrichMapMulti() must return error when one object in gostObjectList in a number", {
+test_that("createEnrichMapMultiBasic() must return error when one object in gostObjectList in a number", {
     
     gostTerm <- demoGOST
     
@@ -408,13 +408,13 @@ test_that("createEnrichMapMulti() must return error when one object in gostObjec
         "and result as entries corresponding to gprofiler2 ", 
         "enrichment output.")
     
-    expect_error(createEnrichMapMulti(gostObjectList=list(gostTerm, 33), 
+    expect_error(createEnrichMapMultiBasic(gostObjectList=list(gostTerm, 33), 
         queryList=list("query_1", "query_1"), source="GO:CC", termIDs=NULL, 
         removeRoot=TRUE, showCategory=30, groupCategory=FALSE, categoryLabel=1,
         categoryNode=1, force=FALSE), error_message, fixed=TRUE)
 })
 
-test_that("createEnrichMapMulti() must return error when no enriched term for selected source", {
+test_that("createEnrichMapMultiBasic() must return error when no enriched term for selected source", {
     
     gostTerm <- demoGOST
     gostTerm$result <- gostTerm$result[which(gostTerm$result$source != "WP"), ]
@@ -422,33 +422,33 @@ test_that("createEnrichMapMulti() must return error when no enriched term for se
     error_message <- paste0("There is no enriched term for the selected ", 
                                 "source \'WP\'.")   
     
-    expect_error(createEnrichMapMulti(gostObjectList=list(gostTerm, gostTerm), 
+    expect_error(createEnrichMapMultiBasic(gostObjectList=list(gostTerm, gostTerm), 
         queryList=list("query_1", "query_1"), source="WP", termIDs=NULL, 
         removeRoot=TRUE, showCategory=30, groupCategory=FALSE, categoryLabel=1,
         categoryNode=1, force=FALSE), error_message, fixed=TRUE)
 })
 
-test_that("createEnrichMapMulti() must return error when number in queryList", {
+test_that("createEnrichMapMultiBasic() must return error when number in queryList", {
     
     gostTerm <- demoGOST
     
     error_message <- paste0("The queryList object should only contain a list ", 
                                 "of query names in character strings.")
     
-    expect_error(createEnrichMapMulti(gostObjectList=list(gostTerm, gostTerm), 
+    expect_error(createEnrichMapMultiBasic(gostObjectList=list(gostTerm, gostTerm), 
         queryList=list("query_1", 33), source="WP", termIDs=NULL, 
         removeRoot=TRUE, showCategory=30, groupCategory=FALSE, categoryLabel=1,
         categoryNode=1, force=FALSE), error_message, fixed=TRUE)
 })
 
-test_that("createEnrichMapMulti() must return error when number in queryList", {
+test_that("createEnrichMapMultiBasic() must return error when number in queryList", {
     
     gostTerm <- demoGOST
     
     error_message <- paste0("A vector of terms should be given through the ",
                 "\'termIDs\' parameter when source is \'TERM_ID\'.")
     
-    expect_error(createEnrichMapMulti(gostObjectList=list(gostTerm, gostTerm), 
+    expect_error(createEnrichMapMultiBasic(gostObjectList=list(gostTerm, gostTerm), 
         queryList=list("query_1", "query_1"), source="TERM_ID", termIDs=NULL, 
         removeRoot=TRUE, showCategory=30, groupCategory=FALSE, categoryLabel=1,
         categoryNode=1, force=FALSE), error_message, fixed=TRUE)

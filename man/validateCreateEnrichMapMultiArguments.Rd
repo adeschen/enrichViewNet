@@ -3,7 +3,7 @@
 \encoding{UTF-8}
 \name{validateCreateEnrichMapMultiArguments}
 \alias{validateCreateEnrichMapMultiArguments}
-\title{Validate arguments passed to createEnrichMapMulti() function}
+\title{Validate arguments passed to createEnrichMapMultiBasic() function}
 \usage{
 validateCreateEnrichMapMultiArguments(
   gostObjectList,
@@ -73,7 +73,7 @@ overlapping text labels should be forced.}
 \code{TRUE} when all arguments are valid
 }
 \description{
-Validate the arguments passed to createEnrichMapMulti() 
+Validate the arguments passed to createEnrichMapMultiBasic() 
 function.
 First, the object containing the enrichment results must correspond to a 
 object created by  \code{gprofiler2} software. Second, the selected 

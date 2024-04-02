@@ -120,9 +120,9 @@ validateCreateEnrichMapArguments <- function(gostObject, query, source,
 }
 
 
-#' @title Validate arguments passed to createEnrichMapMulti() function
+#' @title Validate arguments passed to createEnrichMapMultiBasic() function
 #' 
-#' @description Validate the arguments passed to createEnrichMapMulti() 
+#' @description Validate the arguments passed to createEnrichMapMultiBasic() 
 #' function.
 #' First, the object containing the enrichment results must correspond to a 
 #' object created by  \code{gprofiler2} software. Second, the selected 
@@ -267,10 +267,10 @@ validateCreateEnrichMapMultiArguments <- function(gostObjectList, queryList,
 
 
 #' @title Validate common arguments passed to createEnrichMap() and 
-#' createEnrichMapMulti() functions
+#' createEnrichMapMultiBasic() functions
 #' 
 #' @description Validate the common arguments passed to createEnrichMap() and 
-#' createEnrichMapMulti() functions.
+#' createEnrichMapMultiBasic() functions.
 #' 
 #' @param showCategory a positive \code{integer} or a \code{vector} of 
 #' \code{characters} representing terms.  If a \code{integer}, the first 
@@ -424,7 +424,7 @@ createBasicEmap <- function(gostResults, backgroundGenes,
     )
     names(geneSets) <- gostResults$term_id
     
-    resultDataFrame <- data.frame(ID=gostResults$term_id, 
+    resultDF <- data.frame(ID=gostResults$term_id, 
         Description=gostResults$term_name,
         GeneRatio=c(paste0(gostResults$intersection_size, "/", 
                                 gostResults$query_size)), 
@@ -436,11 +436,16 @@ createBasicEmap <- function(gostResults, backgroundGenes,
         geneID=str_replace_all(gostResults$intersection, ",", "/"),
         Count=c(gostResults$intersection_size), stringsAsFactors=FALSE)
     
-    resultDataFrame <- resultDataFrame[order(resultDataFrame$pvalues), ]
+    resultDF <- resultDF[order(resultDF$pvalues), ]
     
-    rownames(resultDataFrame) <- resultDataFrame$ID
+    ## Problem when identical description 
+    if (any(table(resultDF$Description) > 1)) {
+        resultDF <- manageNameDuplicationInEmap(clProfDF=resultDF)
+    }
     
-    res <- new("enrichResult", result=resultDataFrame, pvalueCutoff=1, 
+    rownames(resultDF) <- resultDF$ID
+    
+    res <- new("enrichResult", result=resultDF, pvalueCutoff=1, 
                 pAdjustMethod="UNKNOWN", qvalueCutoff=1, 
                 gene=as.character(backgroundGenes), 
                 universe=as.character(backgroundGenes), 

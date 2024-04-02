@@ -544,6 +544,47 @@ _Transcriptional misregulation in cancer_ term is the only isolated node.
 
 <br>
 
+
+### Using list of term IDs
+
+Instead of using a specific source, the enrichment map can be generated from a 
+personalized array of term IDs. To do so, the _source_ parameter must be set 
+to _"TERM_ID"_ and an array of term IDs must be passed to the _termIDs_ 
+parameter. The terms can be pick-up from different sources. If more than one 
+terms have the same description, the term ID will be added at the end of the 
+description for clarity.
+
+```{r runCreateEmapTerms, echo=TRUE, eval=TRUE, fig.cap="A Kegg enrichment map where terms with overlapping significant genes cluster together.", fig.align="center"}
+
+## Load saved enrichment results between parental Napa vs DMSO
+data(parentalNapaVsDMSOEnrichment)
+
+## The term IDs must correspond to the IDs present in the "term_id" column
+head(parentalNapaVsDMSOEnrichment$result[, c("query", "term_id", "term_name")], 
+     n=3)
+
+## List of selected terms from different sources
+termID <- c("KEGG:04115", "WP:WP4963", "KEGG:04010", 
+                "REAC:R-HSA-5675221", "REAC:R-HSA-112409", "WP:WP382")
+
+## Set seed to ensure reproducible results
+set.seed(222)
+
+## Create network for all selected terms
+createEnrichMap(gostObject=parentalNapaVsDMSOEnrichment, 
+                    query="parental_napa_vs_DMSO", 
+                    source="TERM_ID", termIDs=termID)
+    
+```
+
+<br>
+
+The description "MAPK signaling pathway" is present twice. The ID of each 
+term has been added to the end of the description. Hence, the MAPK pathway 
+from WikiPathway can be distinguished from the Kegg pathway.
+
+<br>
+
 ### Effect of _seed_ value
 
 The layering of the nodes is not always optimal. As the layering is affected by 
@@ -609,7 +650,7 @@ The key steps for the workflow are:
 Step                                          | Function                    
 --------------------------------------------- | ------------------------------
 Run one or multiple enrichment analyses       | `gprofiler2::gost()`
-Create an enrichment map                      | `createEnrichMapMulti()`
+Create an enrichment map with group           | `createEnrichMapMultiBasic()`
 
 The `package::function()` notation is used for functions from other packages.
 
@@ -620,6 +661,11 @@ The first step has been presented in the previous section.
 <br>
 
 ## Create an enrichment map using multiple enrichment analyses
+
+An enrichment map can show enrichment results from multiple enrichment 
+analyses. A different color is used for each analysis. This enables to 
+highlight the enriched terms shared by multiples analyses as well as 
+analysis specific network of terms.
 
 
 ```{r emapMulti01, echo=TRUE, warning=FALSE, message=FALSE, collapse=F, eval=TRUE}
@@ -648,18 +694,58 @@ queryList <- list(query_01, query_02)
 
 ## Enrichment map where the groups are the KEGG results for the 2 different
 ## experiments
-createEnrichMapMulti(gostObjectList=gostObjectList,
+createEnrichMapMultiBasic(gostObjectList=gostObjectList,
     queryList=queryList, source="KEGG", removeRoot=TRUE)
     
 
 ```
-
 
 <br>
 
 There are 4 KEGG enrichment terms that are shared by the 2 experiments. 
 In additions, the _Viral carinogenesis_ term is the only term that is not 
 related to the other KEGG terms.
+
+<br>
+
+
+## Create an enrichment map using subsections of one enrichment analysis
+
+An enrichment map can generate enrichment results from one enrichment 
+analysis with terms from different sources in different colors. 
+
+```{r emapMulti02, echo=TRUE, warning=FALSE, message=FALSE, collapse=F, eval=TRUE}
+
+## Set seed to ensure reproducible results
+set.seed(2121)
+
+## The dataset of functional enriched terms for one experiment:
+## napabucasin treated and DMSO control expressing Rosa26 control vector
+## (Froeling et al 2019)
+data("rosaNapaVsDMSOEnrichment")
+
+## The gostObjectList is a list containing all 
+## the functional enrichment objects
+gostObjectList <- list(rosaNapaVsDMSOEnrichment, 
+    rosaNapaVsDMSOEnrichment)
+
+## The queryList is a list of query names retained for each of the enrichment 
+## object (same order). Beware that a enrichment object can contain more than 
+## one query.
+query_01 <- unique(rosaNapaVsDMSOEnrichment$result$query)[1]
+queryList <- list(query_01, query_01)
+
+## Enrichment map where the groups are the KEGG results for the 2 different
+## experiments
+createEnrichMapMultiBasic(gostObjectList=gostObjectList,
+    queryList=queryList, source="KEGG", removeRoot=TRUE)
+    
+
+```
+
+<br>
+
+TODO
 
 <br>
 
@@ -670,7 +756,7 @@ the _seed_ value, you might want to test few _seed_ values, using the
 _set.seed()_ function, before selecting the final graph.
 
 
-```{r emapMulti02, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE, fig.cap="An enrichment map with a different seed.", fig.align="center"}
+```{r emapMultiSeed, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE, fig.cap="An enrichment map with a different seed.", fig.align="center"}
 
 
 ## Set seed to ensure reproducible results
@@ -678,7 +764,7 @@ set.seed(5)
 
 ## Enrichment map where the groups are the KEGG results for the 2 different
 ## experiments
-createEnrichMapMulti(gostObjectList=gostObjectList,
+createEnrichMapMultiBasic(gostObjectList=gostObjectList,
     queryList=queryList, source="KEGG", removeRoot=TRUE)
     
 ```
@@ -692,7 +778,7 @@ The output of the _createEnrichMapMulti()_ function is a _ggplot_ object.
 This means that the graph can be personalized. For example, the default 
 colors, legend title and legend font can be changed:
 
-```{r emapMulti03, echo=TRUE, warning=FALSE, message=FALSE, collapse=F, eval=TRUE, fig.cap="An enrichment map with different colors."}
+```{r emapMultiCustom, echo=TRUE, warning=FALSE, message=FALSE, collapse=F, eval=TRUE, fig.cap="An enrichment map with different colors."}
 
 ## Required library
 library(ggplot2)
@@ -702,7 +788,7 @@ set.seed(2121)
 
 ## Enrichment map where the groups are the KEGG results for the 2 different
 ## experiments
-createEnrichMapMulti(gostObjectList=gostObjectList,
+createEnrichMapMultiBasic(gostObjectList=gostObjectList,
     queryList=queryList, source="KEGG", removeRoot=TRUE) + 
         scale_fill_manual(name="Groups",
                             breaks = queryList,
