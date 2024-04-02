@@ -247,7 +247,7 @@ data("parentalNapaVsDMSODEG")
 ## Retain significant results 
 ## (absolute fold change superior to 1 and adjusted p-value inferior to 0.05)
 retained <- which(abs(parentalNapaVsDMSODEG$log2FoldChange) > 1 & 
-                      parentalNapaVsDMSODEG$padj < 0.05)
+                            parentalNapaVsDMSODEG$padj < 0.05)
 signRes <-  parentalNapaVsDMSODEG[retained, ]
 
 ## Run one functional enrichment analysis using all significant genes
@@ -387,10 +387,9 @@ selectedRes[, c("term_name")]
 ## The network will either by created in Cytoscape (if the application is open)
 ## or a CX file will be created in the temporary directory
 createNetwork(gostObject=parentalNapaVsDMSOEnrichment,  source="TERM_ID", 
-          termIDs=selectedRes$term_id, title="REACTOME_Selected", 
-          collection="parental_napa_vs_DMSO",
-          fileName=file.path(tempdir(), 
-            "parentalNapaVsDMSOEnrichment_REACTOME.cx"))
+        termIDs=selectedRes$term_id, title="REACTOME_Selected", 
+        collection="parental_napa_vs_DMSO",
+        fileName=file.path(tempdir(), "parentalNapaVsDMSO_REACTOME.cx"))
 ```
 
 <br>
@@ -433,10 +432,10 @@ creation of an enrichment map.
 
 The key steps for the workflow are:
 
-Step                              | Function                    
---------------------------------- | ------------------------------------------
- Run an enrichment analysis       | `gprofiler2::gost()`
- Create an enrichment map         | `createEnrichMap()`
+Step                             | Function                    
+-------------------------------- | ------------------------------------------
+Run an enrichment analysis       | `gprofiler2::gost()`
+Create an enrichment map         | `createEnrichMap()`
 
 The `package::function()` notation is used for functions from other packages.
 
@@ -463,8 +462,8 @@ data("parentalNapaVsDMSODEG")
 ## Retain significant results 
 ## (absolute fold change superior to 1 and adjusted p-value inferior to 0.05)
 retained <- which(abs(parentalNapaVsDMSODEG$log2FoldChange) > 1 & 
-                      parentalNapaVsDMSODEG$padj < 0.05)
-signRes <-  parentalNapaVsDMSODEG[retained, ]
+                        parentalNapaVsDMSODEG$padj < 0.05)
+signRes <- parentalNapaVsDMSODEG[retained, ]
 
 ## Run one functional enrichment analysis using all significant genes
 ## The species is homo sapiens ("hsapiens")
@@ -531,8 +530,8 @@ set.seed(121)
 
 ## Create network for all Kegg terms
 createEnrichMap(gostObject=parentalNapaVsDMSOEnrichment, 
-                  query="parental_napa_vs_DMSO", 
-                  source="KEGG")
+                    query="parental_napa_vs_DMSO", 
+                    source="KEGG")
     
 ```
 
@@ -559,8 +558,8 @@ set.seed(91)
 
 ## Create network for all Kegg terms
 createEnrichMap(gostObject=parentalNapaVsDMSOEnrichment, 
-                  query="parental_napa_vs_DMSO", 
-                  source="KEGG")
+                    query="parental_napa_vs_DMSO", 
+                    source="KEGG")
     
 ```
 
@@ -584,8 +583,8 @@ set.seed(91)
 
 ## Create network for all Kegg terms
 graphKegg <- createEnrichMap(gostObject=parentalNapaVsDMSOEnrichment, 
-                  query="parental_napa_vs_DMSO", 
-                  source="KEGG")
+                    query="parental_napa_vs_DMSO", 
+                    source="KEGG")
 
 ## Nodes with lowest p-values will be in orange and highest p-values in black
 ## The title of the legend is also modified
@@ -607,10 +606,10 @@ same enrichment analysis or can come from different enrichment analyses.
 
 The key steps for the workflow are:
 
-Step                                           | Function                    
----------------------------------------------- | ------------------------------
- Run one or multiple enrichment analyses       | `gprofiler2::gost()`
- Create an enrichment map                      | `createEnrichMapMulti()`
+Step                                          | Function                    
+--------------------------------------------- | ------------------------------
+Run one or multiple enrichment analyses       | `gprofiler2::gost()`
+Create an enrichment map                      | `createEnrichMapMulti()`
 
 The `package::function()` notation is used for functions from other packages.
 
