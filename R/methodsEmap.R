@@ -131,8 +131,8 @@ createEnrichMap <- function(gostObject, query, source=c("TERM_ID", "GO:MF",
 }
 
 
-#' @title Using functional enrichment results in  gprofiler2 format to create  
-#' an enrichment map
+#' @title Using functional enrichment results in gprofiler2 format to create  
+#' an enrichment map with multiple groups
 #' 
 #' @description User selected enrichment terms are used to create an enrichment 
 #' map. The selection of the term can by specifying by the 
@@ -140,13 +140,16 @@ createEnrichMap <- function(gostObject, query, source=c("TERM_ID", "GO:MF",
 #' term IDs. The map is only generated when there is at least on 
 #' significant term to graph.
 #' 
-#' @param gostObjectList a TODO \code{list} corresponding to gprofiler2 enrichment 
-#' output that contains and that contains 
-#' the results from an enrichment analysis.
+#' @param gostObjectList a \code{list} of \code{gprofiler2} objects that 
+#' contain the results from an enrichment analysis. The list must contain at 
+#' least 2 entries. The number of entries must correspond to the number of 
+#' entries for the \code{queryList} parameter.
 #' 
-#' @param queryList TODO a \code{character} string representing the name of the query 
-#' that is going to be used to generate the graph. The query must exist in the 
-#' \code{gostObjectList} object.
+#' @param queryList a \code{list} of \code{character} strings representing the 
+#' names of the queries that are going to be used to generate the graph. 
+#' The query names must exist in the associated \code{gostObjectList} objects 
+#' and follow the same order. The number of entries must correspond to the 
+#' number of entries for the \code{gostObjectList} parameter.
 #' 
 #' @param source a \code{character} string representing the selected source 
 #' that will be used to generate the network. To hand-pick the terms to be 
@@ -200,7 +203,7 @@ createEnrichMap <- function(gostObject, query, source=c("TERM_ID", "GO:MF",
 #' query1 <- unique(parentalNapaVsDMSOEnrichment$result$query)[1]
 #' query2 <- unique(rosaNapaVsDMSOEnrichment$result$query)[1]
 #' 
-#' ## Create graph for Gene Ontology - Cellular Component related results from 
+#' ## Create graph for KEGG related results from 
 #' ## 2 enrichment analyses
 #' createEnrichMapMulti(gostObjectList=list(parentalNapaVsDMSOEnrichment, 
 #'     rosaNapaVsDMSOEnrichment), 

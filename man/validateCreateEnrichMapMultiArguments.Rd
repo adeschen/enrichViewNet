@@ -22,8 +22,8 @@ validateCreateEnrichMapMultiArguments(
 \arguments{
 \item{gostObjectList}{a \code{list} of \code{gprofiler2} objects that 
 contain the results from an enrichment analysis. The list must contain at 
-least 2 entries. The number of entries must correspond to the number of
- entries for the \code{queryList} parameter.}
+least 2 entries. The number of entries must correspond to the number of 
+entries for the \code{queryList} parameter.}
 
 \item{queryList}{a \code{list} of \code{character} strings representing the 
 names of the queries that are going to be used to generate the graph. 
