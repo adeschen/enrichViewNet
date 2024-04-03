@@ -58,3 +58,4 @@
 ### BUG FIXES
 
 - `createCytoscapeCXJSON()` method does not replicate anymore the genes that are associated to more than one term.
+
