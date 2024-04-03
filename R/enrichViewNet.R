@@ -25,8 +25,10 @@
 #'
 #' @seealso
 #' \itemize{
-#'     \item \code{\link{createNetwork}} {for transforming functional 
+#'     \item{\code{\link{createNetwork}}} {for transforming functional 
 #'     enrichment results from gprofiler2 into a Cytoscape network}
+#'     \item{\code{\link{createEnrichMap}}} {for transforming functional 
+#'     enrichment results from gprofiler2 into an enrichment map}
 #' }
 #' 
 #' @encoding UTF-8
@@ -62,8 +64,10 @@ NULL
 #'
 #' @seealso
 #' \itemize{
-#'     \item \code{\link{createNetwork}} {for transforming functional 
+#'     \item{\code{\link{createNetwork}}} {for transforming functional 
 #'     enrichment results from gprofiler2 into a Cytoscape network}
+#'     \item{\code{\link{createEnrichMap}}} {for transforming functional 
+#'     enrichment results from gprofiler2 into an enrichment map}
 #' }
 #'
 #' @usage data(demoGOST)
@@ -136,8 +140,10 @@ NULL
 #'
 #' @seealso
 #' \itemize{
-#'     \item \code{\link{createNetwork}} {for transforming functional 
+#'     \item{\code{\link{createNetwork}}} {for transforming functional 
 #'     enrichment results from gprofiler2 into a Cytoscape network}
+#'     \item{\code{\link{createEnrichMap}}} {for transforming functional 
+#'     enrichment results from gprofiler2 into an enrichment map}
 #' }
 #'
 #' @usage data(parentalNapaVsDMSODEG)
@@ -241,8 +247,10 @@ NULL
 #'
 #' @seealso
 #' \itemize{
-#'     \item \code{\link{createNetwork}} {for transforming functional 
+#'     \item{\code{\link{createNetwork}}} {for transforming functional 
 #'     enrichment results from gprofiler2 into a Cytoscape network}
+#'     \item{\code{\link{createEnrichMap}}} {for transforming functional 
+#'     enrichment results from gprofiler2 into an enrichment map}
 #' }
 #'
 #' @usage data(rosaNapaVsDMSODEG)
@@ -336,8 +344,10 @@ NULL
 #'
 #' @seealso
 #' \itemize{
-#'     \item \code{\link{createNetwork}} {for transforming functional 
+#'     \item{\code{\link{createNetwork}}} {for transforming functional 
 #'     enrichment results from gprofiler2 into a Cytoscape network}
+#'     \item{\code{\link{createEnrichMap}}} {for transforming functional 
+#'     enrichment results from gprofiler2 into an enrichment map}
 #' }
 #'
 #' @usage data(parentalNapaVsDMSOEnrichment)
@@ -421,8 +431,10 @@ NULL
 #'
 #' @seealso
 #' \itemize{
-#'     \item \code{\link{createNetwork}} {for transforming functional 
+#'     \item{\code{\link{createNetwork}}} {for transforming functional 
 #'     enrichment results from gprofiler2 into a Cytoscape network}
+#'     \item{\code{\link{createEnrichMap}}} {for transforming functional 
+#'     enrichment results from gprofiler2 into an enrichment map}
 #' }
 #'
 #' @usage data(rosaNapaVsDMSOEnrichment)
