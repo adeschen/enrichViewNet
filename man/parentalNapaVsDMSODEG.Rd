@@ -94,9 +94,9 @@ gostres <- gost(query = list(parental_napa_vs_DMSO=selectedGenes),
 }
 \seealso{
 \itemize{
-    \item{\code{\link{createNetwork}}} {for transforming functional 
+    \item{\link{createNetwork}} {for transforming functional 
     enrichment results from gprofiler2 into a Cytoscape network}
-    \item{\code{\link{createEnrichMap}}} {for transforming functional 
+    \item{\link{createEnrichMap}} {for transforming functional 
     enrichment results from gprofiler2 into an enrichment map}
 }
 }
