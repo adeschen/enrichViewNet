@@ -220,7 +220,7 @@ filterResults <- function(gostResults, source, termIDs, removeRoot) {
 #'
 #' @description Remove root term if present in the list of selected terms
 #'
-#' @param gostResults a \code{data.frame} containing the terms retained
+#' @param gostResult a \code{data.frame} containing the terms retained
 #' for the creation of the network.
 #'
 #' @return a \code{data.frame} of selected terms without the root term.

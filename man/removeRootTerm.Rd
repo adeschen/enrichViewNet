@@ -8,7 +8,7 @@
 removeRootTerm(gostResult)
 }
 \arguments{
-\item{gostResults}{a \code{data.frame} containing the terms retained
+\item{gostResult}{a \code{data.frame} containing the terms retained
 for the creation of the network.}
 }
 \value{
