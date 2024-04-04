@@ -620,14 +620,14 @@ createNetworkForCytoscape <- function(nodeEdgeInfo, title, collection) {
 #'
 #' @return a \code{list} containing 4 entries:
 #' \itemize{
-#' \item{"nodes"}{a \code{data.frame} containing the information about
+#' \item{\code{"nodes"}: a \code{data.frame} containing the information about
 #' the nodes present in the network.}
-#' \item{"edges"}{a \code{data.frame} containing the information about
+#' \item{\code{"edges"}: a \code{data.frame} containing the information about
 #' the edges present in the network.}
-#' \item{"nodeAttributes"}{a \code{data.frame} containing the attributes
+#' \item{\code{"nodeAttributes"}: a \code{data.frame} containing the attributes
 #' associated to the nodes present in the network.}
-#' \item{"edgesAttributes"}{a \code{data.frame} containing the attributes
-#' associated to the edges present in the network}
+#' \item{\code{"edgesAttributes"}: a \code{data.frame} containing the 
+#' attributes associated to the edges present in the network}
 #' }
 #'
 #' @examples
