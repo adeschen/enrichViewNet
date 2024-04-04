@@ -93,7 +93,7 @@ NULL
 
 #' The result of a differential expression analysis done between 
 #' napabucasin treated and DMSO control parental 
-#' MiaPaCa2 cells. The cells were treated for 2 hour with 0.5 uM napabucasin.
+#' MiaPaCa2 cells. The cells were treated for 2 hours with 0.5 uM napabucasin.
 #' The protocol to generate the RNA-seq is described 
 #' in Froeling F.E.M. et al 2019.
 #' 
@@ -110,15 +110,15 @@ NULL
 #' expression analysis between napabucasin treated and DMSO control parental 
 #' MiaPaCa2 cells for all 24184 genes tested. The 4 columns are:
 #' \itemize{
-#' \item{EnsemblID} {a \code{character} string representing the unique Ensembl 
-#' identifier for the tested gene}
-#' \item{EnsemblID} {a \code{numeric} representing the expression difference 
-#' (in log2FoldChange) between the napabucasin treatment and the DMSO control 
-#' for the tested gene}
-#' \item{padj} {a \code{numeric} representing the adjusted p-value associated  
-#' to the difference in expression for the tested gene; \code{NA} when the 
-#' adjusted p-value as not been calculated (equivalent to not significant)}
-#' \item{GeneName} {a \code{character} string representing the name of 
+#' 
+#' \item{\code{"EnsemblID"}: a \code{character} string representing the 
+#' unique Ensembl identifier for the tested gene}
+#' \item{\code{"log2FoldChange"}: a \code{numeric} representing the expression 
+#' difference (in log2FoldChange) between the napabucasin treatment and 
+#' the DMSO control for the tested gene}
+#' \item{\code{"padj"}: a \code{numeric} representing the adjusted p-value 
+#' associated to the difference in expression for the tested gene}
+#' \item{\code{"GeneName"}: a \code{character} string representing the name of 
 #' the tested gene}
 #' }
 #'
@@ -126,23 +126,22 @@ NULL
 #' expression analysis between napabucasin treated and DMSO control parental 
 #' MiaPaCa2 cells for all 24184 genes tested. The 4 columns are:
 #' \itemize{
-#' \item{EnsemblID} {a \code{character} string representing the unique Ensembl 
-#' identifier for the tested gene}
-#' \item{EnsemblID} {a \code{numeric} representing the expression difference 
-#' (in log2FoldChange) between the napabucasin treatment and the DMSO control 
-#' for the tested gene}
-#' \item{padj} {a \code{numeric} representing the adjusted p-value associated  
-#' to the difference in expression for the tested gene; \code{NA} when the 
-#' adjusted p-value as not been calculated (equivalent to not significant)}
-#' \item{GeneName} {a \code{character} string representing the name of 
+#' \item{\code{"EnsemblID"}: a \code{character} string representing the 
+#' unique Ensembl identifier for the tested gene}
+#' \item{\code{"log2FoldChange"}: a \code{numeric} representing the expression 
+#' difference (in log2FoldChange) between the napabucasin treatment and 
+#' the DMSO control for the tested gene}
+#' \item{\code{"padj"}: a \code{numeric} representing the adjusted p-value 
+#' associated to the difference in expression for the tested gene}
+#' \item{\code{"GeneName"}: a \code{character} string representing the name of 
 #' the tested gene}
 #' }
 #'
 #' @seealso
 #' \itemize{
-#'     \item{\link{createNetwork}} {for transforming functional 
+#'     \item{\link{createNetwork} for transforming functional 
 #'     enrichment results from gprofiler2 into a Cytoscape network}
-#'     \item{\link{createEnrichMap}} {for transforming functional 
+#'     \item{\link{createEnrichMap} for transforming functional 
 #'     enrichment results from gprofiler2 into an enrichment map}
 #' }
 #'
