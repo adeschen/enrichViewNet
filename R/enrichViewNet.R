@@ -328,25 +328,26 @@ NULL
 #'
 #' @aliases parentalNapaVsDMSOEnrichment
 #'
-#' @format a \code{list} containing 2 entries:
+#' @format a \code{list} created by gprofiler2 that contains the results 
+#' from the enrichment analysis:
 #' \itemize{
-#' \item{result} {a \code{data.frame} with the significantly enriched 
-#' terms }
-#' \item{meta} {a TODO}
+#'     \item{\code{"result"}: a \code{data.frame} with the significantly 
+#'     enriched terms }
+#'     \item{\code{"meta"}: a \code{list} with the meta-data information}
 #' }
-#'
+#' 
 #' @return  a \code{list} containing 2 entries:
 #' \itemize{
-#' \item{result} {a \code{data.frame} with the significantly enriched 
-#' terms }
-#' \item{meta} {a TODO}
+#'     \item{\code{"result"}: a \code{data.frame} with the significantly 
+#'     enriched terms }
+#'     \item{\code{"meta"}: a \code{list} with the meta-data information}
 #' }
 #'
 #' @seealso
 #' \itemize{
-#'     \item{\code{\link{createNetwork}}} {for transforming functional 
+#'     \item{\link{createNetwork}} {for transforming functional 
 #'     enrichment results from gprofiler2 into a Cytoscape network}
-#'     \item{\code{\link{createEnrichMap}}} {for transforming functional 
+#'     \item{\link{createEnrichMap}} {for transforming functional 
 #'     enrichment results from gprofiler2 into an enrichment map}
 #' }
 #'
@@ -375,17 +376,16 @@ NULL
 #' Omnibus (GEO) under the accession number GSE135352.
 #' 
 #' @examples
-#'
-#' ## Required library
-#' library(gprofiler2)
 #' 
-#' ## Loading dataset containing the results of a differentially expressed 
+#' ## Loading dataset containing the results of the enrichment analysis 
+#' ## done on a differentially expressed 
 #' ## analysis between 2-hour treatment with 0.5 uM napabucasin and 
 #' ## DMSO vehicle control parental MiaPaCa2 cells
 #' data(parentalNapaVsDMSOEnrichment)
 #' 
-#' ## TODO
-#' 
+#' ## Create an enrichment map for the GO:CC terms
+#' createEnrichMap(gostObject=parentalNapaVsDMSOEnrichment, 
+#'     query="parental_napa_vs_DMSO", source="GO:CC")
 #'
 NULL
 
