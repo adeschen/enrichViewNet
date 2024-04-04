@@ -77,9 +77,9 @@ createEnrichMap(gostObject=rosaNapaVsDMSOEnrichment,
 }
 \seealso{
 \itemize{
-    \item{\link{createNetwork}}{  for transforming functional 
+    \item{\link{createNetwork} for transforming functional 
     enrichment results from gprofiler2 into a Cytoscape network}
-    \item{\link{createEnrichMap}}{  for transforming functional 
+    \item{\link{createEnrichMap} for transforming functional 
     enrichment results from gprofiler2 into an enrichment map}
 }
 }
