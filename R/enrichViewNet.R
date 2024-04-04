@@ -418,17 +418,17 @@ NULL
 #' @format a \code{list} created by gprofiler2 that contains the results 
 #' from the enrichment analysis:
 #' \itemize{
-#'     \item{result}{  a \code{data.frame} with the significantly enriched 
-#'     terms }
-#'     \item{meta}{  a \code{list} with the meta-data information}
+#'     \item{\code{"result"}: a \code{data.frame} with the significantly 
+#'     enriched terms }
+#'     \item{\code{"meta"}: a \code{list} with the meta-data information}
 #' }
 #'
-#' @return  a \code{list} created by gprofiler2 that contains the results 
+#' @return a \code{list} created by gprofiler2 that contains the results 
 #' from the enrichment analysis:
 #' \itemize{
-#' \item{result}{  a \code{data.frame} with the significantly enriched 
+#' \item{\code{"result"}: a \code{data.frame} with the significantly enriched 
 #' terms }
-#' \item{meta}{  a \code{list} with the meta-data information}
+#' \item{\code{"meta"}: a \code{list} with the meta-data information}
 #' }
 #'
 #' @seealso
