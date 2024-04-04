@@ -21,9 +21,9 @@ are retained.
 }
 \seealso{
 \itemize{
-    \item{\code{\link{createNetwork}}} {for transforming functional 
+    \item{\code{\link{createNetwork}} for transforming functional 
     enrichment results from gprofiler2 into a Cytoscape network}
-    \item{\code{\link{createEnrichMap}}} {for transforming functional 
+    \item{\code{\link{createEnrichMap}} for transforming functional 
     enrichment results from gprofiler2 into an enrichment map}
 }
 }
