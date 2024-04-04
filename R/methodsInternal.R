@@ -330,11 +330,11 @@ extractNodesAndEdgesInformation <- function(gostResults, gostObject) {
 #'
 #' @return \code{list} containing 2 entries:
 #' \itemize{
-#' \item{"geneNodes"}{a \code{data.frame} containing the information about
-#' the nodes present in the network. The nodes are genes.}
-#' \item{"termNodes"}{a \code{data.frame} containing the information about
-#' the nodes present in the network. The nodes are terms.}
-#' \item{"edges"}{a \code{data.frame} containing the information about
+#' \item{\code{geneNodes}}{  a \code{data.frame} containing the information 
+#' about the nodes present in the network. The nodes are genes.}
+#' \item{\code{termNodes}}{  a \code{data.frame} containing the information 
+#' about the nodes present in the network. The nodes are terms.}
+#' \item{\code{edges}}{  a \code{data.frame} containing the information about
 #' the edges present in the network. The edges connect one gene to one term.}
 #' }
 #'
