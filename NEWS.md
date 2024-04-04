@@ -1,3 +1,8 @@
+\name{enrichViewNetNews}
+\title{enrichViewNet News}
+\encoding{UTF-8}
+
+
 ## version 1.1.1
 
 ---
