@@ -391,8 +391,8 @@ NULL
 
 
 
-#' The result of an enrichment analysis has been done using the significantly 
-#' differentially expressed genes between 
+#' The result of an enrichment analysis that has been done using the 
+#' significantly differentially expressed genes between 
 #' napabucasin treated and DMSO control MiaPaCa2 cells stably expressing 
 #' the Rosa26 control vector.
 #' The cells were treated for 2 hour with 0.5 uM napabucasin.  
@@ -415,25 +415,27 @@ NULL
 #'
 #' @aliases rosaNapaVsDMSOEnrichment
 #'
-#' @format a \code{list} containing 2 entries:
+#' @format a \code{list} created by gprofiler2 that contains the results 
+#' from the enrichment analysis:
 #' \itemize{
-#' \item{result} {a \code{data.frame} with the significantly enriched 
-#' terms }
-#' \item{meta} {a TODO}
+#'     \item{result}{  a \code{data.frame} with the significantly enriched 
+#'     terms }
+#'     \item{meta}{  a \code{list} with the meta-data information}
 #' }
 #'
-#' @return  a \code{list} containing 2 entries:
+#' @return  a \code{list} created by gprofiler2 that contains the results 
+#' from the enrichment analysis:
 #' \itemize{
-#' \item{result} {a \code{data.frame} with the significantly enriched 
+#' \item{result}{  a \code{data.frame} with the significantly enriched 
 #' terms }
-#' \item{meta} {a TODO}
+#' \item{meta}{  a \code{list} with the meta-data information}
 #' }
 #'
 #' @seealso
 #' \itemize{
-#'     \item {\link{createNetwork}} {for transforming functional 
+#'     \item{\link{createNetwork}}{  for transforming functional 
 #'     enrichment results from gprofiler2 into a Cytoscape network}
-#'     \item {\link{createEnrichMap}} {for transforming functional 
+#'     \item{\link{createEnrichMap}}{  for transforming functional 
 #'     enrichment results from gprofiler2 into an enrichment map}
 #' }
 #'
@@ -462,16 +464,15 @@ NULL
 #' Omnibus (GEO) under the accession number GSE135352.
 #' 
 #' @examples
-#'
-#' ## Required library
-#' library(gprofiler2)
 #' 
-#' ## Loading dataset containing the results of a differentially expressed 
-#' ## analysis between 2-hour treatment with 0.5 uM napabucasin and 
-#' ## DMSO control MiaPaCa2 cells stably expressing the Rosa26 control vector
+#' ## Loading dataset containing the enrichment analysis done on the 
+#' ## differentially expressed analysis between 2-hour treatment with 0.5 uM 
+#' ## napabucasin and DMSO control MiaPaCa2 cells stably expressing 
+#' ## the Rosa26 control vector
 #' data(rosaNapaVsDMSOEnrichment)
 #' 
-#' ## TODO
-#' 
+#' ## Create an enrichment map for the KEGG terms
+#' createEnrichMap(gostObject=rosaNapaVsDMSOEnrichment, 
+#'     query="rosa_napa_vs_DMSO", source="KEGG")
 #'
 NULL
