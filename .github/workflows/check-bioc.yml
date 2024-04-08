@@ -27,6 +27,9 @@ on:
 name: R-CMD-check-bioc
 
 
+runs:
+    using: 'node20'
+            
 ## These environment variables control whether to run GHA code later on that is
 ## specific to testthat, covr, and pkgdown.
 ##
@@ -79,8 +82,6 @@ jobs:
       ## https://github.com/r-lib/actions/blob/master/examples/check-standard.yaml
       ## If they update their steps, we will also need to update ours.
       - name: Checkout Repository
-        runs:
-            using: 'node20'
         uses: actions/checkout@v3
 
       ## R is already included in the Bioconductor docker images
