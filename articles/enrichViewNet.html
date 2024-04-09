@@ -6,7 +6,7 @@
 <meta name="generator" content="pandoc">
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE">
 <meta name="author" content="Astrid Deschênes, Pascal Belleau, Robert L Faure and Maria J Fernandes">
-<meta name="date" content="2024-04-08">
+<meta name="date" content="2024-04-09">
 <title>From functional enrichment results to biological networks</title>
 <script src="enrichViewNet_files/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="enrichViewNet_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
@@ -243,7 +243,7 @@ function toggle_visibility(id1) {
 
 <h1 class="title toc-ignore">From functional enrichment results to biological networks</h1>
 <p class="author-name">Astrid Deschênes, Pascal Belleau, Robert L Faure and Maria J Fernandes</p>
-<h4 class="date">8 April 2024</h4>
+<h4 class="date">9 April 2024</h4>
 
 </div>
 
@@ -278,20 +278,21 @@ function toggle_visibility(id1) {
 </ul>
 </li>
 <li>
-<a href="#transforming-enrichment-results-into-an-enrichment-map-with-groups" id="toc-transforming-enrichment-results-into-an-enrichment-map-with-groups"><span class="toc-section-number">8</span> Transforming enrichment results into an enrichment map with groups</a>
+<a href="#transforming-enrichment-results-into-an-enrichment-map-with-groups-from-different-enrichment-analyses" id="toc-transforming-enrichment-results-into-an-enrichment-map-with-groups-from-different-enrichment-analyses"><span class="toc-section-number">8</span> Transforming enrichment results into an enrichment map with groups from different enrichment analyses</a>
 <ul>
 <li><a href="#create-an-enrichment-map-using-multiple-enrichment-analyses" id="toc-create-an-enrichment-map-using-multiple-enrichment-analyses"><span class="toc-section-number">8.1</span> Create an enrichment map using multiple enrichment analyses</a></li>
+<li><a href="#effect-of-seed-value-1" id="toc-effect-of-seed-value-1"><span class="toc-section-number">8.2</span> Effect of <em>seed</em> value</a></li>
+<li><a href="#enrichment-map-customization-1" id="toc-enrichment-map-customization-1"><span class="toc-section-number">8.3</span> Enrichment map customization</a></li>
+</ul>
+</li>
 <li>
-<a href="#create-an-enrichment-map-using-subsections-of-one-enrichment-analysis" id="toc-create-an-enrichment-map-using-subsections-of-one-enrichment-analysis"><span class="toc-section-number">8.2</span> Create an enrichment map using subsections of one enrichment analysis</a>
+<a href="#transforming-enrichment-results-into-an-enrichment-map-with-groups-from-same-enrichment-analysis" id="toc-transforming-enrichment-results-into-an-enrichment-map-with-groups-from-same-enrichment-analysis"><span class="toc-section-number">9</span> Transforming enrichment results into an enrichment map with groups from same enrichment analysis</a>
 <ul>
-<li><a href="#effect-of-seed-value-1" id="toc-effect-of-seed-value-1"><span class="toc-section-number">8.2.1</span> Effect of <em>seed</em> value</a></li>
-<li><a href="#enrichment-map-customization-1" id="toc-enrichment-map-customization-1"><span class="toc-section-number">8.2.2</span> Enrichment map customization</a></li>
+<li><a href="#create-an-enrichment-map-using-subsections-of-one-enrichment-analysis" id="toc-create-an-enrichment-map-using-subsections-of-one-enrichment-analysis"><span class="toc-section-number">9.1</span> Create an enrichment map using subsections of one enrichment analysis</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li><a href="#acknowledgments" id="toc-acknowledgments"><span class="toc-section-number">9</span> Acknowledgments</a></li>
-<li><a href="#session-info" id="toc-session-info"><span class="toc-section-number">10</span> Session info</a></li>
+<li><a href="#acknowledgments" id="toc-acknowledgments"><span class="toc-section-number">10</span> Acknowledgments</a></li>
+<li><a href="#session-info" id="toc-session-info"><span class="toc-section-number">11</span> Session info</a></li>
 <li><a href="#references" id="toc-references">References</a></li>
 </ul>
 </div>
@@ -301,7 +302,7 @@ Pascal Belleau [aut] (<a href="https://orcid.org/0000-0002-0802-1071" class="ext
 Robert L. Faure [aut] (<a href="https://orcid.org/0000-0003-1798-4723" class="external-link uri">https://orcid.org/0000-0003-1798-4723</a>),
 Maria J. Fernandes [aut] (<a href="https://orcid.org/0000-0002-3973-025X" class="external-link uri">https://orcid.org/0000-0002-3973-025X</a>),
 Alexander Krasnitz [aut],
-David A. Tuveson [aut] (<a href="https://orcid.org/0000-0002-8017-2712" class="external-link uri">https://orcid.org/0000-0002-8017-2712</a>)<br><strong>Version</strong>: 1.1.1<br><strong>Compiled date</strong>: 2024-04-08<br><strong>License</strong>: Artistic-2.0<br></p>
+David A. Tuveson [aut] (<a href="https://orcid.org/0000-0002-8017-2712" class="external-link uri">https://orcid.org/0000-0002-8017-2712</a>)<br><strong>Version</strong>: 1.1.1<br><strong>Compiled date</strong>: 2024-04-09<br><strong>License</strong>: Artistic-2.0<br></p>
 <div class="section level2" number="1">
 <h2 id="licensing">
 <span class="header-section-number">1</span> Licensing<a class="anchor" aria-label="anchor" href="#licensing"></a>
@@ -411,8 +412,9 @@ genes cluster together. This type of graphs facilitate the
 identification of functional modules.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:graphDemo02"></span>
-<img src="demo_KEGG_emap_v01.jpeg" alt="An enrichment map using significant Kegg terms." width="95%"><p class="caption">
-Figure 2: <span class="caption-title">An enrichment map using significant Kegg terms</span><br></p>
+<img src="demo_KEGG_emap_v01.jpeg" alt="An enrichment map using significant Kegg terms. Edges connecting terms with overlapping genes." width="95%"><p class="caption">
+Figure 2: <span class="caption-title">An enrichment map using significant Kegg terms</span><br>Edges connecting terms with overlapping genes.
+</p>
 </div>
 <p><strong>enrichViewNet</strong> has been submitted to
 <a href="https://www.bioconductor.org/" class="external-link">Bioconductor</a> to aid researchers in carrying
@@ -441,8 +443,8 @@ from <a href="https://bioconductor.org" class="external-link">Bioconductor</a>, 
 <strong>enrichViewNet</strong>:</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:graphWorkflow"></span>
-<img src="Figure_enrichViewNet_workflow_v05.jpg" alt="The enrichViewNet workflow" width="100%"><p class="caption">
-Figure 3: <span class="caption-title">The enrichViewNet workflow</span><br></p>
+<img src="Figure_enrichViewNet_workflow_v05.jpg" alt="The enrichViewNet general workflow" width="100%"><p class="caption">
+Figure 3: <span class="caption-title">The enrichViewNet general workflow</span><br></p>
 </div>
 <p>The principal input of <strong>enrichViewNet</strong> is a functional enrichment
 result in a format identical to the one generated by the CRAN
@@ -582,7 +584,7 @@ data. The Cytoscape software
 is available at the <a href="https://cytoscape.org/" class="external-link">Cytoscape website</a>.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:cytoscapeLogo01"></span>
-<img src="cy3sticker.png" alt="Cytoscape software logo." width="75%"><p class="caption">
+<img src="cy3sticker.png" alt="Cytoscape software logo." width="55%"><p class="caption">
 Figure 5: <span class="caption-title">Cytoscape software logo</span><br></p>
 </div>
 <p>The Cytoscape network generated by
@@ -626,7 +628,7 @@ is a bit hectic.</p>
 Figure 6: <span class="caption-title">All reactome terms in a gene-term network loaded in Cytoscape</span><br></p>
 </div>
 <p><br></p>
-<p>To address this situation, a updated gene-term network containing only
+<p>To address this situation, an updated gene-term network containing only
 Reactome terms of interest is created.</p>
 <p><br></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
@@ -760,7 +762,7 @@ is a <em>list</em> and should be saved.</p>
 <span>                evcodes<span class="op">=</span><span class="cn">TRUE</span>,</span>
 <span>                custom_bg<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">parentalNapaVsDMSODEG</span><span class="op">$</span><span class="va">EnsemblID</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><br></p>
-<p>The gost() function returns an named list of 2 entries:</p>
+<p>The <em>gost()</em> function returns an named list of 2 entries:</p>
 <ul>
 <li>The <strong>result</strong> entry contains the enrichment results.</li>
 <li>The <strong>meta</strong> entry contains the metadata information.</li>
@@ -866,11 +868,11 @@ description for clarity.</p>
 <span>                    source<span class="op">=</span><span class="st">"TERM_ID"</span>, termIDs<span class="op">=</span><span class="va">termID</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:runCreateEmapTerms"></span>
-<img src="enrichViewNet_files/figure-html/runCreateEmapTerms-1.png" alt="A Kegg enrichment map where terms with overlapping significant genes cluster together." width="100%"><p class="caption">
-Figure 10: <span class="caption-title">A Kegg enrichment map where terms with overlapping significant genes cluster together</span><br></p>
+<img src="enrichViewNet_files/figure-html/runCreateEmapTerms-1.png" alt="An enrichment map showing only the user selected terms." width="100%"><p class="caption">
+Figure 10: <span class="caption-title">An enrichment map showing only the user selected terms</span><br></p>
 </div>
 <p><br></p>
-<p>The description “MAPK signaling pathway” is present twice. The ID of each
+<p>As the description “MAPK signaling pathway” is present twice, the ID of each
 term has been added to the end of the description. Hence, the MAPK pathway
 from WikiPathway can be distinguished from the Kegg pathway.</p>
 <p><br></p>
@@ -892,8 +894,8 @@ the <em>seed</em> value, you might want to test few <em>seed</em> values, using 
 <span>                    source<span class="op">=</span><span class="st">"KEGG"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:runCreateEmap02"></span>
-<img src="enrichViewNet_files/figure-html/runCreateEmap02-1.png" alt="An enrichment map with personalized colors." width="100%"><p class="caption">
-Figure 11: <span class="caption-title">An enrichment map with personalized colors</span><br></p>
+<img src="enrichViewNet_files/figure-html/runCreateEmap02-1.png" alt="An enrichment map with a different seed." width="100%"><p class="caption">
+Figure 11: <span class="caption-title">An enrichment map with a different seed</span><br></p>
 </div>
 <p><br></p>
 </div>
@@ -930,12 +932,14 @@ Figure 12: <span class="caption-title">An enrichment map with personalized color
 </div>
 </div>
 <div class="section level2" number="8">
-<h2 id="transforming-enrichment-results-into-an-enrichment-map-with-groups">
-<span class="header-section-number">8</span> Transforming enrichment results into an enrichment map with groups<a class="anchor" aria-label="anchor" href="#transforming-enrichment-results-into-an-enrichment-map-with-groups"></a>
+<h2 id="transforming-enrichment-results-into-an-enrichment-map-with-groups-from-different-enrichment-analyses">
+<span class="header-section-number">8</span> Transforming enrichment results into an enrichment map with groups from different enrichment analyses<a class="anchor" aria-label="anchor" href="#transforming-enrichment-results-into-an-enrichment-map-with-groups-from-different-enrichment-analyses"></a>
 </h2>
 <p>The following workflow gives an overview of the steps associated to the
 creation of an enrichment map with groups. Groups can be created from the
-same enrichment analysis or can come from different enrichment analyses.</p>
+same enrichment analysis or can come from different enrichment analyses. This
+section is specifically for enrichment maps created using multiple enrichment
+analyses.</p>
 <p>The key steps for the workflow are:</p>
 <div class="horizontal-scroll"><table class="table">
 <colgroup>
@@ -948,7 +952,7 @@ same enrichment analysis or can come from different enrichment analyses.</p>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td>Run one or multiple enrichment analyses</td>
+<td>Run multiple enrichment analyses</td>
 <td><code><a href="https://rdrr.io/pkg/gprofiler2/man/gost.html" class="external-link">gprofiler2::gost()</a></code></td>
 </tr>
 <tr class="even">
@@ -996,7 +1000,11 @@ analysis specific network of terms.</p>
 <span><span class="co">## experiments</span></span>
 <span><span class="fu"><a href="../reference/createEnrichMapMultiBasic.html">createEnrichMapMultiBasic</a></span><span class="op">(</span>gostObjectList<span class="op">=</span><span class="va">gostObjectList</span>,</span>
 <span>    queryList<span class="op">=</span><span class="va">queryList</span>, source<span class="op">=</span><span class="st">"KEGG"</span>, removeRoot<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="enrichViewNet_files/figure-html/emapMulti01-1.png" width="100%"></p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:emapMulti01"></span>
+<img src="enrichViewNet_files/figure-html/emapMulti01-1.png" alt="An enrichment map containing Kegg enrichment results for 2 different experiments." width="100%"><p class="caption">
+Figure 13: <span class="caption-title">An enrichment map containing Kegg enrichment results for 2 different experiments</span><br></p>
+</div>
 <p><br></p>
 <p>There are 4 KEGG enrichment terms that are shared by the 2 experiments.
 In additions, the <em>Viral carinogenesis</em> term is the only term that is not
@@ -1004,12 +1012,99 @@ related to the other KEGG terms.</p>
 <p><br></p>
 </div>
 <div class="section level3" number="8.2">
+<h3 id="effect-of-seed-value-1">
+<span class="header-section-number">8.2</span> Effect of <em>seed</em> value<a class="anchor" aria-label="anchor" href="#effect-of-seed-value-1"></a>
+</h3>
+<p>The layering of the nodes is not always optimal. As the layering is affected by
+the <em>seed</em> value, you might want to test few <em>seed</em> values, using the
+<em>set.seed()</em> function, before selecting the final graph.</p>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## Set seed to ensure reproducible results</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Enrichment map where the groups are the KEGG results for the 2 different</span></span>
+<span><span class="co">## experiments</span></span>
+<span><span class="fu"><a href="../reference/createEnrichMapMultiBasic.html">createEnrichMapMultiBasic</a></span><span class="op">(</span>gostObjectList<span class="op">=</span><span class="va">gostObjectList</span>,</span>
+<span>    queryList<span class="op">=</span><span class="va">queryList</span>, source<span class="op">=</span><span class="st">"KEGG"</span>, removeRoot<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:emapMultiSeed"></span>
+<img src="enrichViewNet_files/figure-html/emapMultiSeed-1.png" alt="An enrichment map using the same data fromt the previous one but with a different seed." width="100%"><p class="caption">
+Figure 14: <span class="caption-title">An enrichment map using the same data fromt the previous one but with a different seed</span><br></p>
+</div>
+<p><br></p>
+</div>
+<div class="section level3" number="8.3">
+<h3 id="enrichment-map-customization-1">
+<span class="header-section-number">8.3</span> Enrichment map customization<a class="anchor" aria-label="anchor" href="#enrichment-map-customization-1"></a>
+</h3>
+<p>The output of the <em>createEnrichMapMultiBasic()</em> function is a <em>ggplot</em> object.
+This means that the graph can be personalized. For example, the default
+colors, legend title and legend font can be changed:</p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## Required library</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Set seed to ensure reproducible results</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Enrichment map where the groups are the KEGG results for the 2 different</span></span>
+<span><span class="co">## experiments</span></span>
+<span><span class="fu"><a href="../reference/createEnrichMapMultiBasic.html">createEnrichMapMultiBasic</a></span><span class="op">(</span>gostObjectList<span class="op">=</span><span class="va">gostObjectList</span>,</span>
+<span>    queryList<span class="op">=</span><span class="va">queryList</span>, source<span class="op">=</span><span class="st">"KEGG"</span>, removeRoot<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span>
+<span>        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>name<span class="op">=</span><span class="st">"Groups"</span>,</span>
+<span>                breaks <span class="op">=</span> <span class="va">queryList</span>,</span>
+<span>                values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cyan4"</span>, <span class="st">"bisque3"</span><span class="op">)</span>,</span>
+<span>                labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"parental"</span>, <span class="st">"rosa"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>face<span class="op">=</span><span class="st">"bold"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:emapMultiCustom"></span>
+<img src="enrichViewNet_files/figure-html/emapMultiCustom-1.png" alt="An enrichment map with multiple groups and personalized colors." width="100%"><p class="caption">
+Figure 15: <span class="caption-title">An enrichment map with multiple groups and personalized colors</span><br></p>
+</div>
+<p><br><br></p>
+</div>
+</div>
+<div class="section level2" number="9">
+<h2 id="transforming-enrichment-results-into-an-enrichment-map-with-groups-from-same-enrichment-analysis">
+<span class="header-section-number">9</span> Transforming enrichment results into an enrichment map with groups from same enrichment analysis<a class="anchor" aria-label="anchor" href="#transforming-enrichment-results-into-an-enrichment-map-with-groups-from-same-enrichment-analysis"></a>
+</h2>
+<p>The following workflow gives an overview of the steps associated to the
+creation of an enrichment map with groups. Groups can be created from the
+same enrichment analysis or can come from different enrichment analyses. This
+section is specifically for enrichment maps containing groups created using
+one enrichment analysis.</p>
+<p>The key steps for the workflow are:</p>
+<div class="horizontal-scroll"><table class="table">
+<colgroup>
+<col width="60%">
+<col width="40%">
+</colgroup>
+<thead><tr class="header">
+<th>Step</th>
+<th>Function</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Run one enrichment analysis</td>
+<td><code><a href="https://rdrr.io/pkg/gprofiler2/man/gost.html" class="external-link">gprofiler2::gost()</a></code></td>
+</tr>
+<tr class="even">
+<td>Create an enrichment map with group</td>
+<td><code>createEnrichMapMulti()</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>The <code>package::function()</code> notation is used for functions from other packages.</p>
+<p><br></p>
+<p>The first step has been presented in the previous section.</p>
+<p><br></p>
+<div class="section level3" number="9.1">
 <h3 id="create-an-enrichment-map-using-subsections-of-one-enrichment-analysis">
-<span class="header-section-number">8.2</span> Create an enrichment map using subsections of one enrichment analysis<a class="anchor" aria-label="anchor" href="#create-an-enrichment-map-using-subsections-of-one-enrichment-analysis"></a>
+<span class="header-section-number">9.1</span> Create an enrichment map using subsections of one enrichment analysis<a class="anchor" aria-label="anchor" href="#create-an-enrichment-map-using-subsections-of-one-enrichment-analysis"></a>
 </h3>
 <p>An enrichment map can generate enrichment results from one enrichment
 analysis with terms from different sources in different colors.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Set seed to ensure reproducible results</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">2121</span><span class="op">)</span></span>
 <span></span>
@@ -1033,67 +1128,19 @@ analysis with terms from different sources in different colors.</p>
 <span><span class="co">## experiments</span></span>
 <span><span class="fu"><a href="../reference/createEnrichMapMultiBasic.html">createEnrichMapMultiBasic</a></span><span class="op">(</span>gostObjectList<span class="op">=</span><span class="va">gostObjectList</span>,</span>
 <span>    queryList<span class="op">=</span><span class="va">queryList</span>, source<span class="op">=</span><span class="st">"KEGG"</span>, removeRoot<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="enrichViewNet_files/figure-html/emapMulti02-1.png" width="100%"></p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:emapMultiComplex01"></span>
+<img src="enrichViewNet_files/figure-html/emapMultiComplex01-1.png" alt="An enrichment map containing TODO for one enrichment analysis." width="100%"><p class="caption">
+Figure 16: <span class="caption-title">An enrichment map containing TODO for one enrichment analysis</span><br></p>
+</div>
 <p><br></p>
 <p>TODO</p>
-<p><br></p>
-<div class="section level4" number="8.2.1">
-<h4 id="effect-of-seed-value-1">
-<span class="header-section-number">8.2.1</span> Effect of <em>seed</em> value<a class="anchor" aria-label="anchor" href="#effect-of-seed-value-1"></a>
-</h4>
-<p>The layering of the nodes is not always optimal. As the layering is affected by
-the <em>seed</em> value, you might want to test few <em>seed</em> values, using the
-<em>set.seed()</em> function, before selecting the final graph.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">## Set seed to ensure reproducible results</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">## Enrichment map where the groups are the KEGG results for the 2 different</span></span>
-<span><span class="co">## experiments</span></span>
-<span><span class="fu"><a href="../reference/createEnrichMapMultiBasic.html">createEnrichMapMultiBasic</a></span><span class="op">(</span>gostObjectList<span class="op">=</span><span class="va">gostObjectList</span>,</span>
-<span>    queryList<span class="op">=</span><span class="va">queryList</span>, source<span class="op">=</span><span class="st">"KEGG"</span>, removeRoot<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:emapMultiSeed"></span>
-<img src="enrichViewNet_files/figure-html/emapMultiSeed-1.png" alt="An enrichment map with a different seed." width="100%"><p class="caption">
-Figure 13: <span class="caption-title">An enrichment map with a different seed</span><br></p>
-</div>
-<p><br></p>
-</div>
-<div class="section level4" number="8.2.2">
-<h4 id="enrichment-map-customization-1">
-<span class="header-section-number">8.2.2</span> Enrichment map customization<a class="anchor" aria-label="anchor" href="#enrichment-map-customization-1"></a>
-</h4>
-<p>The output of the <em>createEnrichMapMulti()</em> function is a <em>ggplot</em> object.
-This means that the graph can be personalized. For example, the default
-colors, legend title and legend font can be changed:</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">## Required library</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">## Set seed to ensure reproducible results</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">2121</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">## Enrichment map where the groups are the KEGG results for the 2 different</span></span>
-<span><span class="co">## experiments</span></span>
-<span><span class="fu"><a href="../reference/createEnrichMapMultiBasic.html">createEnrichMapMultiBasic</a></span><span class="op">(</span>gostObjectList<span class="op">=</span><span class="va">gostObjectList</span>,</span>
-<span>    queryList<span class="op">=</span><span class="va">queryList</span>, source<span class="op">=</span><span class="st">"KEGG"</span>, removeRoot<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>name<span class="op">=</span><span class="st">"Groups"</span>,</span>
-<span>                            breaks <span class="op">=</span> <span class="va">queryList</span>,</span>
-<span>                            values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cyan4"</span>, <span class="st">"bisque3"</span><span class="op">)</span>,</span>
-<span>                            labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"parental"</span>, <span class="st">"rosa"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>face<span class="op">=</span><span class="st">"bold"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="figure">
-<span style="display:block;" id="fig:emapMultiCustom"></span>
-<img src="enrichViewNet_files/figure-html/emapMultiCustom-1.png" alt="An enrichment map with different colors." width="100%"><p class="caption">
-Figure 14: <span class="caption-title">An enrichment map with different colors</span><br></p>
-</div>
 <p><br><br></p>
 </div>
 </div>
-</div>
-<div class="section level2" number="9">
+<div class="section level2" number="10">
 <h2 id="acknowledgments">
-<span class="header-section-number">9</span> Acknowledgments<a class="anchor" aria-label="anchor" href="#acknowledgments"></a>
+<span class="header-section-number">10</span> Acknowledgments<a class="anchor" aria-label="anchor" href="#acknowledgments"></a>
 </h2>
 <p>The differentially expressed genes between napabucasin-treated cells (0.5 uM)
 and DMSO as vehicle control are reprinted from
@@ -1108,9 +1155,9 @@ cancer cell death, with permission from AACR.</p>
 Research Council of Canada (NSERCC): 155751-1501.</p>
 <p><br><br></p>
 </div>
-<div class="section level2" number="10">
+<div class="section level2" number="11">
 <h2 id="session-info">
-<span class="header-section-number">10</span> Session info<a class="anchor" aria-label="anchor" href="#session-info"></a>
+<span class="header-section-number">11</span> Session info<a class="anchor" aria-label="anchor" href="#session-info"></a>
 </h2>
 <p>Here is the output of sessionInfo() on the system on which this document
 was compiled:</p>
