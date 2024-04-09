@@ -2,6 +2,7 @@
 
 export(createEnrichMap)
 export(createEnrichMapMultiBasic)
+export(createEnrichMapMultiComplex)
 export(createNetwork)
 importClassesFrom(DOSE,compareClusterResult)
 importClassesFrom(DOSE,enrichResult)
