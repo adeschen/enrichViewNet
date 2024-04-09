@@ -148,7 +148,7 @@ with edges connecting overlapping genes. Thus, enriched terms with overlapping
 genes cluster together. This type of graphs facilitate the 
 identification of functional modules.
 
-```{r graphDemo02, echo=FALSE, fig.align="center", fig.cap="An enrichment map using significant Kegg terms.", out.width = '95%'}
+```{r graphDemo02, echo=FALSE, fig.align="center", fig.cap="An enrichment map using significant Kegg terms. Edges connecting terms with overlapping genes.", out.width = '95%'}
 knitr::include_graphics("demo_KEGG_emap_v01.jpeg")
 ```
 
@@ -184,7 +184,7 @@ BiocManager::install("enrichViewNet")
 The following workflow gives an overview of the capabilities of 
 **enrichViewNet**:
 
-```{r graphWorkflow, echo=FALSE, fig.align="center", fig.cap="The enrichViewNet workflow", out.width = '100%'}
+```{r graphWorkflow, echo=FALSE, fig.align="center", fig.cap="The enrichViewNet general workflow", out.width = '100%'}
 knitr::include_graphics("Figure_enrichViewNet_workflow_v05.jpg")
 ```
 
@@ -300,7 +300,7 @@ visualizing networks. It enables network integration with any type of attribute
 data. The Cytoscape software 
 is available at the [Cytoscape website](https://cytoscape.org/).
 
-```{r cytoscapeLogo01, echo = FALSE, fig.align="center", fig.cap="Cytoscape software logo.", out.width = '75%'}
+```{r cytoscapeLogo01, echo = FALSE, fig.align="center", fig.cap="Cytoscape software logo.", out.width = '55%'}
 knitr::include_graphics("cy3sticker.png")
 ```
 
@@ -351,7 +351,7 @@ knitr::include_graphics("cytoscape_reactome_all_parental_napa_vs_DMSO.png")
 
 <br>
 
-To address this situation, a updated gene-term network containing only 
+To address this situation, an updated gene-term network containing only 
 Reactome terms of interest is created.
 
 <br>
@@ -485,7 +485,7 @@ gostres <- gprofiler2::gost(
 
 <br>
 
-The gost() function returns an named list of 2 entries: 
+The _gost()_ function returns an named list of 2 entries: 
 
 * The __result__ entry contains the enrichment results.
 * The __meta__ entry contains the metadata information.
@@ -554,7 +554,7 @@ parameter. The terms can be pick-up from different sources. If more than one
 terms have the same description, the term ID will be added at the end of the 
 description for clarity.
 
-```{r runCreateEmapTerms, echo=TRUE, eval=TRUE, fig.cap="A Kegg enrichment map where terms with overlapping significant genes cluster together.", fig.align="center"}
+```{r runCreateEmapTerms, echo=TRUE, eval=TRUE, fig.cap="An enrichment map showing only the user selected terms.", fig.align="center"}
 
 ## Load saved enrichment results between parental Napa vs DMSO
 data(parentalNapaVsDMSOEnrichment)
@@ -579,7 +579,7 @@ createEnrichMap(gostObject=parentalNapaVsDMSOEnrichment,
 
 <br>
 
-The description "MAPK signaling pathway" is present twice. The ID of each 
+As the description "MAPK signaling pathway" is present twice, the ID of each 
 term has been added to the end of the description. Hence, the MAPK pathway 
 from WikiPathway can be distinguished from the Kegg pathway.
 
@@ -592,7 +592,7 @@ the _seed_ value, you might want to test few _seed_ values, using the
 _set.seed()_ function, before selecting the final graph.
 
 
-```{r runCreateEmap02, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE, fig.cap="An enrichment map with personalized colors.", fig.align="center"}
+```{r runCreateEmap02, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE, fig.cap="An enrichment map with a different seed.", fig.align="center"}
 
 ## Set seed to ensure reproducible results
 set.seed(91)
@@ -638,18 +638,20 @@ graphKegg + scale_fill_gradient(name="P-value adjusted", low="orange",
 <br>
 
 
-# Transforming enrichment results into an enrichment map with groups
+# Transforming enrichment results into an enrichment map with groups from different enrichment analyses
 
 
 The following workflow gives an overview of the steps associated to the 
 creation of an enrichment map with groups. Groups can be created from the 
-same enrichment analysis or can come from different enrichment analyses.
+same enrichment analysis or can come from different enrichment analyses. This 
+section is specifically for enrichment maps created using multiple enrichment 
+analyses.
 
 The key steps for the workflow are:
 
 Step                                          | Function                    
 --------------------------------------------- | ------------------------------
-Run one or multiple enrichment analyses       | `gprofiler2::gost()`
+Run multiple enrichment analyses              | `gprofiler2::gost()`
 Create an enrichment map with group           | `createEnrichMapMultiBasic()`
 
 The `package::function()` notation is used for functions from other packages.
@@ -668,7 +670,7 @@ highlight the enriched terms shared by multiples analyses as well as
 analysis specific network of terms.
 
 
-```{r emapMulti01, echo=TRUE, warning=FALSE, message=FALSE, collapse=F, eval=TRUE}
+```{r emapMulti01, echo=TRUE, warning=FALSE, message=FALSE, collapse=F, eval=TRUE, fig.cap="An enrichment map containing Kegg enrichment results for 2 different experiments.", fig.align="center"}
 
 ## Set seed to ensure reproducible results
 set.seed(2121)
@@ -709,12 +711,89 @@ related to the other KEGG terms.
 <br>
 
 
+## Effect of _seed_ value
+
+The layering of the nodes is not always optimal. As the layering is affected by 
+the _seed_ value, you might want to test few _seed_ values, using the 
+_set.seed()_ function, before selecting the final graph.
+
+
+```{r emapMultiSeed, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE, fig.cap="An enrichment map using the same data fromt the previous one but with a different seed.", fig.align="center"}
+
+## Set seed to ensure reproducible results
+set.seed(5)
+
+## Enrichment map where the groups are the KEGG results for the 2 different
+## experiments
+createEnrichMapMultiBasic(gostObjectList=gostObjectList,
+    queryList=queryList, source="KEGG", removeRoot=TRUE)
+    
+```
+
+<br>
+
+
+## Enrichment map customization
+
+
+The output of the _createEnrichMapMultiBasic()_ function is a _ggplot_ object. 
+This means that the graph can be personalized. For example, the default 
+colors, legend title and legend font can be changed:
+
+```{r emapMultiCustom, echo=TRUE, warning=FALSE, message=FALSE, collapse=F, eval=TRUE, fig.cap="An enrichment map with multiple groups and personalized colors."}
+
+## Required library
+library(ggplot2)
+
+## Set seed to ensure reproducible results
+set.seed(5)
+
+## Enrichment map where the groups are the KEGG results for the 2 different
+## experiments
+createEnrichMapMultiBasic(gostObjectList=gostObjectList,
+    queryList=queryList, source="KEGG", removeRoot=TRUE) +
+        scale_fill_manual(name="Groups",
+                breaks = queryList,
+                values = c("cyan4", "bisque3"),
+                labels = c("parental", "rosa")) +
+        theme(legend.title = element_text(face="bold"))
+
+```
+
+
+<br>
+<br>
+
+# Transforming enrichment results into an enrichment map with groups from same enrichment analysis
+
+
+The following workflow gives an overview of the steps associated to the 
+creation of an enrichment map with groups. Groups can be created from the 
+same enrichment analysis or can come from different enrichment analyses. This 
+section is specifically for enrichment maps containing groups created using 
+one enrichment analysis.
+
+The key steps for the workflow are:
+
+Step                                          | Function                    
+--------------------------------------------- | ------------------------------
+Run one enrichment analysis                   | `gprofiler2::gost()`
+Create an enrichment map with group           | `createEnrichMapMulti()`
+
+The `package::function()` notation is used for functions from other packages.
+
+<br>
+
+The first step has been presented in the previous section.
+
+<br>
+
 ## Create an enrichment map using subsections of one enrichment analysis
 
 An enrichment map can generate enrichment results from one enrichment 
 analysis with terms from different sources in different colors. 
 
-```{r emapMulti02, echo=TRUE, warning=FALSE, message=FALSE, collapse=F, eval=TRUE}
+```{r emapMultiComplex01, echo=TRUE, warning=FALSE, message=FALSE, collapse=F, eval=TRUE, fig.cap="An enrichment map containing TODO for one enrichment analysis.", fig.align="center"}
 
 ## Set seed to ensure reproducible results
 set.seed(2121)
@@ -740,7 +819,6 @@ queryList <- list(query_01, query_01)
 createEnrichMapMultiBasic(gostObjectList=gostObjectList,
     queryList=queryList, source="KEGG", removeRoot=TRUE)
     
-
 ```
 
 <br>
@@ -748,60 +826,7 @@ createEnrichMapMultiBasic(gostObjectList=gostObjectList,
 TODO
 
 <br>
-
-### Effect of _seed_ value
-
-The layering of the nodes is not always optimal. As the layering is affected by 
-the _seed_ value, you might want to test few _seed_ values, using the 
-_set.seed()_ function, before selecting the final graph.
-
-
-```{r emapMultiSeed, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE, fig.cap="An enrichment map with a different seed.", fig.align="center"}
-
-
-## Set seed to ensure reproducible results
-set.seed(5)
-
-## Enrichment map where the groups are the KEGG results for the 2 different
-## experiments
-createEnrichMapMultiBasic(gostObjectList=gostObjectList,
-    queryList=queryList, source="KEGG", removeRoot=TRUE)
-    
-```
-
 <br>
-
-### Enrichment map customization
-
-
-The output of the _createEnrichMapMulti()_ function is a _ggplot_ object. 
-This means that the graph can be personalized. For example, the default 
-colors, legend title and legend font can be changed:
-
-```{r emapMultiCustom, echo=TRUE, warning=FALSE, message=FALSE, collapse=F, eval=TRUE, fig.cap="An enrichment map with different colors."}
-
-## Required library
-library(ggplot2)
-
-## Set seed to ensure reproducible results
-set.seed(2121)
-
-## Enrichment map where the groups are the KEGG results for the 2 different
-## experiments
-createEnrichMapMultiBasic(gostObjectList=gostObjectList,
-    queryList=queryList, source="KEGG", removeRoot=TRUE) + 
-        scale_fill_manual(name="Groups",
-                            breaks = queryList,
-                            values = c("cyan4", "bisque3"),
-                            labels = c("parental", "rosa")) +
-        theme(legend.title = element_text(face="bold"))
-
-```
-
-
-<br>
-<br>
-
 
 
 # Acknowledgments
