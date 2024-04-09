@@ -31,6 +31,9 @@
     <loc>/reference/createEnrichMapMultiBasic.html</loc>
   </url>
   <url>
+    <loc>/reference/createEnrichMapMultiComplex.html</loc>
+  </url>
+  <url>
     <loc>/reference/createMetaDataSectionCXJSON.html</loc>
   </url>
   <url>
@@ -95,6 +98,9 @@
   </url>
   <url>
     <loc>/reference/validateCreateEnrichMapMultiArguments.html</loc>
+  </url>
+  <url>
+    <loc>/reference/validateCreateEnrichMapMultiComplexArg.html</loc>
   </url>
   <url>
     <loc>/reference/validateCreateEnrichMapSubSectionArguments.html</loc>
