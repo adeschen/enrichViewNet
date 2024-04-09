@@ -44,7 +44,8 @@ and "WP" for WikiPathways.  Default: "TERM_ID". }
 of the selected source should be removed (when present). }
 \item{\code{termIDs}: a \code{character} strings that contains the
 term IDS retained for the creation of the network separated by a comma ',' 
-when the "TERM_ID" source is selected. }
+when the "TERM_ID" source is selected. Otherwise, it should be a empty 
+string (""). }
 }}
 
 \item{showCategory}{a positive \code{integer} or a \code{vector} of 
@@ -86,11 +87,15 @@ results.
 data(parentalNapaVsDMSOEnrichment)
 data(rosaNapaVsDMSOEnrichment)
 
+queryDataFrame <- data.frame(queryName=c("parental_napa_vs_DMSO", 
+    "rosa_napa_vs_DMSO"), source=c("KEGG", "WP"), removeRoot=c(TRUE, TRUE),
+    termIDs=c("", ""), stringsAsFactors=FALSE)
+
 ## Check that all arguments are valid
 enrichViewNet:::validateCreateEnrichMapMultiComplexArg(
     gostObjectList=list(parentalNapaVsDMSOEnrichment, 
                             rosaNapaVsDMSOEnrichment),
-    queryInfo=NULL,
+    queryInfo=queryDataFrame,
     showCategory=20, groupCategory=FALSE, 
     categoryLabel=1.1, categoryNode=1, line=1.2, force=FALSE)
 

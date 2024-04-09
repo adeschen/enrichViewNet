@@ -308,7 +308,8 @@ createEnrichMapMultiBasic <- function(gostObjectList, queryList,
 #' of the selected source should be removed (when present). }
 #' \item{\code{termIDs}: a \code{character} strings that contains the
 #' term IDS retained for the creation of the network separated by a comma ',' 
-#' when the "TERM_ID" source is selected. }
+#' when the "TERM_ID" source is selected. Otherwise, it should be a empty 
+#' string (""). }
 #' }
 #' 
 #' @param showCategory a positive \code{integer} or a \code{vector} of 
@@ -343,16 +344,21 @@ createEnrichMapMultiBasic <- function(gostObjectList, queryList,
 #' data(parentalNapaVsDMSOEnrichment)
 #' data(rosaNapaVsDMSOEnrichment)
 #'
-#' ## Extract query information (only one in each dataset)
-#' query1 <- unique(parentalNapaVsDMSOEnrichment$result$query)[1]
-#' query2 <- unique(rosaNapaVsDMSOEnrichment$result$query)[1]
-#' 
+#' ## TODO
+#' gostObjectList=list(parentalNapaVsDMSOEnrichment, 
+#'     rosaNapaVsDMSOEnrichment)
+#'     
+#' ## Create data frame containing required information enabling the 
+#' ## selection of the retained enriched terms for each enrichment analysis.
+#' ## One line per enrichment analyses present in the gostObjectList parameter
+#' queryDataFrame <- data.frame(queryName=c("parental_napa_vs_DMSO", 
+#'     "rosa_napa_vs_DMSO"), source=c("KEGG", "WP"), removeRoot=c(TRUE, TRUE),
+#'     termIDs=c("", ""), stringsAsFactors=FALSE)
+#'     
 #' ## Create graph for KEGG related results from 
 #' ## 2 enrichment analyses
-#' createEnrichMapMulti(gostObjectList=list(parentalNapaVsDMSOEnrichment, 
-#'     rosaNapaVsDMSOEnrichment), 
-#'     queryList=list(query1, query2), source="KEGG", removeRoot=TRUE)
-#' 
+#' ##createEnrichMapMultiComplex(gostObjectList=gostObjectList, 
+#' ##    queryInfo=queryDataFrame, line=1.5)
 #' 
 #' @author Astrid Deschênes
 #' @importFrom gprofiler2 gconvert
@@ -363,13 +369,9 @@ createEnrichMapMultiComplex <- function(gostObjectList, queryInfo,
     showCategory=30L, groupCategory=FALSE, categoryLabel=1, 
     categoryNode=1, line=1, force=TRUE) {
     
-    ## Validate source is among the possible choices
-    source <- match_arg(source, ignore_case=TRUE)
-    
     ## Validate parameters
     validateCreateEnrichMapMultiComplexArg(gostObjectList=gostObjectList, 
-        queryInfo=queryInfo, source=source, termIDs=termIDs, 
-        removeRoot=removeRoot, showCategory=showCategory, 
+        queryInfo=queryInfo, showCategory=showCategory, 
         categoryLabel=categoryLabel, groupCategory=groupCategory, 
         categoryNode=categoryNode, line=line, force=force)
     
@@ -377,38 +379,40 @@ createEnrichMapMultiComplex <- function(gostObjectList, queryInfo,
     gostResultsList <- lapply(gostObjectList, FUN=function(x) {x$result})
     
     ## Retain results associated to query
-    gostResultsList <- lapply(seq_len(length(queryList)), 
-        FUN=function(i, queryL, gostL) {
-            gostL[[i]][gostL[[i]]$query == queryL[[i]], ]}, 
-            queryL=queryList, gostL=gostResultsList)
+    gostResultsList <- lapply(seq_len(length(gostObjectList)), 
+        FUN=function(i, queryI, gostL) {
+            gostL[[i]][gostL[[i]]$query == queryI$queryName[[i]], ]}, 
+            queryI=queryInfo, gostL=gostResultsList)
     
-    ## Filter results
-    if (source == "TERM_ID") {
-        gostResultsList <- lapply(gostResultsList,  FUN=function(x, termIDs) {
-            x[x$term_id %in% termIDs,]}, termIDs=termIDs)
-    } else {
-        gostResultsList <- lapply(gostResultsList,  FUN=function(x, source) {
-            x[x$source == source,]}, source=source)
-    }
-    
-    ## Remove root term if required
-    if (removeRoot) {
-        gostResultsList <- lapply(gostResultsList,  FUN=function(x) {
-            removeRootTerm(x)})
-    }
-    
-    ## Validate that at least one term is left
-    if (sum(unlist(lapply(gostResultsList,  FUN=function(x) {nrow(x)})))  
-        == 0) {
-        stop("With removal of the root term, there is no ", 
-             "enrichment term left")
-    }
-    
+    # ## Filter results
+    # if (source == "TERM_ID") {
+    #     gostResultsList <- lapply(gostResultsList,  FUN=function(x, termIDs) {
+    #         x[x$term_id %in% termIDs,]}, termIDs=termIDs)
+    # } else {
+    #     gostResultsList <- lapply(gostResultsList,  FUN=function(x, source) {
+    #         x[x$source == source,]}, source=source)
+    # }
+    # 
+    # ## Remove root term if required
+    # if (removeRoot) {
+    #     gostResultsList <- lapply(gostResultsList,  FUN=function(x) {
+    #         removeRootTerm(x)})
+    # }
+    # 
+    # ## Validate that at least one term is left
+    # if (sum(unlist(lapply(gostResultsList,  FUN=function(x) {nrow(x)})))  
+    #     == 0) {
+    #     stop("With removal of the root term, there is no ", 
+    #          "enrichment term left")
+    # }
+    #
     ## Create multi categories emap
-    emap <- createMultiEmap(gostResultsList=gostResultsList, 
-                queryList=queryList, showCategory=showCategory, 
-                categoryLabel=categoryLabel, groupCategory=groupCategory, 
-                categoryNode=categoryNode, line=line, force=force)
+    # emap <- createMultiEmap(gostResultsList=gostResultsList, 
+    #             queryList=queryList, showCategory=showCategory, 
+    #             categoryLabel=categoryLabel, groupCategory=groupCategory, 
+    #             categoryNode=categoryNode, line=line, force=force)
+    # 
+    emap <- TRUE
     
     return(emap)
 }

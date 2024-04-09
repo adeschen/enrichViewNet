@@ -45,7 +45,8 @@ and "WP" for WikiPathways.  Default: "TERM_ID". }
 of the selected source should be removed (when present). }
 \item{\code{termIDs}: a \code{character} strings that contains the
 term IDS retained for the creation of the network separated by a comma ',' 
-when the "TERM_ID" source is selected. }
+when the "TERM_ID" source is selected. Otherwise, it should be a empty 
+string (""). }
 }}
 
 \item{showCategory}{a positive \code{integer} or a \code{vector} of 
@@ -88,16 +89,21 @@ significant term to graph.
 data(parentalNapaVsDMSOEnrichment)
 data(rosaNapaVsDMSOEnrichment)
 
-## Extract query information (only one in each dataset)
-query1 <- unique(parentalNapaVsDMSOEnrichment$result$query)[1]
-query2 <- unique(rosaNapaVsDMSOEnrichment$result$query)[1]
-
+## TODO
+gostObjectList=list(parentalNapaVsDMSOEnrichment, 
+    rosaNapaVsDMSOEnrichment)
+    
+## Create data frame containing required information enabling the 
+## selection of the retained enriched terms for each enrichment analysis.
+## One line per enrichment analyses present in the gostObjectList parameter
+queryDataFrame <- data.frame(queryName=c("parental_napa_vs_DMSO", 
+    "rosa_napa_vs_DMSO"), source=c("KEGG", "WP"), removeRoot=c(TRUE, TRUE),
+    termIDs=c("", ""), stringsAsFactors=FALSE)
+    
 ## Create graph for KEGG related results from 
 ## 2 enrichment analyses
-createEnrichMapMulti(gostObjectList=list(parentalNapaVsDMSOEnrichment, 
-    rosaNapaVsDMSOEnrichment), 
-    queryList=list(query1, query2), source="KEGG", removeRoot=TRUE)
-
+##createEnrichMapMultiComplex(gostObjectList=gostObjectList, 
+##    queryInfo=queryDataFrame, line=1.5)
 
 }
 \author{

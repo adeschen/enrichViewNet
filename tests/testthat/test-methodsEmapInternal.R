@@ -41,6 +41,28 @@ test_that("validateCreateEnrichMapMultiArguments() must return expected result",
 })
 
 
+### Tests validateCreateEnrichMapMultiComplexArg() results
+
+context("validateCreateEnrichMapMultiComplexArg() results")
+
+test_that("validateCreateEnrichMapMultiComplexArg() must return expected result", {
+    
+    queryDF <- data.frame(queryName=c("parental_napa_vs_DMSO", 
+        "rosa_napa_vs_DMSO", "rosa_napa_vs_DMSO"), 
+        source=c("GO:CC", "REAC", "GO:CC"), removeRoot=c(TRUE, TRUE, TRUE),
+        termIDs=c("", "", ""), stringsAsFactors=FALSE)
+    
+    result <- enrichViewNet:::validateCreateEnrichMapMultiComplexArg(
+        gostObjectList=list(parentalNapaVsDMSOEnrichment, 
+                rosaNapaVsDMSOEnrichment, rosaNapaVsDMSOEnrichment), 
+        queryInfo=queryDF, showCategory=30, 
+        groupCategory=FALSE, categoryLabel=1, categoryNode=1, line=1, 
+        force=TRUE)
+    
+    expect_true(result)
+})
+
+
 ### Tests validateCreateEnrichMapSubSectionArguments() results
 
 context("validateCreateEnrichMapSubSectionArguments() results")

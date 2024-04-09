@@ -305,7 +305,8 @@ validateCreateEnrichMapMultiArguments <- function(gostObjectList, queryList,
 #' of the selected source should be removed (when present). }
 #' \item{\code{termIDs}: a \code{character} strings that contains the
 #' term IDS retained for the creation of the network separated by a comma ',' 
-#' when the "TERM_ID" source is selected. }
+#' when the "TERM_ID" source is selected. Otherwise, it should be a empty 
+#' string (""). }
 #' }
 #' 
 #' @param showCategory a positive \code{integer} or a \code{vector} of 
@@ -337,11 +338,15 @@ validateCreateEnrichMapMultiArguments <- function(gostObjectList, queryList,
 #' data(parentalNapaVsDMSOEnrichment)
 #' data(rosaNapaVsDMSOEnrichment)
 #' 
+#' queryDataFrame <- data.frame(queryName=c("parental_napa_vs_DMSO", 
+#'     "rosa_napa_vs_DMSO"), source=c("KEGG", "WP"), removeRoot=c(TRUE, TRUE),
+#'     termIDs=c("", ""), stringsAsFactors=FALSE)
+#' 
 #' ## Check that all arguments are valid
 #' enrichViewNet:::validateCreateEnrichMapMultiComplexArg(
 #'     gostObjectList=list(parentalNapaVsDMSOEnrichment, 
 #'                             rosaNapaVsDMSOEnrichment),
-#'     queryInfo=NULL,
+#'     queryInfo=queryDataFrame,
 #'     showCategory=20, groupCategory=FALSE, 
 #'     categoryLabel=1.1, categoryNode=1, line=1.2, force=FALSE)
 #' 
@@ -370,46 +375,74 @@ validateCreateEnrichMapMultiComplexArg <- function(gostObjectList, queryInfo,
     } 
     
     ## Test that queryInfo is a data.frame
-    if (!inherits(queryInfo, "data.frame") || !(all(c("") %in% 
-            colnames(queryInfo)))) {
-        
+    if (!inherits(queryInfo, "data.frame") || !(all(c("queryName", "source", 
+            "removeRoot", "termIDs") %in% colnames(queryInfo)))) {
+        stop("The queryInfo should a data.frame with those columns: ", 
+             "results. Enrichment results are lists with meta ", 
+             "and result as entries corresponding to gprofiler2 ", 
+             "enrichment output.")
     }
     
-    # ## Test that queryList is a list with 2 entries minimum
-    # if (!inherits(queryList, "list") || !(length(queryList) > 1) || 
-    #     length(queryList) != length(gostObjectList)) {
-    #     stop("The queryList object should be a list of query names. At least ", 
-    #          "2 query names are required. The number of query names should", 
-    #          " correspond to the number of enrichment objects.")
-    # }
-    # 
-    # ## Test that queryList is a list of character strings
-    # if (!all(unlist(lapply(queryList, is.character)))) {
-    #     stop("The queryList object should only contain a list of query names", 
-    #          " in character strings.")
-    # }
-    # 
-    # ## Validate that all query names are present in the associated results
-    # if (!all(unlist(lapply(seq_len(length(queryList)), FUN = function(x, 
-    #                                                                   queryL, gostL) {res <- as.data.frame(gostL[[x]]$result); 
-    #                                                                   queryL[[x]] %in% unique(res$query)}, queryL=queryList, 
-    #                        gostL=gostObjectList)))) {
-    #     stop("Each query name present in the \'queryList'\ parameter ", 
-    #          "must be present in the associated enrichment object.")
-    # }
-    # 
-    # if (source != "TERM_ID") {
-    #     if (!any(unlist(lapply(gostObjectList, FUN = function(x, source) {
-    #         sum(x$result$source == source) > 1}, source=source)))) {
-    #         stop("There is no enriched term for the selected ", 
-    #              "source \'", source, "\'.")    
-    #     }
-    # } else {
-    #     if (is.null(termIDs)) {
-    #         stop("A vector of terms should be given through the ",
-    #              "\'termIDs\' parameter when source is \'TERM_ID\'.")
-    #     }
-    # }
+    ## Test that queryInfo has the same number of entries than gostObjectList
+    if (nrow(queryInfo) != length(gostObjectList)) {
+        stop("The number of query names should", 
+                " correspond to the number of enrichment objects.")
+    }
+    
+    ## Test that the source values are valid choices in queryInfo data frame
+    sources <- c("TERM_ID", "GO:MF", "GO:CC", "GO:BP", "KEGG", "REAC", "TF", 
+                   "MIRNA", "HPA", "CORUM", "HP", "WP")
+    if (!all(unlist(lapply(seq_len(nrow(queryInfo)), FUN=function(x, queryI, 
+            sourcesL){ queryI$source[x] %in% sourcesL}, 
+            queryI=queryInfo, sourcesL=sources)))) {
+        stop("The values in the \'source\' column of the \'queryInfo\' ", 
+                "data frame should be one of those: \"TERM_ID\", \"GO:MF\", ", 
+                "\"GO:CC\", \"GO:BP\", \"KEGG\", \"REAC\", \"TF\", ",
+                "\"MIRNA\", \"HPA\", \"CORUM\", \"HP\", \"WP\".")
+    }
+    
+    ## Test that queryName should be character string
+    if (!is.character(queryInfo$queryName)) {
+        stop("The \'queryName'\ column of the \'queryInfo\' data frame ", 
+                "should be in a character string format.")
+    }
+    
+    ## Test that source should be character string
+    if (!is.character(queryInfo$source)) {
+        stop("The \'source'\ column of the \'queryInfo\' data frame ", 
+                "should be in a character string format.")
+    }
+    
+    ## Test that source should be character string
+    if (!is.character(queryInfo$termIDs)) {
+        stop("The \'termIDs'\ column of the \'queryInfo\' data frame ", 
+                "should be in a character string format.")
+    }
+    
+    ## Test that removeRoot should be logical
+    if (!is.logical(queryInfo$removeRoot)) {
+        stop("The \'removeRoot'\ column of the \'queryInfo\' data frame ", 
+                "should only contain logical values (TRUE or FALSE).")
+    }
+    
+    ## Test that the query names are present in the associated enrichment
+    if (!all(unlist(lapply(seq_len(nrow(queryInfo)), FUN = function(x, queryI, 
+        gostL) {res <- as.data.frame(gostL[[x]]$result); 
+        queryI$queryName[x] %in% unique(res$query)}, 
+        queryI=queryInfo, gostL=gostObjectList)))) {
+        stop("Each query name present in the \'queryName'\ column of the ", 
+                "\'queryInfo\' data frame should must be present in the ", 
+                "associated enrichment object.")
+    }
+    
+    if (length(which(queryInfo$source == "TERM_ID"))) {
+        if(!all(unlist(lapply(which(queryInfo$source == "TERM_ID"), 
+                FUN=function(i, queryI) {queryI$termIDs[i] != ""}, 
+                queryI=queryInfo)))) {
+            stop("A vector of terms should be present in the ",
+                    "\'termIDs\' column when source is \'TERM_ID\'.")
+        }
+    }
     
     result <- validateCreateEnrichMapSubSectionArguments(
         showCategory=showCategory, groupCategory=groupCategory, 

@@ -453,3 +453,23 @@ test_that("createEnrichMapMultiBasic() must return error when number in queryLis
         removeRoot=TRUE, showCategory=30, groupCategory=FALSE, categoryLabel=1,
         categoryNode=1, force=FALSE), error_message, fixed=TRUE)
 })
+
+
+### Tests createEnrichMapMultiComplex() results
+
+context("createEnrichMapMultiComplex() results")
+
+test_that("createEnrichMapMultiComplex() must return error when gostObjectList is a number", {
+    
+    error_message <- paste0("The gostObjectList object should be a list ", 
+        "of enrichment objects. At least 2 enrichment objects are required.")
+    
+    queryDF <- data.frame(queryName=c("parental_napa_vs_DMSO", 
+        "rosa_napa_vs_DMSO", "rosa_napa_vs_DMSO"), 
+        source=c("GO:CC", "REAC", "GO:CC"), removeRoot=c(TRUE, TRUE, TRUE),
+        termIDs=c("", "", ""), stringsAsFactors=FALSE)
+    
+    expect_error(createEnrichMapMultiComplex(gostObjectList=33, 
+        queryInfo=queryDF,  showCategory=30, groupCategory=FALSE, 
+        categoryLabel=1, categoryNode=1, line=1, force=FALSE), error_message)
+})
