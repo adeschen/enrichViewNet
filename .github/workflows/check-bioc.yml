@@ -152,7 +152,7 @@ jobs:
           brew install libgit2
           
           brew update
-          brew update npm
+          brew upgrade npm
           brew upgrade imagemagick
           brew upgrade imagemagick@6
           
