@@ -134,10 +134,10 @@ jobs:
           ## Enable installing XML from source if needed
           brew install libxml2
           echo "XML_CONFIG=/usr/local/opt/libxml2/bin/xml2-config" >> $GITHUB_ENV
-          echo "export PATH="/usr/local/opt/libxml2/bin:$PATH"' >> /Users/runner/.bash_profile"
-          echo "export LDFLAGS="-L/usr/local/opt/libxml2/lib"
-          echo "export CPPFLAGS="-I/usr/local/opt/libxml2/include"
-          echo "export PKG_CONFIG_PATH="/usr/local/opt/libxml2/lib/pkgconfig"
+          echo 'export PATH="/usr/local/opt/libxml2/bin:$PATH"' >> /Users/runner/.bash_profile
+          echo "LDFLAGS=-L/usr/local/opt/libxml2/lib" >> $GITHUB_ENV
+          echo "CPPFLAGS=-I/usr/local/opt/libxml2/include" >> $GITHUB_ENV
+          echo "PKG_CONFIG_PATH=/usr/local/opt/libxml2/lib/pkgconfig" >> $GITHUB_ENV
 
           ## Required to install magick as noted at
           ## https://github.com/r-lib/usethis/commit/f1f1e0d10c1ebc75fd4c18fa7e2de4551fd9978f#diff-9bfee71065492f63457918efcd912cf2
