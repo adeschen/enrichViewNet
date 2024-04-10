@@ -154,6 +154,8 @@ jobs:
           brew install libgit2
           
           brew update
+          brew upgrade imagemagick
+          brew upgrade imagemagick@6
           
       - name: Install Windows system dependencies
         if: runner.os == 'Windows'
