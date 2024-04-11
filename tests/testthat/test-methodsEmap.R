@@ -473,3 +473,35 @@ test_that("createEnrichMapMultiComplex() must return error when gostObjectList i
         queryInfo=queryDF,  showCategory=30, groupCategory=FALSE, 
         categoryLabel=1, categoryNode=1, line=1, force=FALSE), error_message)
 })
+
+test_that("createEnrichMapMultiComplex() must return error when gostObjectList has only one element", {
+    
+    gostTerm <- demoGOST
+    
+    queryDF <- data.frame(queryName=c("query_1"), 
+            source=c("GO:CC"), removeRoot=c(TRUE),
+            termIDs=c(""), stringsAsFactors=FALSE)
+    
+    error_message <- paste0("The gostObjectList object should be a list ", 
+        "of enrichment objects. At least 2 enrichment objects are required.")
+    
+    expect_error(createEnrichMapMultiComplex(gostObjectList=list(gostTerm), 
+        queryInfo=queryDF, showCategory=30, groupCategory=FALSE, 
+        categoryLabel=1, categoryNode=1, force=FALSE), error_message)
+})
+
+test_that("createEnrichMapMultiComplex() must return error when queryInfo is a number", {
+    
+    gostTerm <- demoGOST
+    
+    error_message <- paste0("The queryInfo should a data.frame with ", 
+        "those columns: queryName, source, removeRoot and termIDs.")
+    
+    expect_error(createEnrichMapMultiComplex(
+        gostObjectList=list(gostTerm, gostTerm), 
+        queryInfo=33, showCategory=30, groupCategory=FALSE, 
+        categoryLabel=1, categoryNode=1, force=FALSE), error_message)
+})
+
+
+

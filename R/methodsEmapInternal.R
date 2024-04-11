@@ -378,9 +378,7 @@ validateCreateEnrichMapMultiComplexArg <- function(gostObjectList, queryInfo,
     if (!inherits(queryInfo, "data.frame") || !(all(c("queryName", "source", 
             "removeRoot", "termIDs") %in% colnames(queryInfo)))) {
         stop("The queryInfo should a data.frame with those columns: ", 
-             "results. Enrichment results are lists with meta ", 
-             "and result as entries corresponding to gprofiler2 ", 
-             "enrichment output.")
+                "queryName, source, removeRoot and termIDs.")
     }
     
     ## Test that queryInfo has the same number of entries than gostObjectList
