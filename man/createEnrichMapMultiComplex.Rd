@@ -91,19 +91,27 @@ data(rosaNapaVsDMSOEnrichment)
 
 ## TODO
 gostObjectList=list(parentalNapaVsDMSOEnrichment, 
+    parentalNapaVsDMSOEnrichment, rosaNapaVsDMSOEnrichment, 
     rosaNapaVsDMSOEnrichment)
     
 ## Create data frame containing required information enabling the 
 ## selection of the retained enriched terms for each enrichment analysis.
 ## One line per enrichment analyses present in the gostObjectList parameter
+## With this data frame, the enrichment results will be split in 4 groups:
+## 1) KEGG significant terms from parental napa vs DMSO (no root term)
+## 2) REACTOME significant terms from parental napa vs DMSO (no root term)
+## 3) KEGG significant terms from rosa napa vs DMSO (no root term)
+## 4) REACTOME significant terms from rosa napa vs DMSO (no root term)
 queryDataFrame <- data.frame(queryName=c("parental_napa_vs_DMSO", 
-    "rosa_napa_vs_DMSO"), source=c("KEGG", "WP"), removeRoot=c(TRUE, TRUE),
-    termIDs=c("", ""), stringsAsFactors=FALSE)
+    "parental_napa_vs_DMSO", "rosa_napa_vs_DMSO", "rosa_napa_vs_DMSO"), 
+    source=c("KEGG", "REAC", "KEGG", "REAC"), 
+    removeRoot=c(TRUE, TRUE, TRUE, TRUE), termIDs=c("", "", "", ""), 
+    stringsAsFactors=FALSE)
     
-## Create graph for KEGG related results from 
+## Create graph for KEGG and REACTOME significant results from 
 ## 2 enrichment analyses
-##createEnrichMapMultiComplex(gostObjectList=gostObjectList, 
-##    queryInfo=queryDataFrame, line=1.5)
+createEnrichMapMultiComplex(gostObjectList=gostObjectList, 
+    queryInfo=queryDataFrame, line=1.5)
 
 }
 \author{

@@ -346,23 +346,32 @@ createEnrichMapMultiBasic <- function(gostObjectList, queryList,
 #'
 #' ## TODO
 #' gostObjectList=list(parentalNapaVsDMSOEnrichment, 
+#'     parentalNapaVsDMSOEnrichment, rosaNapaVsDMSOEnrichment, 
 #'     rosaNapaVsDMSOEnrichment)
 #'     
 #' ## Create data frame containing required information enabling the 
 #' ## selection of the retained enriched terms for each enrichment analysis.
 #' ## One line per enrichment analyses present in the gostObjectList parameter
+#' ## With this data frame, the enrichment results will be split in 4 groups:
+#' ## 1) KEGG significant terms from parental napa vs DMSO (no root term)
+#' ## 2) REACTOME significant terms from parental napa vs DMSO (no root term)
+#' ## 3) KEGG significant terms from rosa napa vs DMSO (no root term)
+#' ## 4) REACTOME significant terms from rosa napa vs DMSO (no root term)
 #' queryDataFrame <- data.frame(queryName=c("parental_napa_vs_DMSO", 
-#'     "rosa_napa_vs_DMSO"), source=c("KEGG", "WP"), removeRoot=c(TRUE, TRUE),
-#'     termIDs=c("", ""), stringsAsFactors=FALSE)
+#'     "parental_napa_vs_DMSO", "rosa_napa_vs_DMSO", "rosa_napa_vs_DMSO"), 
+#'     source=c("KEGG", "REAC", "KEGG", "REAC"), 
+#'     removeRoot=c(TRUE, TRUE, TRUE, TRUE), termIDs=c("", "", "", ""), 
+#'     stringsAsFactors=FALSE)
 #'     
-#' ## Create graph for KEGG related results from 
+#' ## Create graph for KEGG and REACTOME significant results from 
 #' ## 2 enrichment analyses
-#' ##createEnrichMapMultiComplex(gostObjectList=gostObjectList, 
-#' ##    queryInfo=queryDataFrame, line=1.5)
+#' createEnrichMapMultiComplex(gostObjectList=gostObjectList, 
+#'     queryInfo=queryDataFrame, line=1.5)
 #' 
 #' @author Astrid Deschênes
 #' @importFrom gprofiler2 gconvert
 #' @importFrom strex match_arg
+#' @importFrom stringr str_split str_trim
 #' @encoding UTF-8
 #' @export
 createEnrichMapMultiComplex <- function(gostObjectList, queryInfo,  
@@ -384,35 +393,44 @@ createEnrichMapMultiComplex <- function(gostObjectList, queryInfo,
             gostL[[i]][gostL[[i]]$query == queryI$queryName[[i]], ]}, 
             queryI=queryInfo, gostL=gostResultsList)
     
-    # ## Filter results
-    # if (source == "TERM_ID") {
-    #     gostResultsList <- lapply(gostResultsList,  FUN=function(x, termIDs) {
-    #         x[x$term_id %in% termIDs,]}, termIDs=termIDs)
-    # } else {
-    #     gostResultsList <- lapply(gostResultsList,  FUN=function(x, source) {
-    #         x[x$source == source,]}, source=source)
-    # }
-    # 
-    # ## Remove root term if required
-    # if (removeRoot) {
-    #     gostResultsList <- lapply(gostResultsList,  FUN=function(x) {
-    #         removeRootTerm(x)})
-    # }
-    # 
-    # ## Validate that at least one term is left
-    # if (sum(unlist(lapply(gostResultsList,  FUN=function(x) {nrow(x)})))  
-    #     == 0) {
-    #     stop("With removal of the root term, there is no ", 
-    #          "enrichment term left")
-    # }
-    #
+    ## Filter results
+    gostResultsList <- lapply(seq_len(length(gostObjectList)), 
+        FUN=function(i, queryI, gostL) {
+            if (queryI$source[i] == "TERM_ID") {
+                terms <- str_split(queryI$termIDs[i], ",")
+                terms <- stringr::str_trim(terms)
+                return(gostL[[i]][gostL[[i]]$term_id %in% terms, ])
+            } else {
+                return(gostL[[i]][gostL[[i]]$source == queryI$source[i], ])
+            }
+        }, queryI=queryInfo, gostL=gostResultsList)
+    
+    
+    ## Remove root terms when requested
+    gostResultsList <- lapply(seq_len(length(gostObjectList)), 
+        FUN=function(i, queryI, gostL) {
+            if (queryI$removeRoot[i]) {
+                 return(removeRootTerm(gostL[[i]]))
+            } else {
+                return(gostL[[i]])
+            }
+        }, queryI=queryInfo, gostL=gostResultsList)
+    
+    
+    queryList <- as.list(paste0(queryInfo$queryName, " - ", queryInfo$source))
+    
+    ## Validate that at least one term is left
+    if (sum(unlist(lapply(gostResultsList,  FUN=function(x) {nrow(x)})))
+            == 0) {
+        stop("With removal of the root term, there is no ",
+                "enrichment term left")
+    }
+    
     ## Create multi categories emap
-    # emap <- createMultiEmap(gostResultsList=gostResultsList, 
-    #             queryList=queryList, showCategory=showCategory, 
-    #             categoryLabel=categoryLabel, groupCategory=groupCategory, 
-    #             categoryNode=categoryNode, line=line, force=force)
-    # 
-    emap <- TRUE
+    emap <- createMultiEmap(gostResultsList=gostResultsList, 
+                queryList=queryList, showCategory=showCategory, 
+                categoryLabel=categoryLabel, groupCategory=groupCategory, 
+                categoryNode=categoryNode, line=line, force=force)
     
     return(emap)
 }
