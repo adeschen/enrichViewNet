@@ -383,7 +383,7 @@ validateCreateEnrichMapMultiComplexArg <- function(gostObjectList, queryInfo,
     
     ## Test that queryInfo has the same number of entries than gostObjectList
     if (nrow(queryInfo) != length(gostObjectList)) {
-        stop("The number of query names should", 
+        stop("The number of rows in queryInfo should ", 
                 " correspond to the number of enrichment objects.")
     }
     

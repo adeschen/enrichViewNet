@@ -490,12 +490,25 @@ test_that("createEnrichMapMultiComplex() must return error when gostObjectList h
         categoryLabel=1, categoryNode=1, force=FALSE), error_message)
 })
 
+test_that("createEnrichMapMultiComplex() must return error when gostObjectList is a list of numbers", {
+    
+    error_message <- paste0("The gostObjectList should only contain a list ", 
+        "of enrichment results. Enrichment results are lists with meta and", 
+        " result as entries corresponding to gprofiler2 enrichment", 
+        " output.")
+    
+    expect_error(createEnrichMapMultiComplex(
+        gostObjectList=list(3, 4), 
+        queryInfo=33, showCategory=30, groupCategory=FALSE, 
+        categoryLabel=1, categoryNode=1, force=FALSE), error_message)
+})
+
 test_that("createEnrichMapMultiComplex() must return error when queryInfo is a number", {
     
     gostTerm <- demoGOST
     
     error_message <- paste0("The queryInfo should a data.frame with ", 
-        "those columns: queryName, source, removeRoot and termIDs.")
+            "those columns: queryName, source, removeRoot and termIDs.")
     
     expect_error(createEnrichMapMultiComplex(
         gostObjectList=list(gostTerm, gostTerm), 
@@ -503,5 +516,21 @@ test_that("createEnrichMapMultiComplex() must return error when queryInfo is a n
         categoryLabel=1, categoryNode=1, force=FALSE), error_message)
 })
 
+test_that("createEnrichMapMultiComplex() must return error when queryInfo shorter than gostObjectList", {
+    
+    gostTerm <- demoGOST
+    
+    queryDataFrame <- data.frame(queryName=c("query_1"), 
+        source=c("KEGG"), removeRoot=c(TRUE), termIDs=c(""), 
+        stringsAsFactors=FALSE)
+        
+    error_message <- paste0("The number of rows in queryInfo should ", 
+        " correspond to the number of enrichment objects.")
+    
+    expect_error(createEnrichMapMultiComplex(
+        gostObjectList=list(gostTerm, gostTerm), 
+        queryInfo=queryDataFrame, showCategory=30, groupCategory=FALSE, 
+        categoryLabel=1, categoryNode=1, force=FALSE), error_message)
+})
 
 
