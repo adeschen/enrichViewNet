@@ -740,7 +740,7 @@ The output of the _createEnrichMapMultiBasic()_ function is a _ggplot_ object.
 This means that the graph can be personalized. For example, the default 
 colors, legend title and legend font can be changed:
 
-```{r emapMultiCustom, echo=TRUE, warning=FALSE, message=FALSE, collapse=F, eval=TRUE, fig.cap="An enrichment map with multiple groups and personalized colors."}
+```{r emapMultiCustom, echo=TRUE, warning=FALSE, message=FALSE, collapse=F, eval=TRUE, fig.cap="An enrichment map using KEGG terms from 2 enrichment analyses with personalized colors."}
 
 ## Required library
 library(ggplot2)
@@ -764,21 +764,19 @@ createEnrichMapMultiBasic(gostObjectList=gostObjectList,
 <br>
 <br>
 
-# Transforming enrichment results into an enrichment map with groups from same enrichment analysis
+# Transforming enrichment results into an enrichment map with groups from same enrichment analysis (or different analyses)
 
 
 The following workflow gives an overview of the steps associated to the 
 creation of an enrichment map with groups. Groups can be created from the 
-same enrichment analysis or can come from different enrichment analyses. This 
-section is specifically for enrichment maps containing groups created using 
-one enrichment analysis.
+same enrichment analysis or can come from different enrichment analyses. 
 
 The key steps for the workflow are:
 
-Step                                          | Function                    
---------------------------------------------- | ------------------------------
-Run one enrichment analysis                   | `gprofiler2::gost()`
-Create an enrichment map with group           | `createEnrichMapMulti()`
+Step                                        | Function                    
+------------------------------------------- | ------------------------------
+Run one ro multiple enrichment analyses     | `gprofiler2::gost()`
+Create an enrichment map with group         | `createEnrichMapMultiComplex()`
 
 The `package::function()` notation is used for functions from other packages.
 
@@ -796,7 +794,7 @@ analysis with terms from different sources in different colors.
 ```{r emapMultiComplex01, echo=TRUE, warning=FALSE, message=FALSE, collapse=F, eval=TRUE, fig.cap="An enrichment map containing TODO for one enrichment analysis.", fig.align="center"}
 
 ## Set seed to ensure reproducible results
-set.seed(2121)
+set.seed(2221)
 
 ## The dataset of functional enriched terms for one experiment:
 ## napabucasin treated and DMSO control expressing Rosa26 control vector
@@ -805,25 +803,41 @@ data("rosaNapaVsDMSOEnrichment")
 
 ## The gostObjectList is a list containing all 
 ## the functional enrichment objects
+## In this case, the same enrichment object is used twice
 gostObjectList <- list(rosaNapaVsDMSOEnrichment, 
     rosaNapaVsDMSOEnrichment)
 
-## The queryList is a list of query names retained for each of the enrichment 
-## object (same order). Beware that a enrichment object can contain more than 
-## one query.
+## Extract the query name from eht enrichment object
 query_01 <- unique(rosaNapaVsDMSOEnrichment$result$query)[1]
-queryList <- list(query_01, query_01)
 
-## Enrichment map where the groups are the KEGG results for the 2 different
-## experiments
-createEnrichMapMultiBasic(gostObjectList=gostObjectList,
-    queryList=queryList, source="KEGG", removeRoot=TRUE)
+## The query information is a data frame containing the information required 
+## to extract the specific terms for each enrichment object
+## The number of rows must correspond to the number of enrichment objects
+## The query name must be present in the enrichment object
+## The source can be: "GO:BP" for Gene Ontology Biological Process, 
+## "GO:CC" for Gene Ontology Cellular Component, "GO:MF" for Gene Ontology 
+## Molecular Function, "KEGG" for Kegg, "REAC" for Reactome, "TF" for TRANSFAC, 
+## "MIRNA" for miRTarBase, "CORUM" for CORUM database, "HP" for Human 
+## phenotype ontology and "WP" for WikiPathways or "TERM_ID" when a  
+## list of terms is specified.
+## The termsIDs is an empty string except when the source is set to "TERM_ID"
+queryInfo <- data.frame(queryName=c(query_01, query_01), 
+                            source=c("KEGG", "REAC"),
+                            removeRoot=c(TRUE, TRUE),
+                            termIDs=c("", ""),
+                            stringsAsFactors=FALSE)
+
+## Enrichment map where the groups are the KEGG and Reactome results for the 
+## same experiment
+createEnrichMapMultiComplex(gostObjectList=gostObjectList, 
+        queryInfo=queryInfo)
     
 ```
 
 <br>
 
-TODO
+The significant genes are overlapping between the Kegg and Reactome pathways. 
+The only isolated term is the Kegg Viral carcinogenesis pathway.
 
 <br>
 <br>
