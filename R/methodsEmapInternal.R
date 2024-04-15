@@ -387,6 +387,12 @@ validateCreateEnrichMapMultiComplexArg <- function(gostObjectList, queryInfo,
                 " correspond to the number of enrichment objects.")
     }
     
+    ## Test that source should be character string
+    if (!is.character(queryInfo$source)) {
+        stop("The \'source'\ column of the \'queryInfo\' data frame ", 
+                "should be in a character string format.")
+    }
+    
     ## Test that the source values are valid choices in queryInfo data frame
     sources <- c("TERM_ID", "GO:MF", "GO:CC", "GO:BP", "KEGG", "REAC", "TF", 
                    "MIRNA", "HPA", "CORUM", "HP", "WP")
@@ -402,12 +408,6 @@ validateCreateEnrichMapMultiComplexArg <- function(gostObjectList, queryInfo,
     ## Test that queryName should be character string
     if (!is.character(queryInfo$queryName)) {
         stop("The \'queryName'\ column of the \'queryInfo\' data frame ", 
-                "should be in a character string format.")
-    }
-    
-    ## Test that source should be character string
-    if (!is.character(queryInfo$source)) {
-        stop("The \'source'\ column of the \'queryInfo\' data frame ", 
                 "should be in a character string format.")
     }
     
