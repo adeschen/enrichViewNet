@@ -569,3 +569,88 @@ test_that("createEnrichMapMultiComplex() must return error when source in queryI
         categoryLabel=1, categoryNode=1, force=FALSE), error_message)
 })
 
+test_that("createEnrichMapMultiComplex() must return error when queryName in queryInfo is number", {
+    
+    gostTerm <- demoGOST
+    
+    queryDataFrame <- data.frame(queryName=c(22, 33), 
+        source=c("KEGG", "REAC"), removeRoot=c(TRUE, TRUE), termIDs=c("", ""), 
+        stringsAsFactors=FALSE)
+    
+    error_message <- paste0("The \'queryName'\ column of the \'queryInfo\' ", 
+                    "data frame should be in a character string format.")
+    
+    expect_error(createEnrichMapMultiComplex(
+        gostObjectList=list(gostTerm, gostTerm), 
+        queryInfo=queryDataFrame, showCategory=30, groupCategory=FALSE, 
+        categoryLabel=1, categoryNode=1, force=FALSE), error_message)
+})
+
+test_that("createEnrichMapMultiComplex() must return error when termIDs in queryInfo is number", {
+    
+    gostTerm <- demoGOST
+    
+    queryDataFrame <- data.frame(queryName=c("query_1", "query_1"), 
+        source=c("KEGG", "REAC"), removeRoot=c(TRUE, TRUE), termIDs=c(33, 22), 
+        stringsAsFactors=FALSE)
+    
+    error_message <- paste0("The \'termIDs'\ column of the \'queryInfo\' ", 
+    "data frame should be in a character string format.")
+    
+    expect_error(createEnrichMapMultiComplex(
+        gostObjectList=list(gostTerm, gostTerm), 
+        queryInfo=queryDataFrame, showCategory=30, groupCategory=FALSE, 
+        categoryLabel=1, categoryNode=1, force=FALSE), error_message)
+})
+
+test_that("createEnrichMapMultiComplex() must return error when removeRoot in queryInfo is number", {
+    
+    gostTerm <- demoGOST
+    
+    queryDataFrame <- data.frame(queryName=c("query_1", "query_1"), 
+        source=c("KEGG", "REAC"), removeRoot=c(33, 22), termIDs=c("", ""), 
+        stringsAsFactors=FALSE)
+    
+    error_message <- paste0("The \'removeRoot'\ column of the \'queryInfo\' ", 
+        "data frame should only contain logical values (TRUE or FALSE).")
+    
+    expect_error(createEnrichMapMultiComplex(
+        gostObjectList=list(gostTerm, gostTerm), 
+        queryInfo=queryDataFrame, showCategory=30, groupCategory=FALSE, 
+        categoryLabel=1, categoryNode=1, force=FALSE), error_message, fixed=TRUE)
+})
+
+test_that("createEnrichMapMultiComplex() must return error when query name in queryInfo not in enrichment object", {
+    
+    gostTerm <- demoGOST
+    
+    queryDataFrame <- data.frame(queryName=c("query_1", "query_2"), 
+        source=c("KEGG", "REAC"), removeRoot=c(TRUE, TRUE), termIDs=c("", ""), 
+        stringsAsFactors=FALSE)
+    
+    error_message <- paste0("Each query name present in the \'queryName'\ ", 
+        "column of the \'queryInfo\' data frame must be present in the ", 
+        "associated enrichment object.")
+    
+    expect_error(createEnrichMapMultiComplex(
+        gostObjectList=list(gostTerm, gostTerm), 
+        queryInfo=queryDataFrame, showCategory=30, groupCategory=FALSE, 
+        categoryLabel=1, categoryNode=1, force=FALSE), error_message, fixed=TRUE)
+})
+
+test_that("createEnrichMapMultiComplex() must return error when TERM_ID in queryInfo but not term ids", {
+    
+    gostTerm <- demoGOST
+    
+    queryDataFrame <- data.frame(queryName=c("query_1", "query_1"), 
+        source=c("KEGG", "TERM_ID"), removeRoot=c(TRUE, TRUE), termIDs=c("", ""), 
+        stringsAsFactors=FALSE)
+    
+    error_message <- paste0("A string of terms should be present in the ",
+        "\'termIDs\' column when source is \'TERM_ID\'.")
+    
+    expect_error(createEnrichMapMultiComplex(
+        gostObjectList=list(gostTerm, gostTerm), 
+        queryInfo=queryDataFrame, showCategory=30, groupCategory=FALSE, 
+        categoryLabel=1, categoryNode=1, force=FALSE), error_message, fixed=TRUE)
+})

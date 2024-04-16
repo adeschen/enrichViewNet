@@ -429,7 +429,7 @@ validateCreateEnrichMapMultiComplexArg <- function(gostObjectList, queryInfo,
         queryI$queryName[x] %in% unique(res$query)}, 
         queryI=queryInfo, gostL=gostObjectList)))) {
         stop("Each query name present in the \'queryName'\ column of the ", 
-                "\'queryInfo\' data frame should must be present in the ", 
+                "\'queryInfo\' data frame must be present in the ", 
                 "associated enrichment object.")
     }
     
@@ -437,7 +437,7 @@ validateCreateEnrichMapMultiComplexArg <- function(gostObjectList, queryInfo,
         if(!all(unlist(lapply(which(queryInfo$source == "TERM_ID"), 
                 FUN=function(i, queryI) {queryI$termIDs[i] != ""}, 
                 queryI=queryInfo)))) {
-            stop("A vector of terms should be present in the ",
+            stop("A string of terms should be present in the ",
                     "\'termIDs\' column when source is \'TERM_ID\'.")
         }
     }
