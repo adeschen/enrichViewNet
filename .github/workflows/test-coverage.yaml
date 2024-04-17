@@ -31,7 +31,6 @@ jobs:
         run: covr::codecov(quiet = FALSE)
         shell: Rscript {0}
         
-      - uses: codecov/codecov-action@v4
       
         
         
