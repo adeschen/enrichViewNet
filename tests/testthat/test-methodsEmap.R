@@ -654,3 +654,39 @@ test_that("createEnrichMapMultiComplex() must return error when TERM_ID in query
         queryInfo=queryDataFrame, showCategory=30, groupCategory=FALSE, 
         categoryLabel=1, categoryNode=1, force=FALSE), error_message, fixed=TRUE)
 })
+
+test_that("createEnrichMapMultiComplex() must return error when termIDs column in queryInfo contains numbers", {
+    
+    gostTerm <- demoGOST
+    
+    queryDataFrame <- data.frame(queryName=c("query_1", "query_1"), 
+        source=c("KEGG", "TERM_ID"), removeRoot=c(TRUE, TRUE), termIDs=c(33, 22), 
+        stringsAsFactors=FALSE)
+    
+    error_message <- paste0("The \'termIDs\' column of the 'queryInfo' data ", 
+        "frame should be in a character string format.")
+    
+    expect_error(createEnrichMapMultiComplex(
+        gostObjectList=list(gostTerm, gostTerm), 
+        queryInfo=queryDataFrame, showCategory=30, groupCategory=FALSE, 
+        categoryLabel=1, categoryNode=1, force=FALSE), error_message, 
+        fixed=TRUE)
+})
+
+test_that("createEnrichMapMultiComplex() must return error when removeRoot column in queryInfo contains numbers", {
+    
+    gostTerm <- demoGOST
+    
+    queryDataFrame <- data.frame(queryName=c("query_1", "query_1"), 
+        source=c("KEGG", "TERM_ID"), removeRoot=c(33, 22), termIDs=c("", ""), 
+        stringsAsFactors=FALSE)
+    
+    error_message <- paste0("The \'removeRoot\' column of the 'queryInfo' ", 
+        "data frame should only contain logical values (TRUE or FALSE).")
+    
+    expect_error(createEnrichMapMultiComplex(
+        gostObjectList=list(gostTerm, gostTerm), 
+        queryInfo=queryDataFrame, showCategory=30, groupCategory=FALSE, 
+        categoryLabel=1, categoryNode=1, force=FALSE), error_message, 
+        fixed=TRUE)
+})
