@@ -666,8 +666,7 @@ The first step has been presented in the previous section.
 
 An enrichment map can show enrichment results from multiple enrichment 
 analyses. A different color is used for each analysis. This enables to 
-highlight the enriched terms shared by multiples analyses as well as 
-analysis specific network of terms.
+highlight the similarities and differences between the analyses.
 
 
 ```{r emapMulti01, echo=TRUE, warning=FALSE, message=FALSE, collapse=F, eval=TRUE, fig.cap="An enrichment map containing Kegg enrichment results for 2 different experiments.", fig.align="center"}
@@ -740,7 +739,7 @@ The output of the _createEnrichMapMultiBasic()_ function is a _ggplot_ object.
 This means that the graph can be personalized. For example, the default 
 colors, legend title and legend font can be changed:
 
-```{r emapMultiCustom, echo=TRUE, warning=FALSE, message=FALSE, collapse=F, eval=TRUE, fig.cap="An enrichment map using KEGG terms from 2 enrichment analyses with personalized colors."}
+```{r emapMultiCustom, echo=TRUE, warning=FALSE, message=FALSE, collapse=F, eval=TRUE, fig.cap="An enrichment map using KEGG terms from 2 enrichment analyses with personalized colors and legend."}
 
 ## Required library
 library(ggplot2)
