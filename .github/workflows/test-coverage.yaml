@@ -30,4 +30,9 @@ jobs:
         run: covr::codecov(quiet = FALSE)
         shell: Rscript {0}
         
+      - uses: codecov/codecov-action@v4
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        
+        
         
