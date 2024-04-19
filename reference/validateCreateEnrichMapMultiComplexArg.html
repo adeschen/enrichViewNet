@@ -111,6 +111,9 @@ of the selected source should be removed (when present).</p></li>
 term IDS retained for the creation of the network separated by a comma ',' 
 when the "TERM_ID" source is selected. Otherwise, it should be a empty 
 string ("").</p></li>
+<li><p><code>groupName</code>: a <code>character</code> strings that contains the 
+name of the group to be shown in the legend. Each group has to have a 
+unique name.</p></li>
 </ul></dd>
 
 
@@ -167,7 +170,8 @@ overlapping text labels should be forced.</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">queryDataFrame</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>queryName<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"parental_napa_vs_DMSO"</span>, </span></span>
 <span class="r-in"><span>    <span class="st">"rosa_napa_vs_DMSO"</span><span class="op">)</span>, source<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"KEGG"</span>, <span class="st">"WP"</span><span class="op">)</span>, removeRoot<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">TRUE</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    termIDs<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">""</span>, <span class="st">""</span><span class="op">)</span>, stringsAsFactors<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    termIDs<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">""</span>, <span class="st">""</span><span class="op">)</span>, groupName<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"parental - KEGG"</span>, <span class="st">"rosa - WP"</span><span class="op">)</span>, </span></span>
+<span class="r-in"><span>    stringsAsFactors<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Check that all arguments are valid</span></span></span>
 <span class="r-in"><span><span class="fu">enrichViewNet</span><span class="fu">:::</span><span class="fu">validateCreateEnrichMapMultiComplexArg</span><span class="op">(</span></span></span>
@@ -192,7 +196,7 @@ overlapping text labels should be forced.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.8.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.9000.</p>
 </div>
 
       </footer></div>

@@ -107,6 +107,9 @@ of the selected source should be removed (when present).</p></li>
 term IDS retained for the creation of the network separated by a comma ',' 
 when the "TERM_ID" source is selected. Otherwise, it should be a empty 
 string ("").</p></li>
+<li><p><code>groupName</code>: a <code>character</code> strings that contains the 
+name of the group to be shown in the legend. Each group has to have a 
+unique name.</p></li>
 </ul></dd>
 
 
@@ -166,19 +169,29 @@ results.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## TODO</span></span></span>
 <span class="r-in"><span><span class="va">gostObjectList</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">parentalNapaVsDMSOEnrichment</span>, </span></span>
+<span class="r-in"><span>    <span class="va">parentalNapaVsDMSOEnrichment</span>, <span class="va">rosaNapaVsDMSOEnrichment</span>, </span></span>
 <span class="r-in"><span>    <span class="va">rosaNapaVsDMSOEnrichment</span><span class="op">)</span></span></span>
 <span class="r-in"><span>    </span></span>
 <span class="r-in"><span><span class="co">## Create data frame containing required information enabling the </span></span></span>
 <span class="r-in"><span><span class="co">## selection of the retained enriched terms for each enrichment analysis.</span></span></span>
 <span class="r-in"><span><span class="co">## One line per enrichment analyses present in the gostObjectList parameter</span></span></span>
+<span class="r-in"><span><span class="co">## With this data frame, the enrichment results will be split in 4 groups:</span></span></span>
+<span class="r-in"><span><span class="co">## 1) KEGG significant terms from parental napa vs DMSO (no root term)</span></span></span>
+<span class="r-in"><span><span class="co">## 2) REACTOME significant terms from parental napa vs DMSO (no root term)</span></span></span>
+<span class="r-in"><span><span class="co">## 3) KEGG significant terms from rosa napa vs DMSO (no root term)</span></span></span>
+<span class="r-in"><span><span class="co">## 4) REACTOME significant terms from rosa napa vs DMSO (no root term)</span></span></span>
 <span class="r-in"><span><span class="va">queryDataFrame</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>queryName<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"parental_napa_vs_DMSO"</span>, </span></span>
-<span class="r-in"><span>    <span class="st">"rosa_napa_vs_DMSO"</span><span class="op">)</span>, source<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"KEGG"</span>, <span class="st">"WP"</span><span class="op">)</span>, removeRoot<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">TRUE</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    termIDs<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">""</span>, <span class="st">""</span><span class="op">)</span>, stringsAsFactors<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>        <span class="st">"parental_napa_vs_DMSO"</span>, <span class="st">"rosa_napa_vs_DMSO"</span>, <span class="st">"rosa_napa_vs_DMSO"</span><span class="op">)</span>, </span></span>
+<span class="r-in"><span>    source<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"KEGG"</span>, <span class="st">"REAC"</span>, <span class="st">"KEGG"</span>, <span class="st">"REAC"</span><span class="op">)</span>, </span></span>
+<span class="r-in"><span>    removeRoot<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span><span class="op">)</span>, termIDs<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span><span class="op">)</span>, </span></span>
+<span class="r-in"><span>    groupName<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"parental - KEGG"</span>, <span class="st">"parental - Reactome"</span>, </span></span>
+<span class="r-in"><span>        <span class="st">"rosa - KEGG"</span>, <span class="st">"rosa - Reactome"</span><span class="op">)</span>, stringsAsFactors<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span>    </span></span>
-<span class="r-in"><span><span class="co">## Create graph for KEGG related results from </span></span></span>
+<span class="r-in"><span><span class="co">## Create graph for KEGG and REACTOME significant results from </span></span></span>
 <span class="r-in"><span><span class="co">## 2 enrichment analyses</span></span></span>
-<span class="r-in"><span><span class="co">##createEnrichMapMultiComplex(gostObjectList=gostObjectList, </span></span></span>
-<span class="r-in"><span><span class="co">##    queryInfo=queryDataFrame, line=1.5)</span></span></span>
+<span class="r-in"><span><span class="fu">createEnrichMapMultiComplex</span><span class="op">(</span>gostObjectList<span class="op">=</span><span class="va">gostObjectList</span>, </span></span>
+<span class="r-in"><span>    queryInfo<span class="op">=</span><span class="va">queryDataFrame</span>, line<span class="op">=</span><span class="fl">1.5</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="createEnrichMapMultiComplex-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -194,7 +207,7 @@ results.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.8.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.9000.</p>
 </div>
 
       </footer></div>
