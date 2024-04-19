@@ -794,7 +794,7 @@ terms from different sources can be drawn in different colors.
 ```{r emapMultiComplex01, echo=TRUE, warning=FALSE, message=FALSE, collapse=F, eval=TRUE, fig.cap="An enrichment map containing Kegg and Reactome results from the rosa Napa vs DMSO analysis.", fig.align="center"}
 
 ## Set seed to ensure reproducible results
-set.seed(2221)
+set.seed(3221)
 
 ## The dataset of functional enriched terms for one experiment:
 ## napabucasin treated and DMSO control expressing Rosa26 control vector
