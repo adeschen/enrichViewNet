@@ -652,7 +652,7 @@ The key steps for the workflow are:
 Step                                          | Function                    
 --------------------------------------------- | ------------------------------
 Run multiple enrichment analyses              | `gprofiler2::gost()`
-Create an enrichment map with group           | `createEnrichMapMultiBasic()`
+Create an enrichment map with groups          | `createEnrichMapMultiBasic()`
 
 The `package::function()` notation is used for functions from other packages.
 
@@ -739,7 +739,7 @@ The output of the _createEnrichMapMultiBasic()_ function is a _ggplot_ object.
 This means that the graph can be personalized. For example, the default 
 colors, legend title and legend font can be changed:
 
-```{r emapMultiCustom, echo=TRUE, warning=FALSE, message=FALSE, collapse=F, eval=TRUE, fig.cap="An enrichment map using KEGG terms from 2 enrichment analyses with personalized colors and legend."}
+```{r emapMultiCustom, echo=TRUE, warning=FALSE, message=FALSE, collapse=F, eval=TRUE, fig.cap="An enrichment map using KEGG terms from two enrichment analyses with personalized colors and legend."}
 
 ## Required library
 library(ggplot2)
@@ -763,12 +763,12 @@ createEnrichMapMultiBasic(gostObjectList=gostObjectList,
 <br>
 <br>
 
-# Transforming enrichment results into an enrichment map with groups from same enrichment analysis (or different analyses)
-
+# Transforming enrichment results into an enrichment map with groups from same enrichment analysis or from complex designs
 
 The following workflow gives an overview of the steps associated to the 
 creation of an enrichment map with groups. Groups can be created from the 
-same enrichment analysis or can come from different enrichment analyses. 
+same enrichment analysis or can come from different enrichment analyses. This 
+section is specifically for enrichment maps created using complex designs. 
 
 The key steps for the workflow are:
 
@@ -785,12 +785,13 @@ The first step has been presented in the previous section.
 
 <br>
 
-## Create an enrichment map using subsections of one enrichment analysis
+## Create an enrichment map using mutliple subsections of one enrichment analysis
 
-An enrichment map can generate enrichment results from one enrichment 
-analysis with terms from different sources in different colors. 
+The _createEnrichMapMultiComplex()_ function enables enrichment map to be 
+generate with multiple groups from one enrichment analysis. As an example, 
+terms from different sources can be drawn in different colors.
 
-```{r emapMultiComplex01, echo=TRUE, warning=FALSE, message=FALSE, collapse=F, eval=TRUE, fig.cap="An enrichment map containing TODO for one enrichment analysis.", fig.align="center"}
+```{r emapMultiComplex01, echo=TRUE, warning=FALSE, message=FALSE, collapse=F, eval=TRUE, fig.cap="An enrichment map containing Kegg and Reactome results from the rosa Napa vs DMSO analysis.", fig.align="center"}
 
 ## Set seed to ensure reproducible results
 set.seed(2221)
@@ -806,24 +807,27 @@ data("rosaNapaVsDMSOEnrichment")
 gostObjectList <- list(rosaNapaVsDMSOEnrichment, 
     rosaNapaVsDMSOEnrichment)
 
-## Extract the query name from eht enrichment object
+## Extract the query name from the enrichment object
 query_01 <- unique(rosaNapaVsDMSOEnrichment$result$query)[1]
 
 ## The query information is a data frame containing the information required 
-## to extract the specific terms for each enrichment object
-## The number of rows must correspond to the number of enrichment objects
-## The query name must be present in the enrichment object
+##   to extract the specific terms for each enrichment object.
+## The number of rows must correspond to the number of enrichment objects/
+## The query name must be present in the enrichment object.
 ## The source can be: "GO:BP" for Gene Ontology Biological Process, 
-## "GO:CC" for Gene Ontology Cellular Component, "GO:MF" for Gene Ontology 
-## Molecular Function, "KEGG" for Kegg, "REAC" for Reactome, "TF" for TRANSFAC, 
-## "MIRNA" for miRTarBase, "CORUM" for CORUM database, "HP" for Human 
-## phenotype ontology and "WP" for WikiPathways or "TERM_ID" when a  
-## list of terms is specified.
-## The termsIDs is an empty string except when the source is set to "TERM_ID"
+##   "GO:CC" for Gene Ontology Cellular Component, "GO:MF" for Gene Ontology 
+##   Molecular Function, "KEGG" for Kegg, "REAC" for Reactome, 
+##   "TF" for TRANSFAC, "MIRNA" for miRTarBase, "CORUM" for CORUM database, 
+##   "HP" for Human phenotype ontology and "WP" for WikiPathways or 
+##   "TERM_ID" when a list of terms is specified.
+## The termsIDs is an empty string except when the source is set to "TERM_ID".
+## The group names are going to be used in the legend and should be unique to 
+##  each group.
 queryInfo <- data.frame(queryName=c(query_01, query_01), 
                             source=c("KEGG", "REAC"),
                             removeRoot=c(TRUE, TRUE),
-                            termIDs=c("", ""),
+                            termIDs=c("", ""), 
+                            groupName=c("Kegg", "Reactome"),
                             stringsAsFactors=FALSE)
 
 ## Enrichment map where the groups are the KEGG and Reactome results for the 
@@ -835,11 +839,93 @@ createEnrichMapMultiComplex(gostObjectList=gostObjectList,
 
 <br>
 
-The significant genes are overlapping between the Kegg and Reactome pathways. 
+The significant genes are overlapping between the Kegg and Reactome pathways 
+as shown by the connections between the pathways. 
 The only isolated term is the Kegg Viral carcinogenesis pathway.
 
 <br>
+
+## Create an enrichment map using a complex design
+
+Complex designs can be used with _createEnrichMapMultiComplex()_. Results 
+from different analyses as well as split results from the same analysis can 
+be showcase together. 
+
+In this example, the enrichment map will contain 4 groups from 2 experiments:
+- MAP kinases related terms in rosa napabucasin treated vs DMSO control
+- MAP kinases related terms in parental napabucasin treated vs DMSO control
+- Interleukin related terms in rosa napabucasin treated vs DMSO control
+- Interleukin related terms in parental napabucasin treated vs DMSO control
+
+
+```{r emapMultiCustom2, echo=TRUE, warning=FALSE, message=FALSE, collapse=FALSE, eval=TRUE, fig.cap="An enrichment map using selected terms related to MAP kinases and interleukin in two different experiments."}
+
+## Set seed to ensure reproducible results
+set.seed(28)
+
+## The datasets of functional enriched terms for the two experiments:
+## napabucasin treated and DMSO control expressing Rosa26 control vector and
+## napabucasin treated and DMSO control parental MiaPaCa2 cells
+## (Froeling et al 2019)
+data("rosaNapaVsDMSOEnrichment")
+data("parentalNapaVsDMSOEnrichment")
+
+## The gostObjectList is a list containing all 
+## the functional enrichment objects
+## In this case, the same enrichment object is used twice
+## The order of the objects must respect the order on the queryInfo data frame
+## In this case: 
+##   1. rosa dataset (for MAP kinases)
+##   2. parental dataset (for MAP kinases)
+##   3. rosa dataset (for interleukin)
+##   4. parental dataset (for interleukin)
+gostObjectList <- list(rosaNapaVsDMSOEnrichment, parentalNapaVsDMSOEnrichment, 
+    rosaNapaVsDMSOEnrichment, parentalNapaVsDMSOEnrichment)
+
+## Extract the query name from the enrichment object
+query_rosa <- unique(rosaNapaVsDMSOEnrichment$result$query)[1]
+query_parental <- unique(parentalNapaVsDMSOEnrichment$result$query)[1]
+
+
+## List of selected terms that will be shown in each group
+rosa_mapk <- "GO:0017017,GO:0033549,KEGG:04010,WP:WP382"
+rosa_il <- "KEGG:04657,WP:WP4754" 
+parental_mapk <- paste0("GO:0017017,GO:0033549,KEGG:04010,", 
+                            "REAC:R-HSA-5675221,REAC:R-HSA-112409,WP:WP382")
+parental_il <- "WP:WP4754,WP:WP395"
+
+
+## The query information is a data frame containing the information required 
+## to extract the specific terms for each enrichment object
+## The number of rows must correspond to the number of enrichment objects
+## The query name must be present in the enrichment object
+## The source is set to "TERM_ID" so that the terms present in termIDs column 
+##  will be used
+## The group name will be used for the legend, the same name cannot be 
+##  used twice
+queryInfo <- data.frame(queryName=c(query_rosa, query_parental, 
+                    query_rosa, query_parental), 
+        source=c("TERM_ID", "TERM_ID", "TERM_ID", "TERM_ID"),
+        removeRoot=c(FALSE, FALSE, FALSE, FALSE),
+        termIDs=c(rosa_mapk, parental_mapk, rosa_il, parental_il),
+        groupName=c("rosa - MAP kinases", "parental - MAP kinases", 
+                        "rosa - Interleukin", "parental - Interleukin"),
+        stringsAsFactors=FALSE)
+
+## Enrichment map where the groups TODO
+createEnrichMapMultiComplex(gostObjectList=gostObjectList, 
+        queryInfo=queryInfo)
+
+```
+
+
+While the two experiments have a lot of similar enriched terms, there are 
+still terms that are unique to each experiment.
+
+
 <br>
+<br>
+
 
 
 # Acknowledgments

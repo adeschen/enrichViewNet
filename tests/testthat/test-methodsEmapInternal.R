@@ -50,6 +50,7 @@ test_that("validateCreateEnrichMapMultiComplexArg() must return expected result"
     queryDF <- data.frame(queryName=c("parental_napa_vs_DMSO", 
         "rosa_napa_vs_DMSO", "rosa_napa_vs_DMSO"), 
         source=c("GO:CC", "REAC", "GO:CC"), removeRoot=c(TRUE, TRUE, TRUE),
+        groupName=c("parental GO:CC", "rosa Reactome", "rosa GO:CC"), 
         termIDs=c("", "", ""), stringsAsFactors=FALSE)
     
     result <- enrichViewNet:::validateCreateEnrichMapMultiComplexArg(
@@ -158,7 +159,10 @@ test_that("createBasicEmap() must return expected result", {
     
     expect_true(all(graphRes$data$name %in% gostResults$term_name))
     
-    ##expect_true(all(graphRes$data$size == gostResults$intersection_size))
+    expect_true(all(graphRes$data$size[order(graphRes$data$size, 
+        decreasing=TRUE)] == 
+        gostResults$intersection_size[order(gostResults$intersection_size, 
+                                                decreasing=TRUE)]))
 })
 
 

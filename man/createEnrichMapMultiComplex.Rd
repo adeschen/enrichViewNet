@@ -47,6 +47,9 @@ of the selected source should be removed (when present). }
 term IDS retained for the creation of the network separated by a comma ',' 
 when the "TERM_ID" source is selected. Otherwise, it should be a empty 
 string (""). }
+\item{\code{groupName}: a \code{character} strings that contains the 
+name of the group to be shown in the legend. Each group has to have a 
+unique name. }
 }}
 
 \item{showCategory}{a positive \code{integer} or a \code{vector} of 
@@ -103,10 +106,11 @@ gostObjectList=list(parentalNapaVsDMSOEnrichment,
 ## 3) KEGG significant terms from rosa napa vs DMSO (no root term)
 ## 4) REACTOME significant terms from rosa napa vs DMSO (no root term)
 queryDataFrame <- data.frame(queryName=c("parental_napa_vs_DMSO", 
-    "parental_napa_vs_DMSO", "rosa_napa_vs_DMSO", "rosa_napa_vs_DMSO"), 
+        "parental_napa_vs_DMSO", "rosa_napa_vs_DMSO", "rosa_napa_vs_DMSO"), 
     source=c("KEGG", "REAC", "KEGG", "REAC"), 
     removeRoot=c(TRUE, TRUE, TRUE, TRUE), termIDs=c("", "", "", ""), 
-    stringsAsFactors=FALSE)
+    groupName=c("parental - KEGG", "parental - Reactome", 
+        "rosa - KEGG", "rosa - Reactome"), stringsAsFactors=FALSE)
     
 ## Create graph for KEGG and REACTOME significant results from 
 ## 2 enrichment analyses

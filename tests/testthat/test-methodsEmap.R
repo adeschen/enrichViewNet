@@ -690,3 +690,42 @@ test_that("createEnrichMapMultiComplex() must return error when removeRoot colum
         categoryLabel=1, categoryNode=1, force=FALSE), error_message, 
         fixed=TRUE)
 })
+
+test_that("createEnrichMapMultiComplex() must return error when groupName column in queryInfo contains numbers", {
+    
+    gostTerm <- demoGOST
+    
+    queryDataFrame <- data.frame(queryName=c("query_1", "query_1"), 
+        source=c("KEGG", "REAC"), removeRoot=c(TRUE, TRUE), 
+        termIDs=c("", ""), groupName=c(22, 33),  
+        stringsAsFactors=FALSE)
+    
+    error_message <- paste0("The \'groupName\' column of the 'queryInfo' ", 
+        "data frame should be in a character string format.")
+    
+    expect_error(createEnrichMapMultiComplex(
+        gostObjectList=list(gostTerm, gostTerm), 
+        queryInfo=queryDataFrame, showCategory=30, groupCategory=FALSE, 
+        categoryLabel=1, categoryNode=1, force=FALSE), error_message, 
+        fixed=TRUE)
+})
+
+test_that("createEnrichMapMultiComplex() must return error when groupName column contain identical names", {
+    
+    gostTerm <- demoGOST
+    
+    queryDataFrame <- data.frame(queryName=c("query_1", "query_1"), 
+        source=c("KEGG", "REAC"), removeRoot=c(TRUE, TRUE), 
+        termIDs=c("", ""), groupName=c("REAC", "REAC"),  
+        stringsAsFactors=FALSE)
+    
+    error_message <- paste0("The \'groupName\' column of the 'queryInfo' ", 
+        "data frame should only contain unique group names.")
+    
+    expect_error(createEnrichMapMultiComplex(
+        gostObjectList=list(gostTerm, gostTerm), 
+        queryInfo=queryDataFrame, showCategory=30, groupCategory=FALSE, 
+        categoryLabel=1, categoryNode=1, force=FALSE), error_message, 
+        fixed=TRUE)
+})
+
