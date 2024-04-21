@@ -1,0 +1,56 @@
+CHANGES IN VERSION 1.1.1
+-------------------------
+
+SIGNIFICANT USER-VISIBLE CHANGE
+
+    o The enrichViewNet workflow figure, in the vignette, has been updated.
+
+
+CHANGES IN VERSION 0.99.2
+-------------------------
+
+NEW FEATURES
+
+    o The man pages are respecting 80 character width.
+
+
+CHANGES IN VERSION 0.99.1
+-------------------------
+
+NEW FEATURES
+
+    o The Installation and Introduction sections of the vignette have been updated.
+
+
+CHANGES IN VERSION 0.99.0
+-------------------------
+
+NEW FEATURES
+
+    o The new createEnrichMap() function enables the creation of an enrichment map from enrichment results.
+
+
+CHANGES IN VERSION 0.0.4
+-------------------------
+
+NEW FEATURES
+
+    o When intersection column present in the GOST object, the software uses the column to create the output for Cytoscape, without having to call gconvert(). The output is generated much more rapidly.
+
+
+CHANGES IN VERSION 0.0.2
+-------------------------
+
+NEW FEATURES
+
+    o Added a NEWS.md file to track changes to the package.
+
+SIGNIFICANT USER-VISIBLE CHANGES
+
+    o The createNetwork() method has a new parameter `fileName` that enables the creation of a CX JSON file when Cytoscape is not running.
+
+BUG FIXES
+
+    o The createCytoscapeCXJSON() method does not replicate anymore the genes that are associated to more than one term.
+
+
