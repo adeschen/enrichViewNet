@@ -4,6 +4,9 @@
     <loc>/404.html</loc>
   </url>
   <url>
+    <loc>/NEWS_old.html</loc>
+  </url>
+  <url>
     <loc>/articles/enrichViewNet.html</loc>
   </url>
   <url>
@@ -14,9 +17,6 @@
   </url>
   <url>
     <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/news/index.html</loc>
   </url>
   <url>
     <loc>/reference/createBasicEmap.html</loc>
