@@ -19,7 +19,7 @@ CHANGES IN VERSION 0.99.1
 
 NEW FEATURES
 
-    o The Installation and Introduction sections of the vignette have been updated.
+    o The 'Installation' and 'Introduction' sections of the vignette have been updated.
 
 
 CHANGES IN VERSION 0.99.0
@@ -35,7 +35,7 @@ CHANGES IN VERSION 0.0.4
 
 NEW FEATURES
 
-    o When intersection column present in the GOST object, the software uses the column to create the output for Cytoscape, without having to call gconvert(). The output is generated much more rapidly.
+    o When 'intersection' column present in the GOST object, the software uses the column to create the output for Cytoscape, without having to call gconvert() function. The output is generated much more rapidly.
 
 
 CHANGES IN VERSION 0.0.2
@@ -47,7 +47,7 @@ NEW FEATURES
 
 SIGNIFICANT USER-VISIBLE CHANGES
 
-    o The createNetwork() method has a new parameter `fileName` that enables the creation of a CX JSON file when Cytoscape is not running.
+    o The createNetwork() method has a new parameter 'fileName' that enables the creation of a CX JSON file when Cytoscape is not running.
 
 BUG FIXES
 
