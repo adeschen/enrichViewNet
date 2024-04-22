@@ -211,7 +211,7 @@ The following workflow gives an overview of the steps associated to the
 creation of an gene-term network loadable in *Cytoscape*.  
 
 ```{r graphListToGraph01, echo = FALSE, fig.align="left", fig.cap="From an enrichment list to a Cytoscape network", out.width = '100%'}
-knitr::include_graphics("FromListToGraph_v02.jpg")
+knitr::include_graphics("FromListToGraph_v03.jpg")
 ```
 
 
