@@ -148,8 +148,8 @@ with edges connecting overlapping genes. Thus, enriched terms with overlapping
 genes cluster together. This type of graphs facilitate the 
 identification of functional modules.
 
-```{r graphDemo02, echo=FALSE, fig.align="center", fig.cap="An enrichment map using significant Kegg terms. Edges connecting terms with overlapping genes.", out.width = '95%'}
-knitr::include_graphics("demo_KEGG_emap_v01.jpeg")
+```{r graphDemo02, echo=FALSE, fig.align="center", fig.cap="An enrichment map using significant Kegg terms where edges are connecting terms with overlapping genes.", out.width = '95%'}
+knitr::include_graphics("demo_KEGG_emap_v03.jpg")
 ```
 
 
@@ -210,7 +210,7 @@ highly recommended.
 The following workflow gives an overview of the steps associated to the 
 creation of an gene-term network loadable in *Cytoscape*.  
 
-```{r graphListToGraph01, echo = FALSE, fig.align="left", fig.cap="From an enrichment list to a Cytoscape network", out.width = '100%'}
+```{r graphListToGraph01, echo = FALSE, fig.align="left", fig.cap="From an enrichment list (A) to a Cytoscape network (B).", out.width = '100%'}
 knitr::include_graphics("FromListToGraph_v03.jpg")
 ```
 
