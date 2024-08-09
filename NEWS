@@ -1,3 +1,11 @@
+CHANGES IN VERSION 1.3.1
+-------------------------
+
+BUG FIXES
+
+    o The package uses the information about the organism when querying the gprofiler database.
+    
+
 CHANGES IN VERSION 1.1.2
 -------------------------
 
@@ -5,6 +13,7 @@ NEW FEATURES
 
     o The new function createEnrichMapMultiBasic() enables the creation of enrichment maps with groups from simple designs.
     o The new function createEnrichMapMultiComplex() enables the creation of enrichment maps with groups from complex designs. 
+
 SIGNIFICANT USER-VISIBLE CHANGE
 
     o The vignette contains new sections presenting the new functions createEnrichMapMultiBasic() and createEnrichMapMultiComplex().
