@@ -1,108 +1,38 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/articles/enrichViewNet.html</loc>
-  </url>
-  <url>
-    <loc>/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/createBasicEmap.html</loc>
-  </url>
-  <url>
-    <loc>/reference/createCXJSONForCytoscape.html</loc>
-  </url>
-  <url>
-    <loc>/reference/createEnrichMap.html</loc>
-  </url>
-  <url>
-    <loc>/reference/createEnrichMapMultiBasic.html</loc>
-  </url>
-  <url>
-    <loc>/reference/createEnrichMapMultiComplex.html</loc>
-  </url>
-  <url>
-    <loc>/reference/createMetaDataSectionCXJSON.html</loc>
-  </url>
-  <url>
-    <loc>/reference/createMultiEmap.html</loc>
-  </url>
-  <url>
-    <loc>/reference/createNetwork.html</loc>
-  </url>
-  <url>
-    <loc>/reference/createNetworkForCytoscape.html</loc>
-  </url>
-  <url>
-    <loc>/reference/demoGOST.html</loc>
-  </url>
-  <url>
-    <loc>/reference/enrichViewNet-package.html</loc>
-  </url>
-  <url>
-    <loc>/reference/extractInformationWhenIntersection.html</loc>
-  </url>
-  <url>
-    <loc>/reference/extractInformationWhenNoIntersection.html</loc>
-  </url>
-  <url>
-    <loc>/reference/extractNodesAndEdgesInformation.html</loc>
-  </url>
-  <url>
-    <loc>/reference/filterResults.html</loc>
-  </url>
-  <url>
-    <loc>/reference/formatInformationForCXJSON.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/isCytoscapeRunning.html</loc>
-  </url>
-  <url>
-    <loc>/reference/manageNameDuplicationInEmap.html</loc>
-  </url>
-  <url>
-    <loc>/reference/manageQueryDuplicationInEmap.html</loc>
-  </url>
-  <url>
-    <loc>/reference/parentalNapaVsDMSODEG.html</loc>
-  </url>
-  <url>
-    <loc>/reference/parentalNapaVsDMSOEnrichment.html</loc>
-  </url>
-  <url>
-    <loc>/reference/removeRootTerm.html</loc>
-  </url>
-  <url>
-    <loc>/reference/rosaNapaVsDMSODEG.html</loc>
-  </url>
-  <url>
-    <loc>/reference/rosaNapaVsDMSOEnrichment.html</loc>
-  </url>
-  <url>
-    <loc>/reference/validateCreateEnrichMapArguments.html</loc>
-  </url>
-  <url>
-    <loc>/reference/validateCreateEnrichMapMultiArguments.html</loc>
-  </url>
-  <url>
-    <loc>/reference/validateCreateEnrichMapMultiComplexArg.html</loc>
-  </url>
-  <url>
-    <loc>/reference/validateCreateEnrichMapSubSectionArguments.html</loc>
-  </url>
-  <url>
-    <loc>/reference/validateCreateNetworkArguments.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/articles/enrichViewNet.html</loc></url>
+<url><loc>/articles/index.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/reference/createBasicEmap.html</loc></url>
+<url><loc>/reference/createCXJSONForCytoscape.html</loc></url>
+<url><loc>/reference/createEnrichMap.html</loc></url>
+<url><loc>/reference/createEnrichMapMultiBasic.html</loc></url>
+<url><loc>/reference/createEnrichMapMultiComplex.html</loc></url>
+<url><loc>/reference/createMetaDataSectionCXJSON.html</loc></url>
+<url><loc>/reference/createMultiEmap.html</loc></url>
+<url><loc>/reference/createNetwork.html</loc></url>
+<url><loc>/reference/createNetworkForCytoscape.html</loc></url>
+<url><loc>/reference/demoGOST.html</loc></url>
+<url><loc>/reference/enrichViewNet-package.html</loc></url>
+<url><loc>/reference/extractInformationWhenIntersection.html</loc></url>
+<url><loc>/reference/extractInformationWhenNoIntersection.html</loc></url>
+<url><loc>/reference/extractNodesAndEdgesInformation.html</loc></url>
+<url><loc>/reference/filterResults.html</loc></url>
+<url><loc>/reference/formatInformationForCXJSON.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/isCytoscapeRunning.html</loc></url>
+<url><loc>/reference/manageNameDuplicationInEmap.html</loc></url>
+<url><loc>/reference/manageQueryDuplicationInEmap.html</loc></url>
+<url><loc>/reference/parentalNapaVsDMSODEG.html</loc></url>
+<url><loc>/reference/parentalNapaVsDMSOEnrichment.html</loc></url>
+<url><loc>/reference/removeRootTerm.html</loc></url>
+<url><loc>/reference/rosaNapaVsDMSODEG.html</loc></url>
+<url><loc>/reference/rosaNapaVsDMSOEnrichment.html</loc></url>
+<url><loc>/reference/validateCreateEnrichMapArguments.html</loc></url>
+<url><loc>/reference/validateCreateEnrichMapMultiArguments.html</loc></url>
+<url><loc>/reference/validateCreateEnrichMapMultiComplexArg.html</loc></url>
+<url><loc>/reference/validateCreateEnrichMapSubSectionArguments.html</loc></url>
+<url><loc>/reference/validateCreateNetworkArguments.html</loc></url>
 </urlset>
+
