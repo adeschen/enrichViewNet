@@ -451,7 +451,8 @@ extractInformationWhenNoIntersection <- function(gostResults, gostObject) {
     gostQuery <- gostResults[which(gostResults$query == query),]
     listTerm <- gostQuery[!duplicated(gostQuery$term_id), 
                                             c("term_id", "term_name")]
-    res <- gconvert(query=c(listTerm$term_id))
+    res <- gconvert(query=c(listTerm$term_id), 
+                    organism=gostObject$meta$query_metadata$organism)
     
     ## Create a data.frame linking gene and term
     resEdge <- do.call(rbind, lapply(seq_len(nrow(listTerm)),
