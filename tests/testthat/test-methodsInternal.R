@@ -354,7 +354,7 @@ test_that("extractInformationWhenNoIntersection() must return expected text", {
     mirnaDemo <- demoGOST
     
     mirnaDemo$meta$query_metadata$queries[[1]] <- 
-        mirnaDemo$meta$query_metadata$queries[[1]][1:4]
+        mirnaDemo$meta$query_metadata$queries[[1]][1:3]
     
     mirnaData <- demoGOST$result[demoGOST$result$source == "MIRNA", ]
     
@@ -365,32 +365,36 @@ test_that("extractInformationWhenNoIntersection() must return expected text", {
     expected <- list()
     
     expected[["geneNodes"]] <- data.frame("id"=c("ENSG00000059728", 
-                    "ENSG00000077616", "ENSG00000051108"),
-                    group=rep("GENE", 3), 
-                    alias=c("MXD1", "NAALAD2", "HERPUD1"),
+                    "ENSG00000077616", "ENSG00000100292", "ENSG00000107968", 
+                    "ENSG00000108551", "ENSG00000113369", "ENSG00000051108", 
+                    "ENSG00000087074", "ENSG00000105327"),
+                    group=rep("GENE", 9), 
+                    alias=c("MXD1", "NAALAD2", "HMOX1", "MAP3K8", "RASD1", 
+                            "ARRDC3", "HERPUD1", "PPP1R15A", "BBC3"),
                     check.names=FALSE, stringsAsFactors=FALSE)
     
-    expected[["termNode"]] <- data.frame(id=c("MIRNA:hsa-miR-335-5p", 
+    expected[["termNodes"]] <- data.frame(id=c("MIRNA:hsa-miR-335-5p", 
                     "MIRNA:hsa-miR-3180-5p", "MIRNA:hsa-miR-759"),
-                    target=c("ENSG00000059728", "ENSG00000077616", 
-                        "ENSG00000051108", "ENSG00000059728", "ENSG00000051108", 
-                        "ENSG00000059728"),
-                    interaction=rep("contains", 6),
+                    group=rep("TERM", 3), 
+                    alias=c("hsa-miR-335-5p", 
+                             "hsa-miR-3180-5p", "hsa-miR-759"),
                     check.names=FALSE, stringsAsFactors=FALSE)
     
     expected[["edges"]] <- data.frame(
-        "source"=c("MIRNA:hsa-miR-335-5p", "MIRNA:hsa-miR-335-5p", 
-            "MIRNA:hsa-miR-335-5p", "MIRNA:hsa-miR-3180-5p", 
-            "MIRNA:hsa-miR-759", "MIRNA:hsa-miR-759"),
-        target=c("ENSG00000059728", "ENSG00000077616", "ENSG00000051108", 
-                    "ENSG00000059728", "ENSG00000051108", "ENSG00000059728"),
-        interaction=rep("contains", 6),
+        "source"=c(rep("MIRNA:hsa-miR-335-5p", 7),  
+                    rep("MIRNA:hsa-miR-3180-5p", 3), 
+                    rep("MIRNA:hsa-miR-759", 3)), 
+        target=c("ENSG00000059728", "ENSG00000077616", "ENSG00000100292", 
+                    "ENSG00000107968", "ENSG00000108551", "ENSG00000113369",
+                    "ENSG00000051108", "ENSG00000087074",
+                    "ENSG00000100292", "ENSG00000059728", "ENSG00000051108",
+                    "ENSG00000059728", "ENSG00000105327"),
+        interaction=rep("contains", 13),
         check.names=FALSE, stringsAsFactors=FALSE)
         
-    expect_equal(result$nodes, expected$nodes)
+    expect_equal(result$geneNodes, expected$geneNodes)
+    expect_equal(result$termNodes, expected$termNodes)
     expect_equal(result$edges, expected$edges)
-    expect_equal(result$nodeAttributes, expected$nodeAttributes)
-    expect_equal(result$edgeAttributes, expected$edgeAttributes)
 })
 
 
@@ -413,27 +417,65 @@ test_that("createCXJSONForCytoscape() must return expected text", {
         nodeEdgeInfo=info, title = "MIRNA")
     
     expected <- paste0(
-        "[{\"metaData\":[{\"name\":\"nodes\",\"version\":\"1.0\"},",
-        "{\"name\":\"edges\",\"version\":\"1.0\"},{\"name\":\"edgeAttributes\",\"version\":\"1.0\"},",
+        "[{\"metaData\":[{\"name\":\"nodes\",\"version\":\"1.0\"},", 
+        "{\"name\":\"edges\",\"version\":\"1.0\"},{\"name\":\"edgeAttributes\",",
+        "\"version\":\"1.0\"},{\"name\":\"nodeAttributes\",\"version\":\"1.0\"},", 
+        "{\"name\":\"cyHiddenAttributes\",\"version\":\"1.0\"},", 
+        "{\"name\":\"cyNetworkRelations\",\"version\":\"1.0\"},",
+        "{\"name\":\"cyGroups\",\"version\":\"1.0\"},{\"name\":\"networkAttributes\",\"version\":\"1.0\"},",
+        "{\"name\":\"cyTableColumn\",\"version\":\"1.0\"},{\"name\":\"cySubNetworks\",\"version\":\"1.0\"}]},",
+        "{\"networkAttributes\":[{\"n\":\"name\",\"v\":\"MIRNA\"}]},{\"nodes\":[{\"@id\":1,\"n\":\"ENSG00000059728\"},",
+        "{\"@id\":2,\"n\":\"ENSG00000077616\"},{\"@id\":3,\"n\":\"ENSG00000100292\"},{\"@id\":4,\"n\":\"ENSG00000107968\"},", 
+        "{\"@id\":5,\"n\":\"ENSG00000108551\"},{\"@id\":6,\"n\":\"ENSG00000113369\"},{\"@id\":7,\"n\":\"ENSG00000051108\"},", 
+        "{\"@id\":8,\"n\":\"ENSG00000087074\"},{\"@id\":9,\"n\":\"ENSG00000105327\"},{\"@id\":10,\"n\":\"MIRNA:hsa-miR-335-5p\"},",
+        "{\"@id\":11,\"n\":\"MIRNA:hsa-miR-3180-5p\"},{\"@id\":12,\"n\":\"MIRNA:hsa-miR-759\"}]},",
+        "{\"edges\":[{\"@id\":13,\"s\":11,\"t\":7,\"i\":\"contains\"},{\"@id\":14,\"s\":11,\"t\":7,\"i\":\"contains\"},",
+        "{\"@id\":15,\"s\":11,\"t\":1,\"i\":\"contains\"},{\"@id\":16,\"s\":10,\"t\":1,\"i\":\"contains\"},",
+        "{\"@id\":17,\"s\":10,\"t\":1,\"i\":\"contains\"},{\"@id\":18,\"s\":10,\"t\":2,\"i\":\"contains\"},",
+        "{\"@id\":19,\"s\":10,\"t\":8,\"i\":\"contains\"},{\"@id\":20,\"s\":10,\"t\":3,\"i\":\"contains\"},",
+        "{\"@id\":21,\"s\":10,\"t\":3,\"i\":\"contains\"},{\"@id\":22,\"s\":10,\"t\":9,\"i\":\"contains\"},",
+        "{\"@id\":23,\"s\":12,\"t\":4,\"i\":\"contains\"},{\"@id\":24,\"s\":12,\"t\":5,\"i\":\"contains\"},",
+        "{\"@id\":25,\"s\":12,\"t\":6,\"i\":\"contains\"}]},{\"nodeAttributes\":[{\"po\":1,\"n\":\"alias\",\"v\":\"MXD1\"},",
+        "{\"po\":2,\"n\":\"alias\",\"v\":\"NAALAD2\"},{\"po\":3,\"n\":\"alias\",\"v\":\"HMOX1\"},",
+        "{\"po\":4,\"n\":\"alias\",\"v\":\"MAP3K8\"},{\"po\":5,\"n\":\"alias\",\"v\":\"RASD1\"},",
+        "{\"po\":6,\"n\":\"alias\",\"v\":\"ARRDC3\"},{\"po\":7,\"n\":\"alias\",\"v\":\"HERPUD1\"},",
+        "{\"po\":8,\"n\":\"alias\",\"v\":\"PPP1R15A\"},{\"po\":9,\"n\":\"alias\",\"v\":\"BBC3\"},",
+        "{\"po\":1,\"n\":\"group\",\"v\":\"GENE\"},{\"po\":2,\"n\":\"group\",\"v\":\"GENE\"},{\"po\":3,\"n\":\"group\",\"v\":\"GENE\"},",
+        "{\"po\":4,\"n\":\"group\",\"v\":\"GENE\"},{\"po\":5,\"n\":\"group\",\"v\":\"GENE\"},{\"po\":6,\"n\":\"group\",\"v\":\"GENE\"},",
+        "{\"po\":7,\"n\":\"group\",\"v\":\"GENE\"},{\"po\":8,\"n\":\"group\",\"v\":\"GENE\"},{\"po\":9,\"n\":\"group\",\"v\":\"GENE\"},",
+        "{\"po\":10,\"n\":\"alias\",\"v\":\"hsa-miR-335-5p\"},{\"po\":11,\"n\":\"alias\",\"v\":\"hsa-miR-3180-5p\"},",
+        "{\"po\":12,\"n\":\"alias\",\"v\":\"hsa-miR-759\"},{\"po\":10,\"n\":\"group\",\"v\":\"TERM\"},",
+        "{\"po\":11,\"n\":\"group\",\"v\":\"TERM\"},{\"po\":12,\"n\":\"group\",\"v\":\"TERM\"}]},",
+        "{\"edgeAttributes\":[{\"po\":13,\"n\":\"name\",\"v\":\"MIRNA:hsa-miR-335-5p (contains) ENSG00000059728\"},",
+        "{\"po\":14,\"n\":\"name\",\"v\":\"MIRNA:hsa-miR-335-5p (contains) ENSG00000077616\"},",
+        "{\"po\":15,\"n\":\"name\",\"v\":\"MIRNA:hsa-miR-335-5p (contains) ENSG00000100292\"},",
+        "{\"po\":16,\"n\":\"name\",\"v\":\"MIRNA:hsa-miR-335-5p (contains) ENSG00000107968\"},",
+        "{\"po\":17,\"n\":\"name\",\"v\":\"MIRNA:hsa-miR-335-5p (contains) ENSG00000108551\"},",
+        "{\"po\":18,\"n\":\"name\",\"v\":\"MIRNA:hsa-miR-335-5p (contains) ENSG00000113369\"},",
+        "{\"po\":19,\"n\":\"name\",\"v\":\"MIRNA:hsa-miR-335-5p (contains) ENSG00000051108\"},",
+        "{\"po\":20,\"n\":\"name\",\"v\":\"MIRNA:hsa-miR-3180-5p (contains) ENSG00000087074\"},",
+        "{\"po\":21,\"n\":\"name\",\"v\":\"MIRNA:hsa-miR-3180-5p (contains) ENSG00000100292\"},",
+        "{\"po\":22,\"n\":\"name\",\"v\":\"MIRNA:hsa-miR-3180-5p (contains) ENSG00000059728\"},",
+        "{\"po\":23,\"n\":\"name\",\"v\":\"MIRNA:hsa-miR-759 (contains) ENSG00000051108\"},",
+        "{\"po\":24,\"n\":\"name\",\"v\":\"MIRNA:hsa-miR-759 (contains) ENSG00000059728\"},",
+        "{\"po\":25,\"n\":\"name\",\"v\":\"MIRNA:hsa-miR-759 (contains) ENSG00000105327\"},{\"po\":13,\"n\":\"source\",\"v\":\"MIRNA:hsa-miR-335-5p\"},",
+        "{\"po\":14,\"n\":\"source\",\"v\":\"MIRNA:hsa-miR-335-5p\"},{\"po\":15,\"n\":\"source\",\"v\":\"MIRNA:hsa-miR-335-5p\"},",
+        "{\"po\":16,\"n\":\"source\",\"v\":\"MIRNA:hsa-miR-335-5p\"},{\"po\":17,\"n\":\"source\",\"v\":\"MIRNA:hsa-miR-335-5p\"},",
+        "{\"po\":18,\"n\":\"source\",\"v\":\"MIRNA:hsa-miR-335-5p\"},{\"po\":19,\"n\":\"source\",\"v\":\"MIRNA:hsa-miR-335-5p\"},",
+        "{\"po\":20,\"n\":\"source\",\"v\":\"MIRNA:hsa-miR-3180-5p\"},{\"po\":21,\"n\":\"source\",\"v\":\"MIRNA:hsa-miR-3180-5p\"},",
+        "{\"po\":22,\"n\":\"source\",\"v\":\"MIRNA:hsa-miR-3180-5p\"},{\"po\":23,\"n\":\"source\",\"v\":\"MIRNA:hsa-miR-759\"},",
+        "{\"po\":24,\"n\":\"source\",\"v\":\"MIRNA:hsa-miR-759\"},{\"po\":25,\"n\":\"source\",\"v\":\"MIRNA:hsa-miR-759\"},",
+        "{\"po\":13,\"n\":\"target\",\"v\":\"ENSG00000059728\"},{\"po\":14,\"n\":\"target\",\"v\":\"ENSG00000077616\"},",
+        "{\"po\":15,\"n\":\"target\",\"v\":\"ENSG00000100292\"},{\"po\":16,\"n\":\"target\",\"v\":\"ENSG00000107968\"},",
+        "{\"po\":17,\"n\":\"target\",\"v\":\"ENSG00000108551\"},{\"po\":18,\"n\":\"target\",\"v\":\"ENSG00000113369\"},",
+        "{\"po\":19,\"n\":\"target\",\"v\":\"ENSG00000051108\"},{\"po\":20,\"n\":\"target\",\"v\":\"ENSG00000087074\"},", 
+        "{\"po\":21,\"n\":\"target\",\"v\":\"ENSG00000100292\"},{\"po\":22,\"n\":\"target\",\"v\":\"ENSG00000059728\"},", 
+        "{\"po\":23,\"n\":\"target\",\"v\":\"ENSG00000051108\"},{\"po\":24,\"n\":\"target\",\"v\":\"ENSG00000059728\"},", 
+        "{\"po\":25,\"n\":\"target\",\"v\":\"ENSG00000105327\"}]},{\"cyHiddenAttributes\":[{\"n\":\"layoutAlgorithm\",\"y\":\"yFiles Circular Layout\"}]},",
+        "{\"metaData\":[{\"name\":\"nodes\",\"version\":\"1.0\"},{\"name\":\"edges\",\"version\":\"1.0\"},{\"name\":\"edgeAttributes\",\"version\":\"1.0\"},",
         "{\"name\":\"nodeAttributes\",\"version\":\"1.0\"},{\"name\":\"cyHiddenAttributes\",\"version\":\"1.0\"},",
         "{\"name\":\"cyNetworkRelations\",\"version\":\"1.0\"},{\"name\":\"cyGroups\",\"version\":\"1.0\"},",
         "{\"name\":\"networkAttributes\",\"version\":\"1.0\"},{\"name\":\"cyTableColumn\",\"version\":\"1.0\"},",
-        "{\"name\":\"cySubNetworks\",\"version\":\"1.0\"}]},{\"networkAttributes\":[{\"n\":\"name\",\"v\":\"MIRNA\"}]},",
-        "{\"nodes\":[{\"@id\":1,\"n\":\"ENSG00000051108\"},{\"@id\":2,\"n\":\"MIRNA:hsa-miR-335-5p\"},{\"@id\":3,\"n\":\"MIRNA:hsa-miR-759\"}]},",
-        "{\"edges\":[{\"@id\":4,\"s\":2,\"t\":1,\"i\":\"contains\"},{\"@id\":5,\"s\":3,\"t\":1,\"i\":\"contains\"}]},",
-        "{\"nodeAttributes\":[{\"po\":1,\"n\":\"alias\",\"v\":\"HERPUD1\"},{\"po\":1,\"n\":\"group\",\"v\":\"GENE\"},",
-        "{\"po\":2,\"n\":\"alias\",\"v\":\"hsa-miR-335-5p\"},{\"po\":3,\"n\":\"alias\",\"v\":\"hsa-miR-759\"},",
-        "{\"po\":2,\"n\":\"group\",\"v\":\"TERM\"},{\"po\":3,\"n\":\"group\",\"v\":\"TERM\"}]},",
-        "{\"edgeAttributes\":[{\"po\":4,\"n\":\"name\",\"v\":\"MIRNA:hsa-miR-335-5p (contains) ENSG00000051108\"},",
-        "{\"po\":5,\"n\":\"name\",\"v\":\"MIRNA:hsa-miR-759 (contains) ENSG00000051108\"},",
-        "{\"po\":4,\"n\":\"source\",\"v\":\"MIRNA:hsa-miR-335-5p\"},{\"po\":5,\"n\":\"source\",\"v\":\"MIRNA:hsa-miR-759\"},",
-        "{\"po\":4,\"n\":\"target\",\"v\":\"ENSG00000051108\"},{\"po\":5,\"n\":\"target\",\"v\":\"ENSG00000051108\"}]},",
-        "{\"cyHiddenAttributes\":[{\"n\":\"layoutAlgorithm\",\"y\":\"yFiles Circular Layout\"}]},",
-        "{\"metaData\":[{\"name\":\"nodes\",\"version\":\"1.0\"},{\"name\":\"edges\",\"version\":\"1.0\"},",
-        "{\"name\":\"edgeAttributes\",\"version\":\"1.0\"},{\"name\":\"nodeAttributes\",\"version\":\"1.0\"},",
-        "{\"name\":\"cyHiddenAttributes\",\"version\":\"1.0\"},{\"name\":\"cyNetworkRelations\",\"version\":\"1.0\"},",
-        "{\"name\":\"cyGroups\",\"version\":\"1.0\"},{\"name\":\"networkAttributes\",\"version\":\"1.0\"},",
-        "{\"name\":\"cyTableColumn\",\"version\":\"1.0\"},",
         "{\"name\":\"cySubNetworks\",\"version\":\"1.0\"}]},{\"status\":[{\"error\":\"\",\"success\":true}]}]")
     
     expect_equal(result, expected)

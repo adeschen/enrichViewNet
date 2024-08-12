@@ -445,7 +445,8 @@ extractInformationWhenNoIntersection <- function(gostResults, gostObject) {
     
     query <- listQuery[1]
     
-    listGenes <- unique(gostObject$meta$query_metadata$queries[[query]])
+    ## List of Ensembl genes
+    listGenes <- unique(gostObject$meta$genes_metadata$query[[query]]$ensgs)
     
     ## Extract information about the enriched terms from database
     gostQuery <- gostResults[which(gostResults$query == query),]
