@@ -4,7 +4,7 @@
 #' 
 #' @description User selected enrichment terms are used to create an enrichment 
 #' map. The selection of the term can by specifying by the 
-#' source of the terms (GO:MF, REAC, TF, etc...) or by listing the selected 
+#' source of the terms (GO:MF, REAC, TF, etc.) or by listing the selected 
 #' term IDs. The map is only generated when there is at least on 
 #' significant term to graph.
 #' 
@@ -54,6 +54,9 @@
 #' @param force a \code{logical} indicating if the repulsion between 
 #' overlapping text labels should be forced. Default: \code{TRUE}.
 #'
+#' @param ... additional arguments that will be pass to the 
+#' \code{\link[enrichplot]{emapplot}} function. 
+#' 
 #' @return a \code{ggplot} object which is the enrichment map for enrichment 
 #' results.
 #' 
@@ -80,7 +83,7 @@ createEnrichMap <- function(gostObject, query, source=c("TERM_ID", "GO:MF",
         "GO:CC", "GO:BP", "KEGG", "REAC", "TF", "MIRNA", "HPA", "CORUM", 
         "HP", "WP"), termIDs=NULL, removeRoot=TRUE,  
         showCategory=30L, groupCategory=FALSE, categoryLabel=1,
-        categoryNode=1, line=1, force=TRUE) {
+        categoryNode=1, line=1, force=TRUE, ...) {
     
     ## Validate source is among the possible choices
     source <- match_arg(source, ignore_case=TRUE)
@@ -125,7 +128,8 @@ createEnrichMap <- function(gostObject, query, source=c("TERM_ID", "GO:MF",
                 backgroundGenes=backgroundGenes, 
                 showCategory=showCategory, categoryLabel=categoryLabel,
                 groupCategory=groupCategory, categoryNode=categoryNode, 
-                significantMethod=significantMethod, line=line, force=force)
+                significantMethod=significantMethod, line=line, force=force, 
+                ...)
     
     return(emap)
 }
@@ -136,7 +140,7 @@ createEnrichMap <- function(gostObject, query, source=c("TERM_ID", "GO:MF",
 #' 
 #' @description User selected enrichment terms are used to create an enrichment 
 #' map. The selection of the term can by specifying by the 
-#' source of the terms (GO:MF, REAC, TF, etc...) or by listing the selected 
+#' source of the terms (GO:MF, REAC, TF, etc.) or by listing the selected 
 #' term IDs. The map is only generated when there is at least on 
 #' significant term to graph.
 #' 
@@ -189,6 +193,9 @@ createEnrichMap <- function(gostObject, query, source=c("TERM_ID", "GO:MF",
 #' @param force a \code{logical} indicating if the repulsion between 
 #' overlapping text labels should be forced. Default: \code{TRUE}.
 #' 
+#' @param ... additional arguments that will be pass to the 
+#' \code{\link[enrichplot]{emapplot}} function. 
+#'
 #' @return a \code{ggplot} object which is the enrichment map for enrichment 
 #' results.
 #' 
@@ -219,7 +226,7 @@ createEnrichMapMultiBasic <- function(gostObjectList, queryList,
     source=c("TERM_ID", "GO:MF", "GO:CC", "GO:BP", "KEGG", "REAC", "TF", 
     "MIRNA", "HPA", "CORUM", "HP", "WP"), termIDs=NULL, removeRoot=TRUE, 
     showCategory=30L, groupCategory=FALSE, categoryLabel=1, 
-    categoryNode=1, line=1, force=TRUE) {
+    categoryNode=1, line=1, force=TRUE, ...) {
     
     ## Validate source is among the possible choices
     source <- match_arg(source, ignore_case=TRUE)
@@ -266,7 +273,7 @@ createEnrichMapMultiBasic <- function(gostObjectList, queryList,
     emap <- createMultiEmap(gostResultsList=gostResultsList, 
                 queryList=queryList, showCategory=showCategory, 
                 categoryLabel=categoryLabel, groupCategory=groupCategory, 
-                categoryNode=categoryNode, line=line, force=force)
+                categoryNode=categoryNode, line=line, force=force, ...)
     
     return(emap)
 }
@@ -278,7 +285,7 @@ createEnrichMapMultiBasic <- function(gostObjectList, queryList,
 #' 
 #' @description User selected enrichment terms are used to create an enrichment 
 #' map. The selection of the term can by specifying by the 
-#' source of the terms (GO:MF, REAC, TF, etc...) or by listing the selected 
+#' source of the terms (GO:MF, REAC, TF, etc.) or by listing the selected 
 #' term IDs. The map is only generated when there is at least on 
 #' significant term to graph.
 #' 
@@ -337,6 +344,9 @@ createEnrichMapMultiBasic <- function(gostObjectList, queryList,
 #' @param force a \code{logical} indicating if the repulsion between 
 #' overlapping text labels should be forced. Default: \code{TRUE}.
 #' 
+#' @param ... additional arguments that will be pass to the 
+#' \code{\link[enrichplot]{emapplot}} function. 
+#'
 #' @return a \code{ggplot} object which is the enrichment map for enrichment 
 #' results.
 #' 
@@ -380,7 +390,7 @@ createEnrichMapMultiBasic <- function(gostObjectList, queryList,
 #' @export
 createEnrichMapMultiComplex <- function(gostObjectList, queryInfo,  
     showCategory=30L, groupCategory=FALSE, categoryLabel=1, 
-    categoryNode=1, line=1, force=TRUE) {
+    categoryNode=1, line=1, force=TRUE, ...) {
     
     ## Validate parameters
     validateCreateEnrichMapMultiComplexArg(gostObjectList=gostObjectList, 
@@ -431,7 +441,7 @@ createEnrichMapMultiComplex <- function(gostObjectList, queryInfo,
     emap <- createMultiEmap(gostResultsList=gostResultsList, 
                 queryList=queryInfo$groupName, showCategory=showCategory, 
                 categoryLabel=categoryLabel, groupCategory=groupCategory, 
-                categoryNode=categoryNode, line=line, force=force)
+                categoryNode=categoryNode, line=line, force=force, ...)
     
     return(emap)
 }

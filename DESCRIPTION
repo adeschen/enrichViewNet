@@ -52,4 +52,4 @@ biocViews: BiologicalQuestion,
 VignetteBuilder: knitr
 URL: https://github.com/adeschen/enrichViewNet, https://adeschen.github.io/enrichViewNet/
 BugReports: https://github.com/adeschen/enrichViewNet/issues
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2

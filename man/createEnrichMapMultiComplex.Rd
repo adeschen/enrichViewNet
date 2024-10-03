@@ -15,7 +15,8 @@ createEnrichMapMultiComplex(
   categoryLabel = 1,
   categoryNode = 1,
   line = 1,
-  force = TRUE
+  force = TRUE,
+  ...
 )
 }
 \arguments{
@@ -73,6 +74,9 @@ width. Default: \code{1}.}
 
 \item{force}{a \code{logical} indicating if the repulsion between 
 overlapping text labels should be forced. Default: \code{TRUE}.}
+
+\item{...}{additional arguments that will be pass to the 
+\code{\link[enrichplot]{emapplot}} function.}
 }
 \value{
 a \code{ggplot} object which is the enrichment map for enrichment 
@@ -81,7 +85,7 @@ results.
 \description{
 User selected enrichment terms are used to create an enrichment 
 map. The selection of the term can by specifying by the 
-source of the terms (GO:MF, REAC, TF, etc...) or by listing the selected 
+source of the terms (GO:MF, REAC, TF, etc.) or by listing the selected 
 term IDs. The map is only generated when there is at least on 
 significant term to graph.
 }

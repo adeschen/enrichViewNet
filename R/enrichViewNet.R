@@ -11,7 +11,6 @@
 #' In the current version, only genes present in at least one gene dataset 
 #' are retained.
 #'
-#' @docType package
 #'
 #' @name enrichViewNet-package
 #'
@@ -33,7 +32,7 @@
 #' 
 #' @encoding UTF-8
 #' @keywords package
-NULL
+"_PACKAGE"
 
 
 #' The result of a functional enrichment analysis done with \code{gprofiler2} 

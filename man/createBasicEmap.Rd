@@ -14,7 +14,8 @@ createBasicEmap(
   categoryNode,
   significantMethod,
   line,
-  force
+  force,
+  ...
 )
 }
 \arguments{
@@ -47,6 +48,9 @@ width.}
 
 \item{force}{a \code{logical} indicating if the repulsion between 
 overlapping text labels should be forced.}
+
+\item{...}{additional arguments that will be pass to the 
+\code{\link[enrichplot]{emapplot}} function.}
 }
 \value{
 a \code{ggplot} object representing the enrichment map.

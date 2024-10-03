@@ -575,6 +575,9 @@ validateCreateEnrichMapSubSectionArguments <- function(showCategory,
 #' @param force a \code{logical} indicating if the repulsion between 
 #' overlapping text labels should be forced. 
 #' 
+#' @param ... additional arguments that will be pass to the 
+#' \code{\link[enrichplot]{emapplot}} function. 
+#'
 #' @return a \code{ggplot} object representing the enrichment map.
 #' 
 #' @examples
@@ -614,7 +617,7 @@ validateCreateEnrichMapSubSectionArguments <- function(showCategory,
 #' @keywords internal
 createBasicEmap <- function(gostResults, backgroundGenes, 
         showCategory, groupCategory, categoryLabel, categoryNode, 
-        significantMethod, line, force) {
+        significantMethod, line, force, ...) {
     
     ## Extract gene list for each term
     geneSets <- lapply(seq_len(nrow(gostResults)), FUN=function(x, gostData) {
@@ -658,7 +661,7 @@ createBasicEmap <- function(gostResults, backgroundGenes,
     graphEmap <- emapplot(x=comp, showCategory=showCategory,
         cluster.params=list(cluster=groupCategory),
         cex.params=list(category_node=categoryNode, line=line, 
-            category_label=categoryLabel), force=force)
+            category_label=categoryLabel), force=force, ...)
     
     return(graphEmap)
 }
@@ -698,6 +701,9 @@ createBasicEmap <- function(gostResults, backgroundGenes,
 #' @param force a \code{logical} indicating if the repulsion between 
 #' overlapping text labels should be forced.
 #' 
+#' @param ... additional arguments that will be pass to the 
+#' \code{\link[enrichplot]{emapplot}} function. 
+#'
 #' @return a \code{ggplot} object representing the enrichment map with 
 #' different colors for each group of enrichment results.
 #' 
@@ -731,7 +737,7 @@ createBasicEmap <- function(gostResults, backgroundGenes,
 #' @importClassesFrom DOSE compareClusterResult
 #' @keywords internal
 createMultiEmap <- function(gostResultsList, queryList, showCategory, 
-    groupCategory, categoryLabel, categoryNode, line, force) {
+    groupCategory, categoryLabel, categoryNode, line, force, ...) {
     
     resF <- list()
     geneClusters <- list()
@@ -785,7 +791,7 @@ createMultiEmap <- function(gostResultsList, queryList, showCategory,
         cluster.params = list(cluster = groupCategory),
         cex.params=list(category_node=categoryNode, line=line,
                             category_label=categoryLabel),
-        force=force)
+        force=force, ...)
     
     return(graphEmap)
 }

@@ -62,7 +62,7 @@ User selected enrichment terms are used to create a Cytoscape
 network where the selected terms and the genes that where part of the 
 enrichment analysis are all represented as nodes. Edges are linking the 
 genes to their terms. The selection of the term can by specifying  the 
-source of the terms (GO:MF, REAC, TF, etc...) or by listing the selected 
+source of the terms (GO:MF, REAC, TF, etc.) or by listing the selected 
 term IDs. The network is only generated when there is at least on 
 significant term to graph. When the enrichment analysis contains more than 
 one query, only one query can be selected to generate the network.
