@@ -43,7 +43,8 @@ Suggests:
     knitr,
     rmarkdown,
     ggplot2,
-    testthat
+    testthat,
+    magick
 biocViews: BiologicalQuestion, 
     Software,
     Network,
