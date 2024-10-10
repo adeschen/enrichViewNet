@@ -529,9 +529,10 @@ data(parentalNapaVsDMSOEnrichment)
 set.seed(121)
 
 ## Create network for all Kegg terms
+## All terms will be shown even if there is overlapping
 createEnrichMap(gostObject=parentalNapaVsDMSOEnrichment, 
                     query="parental_napa_vs_DMSO", 
-                    source="KEGG")
+                    source="KEGG", max.overlaps=Inf)
     
 ```
 
@@ -600,7 +601,7 @@ set.seed(91)
 ## Create network for all Kegg terms
 createEnrichMap(gostObject=parentalNapaVsDMSOEnrichment, 
                     query="parental_napa_vs_DMSO", 
-                    source="KEGG")
+                    source="KEGG", max.overlaps=Inf)
     
 ```
 
@@ -625,7 +626,7 @@ set.seed(91)
 ## Create network for all Kegg terms
 graphKegg <- createEnrichMap(gostObject=parentalNapaVsDMSOEnrichment, 
                     query="parental_napa_vs_DMSO", 
-                    source="KEGG")
+                    source="KEGG", max.overlaps=Inf)
 
 ## Nodes with lowest p-values will be in orange and highest p-values in black
 ## The title of the legend is also modified
