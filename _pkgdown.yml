@@ -1,5 +1,6 @@
 template:
   bootstrap: 5
+  
 output:
   plots:
       style: Normal
@@ -9,3 +10,5 @@ output:
         pre: 'Figure '
         sep: ': '
     
+development:
+  remote_only: true
