@@ -1,3 +1,5 @@
+template:
+  bootstrap: 5
 output:
   plots:
       style: Normal
