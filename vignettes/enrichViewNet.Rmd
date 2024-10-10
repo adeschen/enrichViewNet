@@ -574,7 +574,7 @@ set.seed(222)
 ## Create network for all selected terms
 createEnrichMap(gostObject=parentalNapaVsDMSOEnrichment, 
                     query="parental_napa_vs_DMSO", 
-                    source="TERM_ID", termIDs=termID)
+                    source="TERM_ID", termIDs=termID, max.overlaps=Inf)
     
 ```
 
@@ -834,7 +834,7 @@ queryInfo <- data.frame(queryName=c(query_01, query_01),
 ## Enrichment map where the groups are the KEGG and Reactome results for the 
 ## same experiment
 createEnrichMapMultiComplex(gostObjectList=gostObjectList, 
-        queryInfo=queryInfo)
+        queryInfo=queryInfo, max.overlaps=Inf)
     
 ```
 
@@ -915,7 +915,7 @@ queryInfo <- data.frame(queryName=c(query_rosa, query_parental,
 
 ## Enrichment map where the groups TODO
 createEnrichMapMultiComplex(gostObjectList=gostObjectList, 
-        queryInfo=queryInfo)
+        queryInfo=queryInfo, max.overlaps=Inf)
 
 ```
 
