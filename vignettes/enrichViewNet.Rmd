@@ -25,6 +25,9 @@ suppressPackageStartupMessages({
     library(ggplot2)
 })
 
+## Set it globally
+options(ggrepel.max.overlaps = Inf)
+
 set.seed(1214)
 ```
 
