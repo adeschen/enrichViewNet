@@ -697,7 +697,7 @@ queryList <- list(query_01, query_02)
 ## Enrichment map where the groups are the KEGG results for the 2 different
 ## experiments
 createEnrichMapMultiBasic(gostObjectList=gostObjectList,
-    queryList=queryList, source="KEGG", removeRoot=TRUE)
+    queryList=queryList, source="KEGG", removeRoot=TRUE, max.overlaps=Inf)
     
 
 ```
@@ -726,7 +726,7 @@ set.seed(5)
 ## Enrichment map where the groups are the KEGG results for the 2 different
 ## experiments
 createEnrichMapMultiBasic(gostObjectList=gostObjectList,
-    queryList=queryList, source="KEGG", removeRoot=TRUE)
+    queryList=queryList, source="KEGG", removeRoot=TRUE, max.overlaps=Inf)
     
 ```
 
@@ -751,7 +751,7 @@ set.seed(5)
 ## Enrichment map where the groups are the KEGG results for the 2 different
 ## experiments
 createEnrichMapMultiBasic(gostObjectList=gostObjectList,
-    queryList=queryList, source="KEGG", removeRoot=TRUE) +
+    queryList=queryList, source="KEGG", removeRoot=TRUE, max.overlaps=Inf) +
         scale_fill_manual(name="Groups",
                 breaks = queryList,
                 values = c("cyan4", "bisque3"),
