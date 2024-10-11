@@ -1,14 +1,4 @@
+url: ~
 template:
   bootstrap: 5
-  
-output:
-  plots:
-      style: Normal
-      align: center
-      caption:
-        style: Image Caption
-        pre: 'Figure '
-        sep: ': '
-    
-development:
-  remote_only: true
+
