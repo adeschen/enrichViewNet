@@ -535,7 +535,7 @@ set.seed(121)
 ## All terms will be shown even if there is overlapping
 createEnrichMap(gostObject=parentalNapaVsDMSOEnrichment, 
                     query="parental_napa_vs_DMSO", 
-                    source="KEGG", max.overlaps=Inf)
+                    source="KEGG")
     
 ```
 
@@ -577,7 +577,7 @@ set.seed(222)
 ## Create network for all selected terms
 createEnrichMap(gostObject=parentalNapaVsDMSOEnrichment, 
                     query="parental_napa_vs_DMSO", 
-                    source="TERM_ID", termIDs=termID, max.overlaps=Inf)
+                    source="TERM_ID", termIDs=termID)
     
 ```
 
@@ -604,7 +604,7 @@ set.seed(91)
 ## Create network for all Kegg terms
 createEnrichMap(gostObject=parentalNapaVsDMSOEnrichment, 
                     query="parental_napa_vs_DMSO", 
-                    source="KEGG", max.overlaps=Inf)
+                    source="KEGG")
     
 ```
 
@@ -629,7 +629,7 @@ set.seed(91)
 ## Create network for all Kegg terms
 graphKegg <- createEnrichMap(gostObject=parentalNapaVsDMSOEnrichment, 
                     query="parental_napa_vs_DMSO", 
-                    source="KEGG", max.overlaps=Inf)
+                    source="KEGG")
 
 ## Nodes with lowest p-values will be in orange and highest p-values in black
 ## The title of the legend is also modified
@@ -700,7 +700,7 @@ queryList <- list(query_01, query_02)
 ## Enrichment map where the groups are the KEGG results for the 2 different
 ## experiments
 createEnrichMapMultiBasic(gostObjectList=gostObjectList,
-    queryList=queryList, source="KEGG", removeRoot=TRUE, max.overlaps=Inf)
+    queryList=queryList, source="KEGG", removeRoot=TRUE)
     
 
 ```
@@ -729,7 +729,7 @@ set.seed(5)
 ## Enrichment map where the groups are the KEGG results for the 2 different
 ## experiments
 createEnrichMapMultiBasic(gostObjectList=gostObjectList,
-    queryList=queryList, source="KEGG", removeRoot=TRUE, max.overlaps=Inf)
+    queryList=queryList, source="KEGG", removeRoot=TRUE)
     
 ```
 
@@ -754,7 +754,7 @@ set.seed(5)
 ## Enrichment map where the groups are the KEGG results for the 2 different
 ## experiments
 createEnrichMapMultiBasic(gostObjectList=gostObjectList,
-    queryList=queryList, source="KEGG", removeRoot=TRUE, max.overlaps=Inf) +
+    queryList=queryList, source="KEGG", removeRoot=TRUE) +
         scale_fill_manual(name="Groups",
                 breaks = queryList,
                 values = c("cyan4", "bisque3"),
@@ -837,7 +837,7 @@ queryInfo <- data.frame(queryName=c(query_01, query_01),
 ## Enrichment map where the groups are the KEGG and Reactome results for the 
 ## same experiment
 createEnrichMapMultiComplex(gostObjectList=gostObjectList, 
-        queryInfo=queryInfo, max.overlaps=Inf)
+        queryInfo=queryInfo)
     
 ```
 
@@ -918,7 +918,7 @@ queryInfo <- data.frame(queryName=c(query_rosa, query_parental,
 
 ## Enrichment map where the groups TODO
 createEnrichMapMultiComplex(gostObjectList=gostObjectList, 
-        queryInfo=queryInfo, max.overlaps=Inf)
+        queryInfo=queryInfo)
 
 ```
 

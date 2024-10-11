@@ -1,3 +1,13 @@
+CHANGES IN VERSION 1.3.3
+-------------------------
+
+NEW FEATURES
+
+    o The createEnrichMapMultiComplex() now has an new parameter ... that enables passing extra parameters to imbedded emapplot() function.
+    o The createEnrichMapMultiBasic() now has an new parameter ... that enables passing extra parameters to imbedded emapplot() function.
+    o The createEnrichMap() now has an new parameter ... that enables passing extra parameters to imbedded emapplot() function.
+
+
 CHANGES IN VERSION 1.3.2
 -------------------------
 
