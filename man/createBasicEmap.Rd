@@ -14,7 +14,6 @@ createBasicEmap(
   categoryNode,
   significantMethod,
   line,
-  force,
   ...
 )
 }
@@ -45,9 +44,6 @@ of the multiple testing correction method used on the results.}
 
 \item{line}{a non-negative \code{numeric} representing the scale of line 
 width.}
-
-\item{force}{a \code{logical} indicating if the repulsion between 
-overlapping text labels should be forced.}
 
 \item{...}{additional arguments that will be pass to the 
 \code{\link[enrichplot]{emapplot}} function.}
@@ -85,7 +81,7 @@ significantMethod <- meta$query_metadata$significance_threshold_method
 enrichViewNet:::createBasicEmap(gostResults=gostResults, 
     backgroundGenes=backgroundGenes, showCategory=30L, 
     groupCategory=FALSE, categoryLabel=1, categoryNode=1,
-    significantMethod=significantMethod, line=1, force=FALSE)
+    significantMethod=significantMethod, line=1)
     
 }
 \author{

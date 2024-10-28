@@ -13,7 +13,6 @@ createMultiEmap(
   categoryLabel,
   categoryNode,
   line,
-  force,
   ...
 )
 }
@@ -43,9 +42,6 @@ which plotting category nodes should be scaled relative to the default (1).}
 
 \item{line}{a non-negative \code{numeric} representing the scale of line 
 width.}
-
-\item{force}{a \code{logical} indicating if the repulsion between 
-overlapping text labels should be forced.}
 
 \item{...}{additional arguments that will be pass to the 
 \code{\link[enrichplot]{emapplot}} function.}
@@ -77,8 +73,7 @@ queryList <- list("parental - REACTOME", "parental - KEGG")
 ## Create basic enrichment map using Wikipathways terms
 enrichViewNet:::createMultiEmap(gostResultsList=list(gostResultsREAC, 
     gostResultsKEGG), queryList=queryList, showCategory=30L, 
-    groupCategory=FALSE, categoryLabel=1, categoryNode=1, line=1.4, 
-    force=TRUE)
+    groupCategory=FALSE, categoryLabel=1, categoryNode=1, line=1.4)
     
 }
 \author{

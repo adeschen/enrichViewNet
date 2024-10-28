@@ -50,9 +50,6 @@
 #'
 #' @param line a non-negative \code{numeric} representing the scale of line 
 #' width. Default: \code{1}.
-#' 
-#' @param force a \code{logical} indicating if the repulsion between 
-#' overlapping text labels should be forced. Default: \code{TRUE}.
 #'
 #' @param ... additional arguments that will be pass to the 
 #' \code{\link[enrichplot]{emapplot}} function. 
@@ -83,7 +80,7 @@ createEnrichMap <- function(gostObject, query, source=c("TERM_ID", "GO:MF",
         "GO:CC", "GO:BP", "KEGG", "REAC", "TF", "MIRNA", "HPA", "CORUM", 
         "HP", "WP"), termIDs=NULL, removeRoot=TRUE,  
         showCategory=30L, groupCategory=FALSE, categoryLabel=1,
-        categoryNode=1, line=1, force=TRUE, ...) {
+        categoryNode=1, line=1, ...) {
     
     ## Validate source is among the possible choices
     source <- match_arg(source, ignore_case=TRUE)
@@ -93,7 +90,7 @@ createEnrichMap <- function(gostObject, query, source=c("TERM_ID", "GO:MF",
         source=source, termIDs=termIDs, removeRoot=removeRoot, 
         showCategory=showCategory, categoryLabel=categoryLabel,
         groupCategory=groupCategory, categoryNode=categoryNode, 
-        line=line, force=force)
+        line=line)
     
     ## Extract results
     gostResults <- gostObject$result
@@ -128,8 +125,7 @@ createEnrichMap <- function(gostObject, query, source=c("TERM_ID", "GO:MF",
                 backgroundGenes=backgroundGenes, 
                 showCategory=showCategory, categoryLabel=categoryLabel,
                 groupCategory=groupCategory, categoryNode=categoryNode, 
-                significantMethod=significantMethod, line=line, force=force, 
-                ...)
+                significantMethod=significantMethod, line=line,  ...)
     
     return(emap)
 }
@@ -189,9 +185,6 @@ createEnrichMap <- function(gostObject, query, source=c("TERM_ID", "GO:MF",
 #' 
 #' @param line a non-negative \code{numeric} representing the scale of line 
 #' width. Default: \code{1}.
-#'
-#' @param force a \code{logical} indicating if the repulsion between 
-#' overlapping text labels should be forced. Default: \code{TRUE}.
 #' 
 #' @param ... additional arguments that will be pass to the 
 #' \code{\link[enrichplot]{emapplot}} function. 
@@ -226,7 +219,7 @@ createEnrichMapMultiBasic <- function(gostObjectList, queryList,
     source=c("TERM_ID", "GO:MF", "GO:CC", "GO:BP", "KEGG", "REAC", "TF", 
     "MIRNA", "HPA", "CORUM", "HP", "WP"), termIDs=NULL, removeRoot=TRUE, 
     showCategory=30L, groupCategory=FALSE, categoryLabel=1, 
-    categoryNode=1, line=1, force=TRUE, ...) {
+    categoryNode=1, line=1, ...) {
     
     ## Validate source is among the possible choices
     source <- match_arg(source, ignore_case=TRUE)
@@ -236,7 +229,7 @@ createEnrichMapMultiBasic <- function(gostObjectList, queryList,
         queryList=queryList, source=source, termIDs=termIDs, 
         removeRoot=removeRoot, showCategory=showCategory, 
         categoryLabel=categoryLabel, groupCategory=groupCategory, 
-        categoryNode=categoryNode, line=line, force=force)
+        categoryNode=categoryNode, line=line)
     
     ## Extract results
     gostResultsList <- lapply(gostObjectList, FUN=function(x) {x$result})
@@ -273,7 +266,7 @@ createEnrichMapMultiBasic <- function(gostObjectList, queryList,
     emap <- createMultiEmap(gostResultsList=gostResultsList, 
                 queryList=queryList, showCategory=showCategory, 
                 categoryLabel=categoryLabel, groupCategory=groupCategory, 
-                categoryNode=categoryNode, line=line, force=force, ...)
+                categoryNode=categoryNode, line=line, ...)
     
     return(emap)
 }
@@ -340,9 +333,6 @@ createEnrichMapMultiBasic <- function(gostObjectList, queryList,
 #' 
 #' @param line a non-negative \code{numeric} representing the scale of line 
 #' width. Default: \code{1}.
-#'
-#' @param force a \code{logical} indicating if the repulsion between 
-#' overlapping text labels should be forced. Default: \code{TRUE}.
 #' 
 #' @param ... additional arguments that will be pass to the 
 #' \code{\link[enrichplot]{emapplot}} function. 
@@ -390,13 +380,13 @@ createEnrichMapMultiBasic <- function(gostObjectList, queryList,
 #' @export
 createEnrichMapMultiComplex <- function(gostObjectList, queryInfo,  
     showCategory=30L, groupCategory=FALSE, categoryLabel=1, 
-    categoryNode=1, line=1, force=TRUE, ...) {
+    categoryNode=1, line=1, ...) {
     
     ## Validate parameters
     validateCreateEnrichMapMultiComplexArg(gostObjectList=gostObjectList, 
         queryInfo=queryInfo, showCategory=showCategory, 
         categoryLabel=categoryLabel, groupCategory=groupCategory, 
-        categoryNode=categoryNode, line=line, force=force)
+        categoryNode=categoryNode, line=line)
     
     ## Extract results
     gostResultsList <- lapply(gostObjectList, FUN=function(x) {x$result})
@@ -441,7 +431,7 @@ createEnrichMapMultiComplex <- function(gostObjectList, queryInfo,
     emap <- createMultiEmap(gostResultsList=gostResultsList, 
                 queryList=queryInfo$groupName, showCategory=showCategory, 
                 categoryLabel=categoryLabel, groupCategory=groupCategory, 
-                categoryNode=categoryNode, line=line, force=force, ...)
+                categoryNode=categoryNode, line=line,  ...)
     
     return(emap)
 }

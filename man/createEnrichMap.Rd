@@ -18,7 +18,6 @@ createEnrichMap(
   categoryLabel = 1,
   categoryNode = 1,
   line = 1,
-  force = TRUE,
   ...
 )
 }
@@ -65,9 +64,6 @@ Default: \code{1}.}
 
 \item{line}{a non-negative \code{numeric} representing the scale of line 
 width. Default: \code{1}.}
-
-\item{force}{a \code{logical} indicating if the repulsion between 
-overlapping text labels should be forced. Default: \code{TRUE}.}
 
 \item{...}{additional arguments that will be pass to the 
 \code{\link[enrichplot]{emapplot}} function.}

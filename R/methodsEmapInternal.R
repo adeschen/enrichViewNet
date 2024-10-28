@@ -50,9 +50,6 @@
 #' @param line a non-negative \code{numeric} representing the scale of line 
 #' width. 
 #' 
-#' @param force a \code{logical} indicating if the repulsion between 
-#' overlapping text labels should be forced.
-#'
 #' @return \code{TRUE} when all arguments are valid
 #' 
 #' @examples
@@ -64,7 +61,7 @@
 #' enrichViewNet:::validateCreateEnrichMapArguments(gostObject=demoGOST,
 #'     query="query_1", source="GO:BP", termIDs=NULL, removeRoot=FALSE, 
 #'     showCategory=20, groupCategory=FALSE, 
-#'     categoryLabel=1.1, categoryNode=1, line=1.2, force=TRUE)
+#'     categoryLabel=1.1, categoryNode=1, line=1.2)
 #' 
 #' @author Astrid Deschênes
 #' @encoding UTF-8
@@ -73,7 +70,7 @@
 #' @keywords internal
 validateCreateEnrichMapArguments <- function(gostObject, query, source, 
         termIDs, removeRoot, showCategory, groupCategory, 
-        categoryLabel, categoryNode, line, force) {
+        categoryLabel, categoryNode, line) {
     
     ## Test that gostObject is a gprofiler2 result 
     if (!(inherits(gostObject, "list") && "result" %in% names(gostObject) &&
@@ -113,8 +110,7 @@ validateCreateEnrichMapArguments <- function(gostObject, query, source,
     
     result <- validateCreateEnrichMapSubSectionArguments(
         showCategory=showCategory, groupCategory=groupCategory, 
-        categoryLabel=categoryLabel, categoryNode=categoryNode, line=line, 
-        force=force)
+        categoryLabel=categoryLabel, categoryNode=categoryNode, line=line)
     
     return(result)     
 }
@@ -176,9 +172,6 @@ validateCreateEnrichMapArguments <- function(gostObject, query, source,
 #' @param line a non-negative \code{numeric} representing the scale of line 
 #' width. 
 #' 
-#' @param force a \code{logical} indicating if the repulsion between 
-#' overlapping text labels should be forced. 
-#' 
 #' @return \code{TRUE} when all arguments are valid
 #' 
 #' @examples
@@ -194,7 +187,7 @@ validateCreateEnrichMapArguments <- function(gostObject, query, source,
 #'     queryList=list("parental_napa_vs_DMSO", "rosa_napa_vs_DMSO"), 
 #'     source="GO:BP", termIDs=NULL, removeRoot=FALSE, 
 #'     showCategory=20, groupCategory=FALSE, 
-#'     categoryLabel=1.1, categoryNode=1, line=1.2, force=FALSE)
+#'     categoryLabel=1.1, categoryNode=1, line=1.2)
 #' 
 #' @author Astrid Deschênes
 #' @encoding UTF-8
@@ -203,7 +196,7 @@ validateCreateEnrichMapArguments <- function(gostObject, query, source,
 #' @keywords internal
 validateCreateEnrichMapMultiArguments <- function(gostObjectList, queryList, 
     source, termIDs, removeRoot, showCategory, groupCategory, 
-    categoryLabel, categoryNode, line, force) {
+    categoryLabel, categoryNode, line) {
     
     ## Test that gostObject is a list with minimum of 2 entries
     if (!inherits(gostObjectList, "list") || !(length(gostObjectList) > 1)) {
@@ -259,8 +252,7 @@ validateCreateEnrichMapMultiArguments <- function(gostObjectList, queryList,
 
     result <- validateCreateEnrichMapSubSectionArguments(
         showCategory=showCategory, groupCategory=groupCategory, 
-        categoryLabel=categoryLabel, categoryNode=categoryNode, line=line, 
-        force=force)
+        categoryLabel=categoryLabel, categoryNode=categoryNode, line=line)
     
     return(result)   
 }
@@ -330,9 +322,6 @@ validateCreateEnrichMapMultiArguments <- function(gostObjectList, queryList,
 #' @param line a non-negative \code{numeric} representing the scale of line 
 #' width. 
 #' 
-#' @param force a \code{logical} indicating if the repulsion between 
-#' overlapping text labels should be forced. 
-#' 
 #' @return \code{TRUE} when all arguments are valid
 #' 
 #' @examples
@@ -352,7 +341,7 @@ validateCreateEnrichMapMultiArguments <- function(gostObjectList, queryList,
 #'                             rosaNapaVsDMSOEnrichment),
 #'     queryInfo=queryDataFrame,
 #'     showCategory=20, groupCategory=FALSE, 
-#'     categoryLabel=1.1, categoryNode=1, line=1.2, force=FALSE)
+#'     categoryLabel=1.1, categoryNode=1, line=1.2)
 #' 
 #' @author Astrid Deschênes
 #' @encoding UTF-8
@@ -360,7 +349,7 @@ validateCreateEnrichMapMultiArguments <- function(gostObjectList, queryList,
 #' @importFrom stringr str_ends
 #' @keywords internal
 validateCreateEnrichMapMultiComplexArg <- function(gostObjectList, queryInfo, 
-    showCategory, groupCategory, categoryLabel, categoryNode, line, force) {
+    showCategory, groupCategory, categoryLabel, categoryNode, line) {
     
     ## Test that gostObject is a list with minimum of 2 entries
     if (!inherits(gostObjectList, "list") || !(length(gostObjectList) > 1)) {
@@ -458,8 +447,7 @@ validateCreateEnrichMapMultiComplexArg <- function(gostObjectList, queryInfo,
     
     result <- validateCreateEnrichMapSubSectionArguments(
         showCategory=showCategory, groupCategory=groupCategory, 
-        categoryLabel=categoryLabel, categoryNode=categoryNode, line=line, 
-        force=force)
+        categoryLabel=categoryLabel, categoryNode=categoryNode, line=line)
     
     return(result)   
 }
@@ -489,9 +477,6 @@ validateCreateEnrichMapMultiComplexArg <- function(gostObjectList, queryInfo,
 #' @param line a non-negative \code{numeric} representing the scale of line 
 #' width. 
 #' 
-#' @param force a \code{logical} indicating if the repulsion between 
-#' overlapping text labels should be forced. 
-#' 
 #' @return \code{TRUE} when all arguments are valid
 #' 
 #' @examples
@@ -499,7 +484,7 @@ validateCreateEnrichMapMultiComplexArg <- function(gostObjectList, queryInfo,
 #' ## Check that all arguments are valid
 #' enrichViewNet:::validateCreateEnrichMapSubSectionArguments(
 #'     showCategory=20, groupCategory=FALSE, categoryLabel=1.1, categoryNode=1, 
-#'     line=0.5, force=TRUE)
+#'     line=0.5)
 #' 
 #' @author Astrid Deschênes
 #' @encoding UTF-8
@@ -507,7 +492,7 @@ validateCreateEnrichMapMultiComplexArg <- function(gostObjectList, queryInfo,
 #' @importFrom stringr str_ends
 #' @keywords internal
 validateCreateEnrichMapSubSectionArguments <- function(showCategory, 
-    groupCategory, categoryLabel, categoryNode, line, force) {
+    groupCategory, categoryLabel, categoryNode, line) {
     
     if (!is.character(showCategory) && 
         !(is.numeric(showCategory) && (showCategory > 0))) {
@@ -530,10 +515,6 @@ validateCreateEnrichMapSubSectionArguments <- function(showCategory,
 
     if (!is.numeric(line) || !(line > 0)) {
         stop("The \'line\' parameter must be a positive numeric.")
-    }
-    
-    if (!is.logical(force)) {
-        stop("The \'force\' parameter must a logical (TRUE or FALSE).")
     }
     
     return(TRUE)   
@@ -572,9 +553,6 @@ validateCreateEnrichMapSubSectionArguments <- function(showCategory,
 #' @param line a non-negative \code{numeric} representing the scale of line 
 #' width. 
 #' 
-#' @param force a \code{logical} indicating if the repulsion between 
-#' overlapping text labels should be forced. 
-#' 
 #' @param ... additional arguments that will be pass to the 
 #' \code{\link[enrichplot]{emapplot}} function. 
 #'
@@ -606,7 +584,7 @@ validateCreateEnrichMapSubSectionArguments <- function(showCategory,
 #' enrichViewNet:::createBasicEmap(gostResults=gostResults, 
 #'     backgroundGenes=backgroundGenes, showCategory=30L, 
 #'     groupCategory=FALSE, categoryLabel=1, categoryNode=1,
-#'     significantMethod=significantMethod, line=1, force=FALSE)
+#'     significantMethod=significantMethod, line=1)
 #'     
 #' @author Astrid Deschênes
 #' @encoding UTF-8
@@ -617,7 +595,7 @@ validateCreateEnrichMapSubSectionArguments <- function(showCategory,
 #' @keywords internal
 createBasicEmap <- function(gostResults, backgroundGenes, 
         showCategory, groupCategory, categoryLabel, categoryNode, 
-        significantMethod, line, force, ...) {
+        significantMethod, line, ...) {
     
     ## Extract gene list for each term
     geneSets <- lapply(seq_len(nrow(gostResults)), FUN=function(x, gostData) {
@@ -659,9 +637,7 @@ createBasicEmap <- function(gostResults, backgroundGenes,
     comp <- pairwise_termsim(res)  
     
     graphEmap <- emapplot(x=comp, showCategory=showCategory,
-        cluster.params=list(cluster=groupCategory),
-        cex.params=list(category_node=categoryNode, line=line, 
-            category_label=categoryLabel), force=force, ...)
+        group=groupCategory, size_category=categoryNode, size_edge=line,  ...)
     
     return(graphEmap)
 }
@@ -698,9 +674,6 @@ createBasicEmap <- function(gostResults, backgroundGenes,
 #' @param line a non-negative \code{numeric} representing the scale of line 
 #' width.
 #' 
-#' @param force a \code{logical} indicating if the repulsion between 
-#' overlapping text labels should be forced.
-#' 
 #' @param ... additional arguments that will be pass to the 
 #' \code{\link[enrichplot]{emapplot}} function. 
 #'
@@ -726,8 +699,7 @@ createBasicEmap <- function(gostResults, backgroundGenes,
 #' ## Create basic enrichment map using Wikipathways terms
 #' enrichViewNet:::createMultiEmap(gostResultsList=list(gostResultsREAC, 
 #'     gostResultsKEGG), queryList=queryList, showCategory=30L, 
-#'     groupCategory=FALSE, categoryLabel=1, categoryNode=1, line=1.4, 
-#'     force=TRUE)
+#'     groupCategory=FALSE, categoryLabel=1, categoryNode=1, line=1.4)
 #'     
 #' @author Astrid Deschênes
 #' @encoding UTF-8
@@ -737,7 +709,7 @@ createBasicEmap <- function(gostResults, backgroundGenes,
 #' @importClassesFrom DOSE compareClusterResult
 #' @keywords internal
 createMultiEmap <- function(gostResultsList, queryList, showCategory, 
-    groupCategory, categoryLabel, categoryNode, line, force, ...) {
+    groupCategory, categoryLabel, categoryNode, line,  ...) {
     
     resF <- list()
     geneClusters <- list()
@@ -787,11 +759,8 @@ createMultiEmap <- function(gostResultsList, queryList, showCategory,
     kegg_compar <- pairwise_termsim(res)  
     
     graphEmap <- emapplot(kegg_compar, 
-        showCategory=showCategory, 
-        cluster.params = list(cluster = groupCategory),
-        cex.params=list(category_node=categoryNode, line=line,
-                            category_label=categoryLabel),
-        force=force, ...)
+        showCategory=showCategory, group=groupCategory,
+        size_category=categoryNode, size_edge=line, ...)
     
     return(graphEmap)
 }

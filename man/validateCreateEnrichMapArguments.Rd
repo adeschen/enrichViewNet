@@ -15,8 +15,7 @@ validateCreateEnrichMapArguments(
   groupCategory,
   categoryLabel,
   categoryNode,
-  line,
-  force
+  line
 )
 }
 \arguments{
@@ -61,9 +60,6 @@ which plotting category nodes should be scaled relative to the default (1).}
 
 \item{line}{a non-negative \code{numeric} representing the scale of line 
 width.}
-
-\item{force}{a \code{logical} indicating if the repulsion between 
-overlapping text labels should be forced.}
 }
 \value{
 \code{TRUE} when all arguments are valid
@@ -85,7 +81,7 @@ data(demoGOST)
 enrichViewNet:::validateCreateEnrichMapArguments(gostObject=demoGOST,
     query="query_1", source="GO:BP", termIDs=NULL, removeRoot=FALSE, 
     showCategory=20, groupCategory=FALSE, 
-    categoryLabel=1.1, categoryNode=1, line=1.2, force=TRUE)
+    categoryLabel=1.1, categoryNode=1, line=1.2)
 
 }
 \author{

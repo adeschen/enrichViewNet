@@ -633,7 +633,7 @@ graphKegg <- createEnrichMap(gostObject=parentalNapaVsDMSOEnrichment,
 
 ## Nodes with lowest p-values will be in orange and highest p-values in black
 ## The title of the legend is also modified
-graphKegg + scale_fill_gradient(name="P-value adjusted", low="orange", 
+graphKegg + scale_color_continuous(name="P-value adjusted", low="orange", 
                                     high="black")
     
 ```

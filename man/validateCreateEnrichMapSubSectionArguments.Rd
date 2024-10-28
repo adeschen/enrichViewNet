@@ -11,8 +11,7 @@ validateCreateEnrichMapSubSectionArguments(
   groupCategory,
   categoryLabel,
   categoryNode,
-  line,
-  force
+  line
 )
 }
 \arguments{
@@ -33,9 +32,6 @@ which plotting category nodes should be scaled relative to the default (1).}
 
 \item{line}{a non-negative \code{numeric} representing the scale of line 
 width.}
-
-\item{force}{a \code{logical} indicating if the repulsion between 
-overlapping text labels should be forced.}
 }
 \value{
 \code{TRUE} when all arguments are valid
@@ -49,7 +45,7 @@ createEnrichMapMultiBasic() functions.
 ## Check that all arguments are valid
 enrichViewNet:::validateCreateEnrichMapSubSectionArguments(
     showCategory=20, groupCategory=FALSE, categoryLabel=1.1, categoryNode=1, 
-    line=0.5, force=TRUE)
+    line=0.5)
 
 }
 \author{

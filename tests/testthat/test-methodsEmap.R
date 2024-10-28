@@ -19,7 +19,7 @@ test_that("createEnrichMap() must return error when gostObject is a number", {
     expect_error(createEnrichMap(gostObject=33, query="TEST", 
         source="GO:CC", termIDs=NULL, removeRoot=TRUE,
         showCategory=30, groupCategory=FALSE, categoryLabel=1,
-        categoryNode=1, line=1, force=FALSE), error_message)
+        categoryNode=1, line=1), error_message)
 })
 
 
@@ -32,7 +32,7 @@ test_that("createEnrichMap() must return error when gostObject is a string chara
     expect_error(createEnrichMap(gostObject="TEST", query="TEST", 
         source="GO:CC", termIDs=NULL, removeRoot=TRUE, 
         showCategory=30, groupCategory=FALSE, categoryLabel=1,
-        categoryNode=1, line=1, force=FALSE), error_message)
+        categoryNode=1, line=1), error_message)
 })
 
 
@@ -47,7 +47,7 @@ test_that("createEnrichMap() must return error when query is a number", {
     expect_error(createEnrichMap(gostObject=gostObject, query=33, 
         source="KEGG", termIDs=NULL, removeRoot=TRUE, 
         showCategory=30, groupCategory=FALSE, categoryLabel=1,
-        categoryNode=1, line=1, force=FALSE), error_message)
+        categoryNode=1, line=1), error_message)
 })
 
 
@@ -62,7 +62,7 @@ test_that("createEnrichMap() must return error when query is a vector of strings
     expect_error(createEnrichMap(gostObject=gostObject, query=c("1", "2"), 
         source="KEGG", termIDs=NULL, removeRoot=TRUE, 
         showCategory=30, groupCategory=FALSE, categoryLabel=1,
-        categoryNode=1, line=1, force=FALSE), error_message)
+        categoryNode=1, line=1), error_message)
 })
 
 
@@ -74,7 +74,7 @@ test_that("createEnrichMap() must return error when query is not in gost", {
     expect_error(createEnrichMap(gostObject=demoGOST, query="CANADA", 
         source="KEGG", termIDs=NULL, removeRoot=TRUE,
         showCategory=30, groupCategory=FALSE, categoryLabel=1,
-        categoryNode=1, line=1, force=FALSE), error_message)
+        categoryNode=1, line=1), error_message)
 })
 
 
@@ -90,7 +90,7 @@ test_that("createEnrichMap() must return error when source is a number", {
     expect_error(createEnrichMap(gostObject=gostObject, query="toto", 
         source=333, termIDs=NULL, removeRoot=TRUE, 
         showCategory=30, groupCategory=FALSE, categoryLabel=1,
-        categoryNode=1, line=1, force=FALSE),  error_message)
+        categoryNode=1, line=1),  error_message)
 })
 
 test_that("createEnrichMap() must return error when source is a wrong name", {
@@ -102,7 +102,7 @@ test_that("createEnrichMap() must return error when source is a wrong name", {
     expect_error(createEnrichMap(gostObject=gostObject, query="toto",  
         source="test", termIDs=NULL, removeRoot=TRUE, title="network", 
         showCategory=30, groupCategory=FALSE, categoryLabel=1,
-        categoryNode=1, line=1, force=FALSE))
+        categoryNode=1, line=1))
 })
 
 
@@ -116,7 +116,7 @@ test_that("createEnrichMap() must return error when source is GO", {
         source="GO",
         termIDs=NULL, removeRoot=TRUE, 
         showCategory=30, groupCategory=FALSE, categoryLabel=1,
-        categoryNode=1, line=1, force=FALSE))
+        categoryNode=1, line=1))
 })
 
 
@@ -131,7 +131,7 @@ test_that("createEnrichMap() must return error when removeRoot remove last enric
     expect_error(createEnrichMap(gostObject=gostTerm, query="query_1", 
                     source="WP", removeRoot=TRUE, 
                     showCategory=30, groupCategory=FALSE, categoryLabel=1,
-                    categoryNode=1, line=1, force=FALSE), error_message)
+                    categoryNode=1, line=1), error_message)
 })
 
 
@@ -147,7 +147,7 @@ test_that("createEnrichMap() must return error when removeRoot remove last enric
         source="TERM_ID",
         termIDs=c("WP:000000"), removeRoot=TRUE, showCategory=30, 
         groupCategory=FALSE, categoryLabel=1,
-        categoryNode=1, line=1, force=FALSE), error_message)
+        categoryNode=1, line=1), error_message)
 })
 
 
@@ -161,7 +161,7 @@ test_that("createEnrichMap() must return error when showCategory negative value"
     expect_error(createEnrichMap(gostObject=gostTerm, query="query_1", 
                     source="WP", removeRoot=TRUE, showCategory=-30, 
                     groupCategory=FALSE, categoryLabel=1,
-                    categoryNode=1, line=2, force=FALSE), error_message)
+                    categoryNode=1, line=2), error_message)
 })
 
 
@@ -175,7 +175,7 @@ test_that("createEnrichMap() must return error when showCategory is boolean", {
     expect_error(createEnrichMap(gostObject=gostTerm, query="query_1", 
                     source="WP", removeRoot=TRUE, showCategory=TRUE, 
                     groupCategory=FALSE, categoryLabel=1,
-                    categoryNode=1, line=1, force=TRUE), error_message)
+                    categoryNode=1, line=1), error_message)
 })
 
 
@@ -189,7 +189,7 @@ test_that("createEnrichMap() must return error when groupCategory is integer", {
     expect_error(createEnrichMap(gostObject=gostTerm, query="query_1", 
             source="WP", removeRoot=TRUE, showCategory=30, 
             groupCategory=22, categoryLabel=1,
-            categoryNode=1, line=1, force=TRUE), error_message, fixed=TRUE)
+            categoryNode=1, line=1), error_message, fixed=TRUE)
 })
 
 
@@ -203,7 +203,7 @@ test_that("createEnrichMap() must return error when categoryLabel is string", {
     expect_error(createEnrichMap(gostObject=gostTerm, query="query_1", 
             source="WP", removeRoot=TRUE, showCategory=30, 
             groupCategory=FALSE, categoryLabel="test",
-            categoryNode=1, line=2, force=TRUE), error_message, fixed=TRUE)
+            categoryNode=1, line=2), error_message, fixed=TRUE)
 })
 
 
@@ -217,7 +217,7 @@ test_that("createEnrichMap() must return error when cexLabelCategory is negative
     expect_error(createEnrichMap(gostObject=gostTerm, query="query_1", 
             source="WP", removeRoot=TRUE, showCategory=30, 
             groupCategory=FALSE, categoryLabel=-1.1,
-            categoryNode=1, line=2, force=TRUE), error_message, fixed=TRUE)
+            categoryNode=1, line=2), error_message, fixed=TRUE)
 })
 
 
@@ -245,7 +245,7 @@ test_that("createEnrichMap() must return error when categoryNode is string", {
     expect_error(createEnrichMap(gostObject=gostTerm, query="query_1", 
             source="WP", removeRoot=TRUE, showCategory=30, 
             groupCategory=FALSE, categoryLabel=2,
-            categoryNode="te", line=1, force=FALSE), error_message, fixed=TRUE)
+            categoryNode="te", line=1), error_message, fixed=TRUE)
 })
 
 test_that("createEnrichMap() must return error when line is a string", {
@@ -257,7 +257,7 @@ test_that("createEnrichMap() must return error when line is a string", {
     
     expect_error(createEnrichMap(gostObject=gostTerm, query="query_1", 
         source="WP", removeRoot=TRUE,  showCategory=30, groupCategory=FALSE, 
-        categoryLabel=1, categoryNode=1, line="HI", force=TRUE), 
+        categoryLabel=1, categoryNode=1, line="HI"), 
         error_message, fixed=TRUE)
 })
 
@@ -270,21 +270,8 @@ test_that("createEnrichMap() must return error when line is a negative number", 
     
     expect_error(createEnrichMap(gostObject=gostTerm, query="query_1", 
         source="WP", removeRoot=TRUE,  showCategory=30, groupCategory=FALSE, 
-        categoryLabel=1, categoryNode=1, line=-0.3, force=TRUE), 
+        categoryLabel=1, categoryNode=1, line=-0.3), 
         error_message, fixed=TRUE)
-})
-
-test_that("createEnrichMap() must return error when force is a string", {
-
-    gostTerm <- demoGOST
-    
-    error_message <- paste0("The \'force\' parameter must a logical ", 
-                                "(TRUE or FALSE).")
-    
-    expect_error(createEnrichMap(gostObject=gostTerm, query="query_1", 
-        source="WP", removeRoot=TRUE,  showCategory=30, groupCategory=FALSE, 
-        categoryLabel=1, categoryNode=1, line=1, force="TOTO"), error_message, 
-        fixed=TRUE)
 })
 
 test_that("createEnrichMap() must return error when not term for selected source", {
@@ -297,7 +284,7 @@ test_that("createEnrichMap() must return error when not term for selected source
     
     expect_error(createEnrichMap(gostObject=gostTerm, query="query_1", 
         source="WP", removeRoot=TRUE,  showCategory=30, groupCategory=FALSE, 
-        categoryLabel=1, categoryNode=1, line=1, force=TRUE), error_message, 
+        categoryLabel=1, categoryNode=1, line=1), error_message, 
                  fixed=TRUE)
 })
 
@@ -310,8 +297,8 @@ test_that("createEnrichMap() must return error when not term id and TERM_ID sele
     
     expect_error(createEnrichMap(gostObject=gostTerm, query="query_1", 
         source="TERM_ID", removeRoot=TRUE,  showCategory=30, 
-        groupCategory=FALSE, categoryLabel=1, categoryNode=1, line=1, 
-        force=TRUE), error_message, fixed=TRUE)
+        groupCategory=FALSE, categoryLabel=1, categoryNode=1, line=1), 
+        error_message, fixed=TRUE)
 })
 
 test_that("createEnrichMap() must return error when not all term ids are present", {
@@ -324,8 +311,8 @@ test_that("createEnrichMap() must return error when not all term ids are present
     expect_error(createEnrichMap(gostObject=gostTerm, query="query_1", 
         source="TERM_ID", termIDs = c("GO:0051173", "GO:0065004", "GO:1905898"), 
         removeRoot=TRUE,  showCategory=30, 
-        groupCategory=FALSE, categoryLabel=1, categoryNode=1, line=1, 
-        force=TRUE), error_message, fixed=TRUE)
+        groupCategory=FALSE, categoryLabel=1, categoryNode=1, line=1), 
+        error_message, fixed=TRUE)
 })
 
 
@@ -341,7 +328,7 @@ test_that("createEnrichMapMultiBasic() must return error when gostObjectList is 
     expect_error(createEnrichMapMultiBasic(gostObjectList=33, 
         queryList=c("TEST", "Test2"),  source="GO:CC", termIDs=NULL, 
         removeRoot=TRUE, showCategory=30, groupCategory=FALSE, categoryLabel=1,
-        categoryNode=1, line=1, force=FALSE), error_message)
+        categoryNode=1, line=1), error_message)
 })
 
 test_that("createEnrichMapMultiBasic() must return error when gostObjectList has only one element", {
@@ -354,7 +341,7 @@ test_that("createEnrichMapMultiBasic() must return error when gostObjectList has
     expect_error(createEnrichMapMultiBasic(gostObjectList=list(gostTerm), 
         queryList=list("TEST"), source="GO:CC", termIDs=NULL, removeRoot=TRUE, 
         showCategory=30, groupCategory=FALSE, categoryLabel=1,
-        categoryNode=1, force=FALSE), error_message)
+        categoryNode=1), error_message)
 })
 
 test_that("createEnrichMapMultiBasic() must return error when queryList is a number", {
@@ -368,7 +355,7 @@ test_that("createEnrichMapMultiBasic() must return error when queryList is a num
     expect_error(createEnrichMapMultiBasic(gostObjectList=list(gostTerm, gostTerm), 
         queryList=33, source="GO:CC", termIDs=NULL, removeRoot=TRUE, 
         showCategory=30, groupCategory=FALSE, categoryLabel=1,
-        categoryNode=1, force=FALSE), error_message)
+        categoryNode=1), error_message)
 })
 
 test_that("createEnrichMapMultiBasic() must return error when queryList is longer than gostObjectList", {
@@ -382,7 +369,7 @@ test_that("createEnrichMapMultiBasic() must return error when queryList is longe
     expect_error(createEnrichMapMultiBasic(gostObjectList=list(gostTerm, gostTerm), 
     queryList=list("TEST", "TEST2", "TEST3"), source="GO:CC", termIDs=NULL, 
     removeRoot=TRUE, showCategory=30, groupCategory=FALSE, categoryLabel=1,
-    categoryNode=1, force=FALSE), error_message)
+    categoryNode=1), error_message)
 })
 
 test_that("createEnrichMapMultiBasic() must return error when one query in queryList is not in gostObject", {
@@ -396,7 +383,7 @@ test_that("createEnrichMapMultiBasic() must return error when one query in query
     expect_error(createEnrichMapMultiBasic(gostObjectList=list(gostTerm, gostTerm), 
         queryList=list("query_1", "TEST"), source="GO:CC", termIDs=NULL, 
         removeRoot=TRUE, showCategory=30, groupCategory=FALSE, categoryLabel=1,
-        categoryNode=1, force=FALSE), error_message, fixed=TRUE)
+        categoryNode=1), error_message, fixed=TRUE)
 })
 
 test_that("createEnrichMapMultiBasic() must return error when one object in gostObjectList in a number", {
@@ -411,7 +398,7 @@ test_that("createEnrichMapMultiBasic() must return error when one object in gost
     expect_error(createEnrichMapMultiBasic(gostObjectList=list(gostTerm, 33), 
         queryList=list("query_1", "query_1"), source="GO:CC", termIDs=NULL, 
         removeRoot=TRUE, showCategory=30, groupCategory=FALSE, categoryLabel=1,
-        categoryNode=1, force=FALSE), error_message, fixed=TRUE)
+        categoryNode=1), error_message, fixed=TRUE)
 })
 
 test_that("createEnrichMapMultiBasic() must return error when no enriched term for selected source", {
@@ -425,7 +412,7 @@ test_that("createEnrichMapMultiBasic() must return error when no enriched term f
     expect_error(createEnrichMapMultiBasic(gostObjectList=list(gostTerm, gostTerm), 
         queryList=list("query_1", "query_1"), source="WP", termIDs=NULL, 
         removeRoot=TRUE, showCategory=30, groupCategory=FALSE, categoryLabel=1,
-        categoryNode=1, force=FALSE), error_message, fixed=TRUE)
+        categoryNode=1), error_message, fixed=TRUE)
 })
 
 test_that("createEnrichMapMultiBasic() must return error when number in queryList", {
@@ -438,7 +425,7 @@ test_that("createEnrichMapMultiBasic() must return error when number in queryLis
     expect_error(createEnrichMapMultiBasic(gostObjectList=list(gostTerm, gostTerm), 
         queryList=list("query_1", 33), source="WP", termIDs=NULL, 
         removeRoot=TRUE, showCategory=30, groupCategory=FALSE, categoryLabel=1,
-        categoryNode=1, force=FALSE), error_message, fixed=TRUE)
+        categoryNode=1), error_message, fixed=TRUE)
 })
 
 test_that("createEnrichMapMultiBasic() must return error when number in queryList", {
@@ -451,7 +438,7 @@ test_that("createEnrichMapMultiBasic() must return error when number in queryLis
     expect_error(createEnrichMapMultiBasic(gostObjectList=list(gostTerm, gostTerm), 
         queryList=list("query_1", "query_1"), source="TERM_ID", termIDs=NULL, 
         removeRoot=TRUE, showCategory=30, groupCategory=FALSE, categoryLabel=1,
-        categoryNode=1, force=FALSE), error_message, fixed=TRUE)
+        categoryNode=1), error_message, fixed=TRUE)
 })
 
 
@@ -471,7 +458,7 @@ test_that("createEnrichMapMultiComplex() must return error when gostObjectList i
     
     expect_error(createEnrichMapMultiComplex(gostObjectList=33, 
         queryInfo=queryDF,  showCategory=30, groupCategory=FALSE, 
-        categoryLabel=1, categoryNode=1, line=1, force=FALSE), error_message)
+        categoryLabel=1, categoryNode=1, line=1), error_message)
 })
 
 test_that("createEnrichMapMultiComplex() must return error when gostObjectList has only one element", {
@@ -487,7 +474,7 @@ test_that("createEnrichMapMultiComplex() must return error when gostObjectList h
     
     expect_error(createEnrichMapMultiComplex(gostObjectList=list(gostTerm), 
         queryInfo=queryDF, showCategory=30, groupCategory=FALSE, 
-        categoryLabel=1, categoryNode=1, force=FALSE), error_message)
+        categoryLabel=1, categoryNode=1), error_message)
 })
 
 test_that("createEnrichMapMultiComplex() must return error when gostObjectList is a list of numbers", {
@@ -500,7 +487,7 @@ test_that("createEnrichMapMultiComplex() must return error when gostObjectList i
     expect_error(createEnrichMapMultiComplex(
         gostObjectList=list(3, 4), 
         queryInfo=33, showCategory=30, groupCategory=FALSE, 
-        categoryLabel=1, categoryNode=1, force=FALSE), error_message)
+        categoryLabel=1, categoryNode=1), error_message)
 })
 
 test_that("createEnrichMapMultiComplex() must return error when queryInfo is a number", {
@@ -513,7 +500,7 @@ test_that("createEnrichMapMultiComplex() must return error when queryInfo is a n
     expect_error(createEnrichMapMultiComplex(
         gostObjectList=list(gostTerm, gostTerm), 
         queryInfo=33, showCategory=30, groupCategory=FALSE, 
-        categoryLabel=1, categoryNode=1, force=FALSE), error_message)
+        categoryLabel=1, categoryNode=1), error_message)
 })
 
 test_that("createEnrichMapMultiComplex() must return error when queryInfo shorter than gostObjectList", {
@@ -530,7 +517,7 @@ test_that("createEnrichMapMultiComplex() must return error when queryInfo shorte
     expect_error(createEnrichMapMultiComplex(
         gostObjectList=list(gostTerm, gostTerm), 
         queryInfo=queryDataFrame, showCategory=30, groupCategory=FALSE, 
-        categoryLabel=1, categoryNode=1, force=FALSE), error_message)
+        categoryLabel=1, categoryNode=1), error_message)
 })
 
 test_that("createEnrichMapMultiComplex() must return error when source in queryInfo is not in list of sources", {
@@ -549,7 +536,7 @@ test_that("createEnrichMapMultiComplex() must return error when source in queryI
     expect_error(createEnrichMapMultiComplex(
         gostObjectList=list(gostTerm, gostTerm), 
         queryInfo=queryDataFrame, showCategory=30, groupCategory=FALSE, 
-        categoryLabel=1, categoryNode=1, force=FALSE), error_message)
+        categoryLabel=1, categoryNode=1), error_message)
 })
 
 test_that("createEnrichMapMultiComplex() must return error when source in queryInfo is number", {
@@ -566,7 +553,7 @@ test_that("createEnrichMapMultiComplex() must return error when source in queryI
     expect_error(createEnrichMapMultiComplex(
         gostObjectList=list(gostTerm, gostTerm), 
         queryInfo=queryDataFrame, showCategory=30, groupCategory=FALSE, 
-        categoryLabel=1, categoryNode=1, force=FALSE), error_message)
+        categoryLabel=1, categoryNode=1), error_message)
 })
 
 test_that("createEnrichMapMultiComplex() must return error when queryName in queryInfo is number", {
@@ -583,7 +570,7 @@ test_that("createEnrichMapMultiComplex() must return error when queryName in que
     expect_error(createEnrichMapMultiComplex(
         gostObjectList=list(gostTerm, gostTerm), 
         queryInfo=queryDataFrame, showCategory=30, groupCategory=FALSE, 
-        categoryLabel=1, categoryNode=1, force=FALSE), error_message)
+        categoryLabel=1, categoryNode=1), error_message)
 })
 
 test_that("createEnrichMapMultiComplex() must return error when termIDs in queryInfo is number", {
@@ -600,7 +587,7 @@ test_that("createEnrichMapMultiComplex() must return error when termIDs in query
     expect_error(createEnrichMapMultiComplex(
         gostObjectList=list(gostTerm, gostTerm), 
         queryInfo=queryDataFrame, showCategory=30, groupCategory=FALSE, 
-        categoryLabel=1, categoryNode=1, force=FALSE), error_message)
+        categoryLabel=1, categoryNode=1), error_message)
 })
 
 test_that("createEnrichMapMultiComplex() must return error when removeRoot in queryInfo is number", {
@@ -617,7 +604,7 @@ test_that("createEnrichMapMultiComplex() must return error when removeRoot in qu
     expect_error(createEnrichMapMultiComplex(
         gostObjectList=list(gostTerm, gostTerm), 
         queryInfo=queryDataFrame, showCategory=30, groupCategory=FALSE, 
-        categoryLabel=1, categoryNode=1, force=FALSE), error_message, fixed=TRUE)
+        categoryLabel=1, categoryNode=1), error_message, fixed=TRUE)
 })
 
 test_that("createEnrichMapMultiComplex() must return error when query name in queryInfo not in enrichment object", {
@@ -635,7 +622,7 @@ test_that("createEnrichMapMultiComplex() must return error when query name in qu
     expect_error(createEnrichMapMultiComplex(
         gostObjectList=list(gostTerm, gostTerm), 
         queryInfo=queryDataFrame, showCategory=30, groupCategory=FALSE, 
-        categoryLabel=1, categoryNode=1, force=FALSE), error_message, fixed=TRUE)
+        categoryLabel=1, categoryNode=1), error_message, fixed=TRUE)
 })
 
 test_that("createEnrichMapMultiComplex() must return error when TERM_ID in queryInfo but not term ids", {
@@ -652,7 +639,7 @@ test_that("createEnrichMapMultiComplex() must return error when TERM_ID in query
     expect_error(createEnrichMapMultiComplex(
         gostObjectList=list(gostTerm, gostTerm), 
         queryInfo=queryDataFrame, showCategory=30, groupCategory=FALSE, 
-        categoryLabel=1, categoryNode=1, force=FALSE), error_message, fixed=TRUE)
+        categoryLabel=1, categoryNode=1), error_message, fixed=TRUE)
 })
 
 test_that("createEnrichMapMultiComplex() must return error when termIDs column in queryInfo contains numbers", {
@@ -669,7 +656,7 @@ test_that("createEnrichMapMultiComplex() must return error when termIDs column i
     expect_error(createEnrichMapMultiComplex(
         gostObjectList=list(gostTerm, gostTerm), 
         queryInfo=queryDataFrame, showCategory=30, groupCategory=FALSE, 
-        categoryLabel=1, categoryNode=1, force=FALSE), error_message, 
+        categoryLabel=1, categoryNode=1), error_message, 
         fixed=TRUE)
 })
 
@@ -687,7 +674,7 @@ test_that("createEnrichMapMultiComplex() must return error when removeRoot colum
     expect_error(createEnrichMapMultiComplex(
         gostObjectList=list(gostTerm, gostTerm), 
         queryInfo=queryDataFrame, showCategory=30, groupCategory=FALSE, 
-        categoryLabel=1, categoryNode=1, force=FALSE), error_message, 
+        categoryLabel=1, categoryNode=1), error_message, 
         fixed=TRUE)
 })
 
@@ -706,7 +693,7 @@ test_that("createEnrichMapMultiComplex() must return error when groupName column
     expect_error(createEnrichMapMultiComplex(
         gostObjectList=list(gostTerm, gostTerm), 
         queryInfo=queryDataFrame, showCategory=30, groupCategory=FALSE, 
-        categoryLabel=1, categoryNode=1, force=FALSE), error_message, 
+        categoryLabel=1, categoryNode=1), error_message, 
         fixed=TRUE)
 })
 
@@ -725,7 +712,7 @@ test_that("createEnrichMapMultiComplex() must return error when groupName column
     expect_error(createEnrichMapMultiComplex(
         gostObjectList=list(gostTerm, gostTerm), 
         queryInfo=queryDataFrame, showCategory=30, groupCategory=FALSE, 
-        categoryLabel=1, categoryNode=1, force=FALSE), error_message, 
+        categoryLabel=1, categoryNode=1), error_message, 
         fixed=TRUE)
 })
 

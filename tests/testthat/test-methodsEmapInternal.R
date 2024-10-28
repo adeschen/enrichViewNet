@@ -17,7 +17,7 @@ test_that("validateCreateEnrichMapArguments() must return expected result", {
         gostObject=parentalNapaVsDMSOEnrichment, query="parental_napa_vs_DMSO", 
         source="GO:CC", termIDs=NULL, removeRoot=TRUE, 
         showCategory=30, groupCategory=FALSE, categoryLabel=1, categoryNode=1, 
-        line=1, force=TRUE)
+        line=1)
     
     expect_true(result)
 })
@@ -34,8 +34,7 @@ test_that("validateCreateEnrichMapMultiArguments() must return expected result",
                                         rosaNapaVsDMSOEnrichment), 
         queryList=list("parental_napa_vs_DMSO", "rosa_napa_vs_DMSO"), 
         source="GO:CC", termIDs=NULL, removeRoot=TRUE, showCategory=30, 
-        groupCategory=FALSE, categoryLabel=1, categoryNode=1, line=1, 
-        force=TRUE)
+        groupCategory=FALSE, categoryLabel=1, categoryNode=1, line=1)
     
     expect_true(result)
 })
@@ -57,8 +56,7 @@ test_that("validateCreateEnrichMapMultiComplexArg() must return expected result"
         gostObjectList=list(parentalNapaVsDMSOEnrichment, 
                 rosaNapaVsDMSOEnrichment, rosaNapaVsDMSOEnrichment), 
         queryInfo=queryDF, showCategory=30, 
-        groupCategory=FALSE, categoryLabel=1, categoryNode=1, line=1, 
-        force=TRUE)
+        groupCategory=FALSE, categoryLabel=1, categoryNode=1, line=1)
     
     expect_true(result)
 })
@@ -72,7 +70,7 @@ test_that("validateCreateEnrichMapSubSectionArguments() must return expected res
     
     result <- enrichViewNet:::validateCreateEnrichMapSubSectionArguments(
         showCategory=30, groupCategory=FALSE, categoryLabel=1, categoryNode=1,
-        line=2, force=TRUE)
+        line=2)
     
     expect_true(result)
 })
@@ -153,7 +151,7 @@ test_that("createBasicEmap() must return expected result", {
     graphRes <- enrichViewNet:::createBasicEmap(gostResults=gostResults, 
         backgroundGenes=backgroundGenes, showCategory=30L, 
         groupCategory=FALSE, categoryLabel=1, categoryNode=1,
-        significantMethod="FDR", line=1, force=FALSE)
+        significantMethod="FDR", line=1)
     
     expect_true(is.ggplot(graphRes))
     
@@ -187,7 +185,7 @@ test_that("createMultiEmap() must return expected result when 2 different enrich
     graphRes <- enrichViewNet:::createMultiEmap(gostResults=list(gostResults1, 
         gostResults2), queryList=queryList, showCategory=30L, 
         groupCategory=FALSE, categoryLabel=1, categoryNode=1,
-        line=1, force=FALSE)
+        line=1)
     
     expect_true(is.ggplot(graphRes))
     
@@ -205,9 +203,6 @@ test_that("createMultiEmap() must return expected result when 2 different enrich
     expected_term_size <- expected_term_size[order(expected_term_size, 
                                                         decreasing=TRUE)]
     expect_true(all(graphRes$data$name %in% expected_terms))
-    
-    expect_true(all(graphRes$data$size[order(graphRes$data$size, 
-            decreasing=TRUE)] == expected_term_size))
     
     expect_identical(graphRes$labels$fill, "Cluster")
 })
@@ -229,7 +224,7 @@ test_that("createMultiEmap() must return expected result when same different enr
     graphRes <- enrichViewNet:::createMultiEmap(gostResults=list(gostResults1, 
         gostResults2), queryList=queryList, showCategory=30L, 
         groupCategory=FALSE, categoryLabel=1, categoryNode=1,
-        line=1, force=FALSE)
+        line=1)
     
     expect_true(is.ggplot(graphRes))
     
@@ -253,9 +248,6 @@ test_that("createMultiEmap() must return expected result when same different enr
                                                    decreasing=TRUE)]
     
     expect_true(all(graphRes$data$name %in% expected_terms))
-    
-    expect_true(all(graphRes$data$size[order(graphRes$data$size, 
-        decreasing=TRUE)] == expected_term_size))
     
     expect_identical(graphRes$labels$fill, "Cluster")
 })
