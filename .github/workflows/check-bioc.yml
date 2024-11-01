@@ -267,7 +267,7 @@ jobs:
           apt-get update && apt-get -y install rsync
       - name: Deploy pkgdown site to GitHub pages 🚀
         if: github.ref == 'refs/heads/devel' && env.run_pkgdown == 'true' && runner.os == 'Linux'
-        uses: JamesIves/github-pages-deploy-action@releases/v4
+        uses: JamesIves/github-pages-deploy-action@v4.5.0
         with:
           clean: false
           branch: gh-pages
