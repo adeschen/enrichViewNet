@@ -359,6 +359,7 @@ test_that("extractInformationWhenNoIntersection() must return expected text", {
     mirnaData <- demoGOST$result[demoGOST$result$source == "MIRNA", ]
     
     set.seed(121)
+    gprofiler2::set_base_url("https://biit.cs.ut.ee/gprofiler_archive3/e111_eg58_p18")
     result <- enrichViewNet:::extractInformationWhenNoIntersection(
                     gostResults=mirnaData, gostObject=mirnaDemo)
     
