@@ -153,7 +153,7 @@ test_that("createBasicEmap() must return expected result", {
         groupCategory=FALSE, categoryLabel=1, categoryNode=1,
         significantMethod="FDR", line=1)
     
-    expect_true(is.ggplot(graphRes))
+    expect_true(is_ggplot(graphRes))
     
     expect_true(all(graphRes$data$name %in% gostResults$term_name))
     
@@ -187,7 +187,7 @@ test_that("createMultiEmap() must return expected result when 2 different enrich
         groupCategory=FALSE, categoryLabel=1, categoryNode=1,
         line=1)
     
-    expect_true(is.ggplot(graphRes))
+    expect_true(is_ggplot(graphRes))
     
     expected_terms <- c("MAPK signaling pathway", 
         "Transcriptional misregulation in cancer", 
@@ -226,7 +226,7 @@ test_that("createMultiEmap() must return expected result when same different enr
         groupCategory=FALSE, categoryLabel=1, categoryNode=1,
         line=1)
     
-    expect_true(is.ggplot(graphRes))
+    expect_true(is_ggplot(graphRes))
     
     expected_terms <- c("MAPK signaling pathway", 
         "Transcriptional misregulation in cancer", 
