@@ -53,8 +53,9 @@ jobs:
       matrix:
         config:
           - { os: ubuntu-devel, r: '4.6.0', bioc: '3.22', cont: "bioconductor/bioconductor_docker:devel", rspm: "https://packagemanager.posit.co/cran/__linux__/jammy/latest"}
+          - { os: ubuntu-devel, r: '4.5.0', bioc: '3.21', cont: "bioconductor/bioc_full:RELEASE_3_21"}
           - { os: macOS-current, r: '4.5.0', bioc: '3.21'}
-          - { os: windows-current, r: '4.5.0', bioc: '3.21'}
+          - { os: windows-current, r: '4.5', bioc: '3.21'}
           ## Check https://github.com/r-lib/actions/tree/master/examples
           ## for examples using the http-user-agent
     env:
