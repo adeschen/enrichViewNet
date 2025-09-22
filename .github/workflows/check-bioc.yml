@@ -72,9 +72,12 @@ jobs:
       ## R packages cache step further below when running on Docker (Linux).
       - name: Set R Library home on Linux
         if: runner.os == 'Linux'
-        run: |
-          mkdir /__w/_temp/Library
-          echo ".libPaths('/__w/_temp/Library')" > ~/.Rprofile
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: ${{ matrix.config.r }}
+       ## run: |
+       ##   mkdir /__w/_temp/Library
+       ##   echo ".libPaths('/__w/_temp/Library')" > ~/.Rprofile
 
       ## Most of these steps are the same as the ones in
       ## https://github.com/r-lib/actions/blob/master/examples/check-standard.yaml
