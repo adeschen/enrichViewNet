@@ -71,13 +71,13 @@ jobs:
       ## Set the R library to the directory matching the
       ## R packages cache step further below when running on Docker (Linux).
       - name: Set R Library home on Linux
-        if: "runner.os == 'Linux'  && matrix.config.r == '4.5' "
+        if: runner.os == 'Linux'
         uses: r-lib/actions/setup-r@v2
         with:
           r-version: ${{ matrix.config.r }}
-          run: |
-           mkdir /__w/_temp/Library
-           echo ".libPaths('/__w/_temp/Library')" > ~/.Rprofile
+     ##   run: |
+     ##     mkdir -p /__w/_temp/Library
+     ##     echo ".libPaths('/__w/_temp/Library')" > ~/.Rprofile
 
       ## Most of these steps are the same as the ones in
       ## https://github.com/r-lib/actions/blob/master/examples/check-standard.yaml
@@ -87,11 +87,10 @@ jobs:
 
       ## R is already included in the Bioconductor docker images
       - name: Setup R from r-lib
-        if: "runner.os != 'Linux'  && matrix.config.r != '4.5' "
+        if: runner.os != 'Linux'
         uses: r-lib/actions/setup-r@v2
         with:
           r-version: ${{ matrix.config.r }}
-          http-user-agent: ${{ matrix.config.http-user-agent }}
 
       ## pandoc is already included in the Bioconductor docker images
       - name: Setup pandoc from r-lib
