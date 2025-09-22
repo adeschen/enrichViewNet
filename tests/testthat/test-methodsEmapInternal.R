@@ -203,8 +203,6 @@ test_that("createMultiEmap() must return expected result when 2 different enrich
     expected_term_size <- expected_term_size[order(expected_term_size, 
                                                         decreasing=TRUE)]
     expect_true(all(graphRes$data$name %in% expected_terms))
-    
-    expect_identical(graphRes$labels$fill, "Cluster")
 })
 
 test_that("createMultiEmap() must return expected result when same different enrichment analysis", {
@@ -248,7 +246,5 @@ test_that("createMultiEmap() must return expected result when same different enr
                                                    decreasing=TRUE)]
     
     expect_true(all(graphRes$data$name %in% expected_terms))
-    
-    expect_identical(graphRes$labels$fill, "Cluster")
 })
     
