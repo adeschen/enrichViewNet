@@ -5,7 +5,7 @@ library(igraph)
 
 data(demoGOST)
 data(parentalNapaVsDMSOEnrichment)
-
+data(rosaNapaVsDMSOEnrichment)
 
 ### Tests createEnrichMap() results
 
@@ -878,7 +878,6 @@ test_that("createEnrichMapMultiComplexAsIgraph() must return expected result", {
     
     gostObjectList <- list(parentalNapaVsDMSOEnrichment, 
                            parentalNapaVsDMSOEnrichment)
-    queryList <- list("parental_napa_vs_DMSO (1)", "parental_napa_vs_DMSO (2)")
     
     queryData <- data.frame(queryName=c("parental_napa_vs_DMSO", 
                     "parental_napa_vs_DMSO"), source=c("KEGG", "REAC"), 
@@ -895,9 +894,53 @@ test_that("createEnrichMapMultiComplexAsIgraph() must return expected result", {
     
     expect_equal(class(result), "igraph")
     expect_equal(length(igraph::V(result)), 31)
-    expect_equal(length(igraph::E(result)), 126)
+    expect_equal(length(igraph::E(result)), 63)
     expect_equal(igraph::V(result)$size, exp_size)
     expect_equal(names(igraph::vertex.attributes(result)), exp_name)
     expect_equal(names(igraph::edge.attributes(result)), c("similarity", 
                                                                     "width"))
+})
+
+
+test_that("createEnrichMapMultiComplexAsIgraph() must return expected result", {
+    
+    gostObjectList <- list(parentalNapaVsDMSOEnrichment, 
+                                rosaNapaVsDMSOEnrichment)
+    
+    queryData <- data.frame(queryName=c("parental_napa_vs_DMSO", 
+                "rosa_napa_vs_DMSO"), source=c("TERM_ID", "TERM_ID"), 
+                removeRoot=c(TRUE, TRUE), 
+                termIDs=c(c("WP:WP4925,WP:WP3613,WP:WP382,WP:WP395"), 
+                        c("WP:WP4925,WP:WP3613,WP:WP382,WP:WP3287")), 
+                groupName=c("parental - WP", "rosa - WP"), 
+                stringsAsFactors=FALSE)
+    
+    result <- createEnrichMapMultiComplexAsIgraph(gostObjectList=gostObjectList, 
+            queryInfo=queryData, showCategory=20, similarityCutOff=0.3)
+    
+    exp_v_name <- c("Photodynamic therapy-induced unfolded protein response", 
+            "Unfolded protein response", "MAPK signaling pathway", 
+            "IL-4 signaling pathway", "Overview of nanoparticle effects")
+    
+    exp_size <- c(7, 6, 10, 4, 2)
+    exp_name <- c("name",   "size",   "pie",  "cluster", "pieName")
+    
+    exp_pie <- list()
+    exp_pie[[1]] <- c(1, 1)
+    exp_pie[[2]] <- c(1, 1)
+    exp_pie[[3]] <- c(1, 1)
+    exp_pie[[4]] <- c(1, 0)
+    exp_pie[[5]] <- c(0, 1)
+    
+    expect_equal(class(result), "igraph")
+    expect_equal(length(V(result)), 5)
+    expect_equal(V(result)$name, exp_v_name)
+    expect_equal(V(result)$size, exp_size)
+    expect_equal(V(result)$pie, exp_pie)
+    expect_equal(length(E(result)), 1)
+    expect_equal(E(result)$similarity, c(0.625))
+    expect_equal(E(result)$width, c(0.625))
+    expect_equal(names(vertex.attributes(result)), exp_name)
+    expect_equal(names(edge.attributes(result)), c("similarity", 
+                                                                "width"))
 })

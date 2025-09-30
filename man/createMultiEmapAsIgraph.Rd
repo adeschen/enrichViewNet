@@ -26,7 +26,9 @@ associated enrichment results.}
 \code{n} terms will be displayed. If \code{NULL}, 
 all terms will be displayed.}
 
-\item{similarityCutOff}{TODO}
+\item{similarityCutOff}{a positive \code{numeric}, larger than zero and
+small than 1 that represent the minimum similarity level between two 
+nodes (terms) to be linked by an edge.}
 }
 \value{
 a \code{igraph} object representing the enrichment map with 
@@ -59,8 +61,7 @@ queryList <- list("parental - REACTOME", "parental - KEGG - v1",
 igraph <- enrichViewNet:::createMultiEmapAsIgraph(
     gostResultsList=list(gostResultsREAC, gostResultsKEGG, 
             gostResultsKEGG2), 
-    queryList=queryList, showCategory=30L, similarityCutOff=0.5, 
-    cexLine=1.4, colorSet=c("red", "blue", "violet"))
+    queryList=queryList, showCategory=30L, similarityCutOff=0.5)
     
 }
 \author{

@@ -1209,7 +1209,9 @@ createMultiEmap <- function(gostResultsList, queryList, showCategory,
 #' \code{n} terms will be displayed. If \code{NULL}, 
 #' all terms will be displayed.
 #' 
-#' @param similarityCutOff TODO
+#' @param similarityCutOff a positive \code{numeric}, larger than zero and
+#' small than 1 that represent the minimum similarity level between two 
+#' nodes (terms) to be linked by an edge. 
 #' 
 #' @return a \code{igraph} object representing the enrichment map with 
 #' different colors for each group of enrichment results.
@@ -1237,8 +1239,7 @@ createMultiEmap <- function(gostResultsList, queryList, showCategory,
 #' igraph <- enrichViewNet:::createMultiEmapAsIgraph(
 #'     gostResultsList=list(gostResultsREAC, gostResultsKEGG, 
 #'             gostResultsKEGG2), 
-#'     queryList=queryList, showCategory=30L, similarityCutOff=0.5, 
-#'     cexLine=1.4, colorSet=c("red", "blue", "violet"))
+#'     queryList=queryList, showCategory=30L, similarityCutOff=0.5)
 #'     
 #' @author Astrid Deschênes
 #' @encoding UTF-8
@@ -1316,8 +1317,9 @@ createMultiEmapAsIgraph <- function(gostResultsList, queryList, showCategory,
         g <- add_vertices(g, length(attrs$name), attr=attrs)
         
         ## Create igraph with multiple entries
-        ## Get similarity matrix
+        ## Get similarity matrix 
         res <- pairwise_termsim(res, method = "JC") 
+        res@termsim[!lower.tri(res@termsim, diag=FALSE)] <- NA
         
         ## Generated data frame with similarity information
         ## Similarity of zero should be removed
