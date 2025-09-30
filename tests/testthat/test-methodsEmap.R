@@ -1,9 +1,10 @@
 ### Unit tests for methodsEmap.R functions
 
 library(enrichViewNet)
+library(igraph)
 
 data(demoGOST)
-
+data(parentalNapaVsDMSOEnrichment)
 
 
 ### Tests createEnrichMap() results
@@ -512,7 +513,7 @@ test_that("createEnrichMapMultiComplex() must return error when queryInfo shorte
         stringsAsFactors=FALSE)
         
     error_message <- paste0("The number of rows in queryInfo should ", 
-        " correspond to the number of enrichment objects.")
+        "correspond to the number of enrichment objects.")
     
     expect_error(createEnrichMapMultiComplex(
         gostObjectList=list(gostTerm, gostTerm), 
@@ -716,3 +717,187 @@ test_that("createEnrichMapMultiComplex() must return error when groupName column
         fixed=TRUE)
 })
 
+
+### Tests createEnrichMapMultiComplexAsIgraph() results
+
+context("createEnrichMapMultiComplexAsIgraph() results")
+
+test_that("createEnrichMapMultiComplexAsIgraph() must return errore when gostObjectList is numerical list", {
+    
+    gostObjL <- list(33, 22)
+    
+    queryData <- data.frame(queryName=c("parental_napa_vs_DMSO", 
+                        "parental_napa_vs_DMSO"), source=c("KEGG", "REAC"), 
+                        removeRoot=c(TRUE, TRUE), termIDs=c("", ""), 
+                        groupName=c("parental - KEGG", "parental - Reactome"), 
+                        stringsAsFactors=FALSE)
+
+    error_message <- paste0("The gostObjectList should only contain a list ", 
+        "of enrichment results. Enrichment results are lists with meta and ", 
+        "result as entries corresponding to gprofiler2 enrichment output.")
+    
+    expect_error(createEnrichMapMultiComplexAsIgraph(gostObjectList=gostObjL, 
+            queryInfo=queryData, showCategory=20, similarityCutOff=0.25), 
+            error_message=error_message)
+})
+
+test_that("createEnrichMapMultiComplexAsIgraph() must return errore when queryInfo missing the groupName field", {
+    
+    gostObjL <- list(parentalNapaVsDMSOEnrichment, 
+                                    parentalNapaVsDMSOEnrichment)
+    
+    queryData <- data.frame(queryName=c("parental_napa_vs_DMSO", 
+                        "parental_napa_vs_DMSO"), source=c("KEGG", "REAC"), 
+                        removeRoot=c(TRUE, TRUE), termIDs=c("", ""), 
+                        test=c("parental - KEGG", "parental - Reactome"), 
+                        stringsAsFactors=FALSE)
+    
+    error_message <- paste0("The \'groupName\' column of the \'queryInfo\' ", 
+        "data frame should be in a character string format.")
+    
+    expect_error(createEnrichMapMultiComplexAsIgraph(gostObjectList=gostObjL, 
+        queryInfo=queryData, showCategory=20, similarityCutOff=0.25), 
+        error_message=error_message)
+})
+
+test_that("createEnrichMapMultiComplexAsIgraph() must return errore when queryInfo contains more elements than the gostObjectList", {
+    
+    gostObjL <- list(parentalNapaVsDMSOEnrichment, 
+                                parentalNapaVsDMSOEnrichment)
+    
+    queryData <- data.frame(queryName=c("parental_napa_vs_DMSO", 
+        "parental_napa_vs_DMSO", "test"), source=c("KEGG", "REAC", "GO:BP"), 
+        removeRoot=c(TRUE, TRUE, TRUE), termIDs=c("", "", ""), 
+        groupName=c("parental - KEGG", "parental - Reactome", "toto"), 
+        stringsAsFactors=FALSE)
+    
+    error_message <- paste0("The number of rows in queryInfo should", 
+                        " correspond to the number of enrichment objects.")
+    
+    expect_error(createEnrichMapMultiComplexAsIgraph(gostObjectList=gostObjL, 
+        queryInfo=queryData, showCategory=20, similarityCutOff=0.25), 
+        error_message=error_message)
+})
+
+test_that("createEnrichMapMultiComplexAsIgraph() must return errore when showCategory is a string", {
+    
+    gostObjL <- list(parentalNapaVsDMSOEnrichment, 
+                            parentalNapaVsDMSOEnrichment)
+    
+    queryData <- data.frame(queryName=c("parental_napa_vs_DMSO", 
+            "parental_napa_vs_DMSO"), source=c("KEGG", "REAC"), 
+            removeRoot=c(TRUE, TRUE), termIDs=c("", ""), 
+            groupName=c("parental - KEGG", "parental - Reactome"), 
+            stringsAsFactors=FALSE)
+    
+    error_message <- paste0("The \'showCategory\' parameter must an ", 
+                                    "positive integer or NULL.")
+    
+    expect_error(createEnrichMapMultiComplexAsIgraph(gostObjectList=gostObjL, 
+        queryInfo=queryData, showCategory="TEST", similarityCutOff=0.25), 
+        error_message=error_message)
+})
+
+test_that("createEnrichMapMultiComplexAsIgraph() must return errore when showCategory is negative", {
+    
+    gostObjL <- list(parentalNapaVsDMSOEnrichment, 
+                        parentalNapaVsDMSOEnrichment)
+    
+    queryData <- data.frame(queryName=c("parental_napa_vs_DMSO", 
+                    "parental_napa_vs_DMSO"), source=c("KEGG", "REAC"), 
+                    removeRoot=c(TRUE, TRUE), termIDs=c("", ""), 
+                    groupName=c("parental - KEGG", "parental - Reactome"), 
+                    stringsAsFactors=FALSE)
+    
+    error_message <- paste0("The \'showCategory\' parameter must an ", 
+                                    "positive integer or NULL.")
+    
+    expect_error(createEnrichMapMultiComplexAsIgraph(gostObjectList=gostObjL, 
+        queryInfo=queryData, showCategory=-2L, similarityCutOff=0.25), 
+        error_message=error_message)
+})
+
+test_that("createEnrichMapMultiComplexAsIgraph() must return errore when similarityCutOff is a string", {
+    
+    gostObjL <- list(parentalNapaVsDMSOEnrichment, 
+                                parentalNapaVsDMSOEnrichment)
+    
+    queryData <- data.frame(queryName=c("parental_napa_vs_DMSO", 
+        "parental_napa_vs_DMSO"), source=c("KEGG", "REAC"), 
+        removeRoot=c(TRUE, TRUE), termIDs=c("", ""), 
+        groupName=c("parental - KEGG", "parental - Reactome"), 
+        stringsAsFactors=FALSE)
+    
+    error_message <- paste0("The \'similarityCutOff\' parameter must be a ", 
+        "numeric superior to zero and inferior to one.")
+    
+    expect_error(createEnrichMapMultiComplexAsIgraph(gostObjectList=gostObjL, 
+            queryInfo=queryData, showCategory=20L, similarityCutOff="BEST"), 
+            error_message=error_message)
+})
+
+test_that("createEnrichMapMultiComplexAsIgraph() must return errore when similarityCutOff is negative numeric", {
+    
+    gostObjL <- list(parentalNapaVsDMSOEnrichment, 
+                            parentalNapaVsDMSOEnrichment)
+    
+    queryData <- data.frame(queryName=c("parental_napa_vs_DMSO", 
+            "parental_napa_vs_DMSO"), source=c("KEGG", "REAC"), 
+            removeRoot=c(TRUE, TRUE), termIDs=c("", ""), 
+            groupName=c("parental - KEGG", "parental - Reactome"), 
+            stringsAsFactors=FALSE)
+    
+    error_message <- paste0("The \'similarityCutOff\' parameter must be a ", 
+        "numeric superior to zero and inferior to one.")
+    
+    expect_error(createEnrichMapMultiComplexAsIgraph(gostObjectList=gostObjL, 
+        queryInfo=queryData, showCategory=20L, similarityCutOff=-0.1), 
+        error_message=error_message)
+})
+
+test_that("createEnrichMapMultiComplexAsIgraph() must return errore when similarityCutOff is superior to 1", {
+    
+    gostObjL <- list(parentalNapaVsDMSOEnrichment, 
+                            parentalNapaVsDMSOEnrichment)
+    
+    queryData <- data.frame(queryName=c("parental_napa_vs_DMSO", 
+            "parental_napa_vs_DMSO"), source=c("KEGG", "REAC"), 
+            removeRoot=c(TRUE, TRUE), termIDs=c("", ""), 
+            groupName=c("parental - KEGG", "parental - Reactome"), 
+            stringsAsFactors=FALSE)
+    
+    error_message <- paste0("The \'similarityCutOff\' parameter must be a ", 
+        "numeric superior to zero and inferior to one.")
+    
+    expect_error(createEnrichMapMultiComplexAsIgraph(gostObjectList=gostObjL, 
+        queryInfo=queryData, showCategory=20L, similarityCutOff=1.1), 
+                 error_message=error_message)
+})
+
+test_that("createEnrichMapMultiComplexAsIgraph() must return expected result", {
+    
+    gostObjectList <- list(parentalNapaVsDMSOEnrichment, 
+                           parentalNapaVsDMSOEnrichment)
+    queryList <- list("parental_napa_vs_DMSO (1)", "parental_napa_vs_DMSO (2)")
+    
+    queryData <- data.frame(queryName=c("parental_napa_vs_DMSO", 
+                    "parental_napa_vs_DMSO"), source=c("KEGG", "REAC"), 
+                    removeRoot=c(TRUE, TRUE), termIDs=c("", ""), 
+                    groupName=c("parental - KEGG", "parental - Reactome"), 
+                    stringsAsFactors=FALSE)
+    
+    result <- createEnrichMapMultiComplexAsIgraph(gostObjectList=gostObjectList, 
+        queryInfo=queryData, showCategory=20, similarityCutOff=0.25)
+    
+    exp_size <- c(14, 8, 6, 7, 6, 6, 5, 7, 6, 4, 5, 9, 9, 6, 9, 7, 9, 34, 5, 
+                    23, 5, 4, 23, 13, 17, 17, 5, 4, 6, 23, 3)
+    exp_name <- c("name",   "size",   "pie",  "cluster", "pieName")
+    
+    expect_equal(class(result), "igraph")
+    expect_equal(length(igraph::V(result)), 31)
+    expect_equal(length(igraph::E(result)), 126)
+    expect_equal(igraph::V(result)$size, exp_size)
+    expect_equal(names(igraph::vertex.attributes(result)), exp_name)
+    expect_equal(names(igraph::edge.attributes(result)), c("similarity", 
+                                                                    "width"))
+})

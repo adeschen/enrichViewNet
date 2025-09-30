@@ -247,4 +247,29 @@ test_that("createMultiEmap() must return expected result when same different enr
     
     expect_true(all(graphRes$data$name %in% expected_terms))
 })
+
+
+### Tests validateCreateEnrichMapMultiComplexAsIgraphArg() results
+
+context("validateCreateEnrichMapMultiComplexAsIgraphArg() results")
+
+test_that("validateCreateEnrichMapMultiComplexAsIgraphArg() must return expected result", {
+    
+    gostObjectList <- list(parentalNapaVsDMSOEnrichment, 
+                            parentalNapaVsDMSOEnrichment)
+    queryList <- list("parental_napa_vs_DMSO (1)", "parental_napa_vs_DMSO (2)")
+    
+    queryData <- data.frame(queryName=c("parental_napa_vs_DMSO", 
+        "parental_napa_vs_DMSO"), source=c("KEGG", "REAC"), 
+        removeRoot=c(TRUE, TRUE), termIDs=c("", ""), 
+        groupName=c("parental - KEGG", "parental - Reactome"), 
+        stringsAsFactors=FALSE)
+    
+    result <- enrichViewNet:::validateCreateEnrichMapMultiComplexAsIgraphArg(
+        gostObjectList=gostObjectList, queryInfo=queryData, showCategory=20, 
+        similarityCutOff=0.2)
+    
+    expect_true(result)
+})
+
     

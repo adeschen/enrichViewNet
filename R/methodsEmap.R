@@ -32,10 +32,10 @@
 #' @param termIDs a \code{vector} of \code{character} strings that contains the
 #' term IDS retained for the creation of the network. Default: \code{NULL}.
 #' 
-#' @param showCategory a positive \code{integer} or a \code{vector} of 
-#' \code{characters} representing terms.  If a \code{integer}, the first 
-#' \code{n} terms will be displayed. If \code{vector} of terms, 
-#' the selected terms will be displayed. Default: \code{30L}.
+#' @param showCategory a positive \code{integer} representing the maximum 
+#' number of terms to display.  If a \code{integer}, the first 
+#' \code{n} terms will be displayed. If \code{NULL}, all terms  
+#' will be displayed. Default: \code{30L}.
 #' 
 #' @param groupCategory a \code{logical} indicating if the categories should 
 #' be grouped. Default: \code{FALSE}.
@@ -86,6 +86,7 @@ createEnrichMap <- function(gostObject, query, source=c("TERM_ID", "GO:MF",
     source <- match_arg(source, ignore_case=TRUE)
     
     ## Validate parameters
+    ## TODO update showCategory
     validateCreateEnrichMapArguments(gostObject=gostObject, query=query, 
         source=source, termIDs=termIDs, removeRoot=removeRoot, 
         showCategory=showCategory, categoryLabel=categoryLabel,
@@ -128,6 +129,125 @@ createEnrichMap <- function(gostObject, query, source=c("TERM_ID", "GO:MF",
                 significantMethod=significantMethod, line=line,  ...)
     
     return(emap)
+}
+
+
+#' @title Using functional enrichment results in  gprofiler2 format to create  
+#' an enrichment map in an igraph format
+#' 
+#' @description User selected enrichment terms are used to create an enrichment 
+#' map. The selection of the term can by specifying by the 
+#' source of the terms (GO:MF, REAC, TF, etc.) or by listing the selected 
+#' term IDs. The map is only generated when there is at least on 
+#' significant term to graph. The output is an \code{igraph}.
+#' 
+#' @param gostObject a \code{list} corresponding to gprofiler2 enrichment 
+#' output that contains and that contains 
+#' the results from an enrichment analysis.
+#' 
+#' @param query a \code{character} string representing the name of the query 
+#' that is going to be used to generate the graph. The query must exist in the 
+#' \code{gostObject} object.
+#' 
+#' @param source a \code{character} string representing the selected source 
+#' that will be used to generate the network. To hand-pick the terms to be 
+#' used, "TERM_ID" should be used and the list of selected term IDs should
+#' be passed through the \code{termIDs} parameter. The possible sources are 
+#' "GO:BP" for Gene Ontology Biological Process, "GO:CC" for Gene Ontology  
+#' Cellular Component, "GO:MF" for Gene Ontology Molecular Function, 
+#' "KEGG" for Kegg, "REAC" for Reactome, "TF" for TRANSFAC, "MIRNA" for 
+#' miRTarBase, "CORUM" for CORUM database, "HP" for Human phenotype ontology
+#' and "WP" for WikiPathways.  Default: "TERM_ID".
+#' 
+#' @param removeRoot a \code{logical} that specified if the root terms of 
+#' the selected source should be removed (when present). Default: \code{TRUE}.
+#' 
+#' @param termIDs a \code{vector} of \code{character} strings that contains the
+#' term IDS retained for the creation of the network. Default: \code{NULL}.
+#' 
+#' @param showCategory a positive \code{integer} representing the maximum 
+#' number of terms to display.  If a \code{integer}, the first 
+#' \code{n} terms will be displayed. If \code{NULL}, all terms  
+#' will be displayed. Default: \code{30L}.
+#'  
+#' @param similarityCutOff a positive \code{numeric} between 0 and 1 indicating 
+#' the minimum level of similarity between two terms to have an edge linking 
+#' the terms. Default: \code{0.20}.  
+#' 
+#' @param cexLine a non-negative \code{numeric} representing the scale of line 
+#' width for the edges. Default: \code{1}.
+#' 
+#' @return a \code{igraph} object representing enrichment map for the 
+#' selected enrichment results.
+#' 
+#' @examples
+#'
+#' ## Loading dataset containing result from an enrichment analysis done with
+#' ## gprofiler2
+#' data(parentalNapaVsDMSOEnrichment)
+#'
+#' ## Extract query information (only one in this dataset)
+#' query <- unique(parentalNapaVsDMSOEnrichment$result$query)
+#' 
+#' ## Create graph for Gene Ontology - Cellular Component related results
+#' mapG <- createEnrichMapAsIgraph(gostObject=parentalNapaVsDMSOEnrichment, 
+#'     query=query, source="GO:CC", removeRoot=TRUE, 
+#'     showCategory=30L, similarityCutOff=0.20, cexLine=1)
+#' 
+#' ## Required library igraph to show the graph
+#' if(requireNamespace("igraph", quietly=TRUE)) {
+#'     plot(mapG)
+#' }
+#' 
+#' 
+#' @author Astrid Deschênes
+#' @importFrom strex match_arg
+#' @encoding UTF-8
+#' @export
+createEnrichMapAsIgraph <- function(gostObject, query, source=c("TERM_ID", 
+    "GO:MF", "GO:CC", "GO:BP", "KEGG", "REAC", "TF", "MIRNA", "HPA", "CORUM", 
+    "HP", "WP"), termIDs=NULL, removeRoot=TRUE,  
+    showCategory=30L, similarityCutOff=0.20, cexLine=1) {
+    
+    ## Validate source is among the possible choices
+    source <- match_arg(source, ignore_case=TRUE)
+    
+    ## Validate parameters
+    validateCreateEnrichMapAsIgraphArg(gostObject=gostObject, query=query, 
+        source=source, termIDs=termIDs, removeRoot=removeRoot, 
+        showCategory=showCategory, similarityCutOff=similarityCutOff, 
+        cexLine=cexLine)
+    
+    ## Extract results
+    gostResults <- gostObject$result
+    
+    ## Retain results associated to query
+    gostResults <- gostResults[gostResults$query == query,]
+    
+    ## Filter results
+    if (source == "TERM_ID") {
+        gostResults <- gostResults[gostResults$term_id %in% termIDs,]
+    } else {
+        gostResults <- gostResults[gostResults$source == source,]
+    }
+    
+    ## Remove root term if required
+    if (removeRoot) {
+        gostResults <- removeRootTerm(gostResults)
+        if (nrow(gostResults) == 0) {
+            stop("With removal of the root term, there is no ", 
+                    "enrichment term left")
+        }
+    }
+    
+    backgroundGenes <- gostObject$meta$query_metadata$queries[[query]]
+    
+    ## Create basic emap in igraph format
+    emapIgraph <- createBasicEmapAsIgraph(gostResults=gostResults, 
+                backgroundGenes=backgroundGenes, showCategory=showCategory,
+                similarityCutOff=similarityCutOff, cexLine=cexLine)
+    
+    return(emapIgraph)
 }
 
 
@@ -435,3 +555,191 @@ createEnrichMapMultiComplex <- function(gostObjectList, queryInfo,
     
     return(emap)
 }
+
+
+#' @title Using functional enrichment results in gprofiler2 format to create  
+#' an enrichment map with multiple groups from same or different enrichment 
+#' analyses in an igraph format
+#' 
+#' @description User selected enrichment terms are used to create an enrichment 
+#' map. The selection of the term can by specifying by the 
+#' source of the terms (GO:MF, REAC, TF, etc.) or by listing the selected 
+#' term IDs. The map is only generated when there is at least on 
+#' significant term to graph.
+#' 
+#' @param gostObjectList a \code{list} of \code{gprofiler2} objects that 
+#' contain the results from an enrichment analysis. The list must contain at 
+#' least 2 entries. The number of entries must correspond to the number of 
+#' entries for the \code{queryList} parameter.
+#' 
+#' @param queryInfo a \code{data.frame} contains one row per group being 
+#' displayed. The number of rows must correspond to the 
+#' number of entries for the \code{gostObjectList} parameter. 
+#' The mandatory columns are:
+#' \itemize{
+#' \item{\code{queryName}: a \code{character} string representing the name 
+#' of the query retained for this group). The query names must exist in the 
+#' associated \code{gostObjectList} objects and follow the same order. }
+#' \item{\code{source}: a \code{character} string representing the selected 
+#' source that will be used to generate the network. To hand-pick the terms to 
+#' be used, "TERM_ID" should be used and the list of selected term IDs should
+#' be passed through the \code{termIDs} parameter. The possible sources are 
+#' "GO:BP" for Gene Ontology Biological Process, "GO:CC" for Gene Ontology  
+#' Cellular Component, "GO:MF" for Gene Ontology Molecular Function, 
+#' "KEGG" for Kegg, "REAC" for Reactome, "TF" for TRANSFAC, "MIRNA" for 
+#' miRTarBase, "CORUM" for CORUM database, "HP" for Human phenotype ontology
+#' and "WP" for WikiPathways.  Default: "TERM_ID". }
+#' \item{\code{removeRoot}: a \code{logical} that specified if the root terms 
+#' of the selected source should be removed (when present). }
+#' \item{\code{termIDs}: a \code{character} strings that contains the
+#' term IDS retained for the creation of the network separated by a comma ',' 
+#' when the "TERM_ID" source is selected. Otherwise, it should be a empty 
+#' string (""). }
+#' \item{\code{groupName}: a \code{character} strings that contains the 
+#' name of the group to be shown in the legend. Each group has to have a 
+#' unique name. }
+#' }
+#' 
+#' @param showCategory a positive \code{integer} or \code{NULL}. 
+#' If a \code{integer}, the first 
+#' \code{n} terms will be displayed. If \code{NULL}, all terms will be 
+#' displayed. Default: \code{30L}.
+#'
+#' @param similarityCutOff a positive \code{numeric}, larger than zero and
+#' small than 1 that represent the minimum similarity level between two 
+#' nodes (terms) to be linked by an edge. Default: \code{0.2}. 
+#' 
+#' @return a \code{igraph} object which is the enrichment map for enrichment 
+#' results.
+#' 
+#' @examples
+#'
+#' ## Loading dataset containing results from 2 enrichment analyses done with
+#' ## gprofiler2 queries
+#' data(parentalNapaVsDMSOEnrichment)
+#' data(rosaNapaVsDMSOEnrichment)
+#'
+#' ## The graph will be split in 4 groups
+#' ## Groups 1 and 2 are using the parental Napa vs DMSO dataset
+#' ## Group 3 and 4 are using the rosa Napa vs DMSO dataset
+#' gostObjectList=list(parentalNapaVsDMSOEnrichment, 
+#'     parentalNapaVsDMSOEnrichment, rosaNapaVsDMSOEnrichment, 
+#'     rosaNapaVsDMSOEnrichment)
+#'     
+#' ## Create data frame containing required information enabling the 
+#' ## selection of the retained enriched terms for each enrichment analysis.
+#' ## One line per enrichment analyses present in the gostObjectList parameter
+#' ## With this data frame, the enrichment results will be split in 4 groups:
+#' ## 1) KEGG significant terms from parental napa vs DMSO (no root term)
+#' ## 2) REACTOME significant terms from parental napa vs DMSO (no root term)
+#' ## 3) KEGG significant terms from rosa napa vs DMSO (no root term)
+#' ## 4) REACTOME significant terms from rosa napa vs DMSO (no root term)
+#' queryDataFrame <- data.frame(queryName=c("parental_napa_vs_DMSO", 
+#'         "parental_napa_vs_DMSO", "rosa_napa_vs_DMSO", "rosa_napa_vs_DMSO"), 
+#'     source=c("KEGG", "REAC", "KEGG", "REAC"), 
+#'     removeRoot=c(TRUE, TRUE, TRUE, TRUE), termIDs=c("", "", "", ""), 
+#'     groupName=c("parental - KEGG", "parental - Reactome", 
+#'         "rosa - KEGG", "rosa - Reactome"), stringsAsFactors=FALSE)
+#'     
+#' ## Create graph for KEGG and REACTOME significant results from 
+#' ## 2 enrichment analyses in an igraph format
+#' emap <- createEnrichMapMultiComplexAsIgraph(gostObjectList=gostObjectList, 
+#'     queryInfo=queryDataFrame, showCategory=5)
+#' 
+#' if (requireNamespace("ggplot2", quietly=TRUE) && 
+#'         requireNamespace("igraph", quietly=TRUE) && 
+#'         requireNamespace("scatterpie", quietly=TRUE) && 
+#'         requireNamespace("ggtangle", quietly=TRUE) && 
+#'         requireNamespace("ggrepel", quietly=TRUE)) {
+#'     ## Create a visual representation of the enrichment map
+#'     ## by default
+#'     library(igraph)
+#'     plot(emap)
+#'     
+#'     ## Add the pie information in the graph using ggplot
+#'     set.seed(12)
+#'     
+#'     library(ggplot2)
+#'     library(ggtangle)
+#'     library(scatterpie)
+#'     library(ggrepel)
+#'     
+#'     emapG <- ggplot(emap, layout=igraph::layout_with_fr) + 
+#'                 geom_edge(color="gray", linewidth=1)
+#'     
+#'     pieInfo <- as.data.frame(do.call(rbind, V(emap)$pie))
+#'     colnames(pieInfo) <- V(emap)$pieName[[1]]
+#'     
+#'     for (i in seq_len(ncol(pieInfo))) {
+#'         emapG$data[colnames(pieInfo)[i]] <- pieInfo[, i]
+#'     }
+#'     
+#'     emapG + 
+#'         geom_scatterpie(aes(x=x, y=y, r=size/50), 
+#'             cols=c(colnames(pieInfo)), legend_name = "Group", color=NA) +
+#'         geom_scatterpie_legend(radius=emapG$data$size/50, n=4, 
+#'             x=max(emapG$data$x), y=max(emapG$data$y),
+#'             labeller=function(x) {round(x*50)}, label_position="right") +
+#'          geom_text_repel(aes(x=x, y = y, label=label))
+#' }
+#' 
+#' @author Astrid Deschênes
+#' @importFrom gprofiler2 gconvert
+#' @importFrom strex match_arg
+#' @importFrom stringr str_split str_trim
+#' @encoding UTF-8
+#' @export
+createEnrichMapMultiComplexAsIgraph <- function(gostObjectList, queryInfo,  
+    showCategory=30L, similarityCutOff=0.2) {
+    
+    ## Validate parameters
+    validateCreateEnrichMapMultiComplexAsIgraphArg(
+        gostObjectList=gostObjectList, queryInfo=queryInfo, 
+        showCategory=showCategory, similarityCutOff=similarityCutOff)
+    
+    ## Extract results
+    gostResultsList <- lapply(gostObjectList, FUN=function(x) {x$result})
+    
+    ## Retain results associated to query
+    gostResultsList <- lapply(seq_len(length(gostObjectList)), 
+            FUN=function(i, queryI, gostL) {
+                    gostL[[i]][gostL[[i]]$query == queryI$queryName[[i]], ]}, 
+                    queryI=queryInfo, gostL=gostResultsList)
+    
+    ## Filter results
+    gostResultsList <- lapply(seq_len(length(gostObjectList)), 
+        FUN=function(i, queryI, gostL) {
+            if (queryI$source[i] == "TERM_ID") {
+                    terms <- unlist(str_split(queryI$termIDs[i], ","))
+                    terms <- str_trim(terms)
+                    return(gostL[[i]][gostL[[i]]$term_id %in% terms, ])
+            } else {
+                    return(gostL[[i]][gostL[[i]]$source == queryI$source[i], ])
+            }
+        }, queryI=queryInfo, gostL=gostResultsList)
+    
+    ## Remove root terms when requested
+    gostResultsList <- lapply(seq_len(length(gostObjectList)), 
+            FUN=function(i, queryI, gostL) {
+                if (queryI$removeRoot[i]) {
+                    return(removeRootTerm(gostL[[i]]))
+                } else {
+                    return(gostL[[i]])
+                }
+        }, queryI=queryInfo, gostL=gostResultsList)
+    
+    ## Validate that at least one term is left
+    if (sum(unlist(lapply(gostResultsList,  FUN=function(x) {nrow(x)})))
+        == 0) {
+        stop("With removal of the root term, there is no ",
+                "enrichment term left")
+    }
+    
+    ## Create multi categories emap in a igraph format
+    emap <- createMultiEmapAsIgraph(gostResultsList=gostResultsList, 
+        queryList=queryInfo$groupName, showCategory=showCategory, 
+        similarityCutOff=similarityCutOff)
+    
+    return(emap)
+}
+
