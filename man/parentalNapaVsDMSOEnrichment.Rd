@@ -79,6 +79,9 @@ createEnrichMap(gostObject=parentalNapaVsDMSOEnrichment,
     enrichment results from gprofiler2 into a Cytoscape network}
     \item{\link{createEnrichMap} for transforming functional 
     enrichment results from gprofiler2 into an enrichment map}
+    \item{\link{createEnrichMapAsIgraph} for transforming functional 
+    enrichment results from gprofiler2 into an enrichment map in a igraph 
+    format}
 }
 }
 \keyword{datasets}

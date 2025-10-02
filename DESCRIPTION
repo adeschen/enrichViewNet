@@ -49,6 +49,7 @@ Suggests:
     ggtangle,
     ggrepel,
     testthat,
+    ggnetwork,
     magick
 biocViews: BiologicalQuestion, 
     Software,

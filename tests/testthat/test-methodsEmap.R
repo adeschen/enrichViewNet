@@ -722,7 +722,7 @@ test_that("createEnrichMapMultiComplex() must return error when groupName column
 
 context("createEnrichMapMultiComplexAsIgraph() results")
 
-test_that("createEnrichMapMultiComplexAsIgraph() must return errore when gostObjectList is numerical list", {
+test_that("createEnrichMapMultiComplexAsIgraph() must return error when gostObjectList is numerical list", {
     
     gostObjL <- list(33, 22)
     
@@ -741,7 +741,7 @@ test_that("createEnrichMapMultiComplexAsIgraph() must return errore when gostObj
             error_message=error_message)
 })
 
-test_that("createEnrichMapMultiComplexAsIgraph() must return errore when queryInfo missing the groupName field", {
+test_that("createEnrichMapMultiComplexAsIgraph() must return error when queryInfo missing the groupName field", {
     
     gostObjL <- list(parentalNapaVsDMSOEnrichment, 
                                     parentalNapaVsDMSOEnrichment)
@@ -760,7 +760,7 @@ test_that("createEnrichMapMultiComplexAsIgraph() must return errore when queryIn
         error_message=error_message)
 })
 
-test_that("createEnrichMapMultiComplexAsIgraph() must return errore when queryInfo contains more elements than the gostObjectList", {
+test_that("createEnrichMapMultiComplexAsIgraph() must return error when queryInfo contains more elements than the gostObjectList", {
     
     gostObjL <- list(parentalNapaVsDMSOEnrichment, 
                                 parentalNapaVsDMSOEnrichment)
@@ -779,7 +779,7 @@ test_that("createEnrichMapMultiComplexAsIgraph() must return errore when queryIn
         error_message=error_message)
 })
 
-test_that("createEnrichMapMultiComplexAsIgraph() must return errore when showCategory is a string", {
+test_that("createEnrichMapMultiComplexAsIgraph() must return error when showCategory is a string", {
     
     gostObjL <- list(parentalNapaVsDMSOEnrichment, 
                             parentalNapaVsDMSOEnrichment)
@@ -798,7 +798,7 @@ test_that("createEnrichMapMultiComplexAsIgraph() must return errore when showCat
         error_message=error_message)
 })
 
-test_that("createEnrichMapMultiComplexAsIgraph() must return errore when showCategory is negative", {
+test_that("createEnrichMapMultiComplexAsIgraph() must return error when showCategory is negative", {
     
     gostObjL <- list(parentalNapaVsDMSOEnrichment, 
                         parentalNapaVsDMSOEnrichment)
@@ -817,7 +817,7 @@ test_that("createEnrichMapMultiComplexAsIgraph() must return errore when showCat
         error_message=error_message)
 })
 
-test_that("createEnrichMapMultiComplexAsIgraph() must return errore when similarityCutOff is a string", {
+test_that("createEnrichMapMultiComplexAsIgraph() must return error when similarityCutOff is a string", {
     
     gostObjL <- list(parentalNapaVsDMSOEnrichment, 
                                 parentalNapaVsDMSOEnrichment)
@@ -836,7 +836,7 @@ test_that("createEnrichMapMultiComplexAsIgraph() must return errore when similar
             error_message=error_message)
 })
 
-test_that("createEnrichMapMultiComplexAsIgraph() must return errore when similarityCutOff is negative numeric", {
+test_that("createEnrichMapMultiComplexAsIgraph() must return error when similarityCutOff is negative numeric", {
     
     gostObjL <- list(parentalNapaVsDMSOEnrichment, 
                             parentalNapaVsDMSOEnrichment)
@@ -855,7 +855,7 @@ test_that("createEnrichMapMultiComplexAsIgraph() must return errore when similar
         error_message=error_message)
 })
 
-test_that("createEnrichMapMultiComplexAsIgraph() must return errore when similarityCutOff is superior to 1", {
+test_that("createEnrichMapMultiComplexAsIgraph() must return error when similarityCutOff is superior to 1", {
     
     gostObjL <- list(parentalNapaVsDMSOEnrichment, 
                             parentalNapaVsDMSOEnrichment)
@@ -942,4 +942,67 @@ test_that("createEnrichMapMultiComplexAsIgraph() must return expected result", {
     expect_equal(E(result)$width, c(0.625))
     expect_equal(names(vertex.attributes(result)), exp_name)
     expect_equal(names(edge.attributes(result)), c("similarity", "width"))
+})
+
+
+### Tests createEnrichMapAsIgraph() results
+
+context("createEnrichMapAsIgraph() results")
+
+test_that("createEnrichMapAsIgraph() must return error when gostObjectList is numerical list", {
+    
+    gostObjL <- list(33, 22)
+    
+    queryData <- "parental_napa_vs_DMSO"
+    
+    error_message <- paste0("The gostObject object should be a list with ", 
+        "meta and result as entries corresponding to gprofiler2 enrichment ", 
+        "output.")
+    
+    expect_error(createEnrichMapAsIgraph(gostObject=gostObjL, 
+        query=queryData, showCategory=20, source="GO:CC", 
+        similarityCutOff=0.25), error_message=error_message)
+})
+
+test_that("createEnrichMapAsIgraph() must return error when similarityCutOff is superior to 1", {
+    
+    gostObjL <- parentalNapaVsDMSOEnrichment
+    
+    queryData <- "parental_napa_vs_DMSO"
+    
+    error_message <- paste0("The \'similarityCutOff\' parameter must be a ", 
+        "numeric superior to zero and inferior to one.")
+    
+    expect_error(createEnrichMapAsIgraph(gostObject=gostObjL, 
+        query=queryData, showCategory=20L, source="GO:CC", removeRoot=TRUE, 
+        similarityCutOff=1.1), error_message=error_message)
+})
+
+test_that("createEnrichMapAsIgraph() must return error when similarityCutOff is inferior to zero", {
+    
+    gostObjL <- parentalNapaVsDMSOEnrichment
+    
+    queryData <- "parental_napa_vs_DMSO"
+    
+    error_message <- paste0("The \'similarityCutOff\' parameter must be a ", 
+                        "numeric superior to zero and inferior to one.")
+    
+    expect_error(createEnrichMapAsIgraph(gostObject=gostObjL, 
+        query=queryData, showCategory=20L, source="GO:CC", removeRoot=TRUE, 
+        similarityCutOff=-0.01), error_message=error_message)
+})
+
+
+test_that("createEnrichMapAsIgraph() must return error when removeRoot is s string", {
+    
+    gostObjL <- parentalNapaVsDMSOEnrichment
+    
+    queryData <- "parental_napa_vs_DMSO"
+    
+    error_message <- paste0("The \'removeRoot\' parameter must a ", 
+                        "logical (TRUE or FALSE).)")
+    
+    expect_error(createEnrichMapAsIgraph(gostObject=gostObjL, 
+        query=queryData, showCategory=20L, source="GO:CC", removeRoot="test", 
+        similarityCutOff=0.1), error_message=error_message, fixed=TRUE)
 })

@@ -167,7 +167,7 @@ validateCreateEnrichMapArguments <- function(gostObject, query, source,
 #' ## Check that all arguments are valid
 #' enrichViewNet:::validateCreateEnrichMapAsIgraphArg(
 #'     gostObject=demoGOST, query="query_1", source="GO:BP", termIDs=NULL, 
-#'     removeRoot=FALSE, showCategory=20, similarityCutOff=0.5, cexLine=1.2)
+#'     removeRoot=FALSE, showCategory=20, similarityCutOff=0.5)
 #' 
 #' @author Astrid Deschênes
 #' @encoding UTF-8
@@ -212,10 +212,20 @@ validateCreateEnrichMapAsIgraphArg <- function(gostObject, query, source,
         }
     }
     
+    if (!is.logical(removeRoot)) {
+        stop("The \'removeRoot\' parameter must a logical (TRUE or FALSE).")
+    }
+    
     if (!is.null(showCategory) && 
         !(is.numeric(showCategory) && (showCategory > 0))) {
         stop("The \'showCategory\' parameter must an positive integer or", 
                 " NULL.")
+    }
+    
+    if (!is.numeric(similarityCutOff) || (similarityCutOff <= 0.0) || 
+        (similarityCutOff >= 1.0)) {
+        stop("The \'similarityCutOff\' parameter must be a numeric superior",  
+             " to zero and inferior to one.")
     }
     
     return(TRUE)     

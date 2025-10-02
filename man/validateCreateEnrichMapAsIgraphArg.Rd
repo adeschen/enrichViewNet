@@ -69,7 +69,7 @@ data(demoGOST)
 ## Check that all arguments are valid
 enrichViewNet:::validateCreateEnrichMapAsIgraphArg(
     gostObject=demoGOST, query="query_1", source="GO:BP", termIDs=NULL, 
-    removeRoot=FALSE, showCategory=20, similarityCutOff=0.5, cexLine=1.2)
+    removeRoot=FALSE, showCategory=20, similarityCutOff=0.5)
 
 }
 \author{
