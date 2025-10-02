@@ -1061,6 +1061,22 @@ test_that("createEnrichMapAsIgraph() must return error when not all listed terms
         fixed=TRUE)
 })
 
+test_that("createEnrichMapAsIgraph() must return error when query not in enrichment object", {
+    
+    gostObjL <- parentalNapaVsDMSOEnrichment
+    
+    queryData <- "ttee"
+    
+    errorM <- paste0("The 'query' is not present in the results of the", 
+                        " gost object.")
+    
+    expect_error(createEnrichMapAsIgraph(gostObject=gostObjL, 
+        query=queryData, showCategory=NULL, source="TERM_ID",
+        termIDs=c("WP:WP3613,REAC:R-HSA-9614085,GO:0008140"), 
+        removeRoot=TRUE, similarityCutOff=0.1), error_message=errorM, 
+        fixed=TRUE)
+})
+
 test_that("createEnrichMapAsIgraph() must return expected result", {
     
     gostObjL <- parentalNapaVsDMSOEnrichment
