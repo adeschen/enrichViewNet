@@ -265,11 +265,46 @@ test_that("validateCreateEnrichMapMultiComplexAsIgraphArg() must return expected
         groupName=c("parental - KEGG", "parental - Reactome"), 
         stringsAsFactors=FALSE)
     
-    result <- enrichViewNet:::validateCreateEnrichMapMultiComplexAsIgraphArg(
+    expect_true(enrichViewNet:::validateCreateEnrichMapMultiComplexAsIgraphArg(
         gostObjectList=gostObjectList, queryInfo=queryData, showCategory=20, 
-        similarityCutOff=0.2)
-    
-    expect_true(result)
+        similarityCutOff=0.2))
 })
+
+
+### Tests similarityJaccard() results
+
+context("similarityJaccard() results")
+
+test_that("similarityJaccard() must return expected result", {
+    
+    resultData <- data.frame(Description=c("Term 1", "Term 2", "Term 3",
+                                            "Term 4", "Term 5"), 
+            geneID=c(
+                paste0("ENSG001/ENSG002/ENSG003/ENSG004/ENSG005"), 
+                paste0("ENSG001/ENSG002/ENSG003"),
+                paste0("ENSG011/ENSG012/ENSG013"),
+                paste0("ENSG001/ENSG002/ENSG003"),
+                paste0("ENSG003/ENSG006/ENSG007/ENSG008/ENSG011")))
+    
+    exp <- matrix(data=NA, ncol=5, nrow=5)
+    exp[2,1] <- 3.0/5.0
+    exp[3,1] <- 0.0
+    exp[3,2] <- 0.0
+    exp[4,1] <- 3.0/5.0
+    exp[4,2] <- 1.0
+    exp[4,3] <- 0.0
+    exp[5,1] <- 1.0/9.0
+    exp[5,2] <- 1.0/7.0
+    exp[5,3] <- 1.0/7.0
+    exp[5,4] <- 1.0/7.0
+    
+    colnames(exp) <- c("Term 1", "Term 2", "Term 3", "Term 4", "Term 5")
+    rownames(exp) <- c("Term 1", "Term 2", "Term 3", "Term 4", "Term 5")
+     
+    result <- enrichViewNet:::similarityJaccard(resultDF=resultData)
+    
+    expect_equivalent(result, exp)
+})
+
 
     

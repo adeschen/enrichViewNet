@@ -66,7 +66,6 @@
 #' @author Astrid Deschênes
 #' @encoding UTF-8
 #' @importFrom methods is
-#' @importFrom stringr str_ends
 #' @keywords internal
 validateCreateEnrichMapArguments <- function(gostObject, query, source, 
         termIDs, removeRoot, showCategory, groupCategory, 
@@ -176,7 +175,6 @@ validateCreateEnrichMapArguments <- function(gostObject, query, source,
 #' @author Astrid Deschênes
 #' @encoding UTF-8
 #' @importFrom methods is
-#' @importFrom stringr str_ends
 #' @keywords internal
 validateCreateEnrichMapAsIgraphArg <- function(gostObject, query, source, 
         termIDs, removeRoot, showCategory, similarityCutOff, cexLine) {
@@ -307,7 +305,6 @@ validateCreateEnrichMapAsIgraphArg <- function(gostObject, query, source,
 #' @author Astrid Deschênes
 #' @encoding UTF-8
 #' @importFrom methods is
-#' @importFrom stringr str_ends
 #' @keywords internal
 validateCreateEnrichMapMultiArguments <- function(gostObjectList, queryList, 
     source, termIDs, removeRoot, showCategory, groupCategory, 
@@ -462,7 +459,10 @@ validateCreateEnrichMapMultiArguments <- function(gostObjectList, queryList,
 validateCreateEnrichMapMultiComplexArg <- function(gostObjectList, queryInfo, 
     showCategory, groupCategory, categoryLabel, categoryNode, line) {
     
-    validateCreateEnrichMapMultiComplexGostSection(
+    validateCreateEnrichMapMultiComplexGostPartOne(
+        gostObjectList=gostObjectList, queryInfo=queryInfo)
+    
+    validateCreateEnrichMapMultiComplexGostPartTwo(
         gostObjectList=gostObjectList, queryInfo=queryInfo)
     
     result <- validateCreateEnrichMapSubSectionArguments(
@@ -549,7 +549,10 @@ validateCreateEnrichMapMultiComplexArg <- function(gostObjectList, queryInfo,
 validateCreateEnrichMapMultiComplexAsIgraphArg <- function(gostObjectList, 
         queryInfo, showCategory, similarityCutOff=similarityCutOff) {
     
-    validateCreateEnrichMapMultiComplexGostSection(
+    validateCreateEnrichMapMultiComplexGostPartOne(
+        gostObjectList=gostObjectList, queryInfo=queryInfo)
+    
+    validateCreateEnrichMapMultiComplexGostPartTwo(
         gostObjectList=gostObjectList, queryInfo=queryInfo)
     
     if (!is.null(showCategory) && 
@@ -566,6 +569,7 @@ validateCreateEnrichMapMultiComplexAsIgraphArg <- function(gostObjectList,
     
     return(TRUE)   
 }
+
 
 #' @title Validate arguments related to GOST passed to 
 #' validateCreateEnrichMapMultiComplexArg() function
@@ -625,7 +629,7 @@ validateCreateEnrichMapMultiComplexAsIgraphArg <- function(gostObjectList,
 #'     stringsAsFactors=FALSE)
 #' 
 #' ## Check that all arguments are valid
-#' enrichViewNet:::validateCreateEnrichMapMultiComplexGostSection(
+#' enrichViewNet:::validateCreateEnrichMapMultiComplexGostPartOne(
 #'     gostObjectList=list(parentalNapaVsDMSOEnrichment, 
 #'                             rosaNapaVsDMSOEnrichment),
 #'     queryInfo=queryDataFrame)
@@ -633,25 +637,25 @@ validateCreateEnrichMapMultiComplexAsIgraphArg <- function(gostObjectList,
 #' @author Astrid Deschênes
 #' @encoding UTF-8
 #' @importFrom methods is
-#' @importFrom stringr str_ends
 #' @keywords internal
-validateCreateEnrichMapMultiComplexGostSection <- function(gostObjectList, 
+validateCreateEnrichMapMultiComplexGostPartOne <- function(gostObjectList, 
     queryInfo) {
+    
     
     ## Test that gostObject is a list with minimum of 2 entries
     if (!inherits(gostObjectList, "list") || !(length(gostObjectList) > 1)) {
         stop("The gostObjectList object should be a list of enrichment", 
-             " objects. At least 2 enrichment objects are required.")
+                " objects. At least 2 enrichment objects are required.")
     }
     
     ## Test that gostObject is a list of gprofiler2 result 
     if (!(all(unlist(lapply(gostObjectList, is.list))) && 
           all(unlist(lapply(gostObjectList, FUN = function(x) {
-              "result" %in% names(x) && "meta" %in% names(x)})))))   {
+                "result" %in% names(x) && "meta" %in% names(x)})))))   {
         stop("The gostObjectList should only contain a list of enrichment ", 
-             "results. Enrichment results are lists with meta ", 
-             "and result as entries corresponding to gprofiler2 ", 
-             "enrichment output.")
+                "results. Enrichment results are lists with meta ", 
+                "and result as entries corresponding to gprofiler2 ", 
+                "enrichment output.")
     } 
     
     ## Test that queryInfo is a data.frame
@@ -673,12 +677,86 @@ validateCreateEnrichMapMultiComplexGostSection <- function(gostObjectList,
                 "should be in a character string format.")
     }
     
+    return(TRUE)   
+}
+
+
+#' @title Validate arguments related to GOST passed to 
+#' validateCreateEnrichMapMultiComplexArg() function
+#' 
+#' @description Validate the arguments passed to 
+#' validateCreateEnrichMapMultiComplexArg() function.
+#' First, the object containing the enrichment results must correspond to a 
+#' object created by  \code{gprofiler2} software. Second, the selected 
+#' source must at least have one enriched term in the results. Then, if the
+#' source is 'TERM_ID', the listed terms must be present in the enrichment
+#' results.
+#' 
+#' @param gostObjectList a \code{list} of \code{gprofiler2} objects that 
+#' contain the results from an enrichment analysis. The list must contain at 
+#' least 2 entries. The number of entries must correspond to the number of 
+#' entries for the \code{queryList} parameter.
+#' 
+#' @param queryInfo a \code{data.frame} contains one row per group being 
+#' displayed. The number of rows must correspond to the 
+#' number of entries for the \code{gostObjectList} parameter. 
+#' The mandatory columns are:
+#' \itemize{
+#' \item{\code{queryName}: a \code{character} string representing the name 
+#' of the query retained for this group). The query names must exist in the 
+#' associated \code{gostObjectList} objects and follow the same order. }
+#' \item{\code{source}: a \code{character} string representing the selected 
+#' source that will be used to generate the network. To hand-pick the terms to 
+#' be used, "TERM_ID" should be used and the list of selected term IDs should
+#' be passed through the \code{termIDs} parameter. The possible sources are 
+#' "GO:BP" for Gene Ontology Biological Process, "GO:CC" for Gene Ontology  
+#' Cellular Component, "GO:MF" for Gene Ontology Molecular Function, 
+#' "KEGG" for Kegg, "REAC" for Reactome, "TF" for TRANSFAC, "MIRNA" for 
+#' miRTarBase, "CORUM" for CORUM database, "HP" for Human phenotype ontology
+#' and "WP" for WikiPathways.  Default: "TERM_ID". }
+#' \item{\code{removeRoot}: a \code{logical} that specified if the root terms 
+#' of the selected source should be removed (when present). }
+#' \item{\code{termIDs}: a \code{character} strings that contains the
+#' term IDS retained for the creation of the network separated by a comma ',' 
+#' when the "TERM_ID" source is selected. Otherwise, it should be a empty 
+#' string (""). }
+#' \item{\code{groupName}: a \code{character} strings that contains the 
+#' name of the group to be shown in the legend. Each group has to have a 
+#' unique name. }
+#' }
+#' 
+#' @return \code{TRUE} when all arguments are valid
+#' 
+#' @examples
+#'
+#' ## Load the result of an enrichment analysis done with gprofiler2
+#' data(parentalNapaVsDMSOEnrichment)
+#' data(rosaNapaVsDMSOEnrichment)
+#' 
+#' queryDataFrame <- data.frame(queryName=c("parental_napa_vs_DMSO", 
+#'     "rosa_napa_vs_DMSO"), source=c("KEGG", "WP"), removeRoot=c(TRUE, TRUE),
+#'     termIDs=c("", ""), groupName=c("parental - KEGG", "rosa - WP"), 
+#'     stringsAsFactors=FALSE)
+#' 
+#' ## Check that all arguments are valid
+#' enrichViewNet:::validateCreateEnrichMapMultiComplexGostPartTwo(
+#'     gostObjectList=list(parentalNapaVsDMSOEnrichment, 
+#'                             rosaNapaVsDMSOEnrichment),
+#'     queryInfo=queryDataFrame)
+#' 
+#' @author Astrid Deschênes
+#' @encoding UTF-8
+#' @importFrom methods is
+#' @keywords internal
+validateCreateEnrichMapMultiComplexGostPartTwo <- function(gostObjectList, 
+                queryInfo) {
+    
     ## Test that the source values are valid choices in queryInfo data frame
     sources <- c("TERM_ID", "GO:MF", "GO:CC", "GO:BP", "KEGG", "REAC", "TF", 
-                 "MIRNA", "HPA", "CORUM", "HP", "WP")
+                    "MIRNA", "HPA", "CORUM", "HP", "WP")
     if (!all(unlist(lapply(seq_len(nrow(queryInfo)), FUN=function(x, queryI, 
-                    sourcesL){ queryI$source[x] %in% sourcesL}, 
-                           queryI=queryInfo, sourcesL=sources)))) {
+                sourcesL){ queryI$source[x] %in% sourcesL}, 
+                            queryI=queryInfo, sourcesL=sources)))) {
         stop("The values in the \'source\' column of the \'queryInfo\' ", 
                 "data frame should be one of those: \"TERM_ID\", \"GO:MF\", ", 
                 "\"GO:CC\", \"GO:BP\", \"KEGG\", \"REAC\", \"TF\", ",
@@ -694,42 +772,42 @@ validateCreateEnrichMapMultiComplexGostSection <- function(gostObjectList,
     ## Test that source should be character string
     if (!is.character(queryInfo$termIDs)) {
         stop("The \'termIDs'\ column of the \'queryInfo\' data frame ", 
-             "should be in a character string format.")
+                "should be in a character string format.")
     }
     
     ## Test that removeRoot should be logical
     if (!is.logical(queryInfo$removeRoot)) {
         stop("The \'removeRoot'\ column of the \'queryInfo\' data frame ", 
-             "should only contain logical values (TRUE or FALSE).")
+                "should only contain logical values (TRUE or FALSE).")
     }
     
     ## Test that the query names are present in the associated enrichment
     if (!all(unlist(lapply(seq_len(nrow(queryInfo)), FUN = function(x, queryI, 
-            gostL) {res <- as.data.frame(gostL[[x]]$result); 
-            queryI$queryName[x] %in% unique(res$query)}, 
-            queryI=queryInfo, gostL=gostObjectList)))) {
+                gostL) {res <- as.data.frame(gostL[[x]]$result); 
+                            queryI$queryName[x] %in% unique(res$query)}, 
+                            queryI=queryInfo, gostL=gostObjectList)))) {
         stop("Each query name present in the \'queryName'\ column of the ", 
-             "\'queryInfo\' data frame must be present in the ", 
-             "associated enrichment object.")
+                "\'queryInfo\' data frame must be present in the ", 
+                "associated enrichment object.")
     }
     
     if (length(which(queryInfo$source == "TERM_ID"))) {
         if(!all(unlist(lapply(which(queryInfo$source == "TERM_ID"), 
-                              FUN=function(i, queryI) {queryI$termIDs[i] != ""}, 
-                              queryI=queryInfo)))) {
+                FUN=function(i, queryI) {queryI$termIDs[i] != ""}, 
+                                queryI=queryInfo)))) {
             stop("A string of terms should be present in the ",
-                 "\'termIDs\' column when source is \'TERM_ID\'.")
+                     "\'termIDs\' column when source is \'TERM_ID\'.")
         }
     }
     
     if (!is.character(queryInfo$groupName)) {
         stop("The \'groupName'\ column of the \'queryInfo\' data frame ", 
-             "should be in a character string format.")
+                "should be in a character string format.")
     }
     
     if (any(table(queryInfo$groupName) > 1)) {
         stop("The \'groupName'\ column of the \'queryInfo\' data frame ", 
-             "should only contain unique group names.")
+                "should only contain unique group names.")
     }
     
     return(TRUE)   
@@ -772,7 +850,6 @@ validateCreateEnrichMapMultiComplexGostSection <- function(gostObjectList,
 #' @author Astrid Deschênes
 #' @encoding UTF-8
 #' @importFrom methods is
-#' @importFrom stringr str_ends
 #' @keywords internal
 validateCreateEnrichMapSubSectionArguments <- function(showCategory, 
     groupCategory, categoryLabel, categoryNode, line) {
@@ -1129,7 +1206,7 @@ createBasicEmapAsIgraph <- function(gostResults, backgroundGenes,
 #' @author Astrid Deschênes
 #' @encoding UTF-8
 #' @importFrom methods is new
-#' @importFrom stringr str_ends str_split str_replace_all
+#' @importFrom stringr str_split str_replace_all
 #' @importFrom enrichplot pairwise_termsim emapplot
 #' @importClassesFrom DOSE compareClusterResult
 #' @keywords internal
@@ -1159,12 +1236,12 @@ createMultiEmap <- function(gostResultsList, queryList, showCategory,
         resF[[i]] <- resultDF
         
         geneClusters[[queryList[[i]]]] <- 
-            unique(unlist(stringr::str_split(gostResults$intersection, ",")))
+            unique(unlist(str_split(gostResults$intersection, ",")))
     }
     clProfDF <- do.call(rbind, resF)
     
     clProfDF$Cluster  <- factor(clProfDF$Cluster)
-    clProfDF$geneID <- stringr::str_replace_all(string = clProfDF$geneID,
+    clProfDF$geneID <- str_replace_all(string = clProfDF$geneID,
                                                 pattern = ",", "/") 
     
     ## Problem when identical description 
@@ -1181,11 +1258,10 @@ createMultiEmap <- function(gostResultsList, queryList, showCategory,
     res@keytype <- "UNKNOWN"
     res@readable <- FALSE
     
-    kegg_compar <- pairwise_termsim(res)  
+    compar <- pairwise_termsim(res)  
     
-    graphEmap <- emapplot(kegg_compar, 
-        showCategory=showCategory, group=groupCategory,
-        size_category=categoryNode, size_edge=line, ...)
+    graphEmap <- emapplot(compar, showCategory=showCategory, 
+        group=groupCategory, size_category=categoryNode, size_edge=line, ...)
     
     return(graphEmap)
 }
@@ -1243,17 +1319,14 @@ createMultiEmap <- function(gostResultsList, queryList, showCategory,
 #'     
 #' @author Astrid Deschênes
 #' @encoding UTF-8
-#' @importFrom stringr str_ends str_split str_replace_all
-#' @importFrom enrichplot pairwise_termsim 
-#' @importClassesFrom DOSE compareClusterResult
+#' @importFrom stringr str_replace_all
 #' @importFrom igraph delete_edges V E add_edges V<-
 #' @keywords internal
 createMultiEmapAsIgraph <- function(gostResultsList, queryList, showCategory, 
                 similarityCutOff) {
     
-    res <- createCompareClusterResultObject(queryList=queryList, 
+    result <- createCompareResultDataFrame(queryList=queryList, 
                                     gostResultsList=gostResultsList)
-    result <- as.data.frame(res)
     
     ## Limit the number of categories if specified by user
     ## Keep best results with best p-values
@@ -1318,12 +1391,11 @@ createMultiEmapAsIgraph <- function(gostResultsList, queryList, showCategory,
         
         ## Create igraph with multiple entries
         ## Get similarity matrix 
-        res <- pairwise_termsim(res, method = "JC") 
-        res@termsim[!lower.tri(res@termsim, diag=FALSE)] <- NA
+        res <- similarityJaccard(resultDF)
         
         ## Generated data frame with similarity information
         ## Similarity of zero should be removed
-        simData <- melt(res@termsim[as.character(resultDF$Description), 
+        simData <- melt(res[as.character(resultDF$Description), 
                         as.character(resultDF$Description)], na.rm=TRUE, 
                         value.name="similarity")
         simData <- simData[which(simData[,1] != simData[,2]), ]
@@ -1345,6 +1417,72 @@ createMultiEmapAsIgraph <- function(gostResultsList, queryList, showCategory,
     }
     
     return(g)   
+}
+
+
+#' @title Calculate the Jaccard similarity coefficient for the terms present
+#' in a data frame
+#' 
+#' @description The function calculates the Jaccard similarity coefficient for 
+#' the enriched terms present i a data frame.  
+#' 
+#' @param resultDF a \code{data.frame} containing the enrichment 
+#' terms that are going to be graphed as an enrichment map. The 
+#' \code{data.frame} must contain the \code{geneID} and \code{Description} 
+#' columns.
+#' 
+#' @return a \code{matrix} with the lower triangle section containing the 
+#' Jaccard similarity coefficients as \code{numeric}. The upper triangle 
+#' section is filled with \code{NA} as well as the diagonal. 
+#' 
+#' @examples
+#'
+#' ## Data frame with the enriched terms
+#' resultData <- data.frame( 
+#'     ID=c("REAC:R-HSA-9031628", "REAC:R-HSA-9648895", "REAC:R-HSA-9614085",
+#'             "REAC:R-HSA-166520"),
+#'     Description=c("NGF-stimulated transcription", 
+#'             "Response of EIF2AK1 (HRI) to heme deficiency",
+#'             "FOXO-mediated transcription", "Signaling by NTRKs"),
+#'     geneID=c(paste0("ENSG00000120738/ENSG00000122877/ENSG00000125740/",
+#'         "ENSG00000135625/ENSG00000170345/ENSG00000171223/ENSG00000173334/", 
+#'         "ENSG00000179388/ENSG0000019857"),
+#'         paste0("ENSG00000087074/ENSG00000128272/ENSG00000128965/", 
+#'         "ENSG00000162772/ENSG00000172216/ENSG00000175197"),
+#'         paste0("ENSG00000105327/ENSG00000113916/ENSG00000124762/", 
+#'         "ENSG00000133639/ENSG00000136826/ENSG00000153094/ENSG00000175197"),
+#'         paste0("ENSG00000105327/ENSG00000113916/ENSG00000124762/", 
+#'         "ENSG00000133639/ENSG00000136826/ENSG00000153094/ENSG0000017519/",
+#'         "ENSG00000120738/ENSG00000122877/ENSG00000125740/ENSG00000135625/",
+#'         "ENSG00000170345/ENSG00000171223/ENSG00000173334/ENSG00000179388/", 
+#'         "ENSG00000198576")))
+#' 
+#' ## Calculate the Jaccard similarity coefficient for all pairwise 
+#' ## term combination
+#' enrichViewNet:::similarityJaccard(resultDF=resultData)
+#'     
+#' @author Astrid Deschênes
+#' @importFrom stringr str_split
+#' @encoding UTF-8
+#' @keywords internal
+similarityJaccard <- function(resultDF) {
+    res <- matrix(data=NA, nrow=nrow(resultDF), ncol=nrow(resultDF))
+    for(i in seq_len(nrow(resultDF))) {
+        tempI <- unique(unlist(str_split(resultDF$geneID[i], "/")))
+        for(j in seq_len(i)) {
+            if (i == j) break
+            tempJ <- unique(unlist(str_split(resultDF$geneID[j], "/")))
+            all <- c(tempI, tempJ)
+            if (length(all) < 1) {
+                res[i, j] <- 0
+            } else {
+                res[i, j] <- sum(table(all) > 1)/length(unique(all))
+            }
+        }
+    }
+    colnames(res) <- as.character(resultDF$Description)
+    rownames(res) <- as.character(resultDF$Description)
+    return(res)
 }
 
 
@@ -1402,8 +1540,7 @@ manageNameDuplicationInEmap <- function(clProfDF) {
 }
 
 
-#' @title Change query name when more than one queries have  
-#' the same name
+#' @title Create a compareClusterResult object from the enrichment results
 #' 
 #' @description The function creates a compareClusterResult object using the
 #' list of queries and list of enrichment results given be the user.
@@ -1445,6 +1582,7 @@ manageNameDuplicationInEmap <- function(clProfDF) {
 #'     
 #' @author Astrid Deschênes
 #' @importClassesFrom DOSE compareClusterResult
+#' @importFrom stringr str_replace_all str_split
 #' @encoding UTF-8
 #' @keywords internal
 createCompareClusterResultObject <- function(queryList, gostResultsList) {
@@ -1469,7 +1607,7 @@ createCompareClusterResultObject <- function(queryList, gostResultsList) {
         resF[[i]] <- resultDF
         
         geneClusters[[queryList[[i]]]] <- 
-            unique(unlist(stringr::str_split(gostResults$intersection, ",")))
+            unique(unlist(str_split(gostResults$intersection, ",")))
     }
     clProfDF <- do.call(rbind, resF)
     
@@ -1494,6 +1632,84 @@ createCompareClusterResultObject <- function(queryList, gostResultsList) {
     return(res)
 }
 
+
+#' @title Create a data frame containing the compiled enrichment results from
+#' multiple queries
+#' 
+#' @description The function creates a data frame object using the
+#' list of queries and list of enrichment results given be the user.
+#' 
+#' @param gostResultsList a \code{list} of \code{data.frame} containing 
+#' the enrichment results to be plot with different group identification.
+#' 
+#' @param queryList a \code{list} containing the query names.
+#' 
+#' @return a \code{data.frame} object
+#' 
+#' @examples
+#'
+#' ## Load the result of an enrichment analysis done with gprofiler2
+#' data(parentalNapaVsDMSOEnrichment)
+#' 
+#' ## Only retain the results section
+#' gostResults <- as.data.frame(parentalNapaVsDMSOEnrichment$result)
+#' 
+#' ## Limit the results subsection of REACTOME and KEGG
+#' ## Kegg is replicated to show shared results between queries
+#' gostResultsREAC <- gostResults[which(gostResults$source == "REAC"),]
+#' gostResultsREAC <- gostResultsREAC[1:13, ]
+#' gostResultsKEGG <- gostResults[which(gostResults$source == "KEGG"),]
+#' gostResultsKEGG2 <- gostResultsKEGG[1:6,]
+#' 
+#' ## List of query names with duplicated names
+#' queryList <- list("parental_vs_DMSO", "rosa_vs_DMSO", "parental_vs_DMSO", 
+#'     "rosa_vs_DMSO", "parental_vs_Control", "rosa_vs_DMSO")
+#'     
+#' ## Extract meta data information
+#' queryList <- list("parental - REACTOME", "parental - KEGG - v1", 
+#'     "parental - KEGG - v2")
+#' 
+#' ## Change the query names for the duplicated names
+#' enrichViewNet:::createCompareResultDataFrame(queryList=queryList,
+#'     gostResultsList=list(gostResultsREAC, gostResultsKEGG, 
+#'             gostResultsKEGG2))
+#'     
+#' @author Astrid Deschênes
+#' @importFrom stringr str_replace_all str_split
+#' @encoding UTF-8
+#' @keywords internal
+createCompareResultDataFrame <- function(queryList, gostResultsList) {
+    
+    resF <- list()
+    geneClusters <- list()
+    
+    for(i in seq_len(length(gostResultsList))) {
+        gostResults <- gostResultsList[[i]]
+        resultDF <- data.frame(
+            Cluster=rep(queryList[[i]], nrow(gostResults)),
+            ID=gostResults$term_id,
+            Description=as.character(gostResults$term_name), 
+            pvalues=as.numeric(gostResults$p_value),
+            geneID=str_replace_all(gostResults$intersection, ",", "/"),
+            Count=c(as.numeric(gostResults$intersection_size)), 
+            stringsAsFactors=FALSE)
+        resF[[i]] <- resultDF
+        
+        geneClusters[[queryList[[i]]]] <- 
+            unique(unlist(str_split(gostResults$intersection, ",")))
+    }
+    allDF <- do.call(rbind, resF)
+    
+    allDF$Cluster  <- factor(allDF$Cluster)
+    allDF$geneID <- str_replace_all(string=allDF$geneID, pattern=",", "/") 
+    
+    ## Problem when identical description (ID added to description)
+    if (any(table(allDF$Description) > 1)) {
+        allDF <- manageNameDuplicationInEmap(clProfDF=allDF)
+    }
+    
+    return(allDF)
+}
 
 #' @title Change query name when more than one queries have  
 #' the same name

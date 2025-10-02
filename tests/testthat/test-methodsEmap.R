@@ -941,6 +941,5 @@ test_that("createEnrichMapMultiComplexAsIgraph() must return expected result", {
     expect_equal(E(result)$similarity, c(0.625))
     expect_equal(E(result)$width, c(0.625))
     expect_equal(names(vertex.attributes(result)), exp_name)
-    expect_equal(names(edge.attributes(result)), c("similarity", 
-                                                                "width"))
+    expect_equal(names(edge.attributes(result)), c("similarity", "width"))
 })

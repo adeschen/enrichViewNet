@@ -534,7 +534,7 @@ createEnrichMapMultiComplex <- function(gostObjectList, queryInfo,
     gostResultsList <- lapply(seq_len(length(gostObjectList)), 
         FUN=function(i, queryI, gostL) {
             if (queryI$removeRoot[i]) {
-                 return(removeRootTerm(gostL[[i]]))
+                return(removeRootTerm(gostL[[i]]))
             } else {
                 return(gostL[[i]])
             }
