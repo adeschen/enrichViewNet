@@ -174,9 +174,6 @@ createEnrichMap <- function(gostObject, query, source=c("TERM_ID", "GO:MF",
 #' the minimum level of similarity between two terms to have an edge linking 
 #' the terms. Default: \code{0.20}.  
 #' 
-#' @param cexLine a non-negative \code{numeric} representing the scale of line 
-#' width for the edges. Default: \code{1}.
-#' 
 #' @return a \code{igraph} object representing enrichment map for the 
 #' selected enrichment results.
 #' 
@@ -192,13 +189,31 @@ createEnrichMap <- function(gostObject, query, source=c("TERM_ID", "GO:MF",
 #' ## Create graph for Gene Ontology - Cellular Component related results
 #' mapG <- createEnrichMapAsIgraph(gostObject=parentalNapaVsDMSOEnrichment, 
 #'     query=query, source="GO:CC", removeRoot=TRUE, 
-#'     showCategory=30L, similarityCutOff=0.20, cexLine=1)
+#'     showCategory=30L, similarityCutOff=0.20)
 #' 
 #' ## Required library igraph to show the graph
 #' if(requireNamespace("igraph", quietly=TRUE)) {
+#'     ## Using library igraph to show the graph
+#'     library(igraph)
 #'     plot(mapG)
 #' }
 #' 
+#' if (requireNamespace("ggplot2", quietly=TRUE) &&
+#'         requireNamespace("igraph", quietly=TRUE) &&
+#'         requireNamespace("ggtangle", quietly=TRUE) &&
+#'         requireNamespace("ggnetwork", quietly=TRUE)) {
+#'     ## Using more complex set of libraries to display personalized graph
+#'     library(ggplot2)
+#'     library(igraph)
+#'     library(ggnetwork)
+#'     library(ggtangle)
+#'     emapG <- ggplot(mapG, layout=layout_with_fr) +
+#'                 geom_edge(color="gray", linewidth=1) + 
+#'                 geom_nodes(aes(size=size)) + 
+#'                 geom_nodetext(aes(label=name), color="black", size=3) +
+#'                 theme_void()
+#'     emapG
+#' }
 #' 
 #' @author Astrid Deschênes
 #' @importFrom strex match_arg
@@ -207,7 +222,7 @@ createEnrichMap <- function(gostObject, query, source=c("TERM_ID", "GO:MF",
 createEnrichMapAsIgraph <- function(gostObject, query, source=c("TERM_ID", 
     "GO:MF", "GO:CC", "GO:BP", "KEGG", "REAC", "TF", "MIRNA", "HPA", "CORUM", 
     "HP", "WP"), termIDs=NULL, removeRoot=TRUE,  
-    showCategory=30L, similarityCutOff=0.20, cexLine=1) {
+    showCategory=30L, similarityCutOff=0.20) {
     
     ## Validate source is among the possible choices
     source <- match_arg(source, ignore_case=TRUE)
@@ -215,8 +230,7 @@ createEnrichMapAsIgraph <- function(gostObject, query, source=c("TERM_ID",
     ## Validate parameters
     validateCreateEnrichMapAsIgraphArg(gostObject=gostObject, query=query, 
         source=source, termIDs=termIDs, removeRoot=removeRoot, 
-        showCategory=showCategory, similarityCutOff=similarityCutOff, 
-        cexLine=cexLine)
+        showCategory=showCategory, similarityCutOff=similarityCutOff)
     
     ## Extract results
     gostResults <- gostObject$result
@@ -242,10 +256,10 @@ createEnrichMapAsIgraph <- function(gostObject, query, source=c("TERM_ID",
     
     backgroundGenes <- gostObject$meta$query_metadata$queries[[query]]
     
-    ## Create basic emap in igraph format
+    ## Create basic enrichment map in igraph format
     emapIgraph <- createBasicEmapAsIgraph(gostResults=gostResults, 
                 backgroundGenes=backgroundGenes, showCategory=showCategory,
-                similarityCutOff=similarityCutOff, cexLine=cexLine)
+                similarityCutOff=similarityCutOff)
     
     return(emapIgraph)
 }
@@ -656,7 +670,7 @@ createEnrichMapMultiComplex <- function(gostObjectList, queryInfo,
 #'     library(igraph)
 #'     plot(emap)
 #'     
-#'     ## Add the pie information in the graph using ggplot
+#'     ## Add see to reproduce the same graph
 #'     set.seed(12)
 #'     
 #'     library(ggplot2)
@@ -664,7 +678,7 @@ createEnrichMapMultiComplex <- function(gostObjectList, queryInfo,
 #'     library(scatterpie)
 #'     library(ggrepel)
 #'     
-#'     emapG <- ggplot(emap, layout=igraph::layout_with_fr) + 
+#'     emapG <- ggplot(emap, layout=layout_with_fr) + 
 #'                 geom_edge(color="gray", linewidth=1)
 #'     
 #'     pieInfo <- as.data.frame(do.call(rbind, V(emap)$pie))
@@ -680,7 +694,7 @@ createEnrichMapMultiComplex <- function(gostObjectList, queryInfo,
 #'         geom_scatterpie_legend(radius=emapG$data$size/50, n=4, 
 #'             x=max(emapG$data$x), y=max(emapG$data$y),
 #'             labeller=function(x) {round(x*50)}, label_position="right") +
-#'          geom_text_repel(aes(x=x, y = y, label=label))
+#'         geom_text_repel(aes(x=x, y = y, label=label))
 #' }
 #' 
 #' @author Astrid Deschênes

@@ -9,8 +9,7 @@ createBasicEmapAsIgraph(
   gostResults,
   backgroundGenes,
   showCategory,
-  similarityCutOff,
-  cexLine
+  similarityCutOff
 )
 }
 \arguments{
@@ -25,10 +24,9 @@ representing the name of the genes present in the request.}
 \code{n} terms will be displayed. If \code{vector} of terms, 
 the selected terms will be displayed.}
 
-\item{similarityCutOff}{TODO}
-
-\item{cexLine}{a non-negative \code{numeric} representing the scale of line 
-width.}
+\item{similarityCutOff}{a positive \code{numeric} between 0 and 1 indicating 
+the minimum level of similarity between two terms to have an edge linking 
+the terms.}
 }
 \value{
 a \code{igraph} object representing the enrichment map.
@@ -58,8 +56,8 @@ backgroundGenes <- meta$query_metadata$queries[["parental_napa_vs_DMSO"]]
 
 ## Create basic enrichment map, as an igraph, using Wikipathways terms
 enrichViewNet:::createBasicEmapAsIgraph(gostResults=gostResults, 
-    backgroundGenes=backgroundGenes, showCategory=30L, similarityCutOff=0.2, 
-    cexLine=1)
+    backgroundGenes=backgroundGenes, showCategory=30L, 
+    similarityCutOff=0.2)
     
 }
 \author{

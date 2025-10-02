@@ -157,9 +157,6 @@ validateCreateEnrichMapArguments <- function(gostObject, query, source,
 #' the minimum level of similarity between two terms to have an edge linking 
 #' the terms.
 #' 
-#' @param cexLine a non-negative \code{numeric} representing the scale of line 
-#' width. 
-#' 
 #' @return \code{TRUE} when all arguments are valid
 #' 
 #' @examples
@@ -177,14 +174,14 @@ validateCreateEnrichMapArguments <- function(gostObject, query, source,
 #' @importFrom methods is
 #' @keywords internal
 validateCreateEnrichMapAsIgraphArg <- function(gostObject, query, source, 
-        termIDs, removeRoot, showCategory, similarityCutOff, cexLine) {
+        termIDs, removeRoot, showCategory, similarityCutOff) {
     
     ## Test that gostObject is a gprofiler2 result 
     if (!(inherits(gostObject, "list") && "result" %in% names(gostObject) &&
           "meta" %in% names(gostObject)))   {
         stop("The gostObject object should be a list with meta ", 
-             "and result as entries corresponding to gprofiler2 ", 
-             "enrichment output.")
+                "and result as entries corresponding to gprofiler2 ", 
+                "enrichment output.")
     } 
     
     if (!is.character(query) || length(query) > 1) {
@@ -200,17 +197,17 @@ validateCreateEnrichMapAsIgraphArg <- function(gostObject, query, source,
     if (source != "TERM_ID") {
         if (sum(gostObject$result$source == source) < 1) {
             stop("There is no enriched term for the selected ", 
-                 "source \'", source, "\'.")    
+                    "source \'", source, "\'.")    
         }
     } else {
         if (is.null(termIDs)) {
             stop("A vector of terms should be given through the ",
-                 "\'termIDs\' parameter when source is \'TERM_ID\'.")  
+                    "\'termIDs\' parameter when source is \'TERM_ID\'.")  
         }
         else {
             if(!all(termIDs %in% gostObject$result$term_id)) {
                 stop("Not all listed terms are present in the  ",
-                     "enrichment results.")
+                        "enrichment results.")
             }
         }
     }
@@ -219,10 +216,6 @@ validateCreateEnrichMapAsIgraphArg <- function(gostObject, query, source,
         !(is.numeric(showCategory) && (showCategory > 0))) {
         stop("The \'showCategory\' parameter must an positive integer or", 
                 " NULL.")
-    }
-    
-    if (!is.numeric(cexLine) || !(cexLine > 0)) {
-        stop("The \'cexLine\' parameter must be a positive numeric.")
     }
     
     return(TRUE)     
@@ -1020,11 +1013,10 @@ createBasicEmap <- function(gostResults, backgroundGenes,
 #' \code{n} terms will be displayed. If \code{vector} of terms, 
 #' the selected terms will be displayed.
 #' 
-#' @param similarityCutOff TODO  
+#' @param similarityCutOff a positive \code{numeric} between 0 and 1 indicating 
+#' the minimum level of similarity between two terms to have an edge linking 
+#' the terms.  
 #' 
-#' @param cexLine a non-negative \code{numeric} representing the scale of line 
-#' width. 
-#'
 #' @return a \code{igraph} object representing the enrichment map.
 #' 
 #' @examples
@@ -1048,20 +1040,19 @@ createBasicEmap <- function(gostResults, backgroundGenes,
 #'
 #' ## Create basic enrichment map, as an igraph, using Wikipathways terms
 #' enrichViewNet:::createBasicEmapAsIgraph(gostResults=gostResults, 
-#'     backgroundGenes=backgroundGenes, showCategory=30L, similarityCutOff=0.2, 
-#'     cexLine=1)
+#'     backgroundGenes=backgroundGenes, showCategory=30L, 
+#'     similarityCutOff=0.2)
 #'     
 #' @author Astrid Deschênes
 #' @encoding UTF-8
 #' @importFrom methods is new
 #' @importFrom stringr str_ends str_split str_replace_all
-#' @importFrom enrichplot pairwise_termsim emapplot
-#' @importFrom igraph make_empty_graph V add_vertices E add_edges E<- delete.edges
+#' @importFrom igraph make_empty_graph V add_vertices E add_edges E<- delete_edges
 #' @importFrom reshape2 melt
 #' @importClassesFrom DOSE enrichResult
 #' @keywords internal
 createBasicEmapAsIgraph <- function(gostResults, backgroundGenes, 
-        showCategory, similarityCutOff, cexLine) {
+        showCategory, similarityCutOff) {
     
     ## Extract gene list for each term
     geneSets <- lapply(seq_len(nrow(gostResults)), FUN=function(x, gostData) {
@@ -1077,7 +1068,6 @@ createBasicEmapAsIgraph <- function(gostResults, backgroundGenes,
                                             gostResults$effective_domain_size)), 
                 pvalues=gostResults$p_value, 
                 p.adjust=gostResults$p_value, 
-                qvalue=gostResults$p_value, 
                 geneID=str_replace_all(gostResults$intersection, ",", "/"),
                 Count=c(gostResults$intersection_size), stringsAsFactors=FALSE)
     
@@ -1097,14 +1087,6 @@ createBasicEmapAsIgraph <- function(gostResults, backgroundGenes,
     
     rownames(resultDF) <- resultDF$ID
     
-    res <- new("enrichResult", result=resultDF, pvalueCutoff=1, 
-               pAdjustMethod="UNKNOWN", qvalueCutoff=1, 
-               gene=as.character(backgroundGenes), 
-               universe=as.character(backgroundGenes), 
-               geneSets=geneSets, 
-               organism="UNKNOWN", keytype="UNKNOWN", ontology="UNKNOWN", 
-               readable=FALSE)
-    
     if (nrow(resultDF) == 1) {
         ## Create igraph with 1 entry
         g <- make_empty_graph(0, directed=FALSE)
@@ -1112,19 +1094,21 @@ createBasicEmapAsIgraph <- function(gostResults, backgroundGenes,
         V(g)$name <- as.character(resultDF$Description)
     } else {
         ## Create igraph with multiple entries
-        ## Get similarity matrix
-        res <- pairwise_termsim(res, method = "JC") 
+        
+        ## Get similarity matrix 
+        res <- similarityJaccard(resultDF=resultDF)
         
         ## Generated data frame with similarity information
-        simData <- melt(res@termsim[as.character(resultDF$Description), 
+        simData <- melt(res[as.character(resultDF$Description), 
                     as.character(resultDF$Description)], na.rm=TRUE, 
-                    value.name="similiarity")
+                    value.name="similarity")
         simData <- simData[which(simData[,1] != simData[,2]), ]
+        simData <- simData[which(simData$similarity > 0), ]
         
         ## Each unique name will be a node
         g <- make_empty_graph(n=0, directed=FALSE)
-        attrs <- list(name=unique(c(as.character(simData[, 1]), 
-                                      as.character(simData[, 2]))))
+        attrs <- list(name=resultDF$Description, 
+                      size=resultDF$Count)
         g <- add_vertices(g, length(attrs$name), attr=attrs)
         
         ## Create links between nodes
@@ -1135,12 +1119,11 @@ createBasicEmapAsIgraph <- function(gostResults, backgroundGenes,
         ## Add attributes (including similarity values) to the edges
         attrsE <- list()
         attrsE[["similarity"]] <- simData$similarity
-        attrsE[["weight"]] <- simData$similarity
-        attrsE[["width"]] <- sqrt((simData$similiarity + 0.1) * 5) * cexLine
+        attrsE[["width"]] <- simData$similarity
         g <- add_edges(g, edges, attr=attrsE)
         
         ## Remove edges with similarity lower than cut off
-        g <- delete.edges(g, E(g)[simData$similiarity < similarityCutOff])
+        g <- delete_edges(g, E(g)[simData$similarity < similarityCutOff])
     }
     return(g)
 }
@@ -1321,6 +1304,7 @@ createMultiEmap <- function(gostResultsList, queryList, showCategory,
 #' @encoding UTF-8
 #' @importFrom stringr str_replace_all
 #' @importFrom igraph delete_edges V E add_edges V<-
+#' @importFrom reshape2 melt
 #' @keywords internal
 createMultiEmapAsIgraph <- function(gostResultsList, queryList, showCategory, 
                 similarityCutOff) {
@@ -1367,9 +1351,10 @@ createMultiEmapAsIgraph <- function(gostResultsList, queryList, showCategory,
         g <- add_vertices(g, nv=1)
         V(g)$name <- as.character(resultDF$Description)
     } else {
+        ## Create igraph with multiple entries
+        
         ## Each unique name will be a node
         g <- make_empty_graph(n=0, directed=FALSE)
-        
         vertex.color <- list()
         vertex.pie <- list()
         vertex.pieName <- list()
@@ -1381,17 +1366,15 @@ createMultiEmapAsIgraph <- function(gostResultsList, queryList, showCategory,
             vertex.pieName[[length(vertex.pieName) + 1]] <-  unlist(queryList)
             vertex.cluster[[length(vertex.cluster) + 1]] <- 
                     as.character(e$Cluster)
-            
         }
         
-        attrs <- list(name = resultDF$Description, size=resultDF$Count, 
+        attrs <- list(name=resultDF$Description, size=resultDF$Count, 
                         pie=vertex.pie, cluster=vertex.cluster, 
                         pieName=vertex.pieName)
         g <- add_vertices(g, length(attrs$name), attr=attrs)
         
-        ## Create igraph with multiple entries
         ## Get similarity matrix 
-        res <- similarityJaccard(resultDF)
+        res <- similarityJaccard(resultDF=resultDF)
         
         ## Generated data frame with similarity information
         ## Similarity of zero should be removed

@@ -14,8 +14,7 @@ createEnrichMapAsIgraph(
   termIDs = NULL,
   removeRoot = TRUE,
   showCategory = 30L,
-  similarityCutOff = 0.2,
-  cexLine = 1
+  similarityCutOff = 0.2
 )
 }
 \arguments{
@@ -51,9 +50,6 @@ will be displayed. Default: \code{30L}.}
 \item{similarityCutOff}{a positive \code{numeric} between 0 and 1 indicating 
 the minimum level of similarity between two terms to have an edge linking 
 the terms. Default: \code{0.20}.}
-
-\item{cexLine}{a non-negative \code{numeric} representing the scale of line 
-width for the edges. Default: \code{1}.}
 }
 \value{
 a \code{igraph} object representing enrichment map for the 
@@ -78,13 +74,31 @@ query <- unique(parentalNapaVsDMSOEnrichment$result$query)
 ## Create graph for Gene Ontology - Cellular Component related results
 mapG <- createEnrichMapAsIgraph(gostObject=parentalNapaVsDMSOEnrichment, 
     query=query, source="GO:CC", removeRoot=TRUE, 
-    showCategory=30L, similarityCutOff=0.20, cexLine=1)
+    showCategory=30L, similarityCutOff=0.20)
 
 ## Required library igraph to show the graph
 if(requireNamespace("igraph", quietly=TRUE)) {
+    ## Using library igraph to show the graph
+    library(igraph)
     plot(mapG)
 }
 
+if (requireNamespace("ggplot2", quietly=TRUE) &&
+        requireNamespace("igraph", quietly=TRUE) &&
+        requireNamespace("ggtangle", quietly=TRUE) &&
+        requireNamespace("ggnetwork", quietly=TRUE)) {
+    ## Using more complex set of libraries to display personalized graph
+    library(ggplot2)
+    library(igraph)
+    library(ggnetwork)
+    library(ggtangle)
+    emapG <- ggplot(mapG, layout=layout_with_fr) +
+                geom_edge(color="gray", linewidth=1) + 
+                geom_nodes(aes(size=size)) + 
+                geom_nodetext(aes(label=name), color="black", size=3) +
+                theme_void()
+    emapG
+}
 
 }
 \author{

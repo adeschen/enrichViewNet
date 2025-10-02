@@ -112,7 +112,7 @@ if (requireNamespace("ggplot2", quietly=TRUE) &&
     library(igraph)
     plot(emap)
     
-    ## Add the pie information in the graph using ggplot
+    ## Add see to reproduce the same graph
     set.seed(12)
     
     library(ggplot2)
@@ -120,7 +120,7 @@ if (requireNamespace("ggplot2", quietly=TRUE) &&
     library(scatterpie)
     library(ggrepel)
     
-    emapG <- ggplot(emap, layout=igraph::layout_with_fr) + 
+    emapG <- ggplot(emap, layout=layout_with_fr) + 
                 geom_edge(color="gray", linewidth=1)
     
     pieInfo <- as.data.frame(do.call(rbind, V(emap)$pie))
@@ -136,7 +136,7 @@ if (requireNamespace("ggplot2", quietly=TRUE) &&
         geom_scatterpie_legend(radius=emapG$data$size/50, n=4, 
             x=max(emapG$data$x), y=max(emapG$data$y),
             labeller=function(x) {round(x*50)}, label_position="right") +
-         geom_text_repel(aes(x=x, y = y, label=label))
+        geom_text_repel(aes(x=x, y = y, label=label))
 }
 
 }

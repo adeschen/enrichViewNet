@@ -12,8 +12,7 @@ validateCreateEnrichMapAsIgraphArg(
   termIDs,
   removeRoot,
   showCategory,
-  similarityCutOff,
-  cexLine
+  similarityCutOff
 )
 }
 \arguments{
@@ -49,9 +48,6 @@ the selected terms will be displayed.}
 \item{similarityCutOff}{a positive \code{numeric} between 0 and 1 indicating 
 the minimum level of similarity between two terms to have an edge linking 
 the terms.}
-
-\item{cexLine}{a non-negative \code{numeric} representing the scale of line 
-width.}
 }
 \value{
 \code{TRUE} when all arguments are valid
