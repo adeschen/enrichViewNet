@@ -185,7 +185,7 @@ validateCreateEnrichMapAsIgraphArg <- function(gostObject, query, source,
     } 
     
     if (!is.character(query) || length(query) > 1) {
-        stop("The \'query\'must be a character string.")
+        stop("The \'query\' must be a character string.")
     }
     
     ## Query must be in gost object

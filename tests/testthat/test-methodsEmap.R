@@ -992,8 +992,7 @@ test_that("createEnrichMapAsIgraph() must return error when similarityCutOff is 
         similarityCutOff=-0.01), error_message=error_message)
 })
 
-
-test_that("createEnrichMapAsIgraph() must return error when removeRoot is s string", {
+test_that("createEnrichMapAsIgraph() must return error when removeRoot is a string", {
     
     gostObjL <- parentalNapaVsDMSOEnrichment
     
@@ -1004,5 +1003,16 @@ test_that("createEnrichMapAsIgraph() must return error when removeRoot is s stri
     
     expect_error(createEnrichMapAsIgraph(gostObject=gostObjL, 
         query=queryData, showCategory=20L, source="GO:CC", removeRoot="test", 
+        similarityCutOff=0.1), error_message=error_message, fixed=TRUE)
+})
+
+test_that("createEnrichMapAsIgraph() must return error when query is a numeric", {
+    
+    gostObjL <- parentalNapaVsDMSOEnrichment
+    
+    error_message <- paste0("The 'query' must be a character string")
+    
+    expect_error(createEnrichMapAsIgraph(gostObject=gostObjL, 
+        query=3, showCategory=20L, source="GO:CC", removeRoot=TRUE, 
         similarityCutOff=0.1), error_message=error_message, fixed=TRUE)
 })
