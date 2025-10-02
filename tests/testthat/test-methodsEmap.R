@@ -1016,3 +1016,84 @@ test_that("createEnrichMapAsIgraph() must return error when query is a numeric",
         query=3, showCategory=20L, source="GO:CC", removeRoot=TRUE, 
         similarityCutOff=0.1), error_message=error_message, fixed=TRUE)
 })
+
+test_that("createEnrichMapAsIgraph() must return error when showCategory is a string", {
+    
+    gostObjL <- parentalNapaVsDMSOEnrichment
+    
+    queryData <- "parental_napa_vs_DMSO"
+    
+    error_message <- paste0("The 'showCategory' parameter must an ", 
+                                "positive integer or NULL.")
+    
+    expect_error(createEnrichMapAsIgraph(gostObject=gostObjL, 
+        query=queryData, showCategory="ROMEO", source="GO:CC", removeRoot=TRUE, 
+        similarityCutOff=0.1), error_message=error_message, fixed=TRUE)
+})
+
+test_that("createEnrichMapAsIgraph() must return error when source has not result", {
+    
+    gostObjL <- parentalNapaVsDMSOEnrichment
+    
+    queryData <- "parental_napa_vs_DMSO"
+    
+    error_message <- paste0(" There is no enriched term for the selected ", 
+                                "source 'TF'.")
+    
+    expect_error(createEnrichMapAsIgraph(gostObject=gostObjL, 
+        query=queryData, showCategory=NULL, source="TF", removeRoot=TRUE, 
+        similarityCutOff=0.1), error_message=error_message, fixed=TRUE)
+})
+
+test_that("createEnrichMapAsIgraph() must return error when not all listed terms exist", {
+    
+    gostObjL <- parentalNapaVsDMSOEnrichment
+    
+    queryData <- "parental_napa_vs_DMSO"
+    
+    errorM <- paste0("Not all listed terms are present in the ", 
+                        "enrichment results.")
+    
+    expect_error(createEnrichMapAsIgraph(gostObject=gostObjL, 
+        query=queryData, showCategory=NULL, source="TERM_ID",
+        termIDs=c("WP:WP3613,REAC:R-HSA-9614085,TEST,GO:0008140"), 
+        removeRoot=TRUE, similarityCutOff=0.1), error_message=errorM, 
+        fixed=TRUE)
+})
+
+test_that("createEnrichMapAsIgraph() must return expected result", {
+    
+    gostObjL <- parentalNapaVsDMSOEnrichment
+    
+    queryData <- "parental_napa_vs_DMSO"
+    
+    termIds <- c("WP:WP516", "WP:WP4970", "WP:WP4211", "WP:WP4216")
+    
+    result <- createEnrichMapAsIgraph(gostObject=gostObjL, 
+        query=queryData, showCategory=NULL, source="TERM_ID", 
+        termIDs=termIds, similarityCutOff=0.3)
+    
+    exp_v_name <- c("Transcriptional cascade regulating adipogenesis", 
+        "Chromosomal and microsatellite instability in colorectal cancer ", 
+        "Galanin receptor pathway", "Hypertrophy model")
+    
+    exp_size <- c(5, 6, 3, 3)
+    exp_name <- c("name",   "size")
+    
+    exp_pie <- list()
+    exp_pie[[1]] <- c(1, 1)
+    exp_pie[[2]] <- c(1, 1)
+    exp_pie[[3]] <- c(1, 1)
+    exp_pie[[4]] <- c(1, 0)
+    exp_pie[[5]] <- c(0, 1)
+    
+    expect_equal(class(result), "igraph")
+    expect_equal(length(V(result)), 4)
+    expect_equal(V(result)$name, exp_v_name)
+    expect_equal(V(result)$size, exp_size)
+    expect_equal(length(E(result)), 1)
+    expect_equal(E(result)$similarity, c(0.5))
+    expect_equal(E(result)$width, c(0.5))
+    expect_equal(names(vertex.attributes(result)), exp_name)
+    expect_equal(names(edge.attributes(result)), c("similarity", "width"))
+})

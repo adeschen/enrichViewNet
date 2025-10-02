@@ -206,7 +206,7 @@ validateCreateEnrichMapAsIgraphArg <- function(gostObject, query, source,
         }
         else {
             if(!all(termIDs %in% gostObject$result$term_id)) {
-                stop("Not all listed terms are present in the  ",
+                stop("Not all listed terms are present in the ",
                         "enrichment results.")
             }
         }
