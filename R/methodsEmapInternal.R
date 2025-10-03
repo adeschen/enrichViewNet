@@ -1102,6 +1102,7 @@ createBasicEmapAsIgraph <- function(gostResults, backgroundGenes,
         g <- make_empty_graph(0, directed=FALSE)
         g <- add_vertices(g, nv=1)
         V(g)$name <- as.character(resultDF$Description)
+        V(g)$size <- resultDF$Count
     } else {
         ## Create igraph with multiple entries
         
@@ -1360,12 +1361,12 @@ createMultiEmapAsIgraph <- function(gostResultsList, queryList, showCategory,
         g <- make_empty_graph(0, directed=FALSE)
         g <- add_vertices(g, nv=1)
         V(g)$name <- as.character(resultDF$Description)
+        V(g)$size <- resultDF$Count
     } else {
         ## Create igraph with multiple entries
         
         ## Each unique name will be a node
         g <- make_empty_graph(n=0, directed=FALSE)
-        vertex.color <- list()
         vertex.pie <- list()
         vertex.pieName <- list()
         vertex.cluster <- list()

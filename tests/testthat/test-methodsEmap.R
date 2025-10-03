@@ -836,6 +836,25 @@ test_that("createEnrichMapMultiComplexAsIgraph() must return error when similari
             error_message=error_message)
 })
 
+test_that("createEnrichMapMultiComplexAsIgraph() must return error when not term left", {
+    
+    gostObjL <- list(parentalNapaVsDMSOEnrichment, 
+                        parentalNapaVsDMSOEnrichment)
+    
+    queryData <- data.frame(queryName=c("parental_napa_vs_DMSO", 
+        "parental_napa_vs_DMSO"), source=c("TERM_ID", "TERM_ID"), 
+        removeRoot=c(TRUE, TRUE), termIDs=c("WP:000000", "KEGG:00000"), 
+        groupName=c("parental - KEGG", "parental - Reactome"), 
+            stringsAsFactors=FALSE)
+    
+    error_message <- paste0("With removal of the root term, there is ", 
+                                "no enrichment term left")
+    
+    expect_error(createEnrichMapMultiComplexAsIgraph(gostObjectList=gostObjL, 
+        queryInfo=queryData, showCategory=20L, similarityCutOff=0.2), 
+        error_message=error_message)
+})
+
 test_that("createEnrichMapMultiComplexAsIgraph() must return error when similarityCutOff is negative numeric", {
     
     gostObjL <- list(parentalNapaVsDMSOEnrichment, 
@@ -901,7 +920,6 @@ test_that("createEnrichMapMultiComplexAsIgraph() must return expected result", {
                                                                     "width"))
 })
 
-
 test_that("createEnrichMapMultiComplexAsIgraph() must return expected result", {
     
     gostObjectList <- list(parentalNapaVsDMSOEnrichment, 
@@ -942,6 +960,34 @@ test_that("createEnrichMapMultiComplexAsIgraph() must return expected result", {
     expect_equal(E(result)$width, c(0.625))
     expect_equal(names(vertex.attributes(result)), exp_name)
     expect_equal(names(edge.attributes(result)), c("similarity", "width"))
+})
+
+test_that("createEnrichMapMultiComplexAsIgraph() must return expected result when one node", {
+    
+    gostObjectList <- list(parentalNapaVsDMSOEnrichment, 
+                           rosaNapaVsDMSOEnrichment)
+    
+    queryData <- data.frame(queryName=c("parental_napa_vs_DMSO", 
+            "rosa_napa_vs_DMSO"), source=c("TERM_ID", "TERM_ID"), 
+            removeRoot=c(TRUE, TRUE), 
+            termIDs=c(c("WP:WP4925"), c("WP:WP4925")), 
+            groupName=c("parental - WP", "rosa - WP"), 
+            stringsAsFactors=FALSE)
+    
+    result <- createEnrichMapMultiComplexAsIgraph(gostObjectList=gostObjectList, 
+                queryInfo=queryData, showCategory=20, similarityCutOff=0.3)
+    
+    exp_v_name <- c("Unfolded protein response")
+    
+    exp_size <- c(6)
+    exp_name <- c("name",   "size")
+    
+    expect_equal(class(result), "igraph")
+    expect_equal(length(V(result)), 1)
+    expect_equal(V(result)$name, exp_v_name)
+    expect_equal(V(result)$size, exp_size)
+    expect_equal(length(E(result)),0)
+    expect_equal(names(vertex.attributes(result)), exp_name)
 })
 
 
@@ -1113,3 +1159,60 @@ test_that("createEnrichMapAsIgraph() must return expected result", {
     expect_equal(names(vertex.attributes(result)), exp_name)
     expect_equal(names(edge.attributes(result)), c("similarity", "width"))
 })
+
+test_that("createEnrichMapAsIgraph() must return error when query not in enrichment object", {
+    
+    gostObjL <- parentalNapaVsDMSOEnrichment
+    
+    queryData <- "ttee"
+    
+    errorM <- paste0("The 'query' is not present in the results of the", 
+                        " gost object.")
+    
+    expect_error(createEnrichMapAsIgraph(gostObject=gostObjL, 
+            query=queryData, showCategory=NULL, source="TERM_ID",
+            termIDs=c("WP:WP3613,REAC:R-HSA-9614085,GO:0008140"), 
+            removeRoot=TRUE, similarityCutOff=0.1), error_message=errorM, 
+            fixed=TRUE)
+})
+
+test_that("createEnrichMapAsIgraph() must return error when query not in enrichment object", {
+    
+    gostObjL <- parentalNapaVsDMSOEnrichment
+    
+    queryData <- "parental_napa_vs_DMSO"
+    
+    errorM <- paste0("With removal of the root term, there is no enrichment", 
+                            " term left")
+    
+    expect_error(createEnrichMapAsIgraph(gostObject=gostObjL, 
+        query=queryData, showCategory=NULL, source="TERM_ID",
+        termIDs=c("WP:000000"), removeRoot=TRUE, similarityCutOff=0.1), 
+        error_message=errorM, fixed=TRUE)
+})
+
+test_that("createEnrichMapAsIgraph() must return expected result when one entry", {
+    
+    gostObjL <- parentalNapaVsDMSOEnrichment
+    
+    queryData <- "parental_napa_vs_DMSO"
+    
+    termIds <- c("WP:WP516")
+    
+    result <- createEnrichMapAsIgraph(gostObject=gostObjL, 
+            query=queryData, showCategory=NULL, source="TERM_ID", 
+            termIDs=termIds, similarityCutOff=0.3)
+    
+    exp_v_name <- c("Hypertrophy model")
+    
+    exp_size <- c(3)
+    exp_name <- c("name",   "size")
+    
+    expect_equal(class(result), "igraph")
+    expect_equal(length(V(result)), 1)
+    expect_equal(V(result)$name, exp_v_name)
+    expect_equal(V(result)$size, exp_size)
+    expect_equal(length(E(result)), 0)
+    expect_equal(names(vertex.attributes(result)), exp_name)
+})
+
