@@ -5,6 +5,7 @@ output:
   BiocStyle::html_document:
     toc: true
     toc_depth: 3
+    number_sections: true
 pkgdown:
   as_is: true
 bibliography: enrichViewNet.bibtex
@@ -23,6 +24,9 @@ suppressPackageStartupMessages({
     library(enrichViewNet)
     library(gprofiler2)
     library(ggplot2)
+    library(igraph)
+    library(ggtangle)
+    library(ggrepel)
 })
 
 ## Set it globally
@@ -438,9 +442,13 @@ The key steps for the workflow are:
 Step                             | Function                    
 -------------------------------- | ------------------------------------------
 Run an enrichment analysis       | `gprofiler2::gost()`
-Create an enrichment map         | `createEnrichMap()`
+Create an enrichment map         | `createEnrichMap()` or `createEnrichMapAsIgraph()`
 
 The `package::function()` notation is used for functions from other packages.
+
+It is possible to create an enrichment map in a `ggplot` format with 
+`createEnrichMap()` function or in a `igraph` format with the 
+`createEnrichMapAsIgraph()` function.
 
 <br>
 
@@ -512,7 +520,7 @@ gostres$result[19:22, c("term_id", "source", "term_name")]
 <br>
 
 
-## Create an enrichment map 
+## Create an enrichment map in a `ggplot` format
 
 The enrichment map can be created with the _createEnrichMap()_ function. The 
 function generates a _ggplot_ object.
@@ -589,27 +597,6 @@ from WikiPathway can be distinguished from the Kegg pathway.
 
 <br>
 
-### Effect of _seed_ value
-
-The layering of the nodes is not always optimal. As the layering is affected by 
-the _seed_ value, you might want to test few _seed_ values, using the 
-_set.seed()_ function, before selecting the final graph.
-
-
-```{r runCreateEmap02, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE, fig.cap="An enrichment map with a different seed.", fig.align="center"}
-
-## Set seed to ensure reproducible results
-set.seed(91)
-
-## Create network for all Kegg terms
-createEnrichMap(gostObject=parentalNapaVsDMSOEnrichment, 
-                    query="parental_napa_vs_DMSO", 
-                    source="KEGG")
-    
-```
-
-<br>
-
 ### Enrichment map customization
 
 
@@ -637,6 +624,105 @@ graphKegg + scale_color_continuous(name="P-value adjusted", low="orange",
                                     high="black")
     
 ```
+
+<br>
+
+## Create an enrichment map in a `igraph` format
+
+The enrichment map can be created with the _createEnrichMapAsIgraph()_ 
+function. The function generates a _igraph_ object.
+
+In an enrichment map, terms with overlapping significant genes tend to 
+cluster together. The Jaccard correlation coefficient is used as a metric of 
+similarity. Terms with high similarity (similarity metric > value set by 
+user) are linked together by edges. The edges are shorter and thicker 
+when the similarity metric is high. 
+
+```{r runCreateEmapIgraph01, echo=TRUE, eval=TRUE, fig.cap="A Kegg enrichment map where terms with overlapping significant genes cluster together.", fig.align="center"}
+
+## Load saved enrichment results between parental Napa vs DMSO
+data(parentalNapaVsDMSOEnrichment)
+
+## Create network for all Kegg terms
+## All terms will be shown even if there is overlapping
+## The similarity cut off is set to 0.3
+emapGraph <- createEnrichMapAsIgraph(gostObject=parentalNapaVsDMSOEnrichment, 
+                    query="parental_napa_vs_DMSO", similarityCutOff=0.3,
+                    source="KEGG")
+
+## Set seed to ensure reproducible results
+set.seed(121)
+
+## The igraph library is required
+library(igraph)
+
+## Use library igraph to create the visual representation
+plot(emapGraph, layout=layout_with_fr, vertex.label.cex=0.5, 
+        vertex.label.color="black")   
+```
+
+
+### Effect of _seed_ value
+
+The layering of the nodes is not always optimal. As the layering is affected by 
+the _seed_ value, you might want to test few _seed_ values, using the 
+_set.seed()_ function, before selecting the final graph.
+
+
+```{r runCreateEmapIgraph02, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE, fig.cap="An enrichment map with a different seed.", fig.align="center"}
+
+## Set seed to ensure reproducible results
+set.seed(12)
+
+## The igraph library is required
+library(igraph)
+
+## Use library igraph to create the visual representation
+plot(emapGraph, layout=layout_with_fr, vertex.label.cex=0.5, 
+        vertex.label.color="black")   
+```
+
+<br>
+
+### Enrichment map customization
+
+
+The output of the _createEnrichMapAsIgraph()_ function is a _igraph_ object. 
+This means that the graph can be personalized. Attributes can also be added 
+or modified inside the _igraph_ object.
+
+
+```{r runCreateEmapIgraph03, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE, fig.cap="An enrichment map with personalized output.", fig.align="center"}
+
+## The igraph library is required
+library(igraph)
+library(ggplot2)
+library(ggtangle)
+
+## Create network for all Kegg terms
+graphKegg <- createEnrichMapAsIgraph(gostObject=parentalNapaVsDMSOEnrichment, 
+                    query="parental_napa_vs_DMSO", similarityCutOff=0.25,
+                    source="KEGG")
+
+## Set seed to ensure reproducible results
+set.seed(91)
+
+## Using ggplot2 to generate a ggplot graph
+graphEmap <- ggplot(graphKegg, layout=layout_with_fr)
+
+## Move up the node related to transcriptional misregulation
+graphEmap$data$y[graphEmap$data$label == 
+            "Transcriptional misregulation in cancer"] <- -1.4
+
+## Using ggtangle and ggrepel libraries to personalize output
+graphEmap + geom_edge(color="lightblue2", linewidth=2) + 
+    geom_point(aes(size=size), colour="gray40") +
+    geom_text_repel(aes(x=x, y=y, label=label), nudge_x=0.5, 
+                nudge_y=0.2, col="darkviolet", min.segment.length=0.1) +
+    scale_size_continuous(range = c(4, 10))
+    
+```
+
 
 <br>
 <br>
