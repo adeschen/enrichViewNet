@@ -1216,3 +1216,30 @@ test_that("createEnrichMapAsIgraph() must return expected result when one entry"
     expect_equal(names(vertex.attributes(result)), exp_name)
 })
 
+test_that("createEnrichMapAsIgraph() must return expected result when limit number of nodes", {
+    
+    gostObjL <- parentalNapaVsDMSOEnrichment
+    
+    queryData <- "parental_napa_vs_DMSO"
+    
+    result <- createEnrichMapAsIgraph(gostObject=gostObjL, 
+            query=queryData, showCategory=6, source="WP", removeRoot=TRUE,
+            termIDs=termIds, similarityCutOff=0.3)
+    
+    exp_v_name <- c("Photodynamic therapy-induced unfolded protein response",
+        "Unfolded protein response" , "VEGFA-VEGFR2 signaling",
+        "Transcriptional cascade regulating adipogenesis", 
+        "White fat cell differentiation", "Pre-implantation embryo")
+    
+    exp_size <- c(7, 6, 16, 5, 6, 6)
+    exp_name <- c("name",   "size")
+    
+    expect_equal(class(result), "igraph")
+    expect_equal(length(V(result)), 6)
+    expect_equal(V(result)$name, exp_v_name)
+    expect_equal(V(result)$size, exp_size)
+    expect_equal(length(E(result)), 2)
+    expect_equal(E(result)$similarity, c(0.62500000000000, 0.8333333333333333))
+    expect_equal(names(vertex.attributes(result)), exp_name)
+})
+
