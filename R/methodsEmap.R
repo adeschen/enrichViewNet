@@ -359,7 +359,7 @@ createEnrichMapMultiBasic <- function(gostObjectList, queryList,
     source <- match_arg(source, ignore_case=TRUE)
     
     ## Validate parameters
-    validateCreateEnrichMapMultiArguments(gostObjectList=gostObjectList, 
+    validateCreateEnrichMapMultiBasicArgs(gostObjectList=gostObjectList, 
         queryList=queryList, source=source, termIDs=termIDs, 
         removeRoot=removeRoot, showCategory=showCategory, 
         categoryLabel=categoryLabel, groupCategory=groupCategory, 
@@ -401,6 +401,176 @@ createEnrichMapMultiBasic <- function(gostObjectList, queryList,
                 queryList=queryList, showCategory=showCategory, 
                 categoryLabel=categoryLabel, groupCategory=groupCategory, 
                 categoryNode=categoryNode, line=line, ...)
+    
+    return(emap)
+}
+
+
+#' @title Using functional enrichment results in gprofiler2 format to create  
+#' an enrichment map with multiple groups from different enrichment analyses as
+#' an igraph
+#' 
+#' @description User selected enrichment terms are used to create an enrichment 
+#' map. The selection of the term can by specifying by the 
+#' source of the terms (GO:MF, REAC, TF, etc.) or by listing the selected 
+#' term IDs. The map is only generated when there is at least on 
+#' significant term to graph. The output is an enrichment map in igraph format.
+#' 
+#' @param gostObjectList a \code{list} of \code{gprofiler2} objects that 
+#' contain the results from an enrichment analysis. The list must contain at 
+#' least 2 entries. The number of entries must correspond to the number of 
+#' entries for the \code{queryList} parameter.
+#' 
+#' @param queryList a \code{list} of \code{character} strings representing the 
+#' names of the queries that are going to be used to generate the graph. 
+#' The query names must exist in the associated \code{gostObjectList} objects 
+#' and follow the same order. The number of entries must correspond to the 
+#' number of entries for the \code{gostObjectList} parameter.
+#' 
+#' @param source a \code{character} string representing the selected source 
+#' that will be used to generate the network. To hand-pick the terms to be 
+#' used, "TERM_ID" should be used and the list of selected term IDs should
+#' be passed through the \code{termIDs} parameter. The possible sources are 
+#' "GO:BP" for Gene Ontology Biological Process, "GO:CC" for Gene Ontology  
+#' Cellular Component, "GO:MF" for Gene Ontology Molecular Function, 
+#' "KEGG" for Kegg, "REAC" for Reactome, "TF" for TRANSFAC, "MIRNA" for 
+#' miRTarBase, "CORUM" for CORUM database, "HP" for Human phenotype ontology
+#' and "WP" for WikiPathways.  Default: "TERM_ID".
+#' 
+#' @param removeRoot a \code{logical} that specified if the root terms of 
+#' the selected source should be removed (when present). Default: \code{TRUE}.
+#' 
+#' @param termIDs a \code{vector} of \code{character} strings that contains the
+#' term IDS retained for the creation of the network. Default: \code{NULL}.
+#' 
+#' @param showCategory a positive \code{integer} representing the maximum 
+#' number of terms to display.  If a \code{integer}, the first 
+#' \code{n} terms will be displayed. If \code{NULL}, all terms  
+#' will be displayed. Default: \code{30L}.
+#'  
+#' @param similarityCutOff a positive \code{numeric} between 0 and 1 indicating 
+#' the minimum level of similarity between two terms to have an edge linking 
+#' the terms. Default: \code{0.20}.  
+#' 
+#' @return a \code{igraph} object which is the enrichment map for enrichment 
+#' results.
+#' 
+#' @examples
+#'
+#' ## Loading dataset containing results from 2 enrichment analyses done with
+#' ## gprofiler2
+#' data(parentalNapaVsDMSOEnrichment)
+#' data(rosaNapaVsDMSOEnrichment)
+#'
+#' ## Extract query information (only one in each dataset)
+#' query1 <- unique(parentalNapaVsDMSOEnrichment$result$query)[1]
+#' query2 <- unique(rosaNapaVsDMSOEnrichment$result$query)[1]
+#' 
+#' ## Create graph for KEGG related results from 
+#' ## 2 enrichment analyses
+#' emapG <- createEnrichMapMultiBasicAsIgraph(gostObjectList=
+#'     list(parentalNapaVsDMSOEnrichment, rosaNapaVsDMSOEnrichment), 
+#'     queryList=list(query1, query2), source="KEGG", removeRoot=TRUE, 
+#'     similarityCutOff=0.3)
+#' 
+#' if (requireNamespace("ggplot2", quietly=TRUE) && 
+#'         requireNamespace("igraph", quietly=TRUE) && 
+#'         requireNamespace("scatterpie", quietly=TRUE) && 
+#'         requireNamespace("ggtangle", quietly=TRUE) && 
+#'         requireNamespace("ggrepel", quietly=TRUE)) {
+#'     ## Create a visual representation of the enrichment map
+#'     ## by default
+#'     library(igraph)
+#'     plot(emapG)
+#'     
+#'     ## Add see to reproduce the same graph
+#'     set.seed(12)
+#'     
+#'     library(ggplot2)
+#'     library(ggtangle)
+#'     library(scatterpie)
+#'     library(ggrepel)
+#'     
+#'     emapGraph <- ggplot(emapG, layout=layout_with_fr) + 
+#'                 geom_edge(color="gray", linewidth=1)
+#'     
+#'     pieInfo <- as.data.frame(do.call(rbind, V(emapG)$pie))
+#'     colnames(pieInfo) <- V(emapG)$pieName[[1]]
+#'     
+#'     ## Add information about the groups associated with each node in the 
+#'     ## ggplot object so that the node can be colored accordingly
+#'     for (i in seq_len(ncol(pieInfo))) {
+#'         emapGraph$data[colnames(pieInfo)[i]] <- pieInfo[, i]
+#'     }
+#'     
+#'     ## Using scatterpie, ggtangle and ggrepel to generate the graph
+#'     ## geom_scatterpie() allows to have scatter pie plot
+#'     ## geom_text_repel() allows to have minimum overlying terms
+#'     ## coord_fixed() forces the plot to have a 1:1 aspect ratio
+#'     emapGraph + 
+#'         geom_scatterpie(aes(x=x, y=y, r=size/50), 
+#'             cols=c(colnames(pieInfo)), legend_name = "Group", color=NA) +
+#'         geom_scatterpie_legend(radius=emapGraph$data$size/50, n=4, 
+#'             x=max(emapGraph$data$x), y=min(emapGraph$data$y),
+#'             labeller=function(x) {round(x*50)}, label_position="right") +
+#'         geom_text_repel(aes(x=x, y=y, label=label)) +
+#'         coord_fixed()
+#' }
+#' 
+#' @author Astrid Deschênes
+#' @importFrom gprofiler2 gconvert
+#' @importFrom strex match_arg
+#' @encoding UTF-8
+#' @export
+createEnrichMapMultiBasicAsIgraph <- function(gostObjectList, queryList, 
+    source=c("TERM_ID", "GO:MF", "GO:CC", "GO:BP", "KEGG", "REAC", "TF", 
+    "MIRNA", "HPA", "CORUM", "HP", "WP"), termIDs=NULL, removeRoot=TRUE, 
+    showCategory=30L, similarityCutOff=0.2) {
+    
+    ## Validate source is among the possible choices
+    source <- match_arg(source, ignore_case=TRUE)
+    
+    ## Validate parameters
+    validateCreateEnrichMapMultiBasicAsIgraphArgs(gostObjectList=gostObjectList, 
+        queryList=queryList, source=source, termIDs=termIDs, 
+        removeRoot=removeRoot, showCategory=showCategory, 
+        similarityCutOff=similarityCutOff)
+    
+    ## Extract results
+    gostResultsList <- lapply(gostObjectList, FUN=function(x) {x$result})
+    
+    ## Retain results associated to query
+    gostResultsList <- lapply(seq_len(length(queryList)), 
+        FUN=function(i, queryL, gostL) {
+            gostL[[i]][gostL[[i]]$query == queryL[[i]], ]}, 
+            queryL=queryList, gostL=gostResultsList)
+    
+    ## Filter results
+    if (source == "TERM_ID") {
+        gostResultsList <- lapply(gostResultsList,  FUN=function(x, termIDs) {
+            x[x$term_id %in% termIDs,]}, termIDs=termIDs)
+    } else {
+        gostResultsList <- lapply(gostResultsList,  FUN=function(x, source) {
+            x[x$source == source,]}, source=source)
+    }
+    
+    ## Remove root term if required
+    if (removeRoot) {
+        gostResultsList <- lapply(gostResultsList,  FUN=function(x) {
+            removeRootTerm(x)})
+    }
+    
+    ## Validate that at least one term is left
+    if (sum(unlist(lapply(gostResultsList,  FUN=function(x) {nrow(x)})))  
+        == 0) {
+        stop("With removal of the root term, there is no ", 
+                "enrichment term left")
+    }
+    
+    ## Create multi categories emap
+    emap <- createMultiEmapAsIgraph(gostResultsList=gostResultsList, 
+        queryList=queryList, showCategory=showCategory, 
+        similarityCutOff=similarityCutOff)
     
     return(emap)
 }
@@ -481,7 +651,7 @@ createEnrichMapMultiBasic <- function(gostObjectList, queryList,
 #' data(parentalNapaVsDMSOEnrichment)
 #' data(rosaNapaVsDMSOEnrichment)
 #'
-#' ## TODO
+#' ## Create list of enrichment objects required to generate the enrichment map
 #' gostObjectList=list(parentalNapaVsDMSOEnrichment, 
 #'     parentalNapaVsDMSOEnrichment, rosaNapaVsDMSOEnrichment, 
 #'     rosaNapaVsDMSOEnrichment)
@@ -684,17 +854,24 @@ createEnrichMapMultiComplex <- function(gostObjectList, queryInfo,
 #'     pieInfo <- as.data.frame(do.call(rbind, V(emap)$pie))
 #'     colnames(pieInfo) <- V(emap)$pieName[[1]]
 #'     
+#'     ## Add information about the groups associated with each node in the 
+#'     ## ggplot object so that the node can be colored accordingly
 #'     for (i in seq_len(ncol(pieInfo))) {
 #'         emapG$data[colnames(pieInfo)[i]] <- pieInfo[, i]
 #'     }
 #'     
+#'     ## Using scatterpie, ggtangle and ggrepel to generate the graph
+#'     ## geom_scatterpie() allows to have scatter pie plot
+#'     ## geom_text_repel() allows to have minimum overlying terms
+#'     ## coord_fixed() forces the plot to have a 1:1 aspect ratio
 #'     emapG + 
 #'         geom_scatterpie(aes(x=x, y=y, r=size/50), 
 #'             cols=c(colnames(pieInfo)), legend_name = "Group", color=NA) +
 #'         geom_scatterpie_legend(radius=emapG$data$size/50, n=4, 
 #'             x=max(emapG$data$x), y=max(emapG$data$y),
 #'             labeller=function(x) {round(x*50)}, label_position="right") +
-#'         geom_text_repel(aes(x=x, y = y, label=label))
+#'         geom_text_repel(aes(x=x, y = y, label=label)) +
+#'         coord_fixed()
 #' }
 #' 
 #' @author Astrid Deschênes

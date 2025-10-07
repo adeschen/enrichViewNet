@@ -297,7 +297,7 @@ validateCreateEnrichMapAsIgraphArg <- function(gostObject, query, source,
 #' data(rosaNapaVsDMSOEnrichment)
 #' 
 #' ## Check that all arguments are valid
-#' enrichViewNet:::validateCreateEnrichMapMultiArguments(
+#' enrichViewNet:::validateCreateEnrichMapMultiBasicArgs(
 #'     gostObjectList=list(parentalNapaVsDMSOEnrichment, 
 #'                             rosaNapaVsDMSOEnrichment),
 #'     queryList=list("parental_napa_vs_DMSO", "rosa_napa_vs_DMSO"), 
@@ -309,9 +309,173 @@ validateCreateEnrichMapAsIgraphArg <- function(gostObject, query, source,
 #' @encoding UTF-8
 #' @importFrom methods is
 #' @keywords internal
-validateCreateEnrichMapMultiArguments <- function(gostObjectList, queryList, 
+validateCreateEnrichMapMultiBasicArgs <- function(gostObjectList, queryList, 
     source, termIDs, removeRoot, showCategory, groupCategory, 
     categoryLabel, categoryNode, line) {
+    
+    ## Same subset of validations that for createEnrichMapMultiBasicAsIgraph()
+    validateCreateEnrichMapMultiBasicGOSTArgs(gostObjectList=gostObjectList, 
+        queryList=queryList, source=source, termIDs=termIDs, 
+        removeRoot=removeRoot)
+
+    result <- validateCreateEnrichMapSubSectionArguments(
+        showCategory=showCategory, groupCategory=groupCategory, 
+        categoryLabel=categoryLabel, categoryNode=categoryNode, line=line)
+    
+    return(result)   
+}
+
+
+#' @title Validate arguments passed to createEnrichMapMultiBasic() function
+#' 
+#' @description Validate the arguments passed to createEnrichMapMultiBasic() 
+#' function.
+#' First, the object containing the enrichment results must correspond to a 
+#' object created by  \code{gprofiler2} software. Second, the selected 
+#' source must at least have one enriched term in the results. Then, if the
+#' source is 'TERM_ID', the listed terms must be present in the enrichment
+#' results.
+#' 
+#' @param gostObjectList a \code{list} of \code{gprofiler2} objects that 
+#' contain the results from an enrichment analysis. The list must contain at 
+#' least 2 entries. The number of entries must correspond to the number of 
+#' entries for the \code{queryList} parameter.
+#' 
+#' @param queryList a \code{list} of \code{character} strings representing the 
+#' names of the queries that are going to be used to generate the graph. 
+#' The query names must exist in the associated \code{gostObjectList} objects 
+#' and follow the same order. The number of entries must correspond to the 
+#' number of entries for the \code{gostObjectList} parameter.
+#' 
+#' @param source a \code{character} string representing the selected source 
+#' that will be used to generate the network. To hand-pick the terms to be 
+#' used, "TERM_ID" should be used and the list of selected term IDs should
+#' be passed through the \code{termIDs} parameter. The possible sources are 
+#' "GO:BP" for Gene Ontology Biological Process, "GO:CC" for Gene Ontology  
+#' Cellular Component, "GO:MF" for Gene Ontology Molecular Function, 
+#' "KEGG" for Kegg, "REAC" for Reactome, "TF" for TRANSFAC, "MIRNA" for 
+#' miRTarBase, "CORUM" for CORUM database, "HP" for Human phenotype ontology
+#' and "WP" for WikiPathways. 
+#' 
+#' @param termIDs a \code{vector} of \code{character} strings that contains 
+#' the term IDs retained for the creation of the network. This parameter is 
+#' only used when \code{source} is set to "TERM_ID".
+#' 
+#' @param removeRoot a \code{logical} that specified if the root terms of 
+#' the selected source should be removed (when present). 
+#' 
+#' @param showCategory a positive \code{integer} representing the maximum 
+#' number of terms to display.  If a \code{integer}, the first 
+#' \code{n} terms will be displayed. If \code{NULL}, all terms  
+#' will be displayed. 
+#'  
+#' @param similarityCutOff a positive \code{numeric} between 0 and 1 indicating 
+#' the minimum level of similarity between two terms to have an edge linking 
+#' the terms.
+#' 
+#' @return \code{TRUE} when all arguments are valid
+#' 
+#' @examples
+#'
+#' ## Load the result of an enrichment analysis done with gprofiler2
+#' data(parentalNapaVsDMSOEnrichment)
+#' data(rosaNapaVsDMSOEnrichment)
+#' 
+#' ## Check that all arguments are valid
+#' enrichViewNet:::validateCreateEnrichMapMultiBasicAsIgraphArgs(
+#'     gostObjectList=list(parentalNapaVsDMSOEnrichment, 
+#'                             rosaNapaVsDMSOEnrichment),
+#'     queryList=list("parental_napa_vs_DMSO", "rosa_napa_vs_DMSO"), 
+#'     source="GO:BP", termIDs=NULL, removeRoot=FALSE, 
+#'     showCategory=20, similarityCutOff=0.3)
+#' 
+#' @author Astrid Deschênes
+#' @encoding UTF-8
+#' @importFrom methods is
+#' @keywords internal
+validateCreateEnrichMapMultiBasicAsIgraphArgs <- function(gostObjectList, 
+    queryList, source, termIDs, removeRoot, showCategory, similarityCutOff) {
+    
+    ## Same subset of validations that for createEnrichMapMultiBasic()
+    validateCreateEnrichMapMultiBasicGOSTArgs(gostObjectList=gostObjectList, 
+        queryList=queryList, source=source, termIDs=termIDs, 
+        removeRoot=removeRoot)
+    
+    if (!is.null(showCategory) && 
+        !(is.numeric(showCategory) && (showCategory > 0))) {
+        stop("The \'showCategory\' parameter must an positive integer or ", 
+                "NULL.")
+    }
+    
+    if (!is.numeric(similarityCutOff) || (similarityCutOff <= 0.0) || 
+        (similarityCutOff >= 1.0)) {
+        stop("The \'similarityCutOff\' parameter must be a numeric superior",  
+                " to zero and inferior to one.")
+    }
+    
+    return(TRUE)   
+}
+
+
+#' @title Validate arguments passed to createEnrichMapMultiBasic() function
+#' 
+#' @description Validate the arguments passed to createEnrichMapMultiBasic() 
+#' function.
+#' First, the object containing the enrichment results must correspond to a 
+#' object created by  \code{gprofiler2} software. Second, the selected 
+#' source must at least have one enriched term in the results. Then, if the
+#' source is 'TERM_ID', the listed terms must be present in the enrichment
+#' results.
+#' 
+#' @param gostObjectList a \code{list} of \code{gprofiler2} objects that 
+#' contain the results from an enrichment analysis. The list must contain at 
+#' least 2 entries. The number of entries must correspond to the number of 
+#' entries for the \code{queryList} parameter.
+#' 
+#' @param queryList a \code{list} of \code{character} strings representing the 
+#' names of the queries that are going to be used to generate the graph. 
+#' The query names must exist in the associated \code{gostObjectList} objects 
+#' and follow the same order. The number of entries must correspond to the 
+#' number of entries for the \code{gostObjectList} parameter.
+#' 
+#' @param source a \code{character} string representing the selected source 
+#' that will be used to generate the network. To hand-pick the terms to be 
+#' used, "TERM_ID" should be used and the list of selected term IDs should
+#' be passed through the \code{termIDs} parameter. The possible sources are 
+#' "GO:BP" for Gene Ontology Biological Process, "GO:CC" for Gene Ontology  
+#' Cellular Component, "GO:MF" for Gene Ontology Molecular Function, 
+#' "KEGG" for Kegg, "REAC" for Reactome, "TF" for TRANSFAC, "MIRNA" for 
+#' miRTarBase, "CORUM" for CORUM database, "HP" for Human phenotype ontology
+#' and "WP" for WikiPathways. 
+#' 
+#' @param termIDs a \code{vector} of \code{character} strings that contains 
+#' the term IDs retained for the creation of the network. This parameter is 
+#' only used when \code{source} is set to "TERM_ID".
+#' 
+#' @param removeRoot a \code{logical} that specified if the root terms of 
+#' the selected source should be removed (when present). 
+#' 
+#' @return \code{TRUE} when all arguments are valid
+#' 
+#' @examples
+#'
+#' ## Load the result of an enrichment analysis done with gprofiler2
+#' data(parentalNapaVsDMSOEnrichment)
+#' data(rosaNapaVsDMSOEnrichment)
+#' 
+#' ## Check that all arguments are valid
+#' enrichViewNet:::validateCreateEnrichMapMultiBasicGOSTArgs(
+#'     gostObjectList=list(parentalNapaVsDMSOEnrichment, 
+#'                             rosaNapaVsDMSOEnrichment),
+#'     queryList=list("parental_napa_vs_DMSO", "rosa_napa_vs_DMSO"), 
+#'     source="GO:BP", termIDs=NULL, removeRoot=TRUE)
+#' 
+#' @author Astrid Deschênes
+#' @encoding UTF-8
+#' @importFrom methods is
+#' @keywords internal
+validateCreateEnrichMapMultiBasicGOSTArgs <- function(gostObjectList, 
+    queryList, source, termIDs, removeRoot) {
     
     ## Test that gostObject is a list with minimum of 2 entries
     if (!inherits(gostObjectList, "list") || !(length(gostObjectList) > 1)) {
@@ -321,7 +485,7 @@ validateCreateEnrichMapMultiArguments <- function(gostObjectList, queryList,
     
     ## Test that gostObject is a list of gprofiler2 result 
     if (!(all(unlist(lapply(gostObjectList, is.list))) && 
-            all(unlist(lapply(gostObjectList, FUN = function(x) {
+          all(unlist(lapply(gostObjectList, FUN = function(x) {
                 "result" %in% names(x) && "meta" %in% names(x)})))))   {
         stop("The gostObjectList should only contain a list of enrichment ", 
                 "results. Enrichment results are lists with meta ", 
@@ -331,32 +495,32 @@ validateCreateEnrichMapMultiArguments <- function(gostObjectList, queryList,
     
     ## Test that queryList is a list with 2 entries minimum
     if (!inherits(queryList, "list") || !(length(queryList) > 1) || 
-            length(queryList) != length(gostObjectList)) {
+        length(queryList) != length(gostObjectList)) {
         stop("The queryList object should be a list of query names. At least ", 
-                "2 query names are required. The number of query names should", 
-                " correspond to the number of enrichment objects.")
+            "2 query names are required. The number of query names should", 
+            " correspond to the number of enrichment objects.")
     }
     
     ## Test that queryList is a list of character strings
     if (!all(unlist(lapply(queryList, is.character)))) {
         stop("The queryList object should only contain a list of query names", 
-                " in character strings.")
+                    " in character strings.")
     }
     
     ## Validate that all query names are present in the associated results
     if (!all(unlist(lapply(seq_len(length(queryList)), FUN = function(x, 
-        queryL, gostL) {res <- as.data.frame(gostL[[x]]$result); 
-        queryL[[x]] %in% unique(res$query)}, queryL=queryList, 
-        gostL=gostObjectList)))) {
-            stop("Each query name present in the \'queryList'\ parameter ", 
+            queryL, gostL) {res <- as.data.frame(gostL[[x]]$result); 
+            queryL[[x]] %in% unique(res$query)}, queryL=queryList, 
+                           gostL=gostObjectList)))) {
+        stop("Each query name present in the \'queryList'\ parameter ", 
                 "must be present in the associated enrichment object.")
     }
     
     if (source != "TERM_ID") {
         if (!any(unlist(lapply(gostObjectList, FUN = function(x, source) {
-            sum(x$result$source == source) > 1}, source=source)))) {
-                stop("There is no enriched term for the selected ", 
-                                "source \'", source, "\'.")    
+                sum(x$result$source == source) > 1}, source=source)))) {
+            stop("There is no enriched term for the selected ", 
+                    "source \'", source, "\'.")    
         }
     } else {
         if (is.null(termIDs)) {
@@ -364,12 +528,13 @@ validateCreateEnrichMapMultiArguments <- function(gostObjectList, queryList,
                     "\'termIDs\' parameter when source is \'TERM_ID\'.")
         }
     }
-
-    result <- validateCreateEnrichMapSubSectionArguments(
-        showCategory=showCategory, groupCategory=groupCategory, 
-        categoryLabel=categoryLabel, categoryNode=categoryNode, line=line)
     
-    return(result)   
+    ## Test that removeRoot should be logical
+    if (!is.logical(removeRoot)) {
+        stop("The \'removeRoot'\ should be a logical value (TRUE or FALSE).")
+    }
+    
+    return(TRUE)   
 }
 
 
@@ -643,7 +808,6 @@ validateCreateEnrichMapMultiComplexAsIgraphArg <- function(gostObjectList,
 #' @keywords internal
 validateCreateEnrichMapMultiComplexGostPartOne <- function(gostObjectList, 
     queryInfo) {
-    
     
     ## Test that gostObject is a list with minimum of 2 entries
     if (!inherits(gostObjectList, "list") || !(length(gostObjectList) > 1)) {
