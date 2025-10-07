@@ -23,18 +23,51 @@ test_that("validateCreateEnrichMapArguments() must return expected result", {
 })
 
 
-### Tests validateCreateEnrichMapMultiArguments() results
+### Tests validateCreateEnrichMapMultiBasicArgs() results
 
-context("validateCreateEnrichMapMultiArguments() results")
+context("validateCreateEnrichMapMultiBasicArgs() results")
 
-test_that("validateCreateEnrichMapMultiArguments() must return expected result", {
+test_that("validateCreateEnrichMapMultiBasicArgs() must return expected result", {
     
-    result <- enrichViewNet:::validateCreateEnrichMapMultiArguments(
+    result <- enrichViewNet:::validateCreateEnrichMapMultiBasicArgs(
         gostObjectList=list(parentalNapaVsDMSOEnrichment, 
                                         rosaNapaVsDMSOEnrichment), 
         queryList=list("parental_napa_vs_DMSO", "rosa_napa_vs_DMSO"), 
         source="GO:CC", termIDs=NULL, removeRoot=TRUE, showCategory=30, 
         groupCategory=FALSE, categoryLabel=1, categoryNode=1, line=1)
+    
+    expect_true(result)
+})
+
+
+### Tests validateCreateEnrichMapMultiBasicAsIgraphArgs() results
+
+context("validateCreateEnrichMapMultiBasicAsIgraphArgs() results")
+
+test_that("validateCreateEnrichMapMultiBasicAsIgraphArgs() must return expected result", {
+    
+    result <- enrichViewNet:::validateCreateEnrichMapMultiBasicAsIgraphArgs(
+        gostObjectList=list(parentalNapaVsDMSOEnrichment, 
+                            rosaNapaVsDMSOEnrichment), 
+        queryList=list("parental_napa_vs_DMSO", "rosa_napa_vs_DMSO"), 
+        source="GO:CC", termIDs=NULL, removeRoot=TRUE, showCategory=30, 
+        similarityCutOff=0.2)
+    
+    expect_true(result)
+})
+
+
+### Tests validateCreateEnrichMapMultiBasicGOSTArgs() results
+
+context("validateCreateEnrichMapMultiBasicGOSTArgs() results")
+
+test_that("validateCreateEnrichMapMultiBasicGOSTArgs() must return expected result", {
+    
+    result <- enrichViewNet:::validateCreateEnrichMapMultiBasicGOSTArgs(
+        gostObjectList=list(parentalNapaVsDMSOEnrichment, 
+                            rosaNapaVsDMSOEnrichment), 
+        queryList=list("parental_napa_vs_DMSO", "rosa_napa_vs_DMSO"), 
+        source="GO:CC", termIDs=NULL, removeRoot=TRUE)
     
     expect_true(result)
 })

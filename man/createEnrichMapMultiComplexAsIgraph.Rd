@@ -126,17 +126,24 @@ if (requireNamespace("ggplot2", quietly=TRUE) &&
     pieInfo <- as.data.frame(do.call(rbind, V(emap)$pie))
     colnames(pieInfo) <- V(emap)$pieName[[1]]
     
+    ## Add information about the groups associated with each node in the 
+    ## ggplot object so that the node can be colored accordingly
     for (i in seq_len(ncol(pieInfo))) {
         emapG$data[colnames(pieInfo)[i]] <- pieInfo[, i]
     }
     
+    ## Using scatterpie, ggtangle and ggrepel to generate the graph
+    ## geom_scatterpie() allows to have scatter pie plot
+    ## geom_text_repel() allows to have minimum overlying terms
+    ## coord_fixed() forces the plot to have a 1:1 aspect ratio
     emapG + 
         geom_scatterpie(aes(x=x, y=y, r=size/50), 
             cols=c(colnames(pieInfo)), legend_name = "Group", color=NA) +
         geom_scatterpie_legend(radius=emapG$data$size/50, n=4, 
             x=max(emapG$data$x), y=max(emapG$data$y),
             labeller=function(x) {round(x*50)}, label_position="right") +
-        geom_text_repel(aes(x=x, y = y, label=label))
+        geom_text_repel(aes(x=x, y = y, label=label)) +
+        coord_fixed()
 }
 
 }

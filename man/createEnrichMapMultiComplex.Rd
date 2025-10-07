@@ -92,7 +92,7 @@ significant term to graph.
 data(parentalNapaVsDMSOEnrichment)
 data(rosaNapaVsDMSOEnrichment)
 
-## TODO
+## Create list of enrichment objects required to generate the enrichment map
 gostObjectList=list(parentalNapaVsDMSOEnrichment, 
     parentalNapaVsDMSOEnrichment, rosaNapaVsDMSOEnrichment, 
     rosaNapaVsDMSOEnrichment)

@@ -24,7 +24,17 @@ are retained.
     \item{\code{\link{createNetwork}} for transforming functional 
     enrichment results from gprofiler2 into a Cytoscape network}
     \item{\code{\link{createEnrichMap}} for transforming functional 
-    enrichment results from gprofiler2 into an enrichment map}
+    enrichment results from gprofiler2 into an enrichment map in 
+    ggplot format}
+    \item{\code{\link{createEnrichMapAsIgraph}} for transforming functional 
+    enrichment results from gprofiler2 into an enrichment map in 
+    igraph format}
+    \item{\code{\link{createEnrichMapMultiComplex}} for transforming 
+    functional enrichment results from multiple gprofiler2 enrichment 
+    results into an enrichment map in ggplot format}
+    \item{\code{\link{createEnrichMapMultiComplexAsIgraph}} for transforming 
+    functional enrichment results from multiple gprofiler2 enrichment 
+    results into an enrichment map in igraph format}
 }
 }
 \author{

@@ -3,6 +3,7 @@
 export(createEnrichMap)
 export(createEnrichMapAsIgraph)
 export(createEnrichMapMultiBasic)
+export(createEnrichMapMultiBasicAsIgraph)
 export(createEnrichMapMultiComplex)
 export(createEnrichMapMultiComplexAsIgraph)
 export(createNetwork)

@@ -536,14 +536,10 @@ metric is high.
 ## Load saved enrichment results between parental Napa vs DMSO
 data(parentalNapaVsDMSOEnrichment)
 
-## Set seed to ensure reproducible results
-set.seed(121)
-
 ## Create network for all Kegg terms
 ## All terms will be shown even if there is overlapping
 createEnrichMap(gostObject=parentalNapaVsDMSOEnrichment, 
-                    query="parental_napa_vs_DMSO", 
-                    source="KEGG")
+                    query="parental_napa_vs_DMSO", source="KEGG")
     
 ```
 
@@ -579,9 +575,6 @@ head(parentalNapaVsDMSOEnrichment$result[, c("query", "term_id", "term_name")],
 termID <- c("KEGG:04115", "WP:WP4963", "KEGG:04010", 
                 "REAC:R-HSA-5675221", "REAC:R-HSA-112409", "WP:WP382")
 
-## Set seed to ensure reproducible results
-set.seed(222)
-
 ## Create network for all selected terms
 createEnrichMap(gostObject=parentalNapaVsDMSOEnrichment, 
                     query="parental_napa_vs_DMSO", 
@@ -609,14 +602,9 @@ colors can be changed:
 
 ## The ggplot2 library is required
 library(ggplot2)
-
-## Set seed to ensure reproducible results
-set.seed(91)
-
 ## Create network for all Kegg terms
 graphKegg <- createEnrichMap(gostObject=parentalNapaVsDMSOEnrichment, 
-                    query="parental_napa_vs_DMSO", 
-                    source="KEGG")
+                    query="parental_napa_vs_DMSO", source="KEGG")
 
 ## Nodes with lowest p-values will be in orange and highest p-values in black
 ## The title of the legend is also modified
@@ -698,6 +686,7 @@ or modified inside the _igraph_ object.
 library(igraph)
 library(ggplot2)
 library(ggtangle)
+library(ggrepel)
 
 ## Create network for all Kegg terms
 graphKegg <- createEnrichMapAsIgraph(gostObject=parentalNapaVsDMSOEnrichment, 
@@ -719,7 +708,7 @@ graphEmap + geom_edge(color="lightblue2", linewidth=2) +
     geom_point(aes(size=size), colour="gray40") +
     geom_text_repel(aes(x=x, y=y, label=label), nudge_x=0.5, 
                 nudge_y=0.2, col="darkviolet", min.segment.length=0.1) +
-    scale_size_continuous(range = c(4, 10))
+    scale_size_continuous(range=c(4, 10))
     
 ```
 
@@ -799,29 +788,6 @@ related to the other KEGG terms.
 
 <br>
 
-
-## Effect of _seed_ value
-
-The layering of the nodes is not always optimal. As the layering is affected by 
-the _seed_ value, you might want to test few _seed_ values, using the 
-_set.seed()_ function, before selecting the final graph.
-
-
-```{r emapMultiSeed, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE, fig.cap="An enrichment map using the same data fromt the previous one but with a different seed.", fig.align="center"}
-
-## Set seed to ensure reproducible results
-set.seed(5)
-
-## Enrichment map where the groups are the KEGG results for the 2 different
-## experiments
-createEnrichMapMultiBasic(gostObjectList=gostObjectList,
-    queryList=queryList, source="KEGG", removeRoot=TRUE)
-    
-```
-
-<br>
-
-
 ## Enrichment map customization
 
 
@@ -834,18 +800,15 @@ colors, legend title and legend font can be changed:
 ## Required library
 library(ggplot2)
 
-## Set seed to ensure reproducible results
-set.seed(5)
-
 ## Enrichment map where the groups are the KEGG results for the 2 different
 ## experiments
 createEnrichMapMultiBasic(gostObjectList=gostObjectList,
     queryList=queryList, source="KEGG", removeRoot=TRUE) +
         scale_fill_manual(name="Groups",
-                breaks = queryList,
-                values = c("cyan4", "bisque3"),
-                labels = c("parental", "rosa")) +
-        theme(legend.title = element_text(face="bold"))
+                breaks=queryList,
+                values=c("cyan4", "bisque3"),
+                labels=c("parental", "rosa")) +
+        theme(legend.title=element_text(face="bold"))
 
 ```
 
@@ -865,7 +828,13 @@ The key steps for the workflow are:
 Step                                        | Function                    
 ------------------------------------------- | ------------------------------
 Run one ro multiple enrichment analyses     | `gprofiler2::gost()`
-Create an enrichment map with group         | `createEnrichMapMultiComplex()`
+Create an enrichment map with group         | `createEnrichMapMultiComplex()` or `createEnrichMapMultiComplexAsIgraph()`
+
+The `package::function()` notation is used for functions from other packages.
+
+It is possible to create an enrichment map in a `ggplot` format with 
+`createEnrichMapMultiComplex()` function or in a `igraph` format with the 
+`createEnrichMapMultiComplexAsIgraph()` function.
 
 The `package::function()` notation is used for functions from other packages.
 
@@ -875,7 +844,7 @@ The first step has been presented in the previous section.
 
 <br>
 
-## Create an enrichment map using mutliple subsections of one enrichment analysis
+## Create an enrichment map using mutliple subsections of one enrichment analysis in a `ggplot` format
 
 The _createEnrichMapMultiComplex()_ function enables enrichment map to be 
 generate with multiple groups from one enrichment analysis. As an example, 
@@ -935,7 +904,7 @@ The only isolated term is the Kegg Viral carcinogenesis pathway.
 
 <br>
 
-## Create an enrichment map using a complex design
+### Create an enrichment map using a complex design
 
 Complex designs can be used with _createEnrichMapMultiComplex()_. Results 
 from different analyses as well as split results from the same analysis can 
@@ -1012,6 +981,262 @@ createEnrichMapMultiComplex(gostObjectList=gostObjectList,
 While the two experiments have a lot of similar enriched terms, there are 
 still terms that are unique to each experiment.
 
+<br>
+
+## Create an enrichment map using mutliple subsections of one enrichment analysis in a `igraph` format
+
+The _createMultiEmapAsIgraph()_ function enables enrichment map to be 
+generate with multiple groups from one enrichment analysis in a `igraph` 
+format. As an example, 
+terms from different sources can be drawn in different colors.
+
+```{r emapMultiComplexIgraph01, echo=TRUE, warning=FALSE, message=FALSE, collapse=F, eval=TRUE, fig.cap="An enrichment map containing Kegg and Reactome results from the rosa Napa vs DMSO analysis.", fig.align="center"}
+
+## The dataset of functional enriched terms for one experiment:
+## napabucasin treated and DMSO control expressing Rosa26 control vector
+## (Froeling et al 2019)
+data("rosaNapaVsDMSOEnrichment")
+
+## The gostObjectList is a list containing all 
+## the functional enrichment objects
+## In this case, the same enrichment object is used twice
+gostObjectList <- list(rosaNapaVsDMSOEnrichment, 
+    rosaNapaVsDMSOEnrichment)
+
+## Extract the query name from the enrichment object
+query_01 <- unique(rosaNapaVsDMSOEnrichment$result$query)[1]
+
+## The query information is a data frame containing the information required 
+##   to extract the specific terms for each enrichment object.
+## The number of rows must correspond to the number of enrichment objects/
+## The query name must be present in the enrichment object.
+## The source can be: "GO:BP" for Gene Ontology Biological Process, 
+##   "GO:CC" for Gene Ontology Cellular Component, "GO:MF" for Gene Ontology 
+##   Molecular Function, "KEGG" for Kegg, "REAC" for Reactome, 
+##   "TF" for TRANSFAC, "MIRNA" for miRTarBase, "CORUM" for CORUM database, 
+##   "HP" for Human phenotype ontology and "WP" for WikiPathways or 
+##   "TERM_ID" when a list of terms is specified.
+## The termsIDs is an empty string except when the source is set to "TERM_ID".
+## The group names are going to be used in the legend and should be unique to 
+##  each group.
+queryInfo <- data.frame(queryName=c(query_01, query_01), 
+                            source=c("KEGG", "REAC"),
+                            removeRoot=c(TRUE, TRUE),
+                            termIDs=c("", ""), 
+                            groupName=c("Kegg", "Reactome"),
+                            stringsAsFactors=FALSE)
+
+
+## Enrichment map where the groups are the KEGG and Reactome results for the 
+## same experiment
+## Minimum similarity coefficient to have 2 terms linked is set to 0.5
+emapGraph <- createEnrichMapMultiComplexAsIgraph(gostObjectList=gostObjectList, 
+        queryInfo=queryInfo, similarityCutOff=0.5)
+
+## The igraph library is required
+library(igraph)
+
+## Set seed to ensure reproducible results
+set.seed(3221)
+
+## Use library igraph to create the visual representation
+plot(emapGraph, layout=layout_with_fr, vertex.label.cex=0.5, 
+        vertex.label.color="black")   
+    
+```
+
+<br>
+
+### Effect of _seed_ value
+
+The layering of the nodes is not always optimal. As the layering is affected 
+by the _seed_ value, you might want to test few seed values, using 
+the `set.seed()` function, before selecting the final graph.
+
+
+```{r changeSeedIgraph02, echo=TRUE, warning=FALSE, message=FALSE, collapse=F, eval=TRUE, fig.cap="An enrichment map containing Kegg and Reactome results from the rosa Napa vs DMSO analysis with a different seed.", fig.align="center"}
+
+## The igraph library is required
+library(igraph)
+
+## Set seed to ensure reproducible results
+set.seed(911)
+
+## Use library igraph to create the visual representation
+plot(emapGraph, layout=layout_with_fr, vertex.label.cex=0.5, 
+        vertex.label.color="black")  
+```
+
+<br>
+
+
+## Create an enrichment map using mutliple subsections of multiple enrichment analyses in a `igraph` format
+
+The _createEnrichMapMultiComplexAsIgraph()_ function enables enrichment map to be 
+generate with multiple groups from one enrichment analysis in a `igraph` 
+format. 
+
+```{r createEnrichMapMultiComplexAsIgraph01, echo=TRUE, warning=FALSE, message=FALSE, collapse=F, eval=TRUE, fig.cap="An enrichment map containing Kegg and Reactome results from the rosa Napa vs DMSO, and parenteal vs DMSO analyses.", fig.align="center"}
+
+## The dataset of functional enriched terms for two experiments:
+## napabucasin treated and DMSO control expressing Rosa26 control vector
+## (Froeling et al 2019)
+data("rosaNapaVsDMSOEnrichment")
+data("parentalNapaVsDMSOEnrichment")
+
+## The gostObjectList is a list containing all 
+## the functional enrichment objects
+## In this case, each enrichment object is used twice
+gostObjectList <- list(rosaNapaVsDMSOEnrichment, 
+    rosaNapaVsDMSOEnrichment, parentalNapaVsDMSOEnrichment, 
+    parentalNapaVsDMSOEnrichment)
+
+## Extract the query name from the enrichment object
+query_01 <- unique(rosaNapaVsDMSOEnrichment$result$query)[1]
+query_02 <- unique(parentalNapaVsDMSOEnrichment$result$query)[1]
+
+## The query information is a data frame containing the information required 
+##   to extract the specific terms for each enrichment object.
+## The number of rows must correspond to the number of enrichment objects/
+## The query name must be present in the enrichment object.
+## The source can be: "GO:BP" for Gene Ontology Biological Process, 
+##   "GO:CC" for Gene Ontology Cellular Component, "GO:MF" for Gene Ontology 
+##   Molecular Function, "KEGG" for Kegg, "REAC" for Reactome, 
+##   "TF" for TRANSFAC, "MIRNA" for miRTarBase, "CORUM" for CORUM database, 
+##   "HP" for Human phenotype ontology and "WP" for WikiPathways or 
+##   "TERM_ID" when a list of terms is specified.
+## The termsIDs is an empty string except when the source is set to "TERM_ID".
+## The group names are going to be used in the legend and should be unique to 
+##  each group.
+queryInfo <- data.frame(queryName=c(query_01, query_01, query_02, query_02), 
+                            source=c("GO:BP", "GO:CC", "GO:BP", "GO:CC"),
+                            removeRoot=c(TRUE, TRUE, TRUE, TRUE),
+                            termIDs=c("", "", "", ""), 
+                            groupName=c("GO:BP - Napa", "GO:CC - Napa",
+                                    "GO:BP - Parental", "GO:CC - Parental"),
+                            stringsAsFactors=FALSE)
+
+
+## Enrichment map where there are 2 groups generated from each 
+## experiment
+## Minimum similarity coefficient to have 2 terms linked is set to 0.5
+## The 10 terms with the best p-value are selected for each group
+emapGraph <- createEnrichMapMultiComplexAsIgraph(gostObjectList=gostObjectList, 
+        queryInfo=queryInfo, similarityCutOff=0.5, showCategory=10)
+
+## The igraph library is required
+library(igraph)
+
+## Set seed to ensure reproducible results
+set.seed(3221)
+
+## Use library igraph to create the visual representation
+## Unfortunately, the output does not generate a scatter pie plot
+## See next topic to generate a scatter pie plot
+plot(emapGraph, layout=layout_with_fr, vertex.label.cex=0.5, 
+        vertex.label.color="black")   
+    
+```
+
+In this situation, the default output from the `igraph` library doesn't 
+create a scatter pie graph. Enrichment map customization is required to 
+generate a scatter pie graph. This is covered in the next topic.
+
+<br>
+
+### Enrichment map customization
+
+The `igraph` object can be used to generate personalized graphs.
+Attributes can also be added or modified inside the igraph object.
+
+```{r personalized01, echo=TRUE, warning=FALSE, message=FALSE, collapse=F, eval=TRUE, fig.cap="An enrichment map containing Kegg and Reactome results from the rosa Napa vs DMSO and parental vs DMSO analyses as a ggplot graph.", fig.align="center"}
+
+## Visualization libraries is required
+library(igraph)
+library(ggplot2)
+library(ggtangle)
+library(ggrepel)
+library(scatterpie)
+
+## The dataset of functional enriched terms for two experiments:
+## napabucasin treated and DMSO control expressing Rosa26 control vector
+## (Froeling et al 2019)
+data("rosaNapaVsDMSOEnrichment")
+data("parentalNapaVsDMSOEnrichment")
+
+## The gostObjectList is a list containing all 
+## the functional enrichment objects
+## In this case, each enrichment object is used twice
+gostObjectList <- list(rosaNapaVsDMSOEnrichment, 
+    rosaNapaVsDMSOEnrichment, parentalNapaVsDMSOEnrichment, 
+    parentalNapaVsDMSOEnrichment)
+
+## Extract the query name from the enrichment object
+query_01 <- unique(rosaNapaVsDMSOEnrichment$result$query)[1]
+query_02 <- unique(parentalNapaVsDMSOEnrichment$result$query)[1]
+
+## The query information is a data frame containing the information required 
+##   to extract the specific terms for each enrichment object.
+## The number of rows must correspond to the number of enrichment objects/
+## The query name must be present in the enrichment object.
+## The source can be: "GO:BP" for Gene Ontology Biological Process, 
+##   "GO:CC" for Gene Ontology Cellular Component, "GO:MF" for Gene Ontology 
+##   Molecular Function, "KEGG" for Kegg, "REAC" for Reactome, 
+##   "TF" for TRANSFAC, "MIRNA" for miRTarBase, "CORUM" for CORUM database, 
+##   "HP" for Human phenotype ontology and "WP" for WikiPathways or 
+##   "TERM_ID" when a list of terms is specified.
+## The termsIDs is an empty string except when the source is set to "TERM_ID".
+## The group names are going to be used in the legend and should be unique to 
+##  each group.
+queryInfo <- data.frame(queryName=c(query_01, query_01, query_02, query_02), 
+                            source=c("KEGG", "REAC", "KEGG", "REAC"),
+                            removeRoot=c(TRUE, TRUE, TRUE, TRUE),
+                            termIDs=c("", "", "", ""), 
+                            groupName=c("Kegg - Rosa", "Reactome - Rosa",
+                                "Kegg - Parental", "Reactome - Parental"),
+                            stringsAsFactors=FALSE)
+
+## Enrichment map where the groups are the KEGG and Reactome results for 
+## two enrichment analyses
+## Minimum similarity coefficient to have 2 terms linked is set to 0.3
+## Only the 7 terms with best p-value are going to be shown in each group
+emapIgraph <- createEnrichMapMultiComplexAsIgraph(gostObjectList=gostObjectList, 
+        queryInfo=queryInfo, showCategory=5, similarityCutOff=0.3)
+
+## Set seed to ensure reproducible results
+set.seed(21)
+
+## Using ggplot2 to generate a ggplot graph
+graphEmap <- ggplot(emapIgraph, layout=layout_with_fr) + 
+                geom_edge(color="blue3", linewidth=1)
+
+## Extract information about group associated to each node
+pieInfo <- as.data.frame(do.call(rbind, V(emapIgraph)$pie))
+colnames(pieInfo) <- V(emapIgraph)$pieName[[1]]
+
+## Add information into the ggplot object to be able to color nodes
+for (i in seq_len(ncol(pieInfo))) {
+    graphEmap$data[colnames(pieInfo)[i]] <- pieInfo[, i]
+}
+
+## Colors selected for the groups
+groupColor <- c("darkorange", "violet", "darkorange4", "darkviolet")
+    
+## Using scatterpie, ggtangle and ggrepel libraries to personalize output
+## geom_scatterpie() allows to have scatter pie plot
+## geom_text_repel() allows to have minimum overlying terms
+## scale_fill_manual() allows to personalize the color of the nodes
+## coord_fixed() forces the plot to have a 1:1 aspect ratio
+graphEmap + 
+    geom_scatterpie(aes(x=x, y=y, r=size/50), 
+            cols=c(colnames(pieInfo)), legend_name="Group", color=NA) +
+    geom_scatterpie_legend(radius=graphEmap$data$size/50, n=4, 
+            x=max(graphEmap$data$x), y=min(graphEmap$data$y),
+            labeller=function(x) {round(x*50)}, label_position="right") +
+    scale_fill_manual(values=groupColor) +
+    geom_text_repel(aes(x=x, y=y, label=label)) +
+    coord_fixed()
+```
 
 <br>
 <br>
