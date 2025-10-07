@@ -563,6 +563,96 @@ test_that("createEnrichMapMultiBasicAsIgraph() must return error when number in 
         error_message, fixed=TRUE)
 })
 
+test_that("createEnrichMapMultiBasicAsIgraph() must return error when removeRoot is numeric", {
+    
+    error_message <- paste0("The \'removeRoot\' should be a logical value (TRUE or FALSE).")
+    
+    expect_error(createEnrichMapMultiBasicAsIgraph(
+        gostObjectList=list(parentalNapaVsDMSOEnrichment, rosaNapaVsDMSOEnrichment), 
+        queryList=list("parental_napa_vs_DMSO", "rosa_napa_vs_DMSO"), 
+        source="GO:MF", termIDs=NULL, 
+        removeRoot=33, showCategory=30, similarityCutOff=0.2), 
+        error_message, fixed=TRUE)
+})
+
+test_that("createEnrichMapMultiBasicAsIgraph() must return error when showCategory is negative", {
+    
+    error_message <- paste0("The \'showCategory\' parameter must an positive integer or NULL.")
+    
+    expect_error(createEnrichMapMultiBasicAsIgraph(
+        gostObjectList=list(parentalNapaVsDMSOEnrichment, rosaNapaVsDMSOEnrichment), 
+        queryList=list("parental_napa_vs_DMSO", "rosa_napa_vs_DMSO"), 
+        source="GO:MF", termIDs=NULL, 
+        removeRoot=FALSE, showCategory=-1, similarityCutOff=0.2), 
+        error_message, fixed=TRUE)
+})
+
+test_that("createEnrichMapMultiBasicAsIgraph() must return error when similarityCutOff is negative", {
+    
+    error_message <- paste0("The \'similarityCutOff\' parameter must be ", 
+                        "a numeric superior to zero and inferior to one.")
+    
+    expect_error(createEnrichMapMultiBasicAsIgraph(
+        gostObjectList=list(parentalNapaVsDMSOEnrichment, rosaNapaVsDMSOEnrichment), 
+        queryList=list("parental_napa_vs_DMSO", "rosa_napa_vs_DMSO"), 
+        source="GO:MF", termIDs=NULL, 
+        removeRoot=FALSE, showCategory=2, similarityCutOff=-0.01), 
+        error_message, fixed=TRUE)
+})
+
+test_that("createEnrichMapMultiBasicAsIgraph() must return error when similarityCutOff above one", {
+    
+    error_message <- paste0("The \'similarityCutOff\' parameter must be a ", 
+                        "numeric superior to zero and inferior to one.")
+    
+    expect_error(createEnrichMapMultiBasicAsIgraph(
+        gostObjectList=list(parentalNapaVsDMSOEnrichment, rosaNapaVsDMSOEnrichment), 
+        queryList=list("parental_napa_vs_DMSO", "rosa_napa_vs_DMSO"), 
+        source="GO:MF", termIDs=NULL, 
+        removeRoot=FALSE, showCategory=2, similarityCutOff=1.01), 
+        error_message, fixed=TRUE)
+})
+
+test_that("createEnrichMapMultiBasicAsIgraph() must return expected result", {
+    
+    result <- createEnrichMapMultiBasicAsIgraph(
+        gostObjectList=list(parentalNapaVsDMSOEnrichment, rosaNapaVsDMSOEnrichment), 
+        queryList=list("parental_napa_vs_DMSO", "rosa_napa_vs_DMSO"), 
+        source="GO:MF", termIDs=NULL, removeRoot=T, showCategory=5, 
+        similarityCutOff=0.4)
+    
+    exp_v_name <- c("DNA-binding transcription factor activity",
+        "DNA-binding transcription factor activity, RNA polymerase II-specific",
+        "RNA polymerase II transcription regulatory region sequence-specific DNA binding",
+        "transcription cis-regulatory region binding",
+        "transcription regulatory region nucleic acid binding",
+        "DNA binding", 
+        "RNA polymerase II cis-regulatory region sequence-specific DNA binding",
+        "cis-regulatory region sequence-specific DNA binding")
+    
+    exp_size <- c(31, 30, 30, 31, 31, 13, 10, 10)
+    exp_name <- c("name",   "size", "pie",  "cluster", "pieName")
+    
+    expect_equal(class(result), "igraph")
+    expect_equal(length(V(result)), 8)
+    expect_equal(V(result)$name, exp_v_name)
+    expect_equal(V(result)$size, exp_size)
+    expect_equal(length(E(result)), 13)
+    expect_equal(names(vertex.attributes(result)), exp_name)
+})
+
+test_that("createEnrichMapMultiBasicAsIgraph() must return error when no term left", {
+    
+    message_error <- paste0("There is no enriched term for the selected ", 
+                        "source \'TF\'.")
+    
+    expect_error(createEnrichMapMultiBasicAsIgraph(
+        gostObjectList=list(parentalNapaVsDMSOEnrichment, rosaNapaVsDMSOEnrichment), 
+        queryList=list("parental_napa_vs_DMSO", "rosa_napa_vs_DMSO"), 
+        source="TF", termIDs=NULL, removeRoot=T, showCategory=5, 
+        similarityCutOff=0.4), error=message_error)
+})
+
 
 ### Tests createEnrichMapMultiComplex() results
 
