@@ -52,7 +52,7 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - { os: ubuntu-latest, r: '4.5', bioc: '3.21', cont: "bioconductor/bioconductor_docker:RELEASE_3_21", rspm: "https://packagemanager.rstudio.com/cran/__linux__/jammy/latest" }
+          - { os: ubuntu-latest, r: '4.5.1', bioc: '3.21', cont: "bioconductor/bioconductor_docker:RELEASE_3_21" }
           - { os: ubuntu-latest, r: 'devel', bioc: '3.22'}
           - { os: macOS-latest, r: '4.5', bioc: '3.21'}
           - { os: windows-latest, r: '4.5', bioc: '3.21'}
@@ -70,11 +70,11 @@ jobs:
 
       ## Set the R library to the directory matching the
       ## R packages cache step further below when running on Docker (Linux).
-      - name: Set R Library home on Linux
-        if: runner.os == 'Linux'
-        uses: r-lib/actions/setup-r@v2
-        with:
-          r-version: ${{ matrix.config.r }}
+     ## - name: Set R Library home on Linux
+     ##   if: runner.os == 'Linux'
+     ##   uses: r-lib/actions/setup-r@v2
+     ##   with:
+     ##     r-version: ${{ matrix.config.r }}
      ##   run: |
      ##     mkdir -p /__w/_temp/Library
      ##     echo ".libPaths('/__w/_temp/Library')" > ~/.Rprofile
