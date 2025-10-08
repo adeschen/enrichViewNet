@@ -44,7 +44,7 @@ env:
 jobs:
   build-check:
     runs-on: ${{ matrix.config.os }}
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+    name: ${{ matrix.config.os }} (R ${{ matrix.config.r }}) (Bioc ${{ matrix.config.bioc }})
     container: ${{ matrix.config.cont }}
     ## Environment variables unique to this job.
 
