@@ -174,8 +174,12 @@ createEnrichMap <- function(gostObject, query, source=c("TERM_ID", "GO:MF",
 #' the minimum level of similarity between two terms to have an edge linking 
 #' the terms. Default: \code{0.20}.  
 #' 
-#' @return a \code{igraph} object representing enrichment map for the 
-#' selected enrichment results.
+#' @return a \code{igraph} object which is the enrichment map for enrichment 
+#' results. The node have 2 attributes: "name" and "size". The "name" 
+#' corresponds to the term description. While the "size" corresponds to the 
+#' number of genes found in the specific gene set. The edges have 
+#' 3 attributes: "similarity", "width", and "weight". All those 3 attributes 
+#' correspond to the Jaccard coefficient.
 #' 
 #' @examples
 #'
@@ -449,11 +453,17 @@ createEnrichMapMultiBasic <- function(gostObjectList, queryList,
 #' will be displayed. Default: \code{30L}.
 #'  
 #' @param similarityCutOff a positive \code{numeric} between 0 and 1 indicating 
-#' the minimum level of similarity between two terms to have an edge linking 
+#' the minimum level of similarity between two terms, calculated 
+#' using the Jaccard coefficient, to have an edge linking 
 #' the terms. Default: \code{0.20}.  
 #' 
 #' @return a \code{igraph} object which is the enrichment map for enrichment 
-#' results.
+#' results. The node have 5 attributes: "name", "size", "pie", "cluster", 
+#' and "pieName". The "name" corresponds to the term description. While the 
+#' "size" corresponds to the number of unique genes found in the specific 
+#' gene set when looking at all the experiments.
+#' The edges have 3 attributes: "similarity", "width", and 
+#' "weight". All those 3 attributes correspond to the Jaccard coefficient.
 #' 
 #' @examples
 #'
@@ -793,8 +803,13 @@ createEnrichMapMultiComplex <- function(gostObjectList, queryInfo,
 #' small than 1 that represent the minimum similarity level between two 
 #' nodes (terms) to be linked by an edge. Default: \code{0.2}. 
 #' 
-#' @return a \code{igraph} object which is the enrichment map for enrichment 
-#' results.
+#' @return  a \code{igraph} object which is the enrichment map for enrichment 
+#' results. The node have 5 attributes: "name", "size", "pie", "cluster", 
+#' and "pieName". The "name" corresponds to the term description. While the 
+#' "size" corresponds to the number of unique genes found in the specific 
+#' gene set when looking at all the experiments. 
+#' The edges have 3 attributes: "similarity", "width", and 
+#' "weight". All those 3 attributes correspond to the Jaccard coefficient.
 #' 
 #' @examples
 #'

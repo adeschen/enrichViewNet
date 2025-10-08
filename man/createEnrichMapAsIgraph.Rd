@@ -52,8 +52,12 @@ the minimum level of similarity between two terms to have an edge linking
 the terms. Default: \code{0.20}.}
 }
 \value{
-a \code{igraph} object representing enrichment map for the 
-selected enrichment results.
+a \code{igraph} object which is the enrichment map for enrichment 
+results. The node have 2 attributes: "name" and "size". The "name" 
+corresponds to the term description. While the "size" corresponds to the 
+number of genes found in the specific gene set. The edges have 
+3 attributes: "similarity", "width", and "weight". All those 3 attributes 
+correspond to the Jaccard coefficient.
 }
 \description{
 User selected enrichment terms are used to create an enrichment 

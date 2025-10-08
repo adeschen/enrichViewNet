@@ -52,12 +52,18 @@ number of terms to display.  If a \code{integer}, the first
 will be displayed. Default: \code{30L}.}
 
 \item{similarityCutOff}{a positive \code{numeric} between 0 and 1 indicating 
-the minimum level of similarity between two terms to have an edge linking 
+the minimum level of similarity between two terms, calculated 
+using the Jaccard coefficient, to have an edge linking 
 the terms. Default: \code{0.20}.}
 }
 \value{
 a \code{igraph} object which is the enrichment map for enrichment 
-results.
+results. The node have 5 attributes: "name", "size", "pie", "cluster", 
+and "pieName". The "name" corresponds to the term description. While the 
+"size" corresponds to the number of unique genes found in the specific 
+gene set when looking at all the experiments.
+The edges have 3 attributes: "similarity", "width", and 
+"weight". All those 3 attributes correspond to the Jaccard coefficient.
 }
 \description{
 User selected enrichment terms are used to create an enrichment 
