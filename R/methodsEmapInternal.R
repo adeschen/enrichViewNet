@@ -1295,6 +1295,7 @@ createBasicEmapAsIgraph <- function(gostResults, backgroundGenes,
         attrsE <- list()
         attrsE[["similarity"]] <- simData$similarity
         attrsE[["width"]] <- simData$similarity
+        attrsE[["weight"]] <- simData$similarity
         g <- add_edges(g, edges, attr=attrsE)
         
         ## Remove edges with similarity lower than cut off
@@ -1568,6 +1569,7 @@ createMultiEmapAsIgraph <- function(gostResultsList, queryList, showCategory,
         attrsE <- list()
         attrsE[["similarity"]] <- simData$similarity
         attrsE[["width"]] <- simData$similarity
+        attrsE[["weight"]] <- simData$similarity
         g <- add_edges(g, edges, attr=attrsE)
             
         ## Remove edges with similarity lower than cut off

@@ -632,13 +632,23 @@ test_that("createEnrichMapMultiBasicAsIgraph() must return expected result", {
     
     exp_size <- c(31, 30, 30, 31, 31, 13, 10, 10)
     exp_name <- c("name",   "size", "pie",  "cluster", "pieName")
-    
+    exp_sim <- c(0.9677419354838710, 0.9677419354838710, 0.9375000000000000, 
+                 0.9375000000000000, 0.9354838709677419, 0.9062500000000000,
+                 0.9062500000000000, 0.9677419354838710, 0.9677419354838710,
+                 1.0000000000000000, 0.7692307692307693, 0.7692307692307693,
+                 1.0000000000000000)
     expect_equal(class(result), "igraph")
     expect_equal(length(V(result)), 8)
     expect_equal(V(result)$name, exp_v_name)
     expect_equal(V(result)$size, exp_size)
+    expect_equal(names(vertex.attributes(result)), exp_name)
     expect_equal(length(E(result)), 13)
     expect_equal(names(vertex.attributes(result)), exp_name)
+    expect_equal(names(edge.attributes(result)), 
+                    c("similarity", "width", "weight"))
+    expect_equal(E(result)$similarity, exp_sim)
+    expect_equal(E(result)$width, exp_sim)
+    expect_equal(E(result)$weight, exp_sim)
 })
 
 test_that("createEnrichMapMultiBasicAsIgraph() must return error when no term left", {
@@ -1127,8 +1137,8 @@ test_that("createEnrichMapMultiComplexAsIgraph() must return expected result", {
     expect_equal(length(igraph::E(result)), 63)
     expect_equal(igraph::V(result)$size, exp_size)
     expect_equal(names(igraph::vertex.attributes(result)), exp_name)
-    expect_equal(names(igraph::edge.attributes(result)), c("similarity", 
-                                                                    "width"))
+    expect_equal(names(igraph::edge.attributes(result)), 
+                            c("similarity", "width", "weight"))
 })
 
 test_that("createEnrichMapMultiComplexAsIgraph() must return expected result", {
@@ -1170,7 +1180,8 @@ test_that("createEnrichMapMultiComplexAsIgraph() must return expected result", {
     expect_equal(E(result)$similarity, c(0.625))
     expect_equal(E(result)$width, c(0.625))
     expect_equal(names(vertex.attributes(result)), exp_name)
-    expect_equal(names(edge.attributes(result)), c("similarity", "width"))
+    expect_equal(names(edge.attributes(result)), 
+                    c("similarity", "width", "weight"))
 })
 
 test_that("createEnrichMapMultiComplexAsIgraph() must return expected result when one node", {
@@ -1368,7 +1379,8 @@ test_that("createEnrichMapAsIgraph() must return expected result", {
     expect_equal(E(result)$similarity, c(0.5))
     expect_equal(E(result)$width, c(0.5))
     expect_equal(names(vertex.attributes(result)), exp_name)
-    expect_equal(names(edge.attributes(result)), c("similarity", "width"))
+    expect_equal(names(edge.attributes(result)), 
+                    c("similarity", "width", "weight"))
 })
 
 test_that("createEnrichMapAsIgraph() must return error when query not in enrichment object", {
