@@ -339,5 +339,35 @@ test_that("similarityJaccard() must return expected result", {
     expect_equivalent(result, exp)
 })
 
+test_that("similarityJaccard() must return expected result when zero", {
+    
+    resultData <- data.frame(Description=c("Term 1", "Term 21", "Term 3",
+                                            "Term 4", "Term 5"), 
+            geneID=c(
+                paste0("ENSG001/ENSG002/ENSG003/ENSG004/ENSG005"), 
+                paste0("ENSG001/ENSG002/ENSG003"),
+                paste0("ENSG011/ENSG012/ENSG013/ENSG001"),
+                paste0(""),
+                paste0("")))
+    
+    exp <- matrix(data=NA, ncol=5, nrow=5)
+    exp[2,1] <- 3.0/5.0
+    exp[3,1] <- 1.0/8.0
+    exp[3,2] <- 1.0/6.0
+    exp[4,1] <- 0.0
+    exp[4,2] <- 0.0
+    exp[4,3] <- 0.0
+    exp[5,1] <- 0.0
+    exp[5,2] <- 0.0
+    exp[5,3] <- 0.0
+    exp[5,4] <- 0.0
+    
+    colnames(exp) <- c("Term 1", "Term 21", "Term 3", "Term 4", "Term 5")
+    rownames(exp) <- c("Term 1", "Term 21", "Term 3", "Term 4", "Term 5")
+    
+    result <- enrichViewNet:::similarityJaccard(resultDF=resultData)
+    
+    expect_equivalent(result, exp)
+})
 
     

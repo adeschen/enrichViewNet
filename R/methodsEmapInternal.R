@@ -1633,6 +1633,7 @@ similarityJaccard <- function(resultDF) {
             if (i == j) break
             tempJ <- unique(unlist(str_split(resultDF$geneID[j], "/")))
             all <- c(tempI, tempJ)
+            all <- all[which(all != "")]
             if (length(all) < 1) {
                 res[i, j] <- 0
             } else {
