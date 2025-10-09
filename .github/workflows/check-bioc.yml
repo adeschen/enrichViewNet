@@ -52,10 +52,10 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - { os: ubuntu-latest, r: '4.5.1', bioc: '3.21', cont: "bioconductor/bioconductor_docker:RELEASE_3_21" }
-          - { os: ubuntu-latest, r: '4.5.1', bioc: 'devel', cont: "bioconductor/bioconductor_docker:devel-R-4.5.1"}
-          - { os: macOS-latest, r: '4.5', bioc: '3.21'}
-          - { os: windows-latest, r: '4.5', bioc: '3.21'}
+          - { os: ubuntu-latest, r: '4.5.1', bioc: '3.21', cont: "bioconductor/bioconductor_docker:RELEASE_3_21", deploy: "true" }
+          - { os: ubuntu-latest, r: '4.5.1', bioc: 'devel', cont: "bioconductor/bioconductor_docker:devel-R-4.5.1", deploy: "false"}
+          - { os: macOS-latest, r: '4.5', bioc: '3.21', deploy: "false"}
+          - { os: windows-latest, r: '4.5', bioc: '3.21', deploy: "false"}
           ## Check https://github.com/r-lib/actions/tree/master/examples
           ## for examples using the http-user-agent
     env:
@@ -258,11 +258,11 @@ jobs:
         shell: Rscript {0}
 
       - name: Install package
-        if: github.ref == 'refs/heads/devel' && env.run_pkgdown == 'true' && runner.os == 'Linux'
+        if: github.ref == 'refs/heads/devel' && env.run_pkgdown == 'true' && runner.os == 'Linux' && matrix.config.deploy == 'true'
         run: R CMD INSTALL .
 
       - name: Build pkgdown site
-        if: github.ref == 'refs/heads/devel' && env.run_pkgdown == 'true' && runner.os == 'Linux'
+        if: github.ref == 'refs/heads/devel' && env.run_pkgdown == 'true' && runner.os == 'Linux' && matrix.config.deploy == 'true'
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
         shell: Rscript {0}
         ## Note that you need to run pkgdown::deploy_to_branch(new_process = FALSE)
@@ -271,12 +271,12 @@ jobs:
         ## makes the git history recognizable by pkgdown.
 
       - name: Install deploy dependencies
-        if: github.ref == 'refs/heads/devel' && env.run_pkgdown == 'true' && runner.os == 'Linux'
+        if: github.ref == 'refs/heads/devel' && env.run_pkgdown == 'true' && runner.os == 'Linux' && matrix.config.deploy == 'true'
         run: |
           apt-get update && apt-get -y install rsync
 
       - name: Deploy pkgdown site to GitHub pages 🚀
-        if: github.ref == 'refs/heads/devel' && env.run_pkgdown == 'true' && runner.os == 'Linux'
+        if: github.ref == 'refs/heads/devel' && env.run_pkgdown == 'true' && runner.os == 'Linux' && matrix.config.deploy == 'true'
         uses: JamesIves/github-pages-deploy-action@v4.5.0
         with:
           clean: false
