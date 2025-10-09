@@ -1374,6 +1374,18 @@ test_that("createEnrichMapAsIgraph() must return error when not all listed terms
         fixed=TRUE)
 })
 
+test_that("createEnrichMapAsIgraph() must return error when term list null", {
+    
+    errorM <- paste0("A vector of terms should be given through the ",
+                        "\'termIDs\' parameter when source is \'TERM_ID\'.")
+    
+    expect_error(createEnrichMapAsIgraph(
+            gostObject=parentalNapaVsDMSOEnrichment, 
+            query="parental_napa_vs_DMSO", showCategory=NULL, source="TERM_ID",
+            termIDs=NULL, removeRoot=TRUE, similarityCutOff=0.1), 
+            error_message=errorM, fixed=TRUE)
+})
+
 test_that("createEnrichMapAsIgraph() must return error when query not in enrichment object", {
     
     gostObjL <- parentalNapaVsDMSOEnrichment
