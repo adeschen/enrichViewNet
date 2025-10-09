@@ -1193,7 +1193,7 @@ test_that("createEnrichMapMultiComplexAsIgraph() must return expected result", {
     
     queryData <- data.frame(queryName=c("parental_napa_vs_DMSO", 
                 "rosa_napa_vs_DMSO"), source=c("TERM_ID", "TERM_ID"), 
-                removeRoot=c(TRUE, TRUE), 
+                removeRoot=c(FALSE, FALSE), 
                 termIDs=c(c("WP:WP4925,WP:WP3613,WP:WP382,WP:WP395"), 
                         c("WP:WP4925,WP:WP3613,WP:WP382,WP:WP3287")), 
                 groupName=c("parental - WP", "rosa - WP"), 
