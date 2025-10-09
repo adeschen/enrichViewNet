@@ -663,6 +663,51 @@ test_that("createEnrichMapMultiBasicAsIgraph() must return error when no term le
         similarityCutOff=0.4), error=message_error)
 })
 
+test_that("createEnrichMapMultiBasicAsIgraph() must return error when no term left after removal of root term", {
+    
+    message_error <- paste0("With removal of the root term, there is no ", 
+                                "enrichment term left")
+    
+    expect_error(createEnrichMapMultiBasicAsIgraph(
+        gostObjectList=list(parentalNapaVsDMSOEnrichment, rosaNapaVsDMSOEnrichment), 
+        queryList=list("parental_napa_vs_DMSO", "rosa_napa_vs_DMSO"), 
+        source="TERM_ID", termIDs=c("WP:000000"), removeRoot=T, showCategory=5, 
+        similarityCutOff=0.4), error=message_error)
+})
+
+test_that("createEnrichMapMultiBasicAsIgraph() must return expected result when using term IDs", {
+    
+    result <- createEnrichMapMultiBasicAsIgraph(
+        gostObjectList=list(parentalNapaVsDMSOEnrichment, rosaNapaVsDMSOEnrichment), 
+        queryList=list("parental_napa_vs_DMSO", "rosa_napa_vs_DMSO"), 
+        source="TERM_ID", 
+        termIDs=c("GO:0006357", "GO:0009892", "GO:0007275", "GO:0034654"), 
+        removeRoot=T, showCategory=5, 
+        similarityCutOff=0.5)
+    
+    exp_v_name <- c("regulation of transcription by RNA polymerase II",
+        "multicellular organism development",
+        "negative regulation of metabolic process",
+        "nucleobase-containing compound biosynthetic process")
+    
+    exp_size <- c(39, 46, 41, 47)
+    exp_name <- c("name",   "size", "pie",  "cluster", "pieName")
+    exp_sim <- c(0.829787234042553)
+    
+    expect_equal(class(result), "igraph")
+    expect_equal(length(V(result)), 4)
+    expect_equal(V(result)$name, exp_v_name)
+    expect_equal(V(result)$size, exp_size)
+    expect_equal(names(vertex.attributes(result)), exp_name)
+    expect_equal(length(E(result)), 1)
+    expect_equal(names(vertex.attributes(result)), exp_name)
+    expect_equal(names(edge.attributes(result)), 
+                 c("similarity", "width", "weight"))
+    expect_equal(E(result)$similarity, exp_sim)
+    expect_equal(E(result)$width, exp_sim)
+    expect_equal(E(result)$weight, exp_sim)
+})
+
 
 ### Tests createEnrichMapMultiComplex() results
 
