@@ -1,9 +1,17 @@
+CHANGES IN VERSION 1.7.3
+------------------------
+
+NEW FEATURES
+
+    o The new functions createBasicEmapAsIgraph(), createEnrichMapMultiBasicAsIgraph(), generates enrichment maps in an igraph format.
+
+
 CHANGES IN VERSION 1.7.2
 ------------------------
 
 BUG FIXES AND IMPROVEMENTS
 
-    o Ensure functions using ggplot2 are using updated functions
+    o All functions using ggplot2 are using updated ggplot2 functions.
 
 
 CHANGES IN VERSION 1.7.1
