@@ -1523,3 +1523,34 @@ test_that("createEnrichMapAsIgraph() must return expected result when limit numb
     expect_equal(names(vertex.attributes(result)), exp_name)
 })
 
+test_that("createEnrichMapAsIgraph() must return expected result when term names duplicated", {
+    
+    gostObjL <- parentalNapaVsDMSOEnrichment
+    
+    ## Duplicate name
+    gostObjL$result$term_name[
+        gostObjL$result$term_name == "VEGFA-VEGFR2 signaling"] <- 
+                    "Unfolded protein response"
+    queryData <- "parental_napa_vs_DMSO"
+    
+    result <- createEnrichMapAsIgraph(gostObject=gostObjL, 
+        query=queryData, showCategory=6, source="WP", removeRoot=TRUE,
+            termIDs=termIds, similarityCutOff=0.7)
+    
+    exp_v_name <- c("Photodynamic therapy-induced unfolded protein response",
+        "Unfolded protein response (WP:WP4925)" , 
+        "Unfolded protein response (WP:WP3888)",
+        "Transcriptional cascade regulating adipogenesis", 
+        "White fat cell differentiation", "Pre-implantation embryo")
+    
+    exp_size <- c(7, 6, 16, 5, 6, 6)
+    exp_name <- c("name",   "size")
+    
+    expect_equal(class(result), "igraph")
+    expect_equal(length(V(result)), 6)
+    expect_equal(V(result)$name, exp_v_name)
+    expect_equal(V(result)$size, exp_size)
+    expect_equal(length(E(result)), 1)
+    expect_equal(E(result)$similarity, c(0.8333333333333333))
+    expect_equal(names(vertex.attributes(result)), exp_name)
+})
