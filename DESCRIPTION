@@ -37,13 +37,19 @@ Imports: gprofiler2,
     stringr,
     enrichplot,
     DOSE,
+    igraph,
+    reshape2,
     methods
 Suggests: 
     BiocStyle,
     knitr,
     rmarkdown,
     ggplot2,
+    scatterpie,
+    ggtangle,
+    ggrepel,
     testthat,
+    ggnetwork,
     magick
 biocViews: BiologicalQuestion, 
     Software,
@@ -53,4 +59,4 @@ biocViews: BiologicalQuestion,
 VignetteBuilder: knitr
 URL: https://github.com/adeschen/enrichViewNet, https://adeschen.github.io/enrichViewNet/
 BugReports: https://github.com/adeschen/enrichViewNet/issues
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3

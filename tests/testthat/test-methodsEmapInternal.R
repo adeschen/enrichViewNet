@@ -23,18 +23,51 @@ test_that("validateCreateEnrichMapArguments() must return expected result", {
 })
 
 
-### Tests validateCreateEnrichMapMultiArguments() results
+### Tests validateCreateEnrichMapMultiBasicArgs() results
 
-context("validateCreateEnrichMapMultiArguments() results")
+context("validateCreateEnrichMapMultiBasicArgs() results")
 
-test_that("validateCreateEnrichMapMultiArguments() must return expected result", {
+test_that("validateCreateEnrichMapMultiBasicArgs() must return expected result", {
     
-    result <- enrichViewNet:::validateCreateEnrichMapMultiArguments(
+    result <- enrichViewNet:::validateCreateEnrichMapMultiBasicArgs(
         gostObjectList=list(parentalNapaVsDMSOEnrichment, 
                                         rosaNapaVsDMSOEnrichment), 
         queryList=list("parental_napa_vs_DMSO", "rosa_napa_vs_DMSO"), 
         source="GO:CC", termIDs=NULL, removeRoot=TRUE, showCategory=30, 
         groupCategory=FALSE, categoryLabel=1, categoryNode=1, line=1)
+    
+    expect_true(result)
+})
+
+
+### Tests validateCreateEnrichMapMultiBasicAsIgraphArgs() results
+
+context("validateCreateEnrichMapMultiBasicAsIgraphArgs() results")
+
+test_that("validateCreateEnrichMapMultiBasicAsIgraphArgs() must return expected result", {
+    
+    result <- enrichViewNet:::validateCreateEnrichMapMultiBasicAsIgraphArgs(
+        gostObjectList=list(parentalNapaVsDMSOEnrichment, 
+                            rosaNapaVsDMSOEnrichment), 
+        queryList=list("parental_napa_vs_DMSO", "rosa_napa_vs_DMSO"), 
+        source="GO:CC", termIDs=NULL, removeRoot=TRUE, showCategory=30, 
+        similarityCutOff=0.2)
+    
+    expect_true(result)
+})
+
+
+### Tests validateCreateEnrichMapMultiBasicGOSTArgs() results
+
+context("validateCreateEnrichMapMultiBasicGOSTArgs() results")
+
+test_that("validateCreateEnrichMapMultiBasicGOSTArgs() must return expected result", {
+    
+    result <- enrichViewNet:::validateCreateEnrichMapMultiBasicGOSTArgs(
+        gostObjectList=list(parentalNapaVsDMSOEnrichment, 
+                            rosaNapaVsDMSOEnrichment), 
+        queryList=list("parental_napa_vs_DMSO", "rosa_napa_vs_DMSO"), 
+        source="GO:CC", termIDs=NULL, removeRoot=TRUE)
     
     expect_true(result)
 })
@@ -247,4 +280,94 @@ test_that("createMultiEmap() must return expected result when same different enr
     
     expect_true(all(graphRes$data$name %in% expected_terms))
 })
+
+
+### Tests validateCreateEnrichMapMultiComplexAsIgraphArg() results
+
+context("validateCreateEnrichMapMultiComplexAsIgraphArg() results")
+
+test_that("validateCreateEnrichMapMultiComplexAsIgraphArg() must return expected result", {
+    
+    gostObjectList <- list(parentalNapaVsDMSOEnrichment, 
+                            parentalNapaVsDMSOEnrichment)
+    queryList <- list("parental_napa_vs_DMSO (1)", "parental_napa_vs_DMSO (2)")
+    
+    queryData <- data.frame(queryName=c("parental_napa_vs_DMSO", 
+        "parental_napa_vs_DMSO"), source=c("KEGG", "REAC"), 
+        removeRoot=c(TRUE, TRUE), termIDs=c("", ""), 
+        groupName=c("parental - KEGG", "parental - Reactome"), 
+        stringsAsFactors=FALSE)
+    
+    expect_true(enrichViewNet:::validateCreateEnrichMapMultiComplexAsIgraphArg(
+        gostObjectList=gostObjectList, queryInfo=queryData, showCategory=20, 
+        similarityCutOff=0.2))
+})
+
+
+### Tests similarityJaccard() results
+
+context("similarityJaccard() results")
+
+test_that("similarityJaccard() must return expected result", {
+    
+    resultData <- data.frame(Description=c("Term 1", "Term 2", "Term 3",
+                                            "Term 4", "Term 5"), 
+            geneID=c(
+                paste0("ENSG001/ENSG002/ENSG003/ENSG004/ENSG005"), 
+                paste0("ENSG001/ENSG002/ENSG003"),
+                paste0("ENSG011/ENSG012/ENSG013"),
+                paste0("ENSG001/ENSG002/ENSG003"),
+                paste0("ENSG003/ENSG006/ENSG007/ENSG008/ENSG011")))
+    
+    exp <- matrix(data=NA, ncol=5, nrow=5)
+    exp[2,1] <- 3.0/5.0
+    exp[3,1] <- 0.0
+    exp[3,2] <- 0.0
+    exp[4,1] <- 3.0/5.0
+    exp[4,2] <- 1.0
+    exp[4,3] <- 0.0
+    exp[5,1] <- 1.0/9.0
+    exp[5,2] <- 1.0/7.0
+    exp[5,3] <- 1.0/7.0
+    exp[5,4] <- 1.0/7.0
+    
+    colnames(exp) <- c("Term 1", "Term 2", "Term 3", "Term 4", "Term 5")
+    rownames(exp) <- c("Term 1", "Term 2", "Term 3", "Term 4", "Term 5")
+     
+    result <- enrichViewNet:::similarityJaccard(resultDF=resultData)
+    
+    expect_equivalent(result, exp)
+})
+
+test_that("similarityJaccard() must return expected result when zero", {
+    
+    resultData <- data.frame(Description=c("Term 1", "Term 21", "Term 3",
+                                            "Term 4", "Term 5"), 
+            geneID=c(
+                paste0("ENSG001/ENSG002/ENSG003/ENSG004/ENSG005"), 
+                paste0("ENSG001/ENSG002/ENSG003"),
+                paste0("ENSG011/ENSG012/ENSG013/ENSG001"),
+                paste0(""),
+                paste0("")))
+    
+    exp <- matrix(data=NA, ncol=5, nrow=5)
+    exp[2,1] <- 3.0/5.0
+    exp[3,1] <- 1.0/8.0
+    exp[3,2] <- 1.0/6.0
+    exp[4,1] <- 0.0
+    exp[4,2] <- 0.0
+    exp[4,3] <- 0.0
+    exp[5,1] <- 0.0
+    exp[5,2] <- 0.0
+    exp[5,3] <- 0.0
+    exp[5,4] <- 0.0
+    
+    colnames(exp) <- c("Term 1", "Term 21", "Term 3", "Term 4", "Term 5")
+    rownames(exp) <- c("Term 1", "Term 21", "Term 3", "Term 4", "Term 5")
+    
+    result <- enrichViewNet:::similarityJaccard(resultDF=resultData)
+    
+    expect_equivalent(result, exp)
+})
+
     

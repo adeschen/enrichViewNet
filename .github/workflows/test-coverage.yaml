@@ -2,6 +2,7 @@ on:
   push:
     branches:
       - devel
+      - graphUpdate
   pull_request:
     branches:
       - devel
