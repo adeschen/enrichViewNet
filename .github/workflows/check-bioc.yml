@@ -52,8 +52,8 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - { os: ubuntu-latest, r: '4.5.1', bioc: '3.21', cont: "bioconductor/bioconductor_docker:RELEASE_3_21", deploy: "true" }
-          - { os: ubuntu-latest, r: '4.5.1', bioc: 'devel', cont: "bioconductor/bioconductor_docker:devel-R-4.5.1", deploy: "false"}
+          - { os: ubuntu-latest, r: '4.5.1', bioc: '3.21', cont: "bioconductor/bioconductor_docker:RELEASE_3_21", deploy: "false" }
+          - { os: ubuntu-latest, r: '4.5.1', bioc: 'devel', cont: "bioconductor/bioconductor_docker:devel-R-4.5.1", deploy: "true"}
           - { os: macOS-latest, r: '4.5', bioc: '3.21', deploy: "false"}
           - { os: windows-latest, r: '4.5', bioc: '3.21', deploy: "false"}
           ## Check https://github.com/r-lib/actions/tree/master/examples
