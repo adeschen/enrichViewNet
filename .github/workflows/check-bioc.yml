@@ -258,7 +258,7 @@ jobs:
         shell: Rscript {0}
 
       - name: Install package
-        if: github.ref == 'refs/heads/devel' && env.run_pkgdown == 'true' && runner.os == 'Linux' && matrix.config.deploy == 'true'
+        if: github.ref == 'refs/heads/devel' && env.run_pkgdown == 'true' && runner.os == 'Linux' && ${{ matrix.config.deploy }} == 'true'
         run: R CMD INSTALL .
 
       - name: Build pkgdown site
