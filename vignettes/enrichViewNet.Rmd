@@ -1,6 +1,7 @@
 ---
 title: "From functional enrichment results to biological networks"
 author: Astrid Deschênes, Pascal Belleau, Robert L Faure and Maria J Fernandes
+package: enrichViewNet
 output:
   BiocStyle::html_document:
     toc: true
@@ -30,7 +31,7 @@ suppressPackageStartupMessages({
 })
 
 ## Set it globally
-options(ggrepel.max.overlaps = Inf)
+options(ggrepel.max.overlaps = 100)
 
 set.seed(1214)
 ```
@@ -692,7 +693,7 @@ library(ggrepel)
 ## Only the top 15 terms with the bestp-values are shown 
 graphReac <- createEnrichMapAsIgraph(gostObject=parentalNapaVsDMSOEnrichment, 
                     query="parental_napa_vs_DMSO", similarityCutOff=0.4,
-                    source="REAC", showCategory=15)
+                    source="REAC", showCategory=10)
 
 ## Set seed to ensure reproducible results
 set.seed(92)
@@ -712,7 +713,8 @@ graphEmap$data$x[graphEmap$data$label ==
 graphEmap + geom_edge(aes(linewidth=weight), color="blue1") + 
     geom_point(aes(size=size), colour="gray40") +
     geom_text_repel(aes(x=x, y=y, label=label), nudge_x=0.5, 
-                nudge_y=0.2, col="darkviolet", min.segment.length=0.1) +
+                 nudge_y=0.2, col="darkviolet", min.segment.length=0.1, 
+                 max.overlaps=10) +
     scale_size_continuous(range=c(4, 12)) + 
     scale_linewidth_binned(range=c(1, 3)) + coord_fixed() 
     
@@ -913,7 +915,8 @@ graphEmap + geom_edge(aes(linewidth=weight), color="black") +
     scale_fill_manual(values=groupColor) +
     scale_size_continuous(range=c(2, 8)) + 
     scale_linewidth_binned(range=c(1, 3)) +
-    geom_text_repel(aes(x=x, y=y, label=label), color="blue2") +
+    geom_text_repel(aes(x=x, y=y, label=label), color="blue2", 
+            max.overlaps=10) +
     coord_fixed()
 ```
 
@@ -1222,7 +1225,8 @@ graphEmap + geom_edge(aes(linewidth=weight), color="lightblue3") +
     scale_fill_manual(values=groupColor) +
     scale_size_continuous(range=c(2, 8)) + 
     scale_linewidth_binned(range=c(1, 3)) +
-    geom_text_repel(aes(x=x, y=y, label=label), color="black") +
+    geom_text_repel(aes(x=x, y=y, label=label), color="black", 
+            max.overlaps=10) +
     coord_fixed()
 
 ```
@@ -1394,7 +1398,8 @@ graphEmap + geom_edge(aes(linewidth=weight), color="blue3") +
     scale_fill_manual(values=groupColor) +
     scale_size_continuous(range=c(2, 8)) + 
     scale_linewidth_binned(range=c(1, 2)) +
-    geom_text_repel(aes(x=x, y=y, label=label), color="black") +
+    geom_text_repel(aes(x=x, y=y, label=label), color="black", 
+            max.overlaps=10) +
     coord_fixed()
 
 ```

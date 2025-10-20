@@ -523,7 +523,7 @@ createEnrichMapMultiBasic <- function(gostObjectList, queryList,
 #'         geom_scatterpie_legend(radius=emapGraph$data$size/50, n=4, 
 #'             x=max(emapGraph$data$x), y=min(emapGraph$data$y),
 #'             labeller=function(x) {round(x*50)}, label_position="right") +
-#'         geom_text_repel(aes(x=x, y=y, label=label)) +
+#'         geom_text_repel(aes(x=x, y=y, label=label), max.overlaps=20) +
 #'         coord_fixed()
 #' }
 #' 
@@ -885,7 +885,7 @@ createEnrichMapMultiComplex <- function(gostObjectList, queryInfo,
 #'         geom_scatterpie_legend(radius=emapG$data$size/50, n=4, 
 #'             x=max(emapG$data$x), y=max(emapG$data$y),
 #'             labeller=function(x) {round(x*50)}, label_position="right") +
-#'         geom_text_repel(aes(x=x, y = y, label=label)) +
+#'         geom_text_repel(aes(x=x, y=y, label=label), max.overlaps=20) +
 #'         coord_fixed()
 #' }
 #' 
