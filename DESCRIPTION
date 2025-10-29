@@ -1,6 +1,6 @@
 Package: enrichViewNet
 Type: Package
-Version: 1.8.0
+Version: 1.9.0
 Date: 2023-08-12
 Title: From functional enrichment results to biological networks
 Description: This package enables the visualization of functional 
