@@ -52,7 +52,7 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - { os: ubuntu-latest, r: '4.6', bioc: 'devel', cont: "bioconductor/bioconductor_docker:devel-R-4.6.0"}
+          - { os: ubuntu-latest, r: '4.6.0', bioc: 'devel', cont: "bioconductor/bioconductor_docker:devel-R-4.6.0"}
           - { os: macOS-latest, r: '4.5', bioc: '3.22'}
           - { os: windows-latest, r: '4.5', bioc: '3.22'}
           ## Check https://github.com/r-lib/actions/tree/master/examples
