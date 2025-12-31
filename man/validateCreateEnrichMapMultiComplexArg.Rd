@@ -10,7 +10,6 @@ validateCreateEnrichMapMultiComplexArg(
   gostObjectList,
   queryInfo,
   showCategory,
-  groupCategory,
   categoryLabel,
   categoryNode,
   line
@@ -55,9 +54,6 @@ unique name. }
 \code{n} terms will be displayed. If \code{vector} of terms, 
 the selected terms will be displayed.}
 
-\item{groupCategory}{a \code{logical} indicating if the categories should 
-be grouped.}
-
 \item{categoryLabel}{a positive \code{numeric} representing the amount by 
 which plotting category nodes label size should be scaled relative 
 to the default (1).}
@@ -96,8 +92,7 @@ enrichViewNet:::validateCreateEnrichMapMultiComplexArg(
     gostObjectList=list(parentalNapaVsDMSOEnrichment, 
                             rosaNapaVsDMSOEnrichment),
     queryInfo=queryDataFrame,
-    showCategory=20, groupCategory=FALSE, 
-    categoryLabel=1.1, categoryNode=1, line=1.2)
+    showCategory=20, categoryLabel=1.1, categoryNode=1, line=1.2)
 
 }
 \author{

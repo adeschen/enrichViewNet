@@ -14,7 +14,6 @@ createEnrichMap(
   termIDs = NULL,
   removeRoot = TRUE,
   showCategory = 30L,
-  groupCategory = FALSE,
   categoryLabel = 1,
   categoryNode = 1,
   line = 1,
@@ -50,9 +49,6 @@ the selected source should be removed (when present). Default: \code{TRUE}.}
 number of terms to display.  If a \code{integer}, the first 
 \code{n} terms will be displayed. If \code{NULL}, all terms  
 will be displayed. Default: \code{30L}.}
-
-\item{groupCategory}{a \code{logical} indicating if the categories should 
-be grouped. Default: \code{FALSE}.}
 
 \item{categoryLabel}{a positive \code{numeric} representing the amount by 
 which plotting category nodes label size should be scaled relative 
