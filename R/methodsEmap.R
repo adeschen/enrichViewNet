@@ -37,9 +37,6 @@
 #' \code{n} terms will be displayed. If \code{NULL}, all terms  
 #' will be displayed. Default: \code{30L}.
 #' 
-#' @param groupCategory a \code{logical} indicating if the categories should 
-#' be grouped. Default: \code{FALSE}.
-#' 
 #' @param categoryLabel a positive \code{numeric} representing the amount by 
 #' which plotting category nodes label size should be scaled relative 
 #' to the default (1). Default: \code{1}.s
@@ -79,8 +76,7 @@
 createEnrichMap <- function(gostObject, query, source=c("TERM_ID", "GO:MF", 
         "GO:CC", "GO:BP", "KEGG", "REAC", "TF", "MIRNA", "HPA", "CORUM", 
         "HP", "WP"), termIDs=NULL, removeRoot=TRUE,  
-        showCategory=30L, groupCategory=FALSE, categoryLabel=1,
-        categoryNode=1, line=1, ...) {
+        showCategory=30L, categoryLabel=1, categoryNode=1, line=1, ...) {
     
     ## Validate source is among the possible choices
     source <- match_arg(source, ignore_case=TRUE)
@@ -90,8 +86,7 @@ createEnrichMap <- function(gostObject, query, source=c("TERM_ID", "GO:MF",
     validateCreateEnrichMapArguments(gostObject=gostObject, query=query, 
         source=source, termIDs=termIDs, removeRoot=removeRoot, 
         showCategory=showCategory, categoryLabel=categoryLabel,
-        groupCategory=groupCategory, categoryNode=categoryNode, 
-        line=line)
+        categoryNode=categoryNode, line=line)
     
     ## Extract results
     gostResults <- gostObject$result
@@ -125,7 +120,7 @@ createEnrichMap <- function(gostObject, query, source=c("TERM_ID", "GO:MF",
     emap <- createBasicEmap(gostResults=gostResults, 
                 backgroundGenes=backgroundGenes, 
                 showCategory=showCategory, categoryLabel=categoryLabel,
-                groupCategory=groupCategory, categoryNode=categoryNode, 
+                categoryNode=categoryNode, 
                 significantMethod=significantMethod, line=line,  ...)
     
     return(emap)
@@ -310,9 +305,6 @@ createEnrichMapAsIgraph <- function(gostObject, query, source=c("TERM_ID",
 #' \code{n} terms will be displayed. If \code{vector} of terms, 
 #' the selected terms will be displayed. Default: \code{30L}.
 #' 
-#' @param groupCategory a \code{logical} indicating if the categories should 
-#' be grouped. Default: \code{FALSE}.
-#' 
 #' @param categoryLabel a positive \code{numeric} representing the amount by 
 #' which plotting category nodes label size should be scaled relative 
 #' to the default (1). Default: \code{1}.
@@ -356,7 +348,7 @@ createEnrichMapAsIgraph <- function(gostObject, query, source=c("TERM_ID",
 createEnrichMapMultiBasic <- function(gostObjectList, queryList, 
     source=c("TERM_ID", "GO:MF", "GO:CC", "GO:BP", "KEGG", "REAC", "TF", 
     "MIRNA", "HPA", "CORUM", "HP", "WP"), termIDs=NULL, removeRoot=TRUE, 
-    showCategory=30L, groupCategory=FALSE, categoryLabel=1, 
+    showCategory=30L, categoryLabel=1, 
     categoryNode=1, line=1, ...) {
     
     ## Validate source is among the possible choices
@@ -366,7 +358,7 @@ createEnrichMapMultiBasic <- function(gostObjectList, queryList,
     validateCreateEnrichMapMultiBasicArgs(gostObjectList=gostObjectList, 
         queryList=queryList, source=source, termIDs=termIDs, 
         removeRoot=removeRoot, showCategory=showCategory, 
-        categoryLabel=categoryLabel, groupCategory=groupCategory, 
+        categoryLabel=categoryLabel, 
         categoryNode=categoryNode, line=line)
     
     ## Extract results
@@ -403,7 +395,7 @@ createEnrichMapMultiBasic <- function(gostObjectList, queryList,
     ## Create multi categories emap
     emap <- createMultiEmap(gostResultsList=gostResultsList, 
                 queryList=queryList, showCategory=showCategory, 
-                categoryLabel=categoryLabel, groupCategory=groupCategory, 
+                categoryLabel=categoryLabel,  
                 categoryNode=categoryNode, line=line, ...)
     
     return(emap)
@@ -634,9 +626,6 @@ createEnrichMapMultiBasicAsIgraph <- function(gostObjectList, queryList,
 #' \code{n} terms will be displayed. If \code{vector} of terms, 
 #' the selected terms will be displayed. Default: \code{30L}.
 #' 
-#' @param groupCategory a \code{logical} indicating if the categories should 
-#' be grouped. Default: \code{FALSE}.
-#' 
 #' @param categoryLabel a positive \code{numeric} representing the amount by 
 #' which plotting category nodes label size should be scaled relative 
 #' to the default (1). Default: \code{1}.
@@ -693,14 +682,12 @@ createEnrichMapMultiBasicAsIgraph <- function(gostObjectList, queryList,
 #' @encoding UTF-8
 #' @export
 createEnrichMapMultiComplex <- function(gostObjectList, queryInfo,  
-    showCategory=30L, groupCategory=FALSE, categoryLabel=1, 
-    categoryNode=1, line=1, ...) {
+    showCategory=30L, categoryLabel=1, categoryNode=1, line=1, ...) {
     
     ## Validate parameters
     validateCreateEnrichMapMultiComplexArg(gostObjectList=gostObjectList, 
         queryInfo=queryInfo, showCategory=showCategory, 
-        categoryLabel=categoryLabel, groupCategory=groupCategory, 
-        categoryNode=categoryNode, line=line)
+        categoryLabel=categoryLabel,categoryNode=categoryNode, line=line)
     
     ## Extract results
     gostResultsList <- lapply(gostObjectList, FUN=function(x) {x$result})
@@ -744,7 +731,7 @@ createEnrichMapMultiComplex <- function(gostObjectList, queryInfo,
     ## Create multi categories emap
     emap <- createMultiEmap(gostResultsList=gostResultsList, 
                 queryList=queryInfo$groupName, showCategory=showCategory, 
-                categoryLabel=categoryLabel, groupCategory=groupCategory, 
+                categoryLabel=categoryLabel, 
                 categoryNode=categoryNode, line=line,  ...)
     
     return(emap)

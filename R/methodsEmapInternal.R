@@ -37,9 +37,6 @@
 #' \code{n} terms will be displayed. If \code{vector} of terms, 
 #' the selected terms will be displayed.
 #' 
-#' @param groupCategory a \code{logical} indicating if the categories should 
-#' be grouped.
-#' 
 #' @param categoryLabel a positive \code{numeric} representing the amount by 
 #' which plotting category nodes label size should be scaled relative 
 #' to the default (1).
@@ -60,15 +57,14 @@
 #' ## Check that all arguments are valid
 #' enrichViewNet:::validateCreateEnrichMapArguments(gostObject=demoGOST,
 #'     query="query_1", source="GO:BP", termIDs=NULL, removeRoot=FALSE, 
-#'     showCategory=20, groupCategory=FALSE, 
-#'     categoryLabel=1.1, categoryNode=1, line=1.2)
+#'     showCategory=20, categoryLabel=1.1, categoryNode=1, line=1.2)
 #' 
 #' @author Astrid Deschênes
 #' @encoding UTF-8
 #' @importFrom methods is
 #' @keywords internal
 validateCreateEnrichMapArguments <- function(gostObject, query, source, 
-        termIDs, removeRoot, showCategory, groupCategory, 
+        termIDs, removeRoot, showCategory, 
         categoryLabel, categoryNode, line) {
     
     ## Test that gostObject is a gprofiler2 result 
@@ -108,8 +104,8 @@ validateCreateEnrichMapArguments <- function(gostObject, query, source,
     }
     
     result <- validateCreateEnrichMapSubSectionArguments(
-        showCategory=showCategory, groupCategory=groupCategory, 
-        categoryLabel=categoryLabel, categoryNode=categoryNode, line=line)
+        showCategory=showCategory, categoryLabel=categoryLabel, 
+        categoryNode=categoryNode, line=line)
     
     return(result)     
 }
@@ -275,9 +271,6 @@ validateCreateEnrichMapAsIgraphArg <- function(gostObject, query, source,
 #' \code{n} terms will be displayed. If \code{vector} of terms, 
 #' the selected terms will be displayed.
 #' 
-#' @param groupCategory a \code{logical} indicating if the categories should 
-#' be grouped.
-#' 
 #' @param categoryLabel a positive \code{numeric} representing the amount by 
 #' which plotting category nodes label size should be scaled relative 
 #' to the default (1).
@@ -302,15 +295,14 @@ validateCreateEnrichMapAsIgraphArg <- function(gostObject, query, source,
 #'                             rosaNapaVsDMSOEnrichment),
 #'     queryList=list("parental_napa_vs_DMSO", "rosa_napa_vs_DMSO"), 
 #'     source="GO:BP", termIDs=NULL, removeRoot=FALSE, 
-#'     showCategory=20, groupCategory=FALSE, 
-#'     categoryLabel=1.1, categoryNode=1, line=1.2)
+#'     showCategory=20, categoryLabel=1.1, categoryNode=1, line=1.2)
 #' 
 #' @author Astrid Deschênes
 #' @encoding UTF-8
 #' @importFrom methods is
 #' @keywords internal
 validateCreateEnrichMapMultiBasicArgs <- function(gostObjectList, queryList, 
-    source, termIDs, removeRoot, showCategory, groupCategory, 
+    source, termIDs, removeRoot, showCategory,
     categoryLabel, categoryNode, line) {
     
     ## Same subset of validations that for createEnrichMapMultiBasicAsIgraph()
@@ -319,7 +311,7 @@ validateCreateEnrichMapMultiBasicArgs <- function(gostObjectList, queryList,
         removeRoot=removeRoot)
 
     result <- validateCreateEnrichMapSubSectionArguments(
-        showCategory=showCategory, groupCategory=groupCategory, 
+        showCategory=showCategory, 
         categoryLabel=categoryLabel, categoryNode=categoryNode, line=line)
     
     return(result)   
@@ -587,9 +579,6 @@ validateCreateEnrichMapMultiBasicGOSTArgs <- function(gostObjectList,
 #' \code{n} terms will be displayed. If \code{vector} of terms, 
 #' the selected terms will be displayed.
 #' 
-#' @param groupCategory a \code{logical} indicating if the categories should 
-#' be grouped.
-#' 
 #' @param categoryLabel a positive \code{numeric} representing the amount by 
 #' which plotting category nodes label size should be scaled relative 
 #' to the default (1).
@@ -618,14 +607,13 @@ validateCreateEnrichMapMultiBasicGOSTArgs <- function(gostObjectList,
 #'     gostObjectList=list(parentalNapaVsDMSOEnrichment, 
 #'                             rosaNapaVsDMSOEnrichment),
 #'     queryInfo=queryDataFrame,
-#'     showCategory=20, groupCategory=FALSE, 
-#'     categoryLabel=1.1, categoryNode=1, line=1.2)
+#'     showCategory=20, categoryLabel=1.1, categoryNode=1, line=1.2)
 #' 
 #' @author Astrid Deschênes
 #' @encoding UTF-8
 #' @keywords internal
 validateCreateEnrichMapMultiComplexArg <- function(gostObjectList, queryInfo, 
-    showCategory, groupCategory, categoryLabel, categoryNode, line) {
+    showCategory, categoryLabel, categoryNode, line) {
     
     validateCreateEnrichMapMultiComplexGostPartOne(
         gostObjectList=gostObjectList, queryInfo=queryInfo)
@@ -634,8 +622,8 @@ validateCreateEnrichMapMultiComplexArg <- function(gostObjectList, queryInfo,
         gostObjectList=gostObjectList, queryInfo=queryInfo)
     
     result <- validateCreateEnrichMapSubSectionArguments(
-        showCategory=showCategory, groupCategory=groupCategory, 
-        categoryLabel=categoryLabel, categoryNode=categoryNode, line=line)
+        showCategory=showCategory, categoryLabel=categoryLabel, 
+        categoryNode=categoryNode, line=line)
     
     return(result)   
 }
@@ -992,9 +980,6 @@ validateCreateEnrichMapMultiComplexGostPartTwo <- function(gostObjectList,
 #' \code{n} terms will be displayed. If \code{vector} of terms, 
 #' the selected terms will be displayed.
 #' 
-#' @param groupCategory a \code{logical} indicating if the categories should 
-#' be grouped.
-#' 
 #' @param categoryLabel a positive \code{numeric} representing the amount by 
 #' which plotting category nodes label size should be scaled relative 
 #' to the default (1).
@@ -1011,7 +996,7 @@ validateCreateEnrichMapMultiComplexGostPartTwo <- function(gostObjectList,
 #'
 #' ## Check that all arguments are valid
 #' enrichViewNet:::validateCreateEnrichMapSubSectionArguments(
-#'     showCategory=20, groupCategory=FALSE, categoryLabel=1.1, categoryNode=1, 
+#'     showCategory=20, categoryLabel=1.1, categoryNode=1, 
 #'     line=0.5)
 #' 
 #' @author Astrid Deschênes
@@ -1019,17 +1004,12 @@ validateCreateEnrichMapMultiComplexGostPartTwo <- function(gostObjectList,
 #' @importFrom methods is
 #' @keywords internal
 validateCreateEnrichMapSubSectionArguments <- function(showCategory, 
-    groupCategory, categoryLabel, categoryNode, line) {
+    categoryLabel, categoryNode, line) {
     
     if (!is.character(showCategory) && 
         !(is.numeric(showCategory) && (showCategory > 0))) {
         stop("The \'showCategory\' parameter must an positive integer or a ", 
             "vector of character strings representing terms.")
-    }
-
-    if (!is.logical(groupCategory)) {
-        stop("The \'groupCategory\' parameter must a logical ", 
-            "(TRUE or FALSE).")
     }
 
     if (!is.numeric(categoryLabel) || !(categoryLabel > 0)) {
@@ -1063,9 +1043,6 @@ validateCreateEnrichMapSubSectionArguments <- function(showCategory,
 #' \code{characters} representing terms.  If a \code{integer}, the first 
 #' \code{n} terms will be displayed. If \code{vector} of terms, 
 #' the selected terms will be displayed.
-#' 
-#' @param groupCategory a \code{logical} indicating if the categories should 
-#' be grouped.
 #' 
 #' @param categoryLabel a positive \code{numeric} representing the amount by 
 #' which plotting category nodes label size should be scaled relative 
@@ -1110,18 +1087,17 @@ validateCreateEnrichMapSubSectionArguments <- function(showCategory,
 #' ## Create basic enrichment map using Wikipathways terms
 #' enrichViewNet:::createBasicEmap(gostResults=gostResults, 
 #'     backgroundGenes=backgroundGenes, showCategory=30L, 
-#'     groupCategory=FALSE, categoryLabel=1, categoryNode=1,
+#'     categoryLabel=1, categoryNode=1,
 #'     significantMethod=significantMethod, line=1)
 #'     
 #' @author Astrid Deschênes
 #' @encoding UTF-8
 #' @importFrom methods is new
 #' @importFrom stringr str_ends str_split str_replace_all
-#' @importFrom enrichplot pairwise_termsim emapplot
-#' @importClassesFrom DOSE enrichResult
+#' @importFrom enrichplot emapplot
 #' @keywords internal
 createBasicEmap <- function(gostResults, backgroundGenes, 
-        showCategory, groupCategory, categoryLabel, categoryNode, 
+        showCategory, categoryLabel, categoryNode, 
         significantMethod, line, ...) {
     
     ## Extract gene list for each term
@@ -1159,12 +1135,23 @@ createBasicEmap <- function(gostResults, backgroundGenes,
                 geneSets=geneSets, 
                 organism="UNKNOWN", keytype="UNKNOWN", ontology="UNKNOWN", 
                 readable=FALSE)
+
+    ## The showCategory parameter should not be bigger 
+    ## than the number of entries
+    if (showCategory > length(unique(resultDF$Description))) {
+        showCategory <- length(unique(resultDF$Description))
+    }
     
     ## Get similarity matrix
-    comp <- pairwise_termsim(res)  
+    ##comp <- pairwise_termsim(res, showCategory=showCategory)  
+    
+    ##compar <- pairwise_termsim(res)  
+    comp <- res
+    comp@termsim <- similarityJaccard(resultDF)
+    comp@method <- "JC"
     
     graphEmap <- emapplot(x=comp, showCategory=showCategory,
-        group=groupCategory, size_category=categoryNode, size_edge=line,  ...)
+        size_category=categoryNode, size_edge=line,  ...)
     
     return(graphEmap)
 }
@@ -1223,7 +1210,6 @@ createBasicEmap <- function(gostResults, backgroundGenes,
 #' @importFrom stringr str_ends str_split str_replace_all
 #' @importFrom igraph make_empty_graph V add_vertices E add_edges E<- delete_edges
 #' @importFrom reshape2 melt
-#' @importClassesFrom DOSE enrichResult
 #' @keywords internal
 createBasicEmapAsIgraph <- function(gostResults, backgroundGenes, 
         showCategory, similarityCutOff) {
@@ -1322,9 +1308,6 @@ createBasicEmapAsIgraph <- function(gostResults, backgroundGenes,
 #' \code{n} terms will be displayed. If \code{vector} of terms, 
 #' the selected terms will be displayed.
 #' 
-#' @param groupCategory a \code{logical} indicating if the categories should 
-#' be grouped.
-#' 
 #' @param categoryLabel a positive \code{numeric} representing the amount by 
 #' which plotting category nodes label size should be scaled relative 
 #' to the default (1).
@@ -1360,17 +1343,16 @@ createBasicEmapAsIgraph <- function(gostResults, backgroundGenes,
 #' ## Create basic enrichment map using Wikipathways terms
 #' enrichViewNet:::createMultiEmap(gostResultsList=list(gostResultsREAC, 
 #'     gostResultsKEGG), queryList=queryList, showCategory=30L, 
-#'     groupCategory=FALSE, categoryLabel=1, categoryNode=1, line=1.4)
+#'     categoryLabel=1, categoryNode=1, line=1.4)
 #'     
 #' @author Astrid Deschênes
 #' @encoding UTF-8
 #' @importFrom methods is new
 #' @importFrom stringr str_split str_replace_all
-#' @importFrom enrichplot pairwise_termsim emapplot
-#' @importClassesFrom DOSE compareClusterResult
+#' @importFrom enrichplot emapplot
 #' @keywords internal
 createMultiEmap <- function(gostResultsList, queryList, showCategory, 
-    groupCategory, categoryLabel, categoryNode, line,  ...) {
+    categoryLabel, categoryNode, line,  ...) {
     
     resF <- list()
     geneClusters <- list()
@@ -1417,10 +1399,19 @@ createMultiEmap <- function(gostResultsList, queryList, showCategory,
     res@keytype <- "UNKNOWN"
     res@readable <- FALSE
     
-    compar <- pairwise_termsim(res)  
+    ## The showCategory parameter should not be bigger 
+    ## than the number of entries
+    if (showCategory > length(unique(clProfDF$Description))) {
+        showCategory <- length(unique(clProfDF$Description))
+    }
+    
+    ##compar <- pairwise_termsim(res)  
+    compar <- res
+    compar@termsim <- similarityJaccard(clProfDF)
+    compar@method <- "JC"
     
     graphEmap <- emapplot(compar, showCategory=showCategory, 
-        group=groupCategory, size_category=categoryNode, size_edge=line, ...)
+        size_category=categoryNode, size_edge=line, ...)
     
     return(graphEmap)
 }

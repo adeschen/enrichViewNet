@@ -9,7 +9,6 @@ createMultiEmap(
   gostResultsList,
   queryList,
   showCategory,
-  groupCategory,
   categoryLabel,
   categoryNode,
   line,
@@ -29,9 +28,6 @@ associated enrichment results.}
 \code{characters} representing terms.  If a \code{integer}, the first 
 \code{n} terms will be displayed. If \code{vector} of terms, 
 the selected terms will be displayed.}
-
-\item{groupCategory}{a \code{logical} indicating if the categories should 
-be grouped.}
 
 \item{categoryLabel}{a positive \code{numeric} representing the amount by 
 which plotting category nodes label size should be scaled relative 
@@ -73,7 +69,7 @@ queryList <- list("parental - REACTOME", "parental - KEGG")
 ## Create basic enrichment map using Wikipathways terms
 enrichViewNet:::createMultiEmap(gostResultsList=list(gostResultsREAC, 
     gostResultsKEGG), queryList=queryList, showCategory=30L, 
-    groupCategory=FALSE, categoryLabel=1, categoryNode=1, line=1.4)
+    categoryLabel=1, categoryNode=1, line=1.4)
     
 }
 \author{

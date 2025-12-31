@@ -9,7 +9,6 @@ createBasicEmap(
   gostResults,
   backgroundGenes,
   showCategory,
-  groupCategory,
   categoryLabel,
   categoryNode,
   significantMethod,
@@ -28,9 +27,6 @@ representing the name of the genes present in the request.}
 \code{characters} representing terms.  If a \code{integer}, the first 
 \code{n} terms will be displayed. If \code{vector} of terms, 
 the selected terms will be displayed.}
-
-\item{groupCategory}{a \code{logical} indicating if the categories should 
-be grouped.}
 
 \item{categoryLabel}{a positive \code{numeric} representing the amount by 
 which plotting category nodes label size should be scaled relative 
@@ -80,7 +76,7 @@ significantMethod <- meta$query_metadata$significance_threshold_method
 ## Create basic enrichment map using Wikipathways terms
 enrichViewNet:::createBasicEmap(gostResults=gostResults, 
     backgroundGenes=backgroundGenes, showCategory=30L, 
-    groupCategory=FALSE, categoryLabel=1, categoryNode=1,
+    categoryLabel=1, categoryNode=1,
     significantMethod=significantMethod, line=1)
     
 }
