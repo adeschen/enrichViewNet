@@ -7,8 +7,6 @@ output:
     toc: true
     toc_depth: 3
     number_sections: true
-pkgdown:
-  as_is: true
 bibliography: enrichViewNet.bibtex
 vignette: >
   %\VignetteIndexEntry{From functional enrichment results to biological networks}
