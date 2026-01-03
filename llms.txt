@@ -1,0 +1,172 @@
+The **enrichViewNet** package enables the transformation of functional
+enrichment results, formatted as the results obtained by
+[gprofiler2](https://cran.r-project.org/web/packages/gprofiler2/vignettes/gprofiler2.html),
+into networks.
+
+First, the **enrichViewNet** package enables the visualization of
+enrichment results a [Cytoscape](https://cytoscape.org/) network where
+significant terms (Gene Ontology/Reactome/Transcription Factor/etc..)
+and genes are nodes. In this network, edges connect genes that are part
+of the enrichment request to their terms.
+
+In addition, the **enrichViewNet** package also provides the option to
+create enrichment maps from functional enrichment results. Enrichment
+maps, as introduced in the Bioconductor
+[enrichplot](https://bioconductor.org/packages/release/bioc/html/enrichplot.html)
+package, enable the visualization of enriched terms into a network with
+edges connecting overlapping genes. Thus, enriched terms with
+overlapping genes cluster together.
+
+## Bioconductor Package
+
+[![Bioconductor
+Time](https://bioconductor.org/shields/years-in-bioc/enrichViewNet.svg)](https://bioconductor.org/packages/enrichViewNet)
+
+The **enrichViewNet** package is now an official package of
+[Bioconductor](http://bioconductor.org/).
+
+The current Bioconductor release can be directly downloaded from their
+website: [Current
+release](https://bioconductor.org/packages/enrichViewNet/)
+
+## Authors
+
+[Astrid
+Deschênes](http://ca.linkedin.com/in/astriddeschenes "Astrid Deschênes"),
+[Pascal
+Belleau](http://ca.linkedin.com/in/pascalbelleau "Pascal Belleau"),
+[Robert L
+Faure](https://www.crchudequebec.ulaval.ca/en/research/researchers/robert-l-faure/),
+[Maria J
+Fernandes](https://www.crchudequebec.ulaval.ca/en/research/researchers/maria-fernandes/),
+[Alexander
+Krasnitz](https://www.cshl.edu/research/faculty-staff/alexander-krasnitz/)
+and [David A Tuveson](https://tuvesonlab.labsites.cshl.edu/)
+
+## License
+
+This package and the underlying **enrichViewNet** code are distributed
+under the Artistic license 2.0. You are free to use and redistribute
+this software.
+
+For more information on Artistic 2.0 License see
+<http://opensource.org/licenses/Artistic-2.0>
+
+## Documentation
+
+[enrichViewNet Website](https://adeschen.github.io/enrichViewNet/)
+
+[enrichViewNet Get
+Started](https://adeschen.github.io/enrichViewNet/articles/enrichViewNet.html)
+
+## Installation
+
+To install the latest version accessible, the
+[devtools](https://cran.r-project.org/web/packages/devtools/index.html)
+package is required.
+
+``` R
+ ## Load required package
+ library(devtools)
+
+ ## Install the latest version of enrichViewNet
+ devtools::install_github('adeschen/enrichViewNet')
+```
+
+To install this package from [Bioconductor](https://bioconductor.org),
+start R (version 4.3 or later) and enter:
+
+``` R
+ if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+ BiocManager::install("enrichViewNet")
+```
+
+## Bugs/Feature requests
+
+If you have any bugs or feature requests, [let us
+know](https://github.com/adeschen/enrichViewNet/issues).
+
+Thanks!
+
+# Package index
+
+## All functions
+
+- [`createEnrichMap()`](createEnrichMap.md) : Using functional
+  enrichment results in gprofiler2 format to create an enrichment map
+
+- [`createEnrichMapAsIgraph()`](createEnrichMapAsIgraph.md) : Using
+  functional enrichment results in gprofiler2 format to create an
+  enrichment map in an igraph format
+
+- [`createEnrichMapMultiBasic()`](createEnrichMapMultiBasic.md) : Using
+  functional enrichment results in gprofiler2 format to create an
+  enrichment map with multiple groups from different enrichment analyses
+
+- [`createEnrichMapMultiBasicAsIgraph()`](createEnrichMapMultiBasicAsIgraph.md)
+  : Using functional enrichment results in gprofiler2 format to create
+  an enrichment map with multiple groups from different enrichment
+  analyses as an igraph
+
+- [`createEnrichMapMultiComplex()`](createEnrichMapMultiComplex.md) :
+  Using functional enrichment results in gprofiler2 format to create an
+  enrichment map with multiple groups from same or different enrichment
+  analyses
+
+- [`createEnrichMapMultiComplexAsIgraph()`](createEnrichMapMultiComplexAsIgraph.md)
+  : Using functional enrichment results in gprofiler2 format to create
+  an enrichment map with multiple groups from same or different
+  enrichment analyses in an igraph format
+
+- [`createNetwork()`](createNetwork.md) : Using functional enrichment
+  results from gprofiler2 to create a Cytoscape network
+
+- [`demoGOST`](demoGOST.md) :
+
+  The result of a functional enrichment analysis done with `gprofiler2`
+  (<https://cran.r-project.org/web/packages/gprofiler2/vignettes/gprofiler2.html>).
+
+- [`enrichViewNet-package`](enrichViewNet-package.md)
+  [`enrichViewNet`](enrichViewNet-package.md) : From functional
+  enrichment results to biological networks
+
+- [`parentalNapaVsDMSODEG`](parentalNapaVsDMSODEG.md) : The result of a
+  differential expression analysis done between napabucasin treated and
+  DMSO control parental MiaPaCa2 cells. The cells were treated for 2
+  hours with 0.5 uM napabucasin. The protocol to generate the RNA-seq is
+  described in Froeling F.E.M. et al 2019.
+
+- [`parentalNapaVsDMSOEnrichment`](parentalNapaVsDMSOEnrichment.md) :
+  The result of an enrichment analysis has been done using the
+  significantly differentially expressed genes between napabucasin
+  treated and DMSO control parental MiaPaCa2 cells. The cells were
+  treated for 2 hour with 0.5 uM napabucasin. The protocol to generate
+  the RNA-seq is described in Froeling F.E.M. et al 2019.
+
+- [`rosaNapaVsDMSODEG`](rosaNapaVsDMSODEG.md) : The result of a
+  differential expression analysis done between napabucasin treated and
+  DMSO control MiaPaCa2 cells stably expressing the Rosa26 control
+  vector. The cells were treated for 2 hours with 0.5 uM napabucasin.
+  The protocol to generate the RNA-seq is described in Froeling F.E.M.
+  et al 2019.
+
+- [`rosaNapaVsDMSOEnrichment`](rosaNapaVsDMSOEnrichment.md) : The result
+  of an enrichment analysis that has been done using the significantly
+  differentially expressed genes between napabucasin treated and DMSO
+  control MiaPaCa2 cells stably expressing the Rosa26 control vector.
+  The cells were treated for 2 hour with 0.5 uM napabucasin. The
+  protocol to generate the RNA-seq is described in Froeling F.E.M. et al
+  2019.
+
+- [`validateCreateEnrichMapMultiComplexAsIgraphArg()`](validateCreateEnrichMapMultiComplexAsIgraphArg.md)
+  : Validate arguments passed to validateCreateEnrichMapMultiComplex()
+  function
+
+# Articles
+
+### All vignettes
+
+- [From functional enrichment results to biological
+  networks](enrichViewNet.md):

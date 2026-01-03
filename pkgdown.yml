@@ -1,6 +1,6 @@
-pandoc: '3.4'
-pkgdown: 2.1.1.9000
-pkgdown_sha: 0cb9d38d1dc25946f01ee7500be9665985d8784e
+pandoc: 3.8.3
+pkgdown: 2.2.0
+pkgdown_sha: ~
 articles:
   enrichViewNet: enrichViewNet.html
-last_built: 2024-10-07T21:16Z
+last_built: 2026-01-03T00:15Z
