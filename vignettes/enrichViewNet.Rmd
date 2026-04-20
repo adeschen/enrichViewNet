@@ -53,17 +53,30 @@ Artistic license 2.0. You are free to use and redistribute this software.
 
 # Citing
 
-If you use this package for a publication, we would ask you to cite the 
-following:
+If you use this package for a publication, we would ask you to cite on of the  
+following references. 
 
-> Deschênes A, Belleau P, Faure RL, Fernandes MJ, Krasnitz A, 
-    Tuveson DA (2023). 
-    enrichViewNet: From functional enrichment results to biological networks. 
-    doi:10.18129/B9.bioc.enrichViewNet, 
-    https://bioconductor.org/packages/enrichViewNet. 
+This reference describes both gene-term networks and enrichment maps:
+
+> Deschênes, A., Belleau, P., Faure, R. L., Fernandes, M. J., Krasnitz, A., & 
+    Tuveson, D. A. (2024, September 13). Visualization of functional 
+    enrichment results into biological networks with Bioconductor 
+    enrichViewNet package. BioC2024: Where Software and Biology Connect 
+    (BioC2024), Grand Rapids, MI, Van Andel Institute. Zenodo. 
+    https://doi.org/10.5281/zenodo.13755900
 
 <br>
+This reference is specific to enrichment maps:
 <br>
+
+> Deschênes,A., Nigri, J., Tuveson, D. A. (2026) Myofibroblasts 
+   induce neuroplasticity to promote pancreatic inflammation and cancer 
+   progression [Functional Enrichment on PCSs Differentially Expressed Genes 
+   from Mucciolo G. et al 2024] [Source Code]. 
+   https://doi.org/10.24433/CO.2493140.v1
+
+<br>
+
 
 # Introduction
 
@@ -210,7 +223,7 @@ highly recommended.
 <br>
 <br>
 
-# Transforming enrichment results into a gene-term network loadable in Cytoscape
+# Gene-Term network loadable in Cytoscape
 
 
 The following workflow gives an overview of the steps associated to the 
@@ -430,7 +443,7 @@ _NGF-stimulated transcription_ terms) are linked through enriched genes.
 <br>
 
 
-# Transforming enrichment results into an enrichment map
+# Enrichment map
 
 
 The following workflow gives an overview of the steps associated to the 
@@ -723,7 +736,7 @@ graphEmap + geom_edge(aes(linewidth=weight), color="blue1") +
 <br>
 
 
-# Transforming enrichment results into an enrichment map with groups from different enrichment analyses
+# Enrichment map with groups from different enrichment analyses
 
 
 The following workflow gives an overview of the steps associated to the 
@@ -921,7 +934,7 @@ graphEmap + geom_edge(aes(linewidth=weight), color="black") +
 <br>
 <br>
 
-# Transforming enrichment results into an enrichment map with groups from same enrichment analysis or from complex designs
+# Enrichment map with groups from same enrichment analysis or from complex designs
 
 The following workflow gives an overview of the steps associated to the 
 creation of an enrichment map with groups. Groups can be created from the 
@@ -1404,6 +1417,14 @@ graphEmap + geom_edge(aes(linewidth=weight), color="blue3") +
 
 <br>
 <br>
+
+# Code Ocean Capsule 
+
+A Code Ocean capsule showcasing the creation of an complex enrichment map 
+from functional enrichment results is now publicly available:
+
+[https://doi.org/10.24433/CO.2493140.v1](https://doi.org/10.24433/CO.2493140.v1)
+
 
 
 
