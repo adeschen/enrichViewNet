@@ -9,7 +9,7 @@
 \[aut\] (ORCID: <https://orcid.org/0000-0002-3973-025X>), Alexander
 Krasnitz \[aut\], David A. Tuveson \[aut\] (ORCID:
 <https://orcid.org/0000-0002-8017-2712>)\
-**Version**: 1.9.1\
+**Version**: 1.9.2\
 **Compiled date**: 2026-04-20\
 **License**: Artistic-2.0\
 
@@ -1594,7 +1594,7 @@ was compiled:
     ## other attached packages:
     ## [1] scatterpie_0.2.6    ggrepel_0.9.8       ggtangle_0.1.1     
     ## [4] igraph_2.2.3        ggplot2_4.0.2       gprofiler2_0.2.4   
-    ## [7] enrichViewNet_1.9.1 knitr_1.51          BiocStyle_2.39.0   
+    ## [7] enrichViewNet_1.9.2 knitr_1.51          BiocStyle_2.39.0   
     ## 
     ## loaded via a namespace (and not attached):
     ##   [1] RColorBrewer_1.1-3      jsonlite_2.0.0          tidydr_0.0.6           
