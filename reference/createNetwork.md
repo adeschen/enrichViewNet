@@ -148,7 +148,7 @@ createNetwork(gostObject=parentalNapaVsDMSOEnrichment, source="KEGG",
 #> Unable to connect to Cytoscape. 
 #> CX JSON file will be created.
 #> Preparing information for generating CX JSON file.
-#> CX JSON file "/tmp/RtmpPrmLoP/KEGG_demo.cx" has been created.
+#> CX JSON file "/tmp/RtmpKsInZl/KEGG_demo.cx" has been created.
 #> [1] TRUE
 
 ```

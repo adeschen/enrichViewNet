@@ -67,7 +67,7 @@ Deschênes, Pascal Belleau, Robert L Faure and Maria J Fernandes</h4>
 [aut] (ORCID: <a href="https://orcid.org/0000-0003-1798-4723" class="external-link uri">https://orcid.org/0000-0003-1798-4723</a>), Maria J.
 Fernandes [aut] (ORCID: <a href="https://orcid.org/0000-0002-3973-025X" class="external-link uri">https://orcid.org/0000-0002-3973-025X</a>), Alexander
 Krasnitz [aut], David A. Tuveson [aut] (ORCID: <a href="https://orcid.org/0000-0002-8017-2712" class="external-link uri">https://orcid.org/0000-0002-8017-2712</a>)<br><strong>Version</strong>: 1.9.1<br><strong>Compiled date</strong>:
-2026-01-03<br><strong>License</strong>: Artistic-2.0<br></p>
+2026-04-20<br><strong>License</strong>: Artistic-2.0<br></p>
 <div class="section level2">
 <h2 id="licensing">Licensing<a class="anchor" aria-label="anchor" href="#licensing"></a>
 </h2>
@@ -81,13 +81,25 @@ and redistribute this software.</p>
 <h2 id="citing">Citing<a class="anchor" aria-label="anchor" href="#citing"></a>
 </h2>
 <p>If you use this package for a publication, we would ask you to cite
-the following:</p>
+on of the<br>
+following references.</p>
+<p>This reference describes both gene-term networks and enrichment
+maps:</p>
 <blockquote>
-<p>Deschênes A, Belleau P, Faure RL, Fernandes MJ, Krasnitz A, Tuveson
-DA (2023). enrichViewNet: From functional enrichment results to
-biological networks. <a href="doi:10.18129/B9.bioc.enrichViewNet" class="uri">doi:10.18129/B9.bioc.enrichViewNet</a>, <a href="https://bioconductor.org/packages/enrichViewNet" class="external-link uri">https://bioconductor.org/packages/enrichViewNet</a>.</p>
+<p>Deschênes, A., Belleau, P., Faure, R. L., Fernandes, M. J., Krasnitz,
+A., &amp; Tuveson, D. A. (2024, September 13). Visualization of
+functional enrichment results into biological networks with Bioconductor
+enrichViewNet package. BioC2024: Where Software and Biology Connect
+(BioC2024), Grand Rapids, MI, Van Andel Institute. Zenodo. <a href="https://doi.org/10.5281/zenodo.13755900" class="external-link uri">https://doi.org/10.5281/zenodo.13755900</a></p>
 </blockquote>
-<p><br><br></p>
+<p><br> This reference is specific to enrichment maps: <br></p>
+<blockquote>
+<p>Deschênes,A., Nigri, J., Tuveson, D. A. (2026) Myofibroblasts induce
+neuroplasticity to promote pancreatic inflammation and cancer
+progression [Functional Enrichment on PCSs Differentially Expressed
+Genes from Mucciolo G. et al 2024] [Source Code]. <a href="https://doi.org/10.24433/CO.2493140.v1" class="external-link uri">https://doi.org/10.24433/CO.2493140.v1</a></p>
+</blockquote>
+<p><br></p>
 </div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
@@ -221,8 +233,7 @@ software is highly recommended.</p>
 <p><br><br></p>
 </div>
 <div class="section level2">
-<h2 id="transforming-enrichment-results-into-a-gene-term-network-loadable-in-cytoscape">Transforming enrichment results into a gene-term network loadable in
-Cytoscape<a class="anchor" aria-label="anchor" href="#transforming-enrichment-results-into-a-gene-term-network-loadable-in-cytoscape"></a>
+<h2 id="gene-term-network-loadable-in-cytoscape">Gene-Term network loadable in Cytoscape<a class="anchor" aria-label="anchor" href="#gene-term-network-loadable-in-cytoscape"></a>
 </h2>
 <p>The following workflow gives an overview of the steps associated to
 the creation of an gene-term network loadable in <em>Cytoscape</em>.</p>
@@ -455,7 +466,7 @@ genes.</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="transforming-enrichment-results-into-an-enrichment-map">Transforming enrichment results into an enrichment map<a class="anchor" aria-label="anchor" href="#transforming-enrichment-results-into-an-enrichment-map"></a>
+<h2 id="enrichment-map">Enrichment map<a class="anchor" aria-label="anchor" href="#enrichment-map"></a>
 </h2>
 <p>The following workflow gives an overview of the steps associated to
 the creation of an enrichment map.</p>
@@ -774,8 +785,7 @@ An enrichment map with personalized visualization options.
 </div>
 </div>
 <div class="section level2">
-<h2 id="transforming-enrichment-results-into-an-enrichment-map-with-groups-from-different-enrichment-analyses">Transforming enrichment results into an enrichment map with groups
-from different enrichment analyses<a class="anchor" aria-label="anchor" href="#transforming-enrichment-results-into-an-enrichment-map-with-groups-from-different-enrichment-analyses"></a>
+<h2 id="enrichment-map-with-groups-from-different-enrichment-analyses">Enrichment map with groups from different enrichment analyses<a class="anchor" aria-label="anchor" href="#enrichment-map-with-groups-from-different-enrichment-analyses"></a>
 </h2>
 <p>The following workflow gives an overview of the steps associated to
 the creation of an enrichment map with groups. Groups can be created
@@ -995,8 +1005,8 @@ analyses with personalized colors and legend.
 </div>
 </div>
 <div class="section level2">
-<h2 id="transforming-enrichment-results-into-an-enrichment-map-with-groups-from-same-enrichment-analysis-or-from-complex-designs">Transforming enrichment results into an enrichment map with groups
-from same enrichment analysis or from complex designs<a class="anchor" aria-label="anchor" href="#transforming-enrichment-results-into-an-enrichment-map-with-groups-from-same-enrichment-analysis-or-from-complex-designs"></a>
+<h2 id="enrichment-map-with-groups-from-same-enrichment-analysis-or-from-complex-designs">Enrichment map with groups from same enrichment analysis or from
+complex designs<a class="anchor" aria-label="anchor" href="#enrichment-map-with-groups-from-same-enrichment-analysis-or-from-complex-designs"></a>
 </h2>
 <p>The following workflow gives an overview of the steps associated to
 the creation of an enrichment map with groups. Groups can be created
@@ -1511,6 +1521,13 @@ Napa vs DMSO and parental vs DMSO analyses as a ggplot graph.
 </div>
 </div>
 <div class="section level2">
+<h2 id="code-ocean-capsule">Code Ocean Capsule<a class="anchor" aria-label="anchor" href="#code-ocean-capsule"></a>
+</h2>
+<p>A Code Ocean capsule showcasing the creation of an complex enrichment
+map from functional enrichment results is now publicly available:</p>
+<p><a href="https://doi.org/10.24433/CO.2493140.v1" class="external-link">https://doi.org/10.24433/CO.2493140.v1</a></p>
+</div>
+<div class="section level2">
 <h2 id="acknowledgments">Acknowledgments<a class="anchor" aria-label="anchor" href="#acknowledgments"></a>
 </h2>
 <p>The differentially expressed genes between napabucasin-treated cells
@@ -1531,9 +1548,9 @@ Engineering Research Council of Canada (NSERCC): 155751-1501.</p>
 </h2>
 <p>Here is the output of sessionInfo() on the system on which this
 document was compiled:</p>
-<pre><code><span><span class="co">## R Under development (unstable) (2025-12-31 r89265)</span></span>
+<pre><code><span><span class="co">## R Under development (unstable) (2026-04-19 r89916)</span></span>
 <span><span class="co">## Platform: x86_64-pc-linux-gnu</span></span>
-<span><span class="co">## Running under: Ubuntu 24.04.3 LTS</span></span>
+<span><span class="co">## Running under: Ubuntu 24.04.4 LTS</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Matrix products: default</span></span>
 <span><span class="co">## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 </span></span>
@@ -1554,53 +1571,53 @@ document was compiled:</p>
 <span><span class="co">## [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">## [1] scatterpie_0.2.6    ggrepel_0.9.6       ggtangle_0.0.9     </span></span>
-<span><span class="co">## [4] igraph_2.2.1        ggplot2_4.0.1       gprofiler2_0.2.4   </span></span>
+<span><span class="co">## [1] scatterpie_0.2.6    ggrepel_0.9.8       ggtangle_0.1.1     </span></span>
+<span><span class="co">## [4] igraph_2.2.3        ggplot2_4.0.2       gprofiler2_0.2.4   </span></span>
 <span><span class="co">## [7] enrichViewNet_1.9.1 knitr_1.51          BiocStyle_2.39.0   </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
 <span><span class="co">##   [1] RColorBrewer_1.1-3      jsonlite_2.0.0          tidydr_0.0.6           </span></span>
-<span><span class="co">##   [4] magrittr_2.0.4          farver_2.1.2            rmarkdown_2.30         </span></span>
-<span><span class="co">##   [7] fs_1.6.6                ragg_1.5.0              vctrs_0.6.5            </span></span>
-<span><span class="co">##  [10] memoise_2.0.1           RCurl_1.98-1.17         ggtree_4.1.1           </span></span>
-<span><span class="co">##  [13] base64enc_0.1-3         htmltools_0.5.9         curl_7.0.0             </span></span>
+<span><span class="co">##   [4] magrittr_2.0.5          farver_2.1.2            rmarkdown_2.31         </span></span>
+<span><span class="co">##   [7] fs_2.1.0                ragg_1.5.2              vctrs_0.7.3            </span></span>
+<span><span class="co">##  [10] memoise_2.0.1           RCurl_1.98-1.18         ggtree_4.1.2           </span></span>
+<span><span class="co">##  [13] base64enc_0.1-6         htmltools_0.5.9         curl_7.0.0             </span></span>
 <span><span class="co">##  [16] gridGraphics_0.5-1      strex_2.0.1             sass_0.4.10            </span></span>
-<span><span class="co">##  [19] KernSmooth_2.23-26      bslib_0.9.0             htmlwidgets_1.6.4      </span></span>
-<span><span class="co">##  [22] desc_1.4.3              plyr_1.8.9              plotly_4.11.0          </span></span>
-<span><span class="co">##  [25] cachem_1.1.0            uuid_1.2-1              lifecycle_1.0.4        </span></span>
+<span><span class="co">##  [19] KernSmooth_2.23-26      bslib_0.10.0            htmlwidgets_1.6.4      </span></span>
+<span><span class="co">##  [22] desc_1.4.3              plyr_1.8.9              plotly_4.12.0          </span></span>
+<span><span class="co">##  [25] cachem_1.1.0            uuid_1.2-2              lifecycle_1.0.5        </span></span>
 <span><span class="co">##  [28] pkgconfig_2.0.3         R6_2.6.1                fastmap_1.2.0          </span></span>
-<span><span class="co">##  [31] digest_0.6.39           aplot_0.2.9             enrichplot_1.31.3      </span></span>
-<span><span class="co">##  [34] ggnewscale_0.5.2        patchwork_1.3.2         AnnotationDbi_1.73.0   </span></span>
-<span><span class="co">##  [37] S4Vectors_0.49.0        textshaping_1.0.4       RSQLite_2.4.5          </span></span>
+<span><span class="co">##  [31] digest_0.6.39           aplot_0.2.9             enrichplot_1.31.5      </span></span>
+<span><span class="co">##  [34] ggnewscale_0.5.2        patchwork_1.3.2         AnnotationDbi_1.73.1   </span></span>
+<span><span class="co">##  [37] S4Vectors_0.49.2        textshaping_1.0.5       RSQLite_2.4.6          </span></span>
 <span><span class="co">##  [40] base64url_1.4           labeling_0.4.3          RJSONIO_2.0.0          </span></span>
-<span><span class="co">##  [43] httr_1.4.7              polyclip_1.10-7         compiler_4.6.0         </span></span>
+<span><span class="co">##  [43] httr_1.4.8              polyclip_1.10-7         compiler_4.7.0         </span></span>
 <span><span class="co">##  [46] bit64_4.6.0-1           fontquiver_0.2.1        withr_3.0.2            </span></span>
-<span><span class="co">##  [49] S7_0.2.1                backports_1.5.0         RCy3_2.31.1            </span></span>
-<span><span class="co">##  [52] DBI_1.2.3               ggforce_0.5.0           gplots_3.3.0           </span></span>
-<span><span class="co">##  [55] MASS_7.3-65             rappdirs_0.3.3          gtools_3.9.5           </span></span>
-<span><span class="co">##  [58] caTools_1.18.3          tools_4.6.0             otel_0.2.0             </span></span>
-<span><span class="co">##  [61] ape_5.8-1               glue_1.8.0              nlme_3.1-168           </span></span>
-<span><span class="co">##  [64] GOSemSim_2.37.1         grid_4.6.0              checkmate_2.3.3        </span></span>
-<span><span class="co">##  [67] pbdZMQ_0.3-14           cluster_2.1.8.1         reshape2_1.4.5         </span></span>
+<span><span class="co">##  [49] S7_0.2.1-1              backports_1.5.1         RCy3_2.31.1            </span></span>
+<span><span class="co">##  [52] DBI_1.3.0               ggforce_0.5.0           gplots_3.3.0           </span></span>
+<span><span class="co">##  [55] MASS_7.3-65             rappdirs_0.3.4          gtools_3.9.5           </span></span>
+<span><span class="co">##  [58] caTools_1.18.3          tools_4.7.0             otel_0.2.0             </span></span>
+<span><span class="co">##  [61] ape_5.8-1               glue_1.8.1              nlme_3.1-169           </span></span>
+<span><span class="co">##  [64] GOSemSim_2.37.2         grid_4.7.0              checkmate_2.3.4        </span></span>
+<span><span class="co">##  [67] pbdZMQ_0.3-14           cluster_2.1.8.2         reshape2_1.4.5         </span></span>
 <span><span class="co">##  [70] generics_0.1.4          gtable_0.3.6            tidyr_1.3.2            </span></span>
-<span><span class="co">##  [73] data.table_1.18.0       XVector_0.51.0          BiocGenerics_0.57.0    </span></span>
-<span><span class="co">##  [76] pillar_1.11.1           stringr_1.6.0           yulab.utils_0.2.3      </span></span>
-<span><span class="co">##  [79] IRdisplay_1.1           dplyr_1.1.4             tweenr_2.0.3           </span></span>
-<span><span class="co">##  [82] treeio_1.35.0           lattice_0.22-7          bit_4.6.0              </span></span>
-<span><span class="co">##  [85] tidyselect_1.2.1        fontLiberation_0.1.0    GO.db_3.22.0           </span></span>
-<span><span class="co">##  [88] Biostrings_2.79.3       fontBitstreamVera_0.1.1 bookdown_0.46          </span></span>
-<span><span class="co">##  [91] IRanges_2.45.0          Seqinfo_1.1.0           stats4_4.6.0           </span></span>
-<span><span class="co">##  [94] xfun_0.55               Biobase_2.71.0          stringi_1.8.7          </span></span>
-<span><span class="co">##  [97] lazyeval_0.2.2          ggfun_0.2.0             yaml_2.3.12            </span></span>
-<span><span class="co">## [100] evaluate_1.0.5          gdtools_0.4.4           tibble_3.3.0           </span></span>
+<span><span class="co">##  [73] data.table_1.18.2.1     XVector_0.51.0          BiocGenerics_0.57.1    </span></span>
+<span><span class="co">##  [76] pillar_1.11.1           stringr_1.6.0           yulab.utils_0.2.4      </span></span>
+<span><span class="co">##  [79] IRdisplay_1.1           dplyr_1.2.1             tweenr_2.0.3           </span></span>
+<span><span class="co">##  [82] treeio_1.35.0           lattice_0.22-9          bit_4.6.0              </span></span>
+<span><span class="co">##  [85] tidyselect_1.2.1        fontLiberation_0.1.0    GO.db_3.23.1           </span></span>
+<span><span class="co">##  [88] Biostrings_2.79.5       fontBitstreamVera_0.1.1 bookdown_0.46          </span></span>
+<span><span class="co">##  [91] IRanges_2.45.0          Seqinfo_1.1.0           stats4_4.7.0           </span></span>
+<span><span class="co">##  [94] xfun_0.57               Biobase_2.71.0          stringi_1.8.7          </span></span>
+<span><span class="co">##  [97] lazyeval_0.2.3          ggfun_0.2.0             yaml_2.3.12            </span></span>
+<span><span class="co">## [100] evaluate_1.0.5          gdtools_0.5.0           tibble_3.3.1           </span></span>
 <span><span class="co">## [103] BiocManager_1.30.27     graph_1.89.1            ggplotify_0.1.3        </span></span>
-<span><span class="co">## [106] cli_3.6.5               IRkernel_1.3.2          systemfonts_1.3.1      </span></span>
-<span><span class="co">## [109] repr_1.1.7              jquerylib_0.1.4         Rcpp_1.1.0.8.1         </span></span>
-<span><span class="co">## [112] png_0.1-8               XML_3.99-0.20           parallel_4.6.0         </span></span>
-<span><span class="co">## [115] pkgdown_2.2.0           blob_1.2.4              DOSE_4.5.1             </span></span>
-<span><span class="co">## [118] bitops_1.0-9            viridisLite_0.4.2       tidytree_0.4.6         </span></span>
-<span><span class="co">## [121] ggiraph_0.9.2           enrichit_0.0.8          scales_1.4.0           </span></span>
-<span><span class="co">## [124] purrr_1.2.0             crayon_1.5.3            rlang_1.1.6            </span></span>
+<span><span class="co">## [106] cli_3.6.6               IRkernel_1.3.2          systemfonts_1.3.2      </span></span>
+<span><span class="co">## [109] repr_1.1.7              jquerylib_0.1.4         Rcpp_1.1.1-1           </span></span>
+<span><span class="co">## [112] png_0.1-9               XML_3.99-0.23           parallel_4.7.0         </span></span>
+<span><span class="co">## [115] pkgdown_2.2.0           blob_1.3.0              DOSE_4.5.1             </span></span>
+<span><span class="co">## [118] bitops_1.0-9            viridisLite_0.4.3       tidytree_0.4.7         </span></span>
+<span><span class="co">## [121] ggiraph_0.9.6           enrichit_0.1.4          scales_1.4.0           </span></span>
+<span><span class="co">## [124] purrr_1.2.2             crayon_1.5.3            rlang_1.2.0            </span></span>
 <span><span class="co">## [127] KEGGREST_1.51.1</span></span></code></pre>
 <p><br><br></p>
 </div>

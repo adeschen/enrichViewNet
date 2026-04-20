@@ -133,6 +133,5 @@ createEnrichMapMultiComplex(gostObjectList=gostObjectList,
     queryInfo=queryDataFrame, line=1.5)
 #> Coordinate system already present.
 #> ℹ Adding new coordinate system, which will replace the existing one.
-#> Warning: ggrepel: 10 unlabeled data points (too many overlaps). Consider increasing max.overlaps
 
 ```

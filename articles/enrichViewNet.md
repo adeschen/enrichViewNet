@@ -1,17 +1,17 @@
 # From functional enrichment results to biological networks
 
-  
-**Package**: *enrichViewNet*  
+\
+**Package**: *enrichViewNet*\
 **Authors**: Astrid Deschênes \[aut, cre\] (ORCID:
 <https://orcid.org/0000-0001-7846-6749>), Pascal Belleau \[aut\] (ORCID:
 <https://orcid.org/0000-0002-0802-1071>), Robert L. Faure \[aut\]
 (ORCID: <https://orcid.org/0000-0003-1798-4723>), Maria J. Fernandes
 \[aut\] (ORCID: <https://orcid.org/0000-0002-3973-025X>), Alexander
 Krasnitz \[aut\], David A. Tuveson \[aut\] (ORCID:
-<https://orcid.org/0000-0002-8017-2712>)  
-**Version**: 1.9.1  
-**Compiled date**: 2026-01-03  
-**License**: Artistic-2.0  
+<https://orcid.org/0000-0002-8017-2712>)\
+**Version**: 1.9.1\
+**Compiled date**: 2026-04-20\
+**License**: Artistic-2.0\
 
 ## Licensing
 
@@ -22,21 +22,34 @@ package and the underlying
 code are distributed under the Artistic license 2.0. You are free to use
 and redistribute this software.
 
-  
-  
+\
+\
 
 ## Citing
 
-If you use this package for a publication, we would ask you to cite the
-following:
+If you use this package for a publication, we would ask you to cite on
+of the\
+following references.
 
-> Deschênes A, Belleau P, Faure RL, Fernandes MJ, Krasnitz A, Tuveson DA
-> (2023). enrichViewNet: From functional enrichment results to
-> biological networks. <doi:10.18129/B9.bioc.enrichViewNet>,
-> <https://bioconductor.org/packages/enrichViewNet>.
+This reference describes both gene-term networks and enrichment maps:
 
-  
-  
+> Deschênes, A., Belleau, P., Faure, R. L., Fernandes, M. J., Krasnitz,
+> A., & Tuveson, D. A. (2024, September 13). Visualization of functional
+> enrichment results into biological networks with Bioconductor
+> enrichViewNet package. BioC2024: Where Software and Biology Connect
+> (BioC2024), Grand Rapids, MI, Van Andel Institute. Zenodo.
+> <https://doi.org/10.5281/zenodo.13755900>
+
+\
+This reference is specific to enrichment maps:\
+
+> Deschênes,A., Nigri, J., Tuveson, D. A. (2026) Myofibroblasts induce
+> neuroplasticity to promote pancreatic inflammation and cancer
+> progression \[Functional Enrichment on PCSs Differentially Expressed
+> Genes from Mucciolo G. et al 2024\] \[Source Code\].
+> <https://doi.org/10.24433/CO.2493140.v1>
+
+\
 
 ## Introduction
 
@@ -135,8 +148,8 @@ connecting terms with overlapping genes.
 carrying out reproducible network analyses using functional enrichment
 results.
 
-  
-  
+\
+\
 
 ## Installation
 
@@ -151,8 +164,8 @@ if (!requireNamespace("BiocManager", quietly = TRUE))
 BiocManager::install("enrichViewNet")
 ```
 
-  
-  
+\
+\
 
 ## General workflow
 
@@ -177,10 +190,10 @@ From an enrichment result, the **enrichViewNet** offers two options:
 For the gene-term network, the installation of *Cytoscape* software is
 highly recommended.
 
-  
-  
+\
+\
 
-## Transforming enrichment results into a gene-term network loadable in Cytoscape
+## Gene-Term network loadable in Cytoscape
 
 The following workflow gives an overview of the steps associated to the
 creation of an gene-term network loadable in *Cytoscape*.
@@ -201,7 +214,7 @@ The key steps for the workflow are:
 The `package::function()` notation is used for functions from other
 packages.
 
-  
+\
 
 ### Run an enrichment analysis
 
@@ -242,14 +255,14 @@ gostres <- gprofiler2::gost(
                 custom_bg=unique(parentalNapaVsDMSODEG$EnsemblID))
 ```
 
-  
+\
 
 The gost() function returns an named list of 2 entries:
 
 - The **result** entry contains the enrichment results.
 - The **meta** entry contains the metadata information.
 
-  
+\
 
 ``` r
 
@@ -285,7 +298,7 @@ gostres$result[19:22, c("term_id", "source", "term_name")]
     ## 21  WP:WP516     WP Exercise and hypertrophy in skeletal muscle
     ## 22 WP:WP1742     WP                                TP53 network
 
-  
+\
 
 ### Start Cytoscape
 
@@ -307,7 +320,7 @@ If the application is not running, a CX JSON file will be created
 (standard Cytoscape file format). The file can then be loaded manually
 into the [Cytoscape](https://cytoscape.org/) software.
 
-  
+\
 
 ### Create a gene-term network
 
@@ -337,7 +350,7 @@ createNetwork(gostObject=parentalNapaVsDMSOEnrichment,  source="REAC",
 
     ## [1] TRUE
 
-  
+\
 
 This is an example of the Reactome network in *Cytoscape*.
 
@@ -346,12 +359,12 @@ Cytoscape.](cytoscape_reactome_all_parental_napa_vs_DMSO.png)
 
 All reactome terms in a gene-term network loaded in Cytoscape.
 
-  
+\
 
 To address this situation, an updated gene-term network containing only
 Reactome terms of interest is created.
 
-  
+\
 
 ``` r
 
@@ -383,7 +396,7 @@ selectedRes[, c("term_name")]
     ## [7] "Transcriptional regulation of white adipocyte differentiation"
     ## [8] "FOXO-mediated transcription of cell cycle genes"
 
-  
+\
 
 ``` r
 
@@ -400,7 +413,7 @@ createNetwork(gostObject=parentalNapaVsDMSOEnrichment,  source="TERM_ID",
 
     ## [1] TRUE
 
-  
+\
 
 The updated Reactome network in *Cytoscape*.
 
@@ -409,7 +422,7 @@ Cytoscape.](cytoscape_with_selected_REACTOME_v01.png)
 
 Selected Reactome terms in a gene-term network loaded in Cytoscape.
 
-  
+\
 
 In *Cytoscape*, the appearance of a network is easily customized. As
 example, default color and shape for all nodes can be modified. For this
@@ -421,7 +434,7 @@ Cytoscape.](REACTOME_Selected.jpeg)
 
 Final Reactome network after customization inside Cytoscape.
 
-  
+\
 
 The final Reactome network, after customization inside Cytoscape, shows
 that multiple transcription enriched terms (*FOXO-mediated
@@ -430,10 +443,10 @@ transcription*, *FOXO-mediated transcription of cell cycle genes*,
 polymerase II transcription* and *NGF-stimulated transcription* terms)
 are linked through enriched genes.
 
-  
-  
+\
+\
 
-## Transforming enrichment results into an enrichment map
+## Enrichment map
 
 The following workflow gives an overview of the steps associated to the
 creation of an enrichment map.
@@ -454,7 +467,7 @@ It is possible to create an enrichment map in a `ggplot` format with the
 [`createEnrichMapAsIgraph()`](../reference/createEnrichMapAsIgraph.md)
 function.
 
-  
+\
 
 ### Run an enrichment analysis
 
@@ -495,14 +508,14 @@ gostres <- gprofiler2::gost(
                 custom_bg=unique(parentalNapaVsDMSODEG$EnsemblID))
 ```
 
-  
+\
 
 The *gost()* function returns an named list of 2 entries:
 
 - The **result** entry contains the enrichment results.
 - The **meta** entry contains the metadata information.
 
-  
+\
 
 ``` r
 
@@ -538,7 +551,7 @@ gostres$result[19:22, c("term_id", "source", "term_name")]
     ## 21  WP:WP516     WP Exercise and hypertrophy in skeletal muscle
     ## 22 WP:WP1742     WP                                TP53 network
 
-  
+\
 
 ### Create an enrichment map in a `ggplot` format
 
@@ -568,13 +581,13 @@ together.](enrichViewNet_files/figure-html/runCreateEmap01-1.png)
 A Kegg enrichment map where terms with overlapping genes cluster
 together.
 
-  
+\
 
 The Kegg enrichment map shows that the *MAPK signaling pathway* term is
 highly influential in the network. In addition, the *Transcriptional
 misregulation in cancer* term is the only isolated node.
 
-  
+\
 
 #### Using list of term IDs
 
@@ -617,13 +630,13 @@ terms.](enrichViewNet_files/figure-html/runCreateEmapTerms-1.png)
 
 An enrichment map showing only the user selected terms.
 
-  
+\
 
 As the description “MAPK signaling pathway” is present twice, the ID of
 each term has been added to the end of the description. Hence, the MAPK
 pathway from WikiPathway can be distinguished from the Kegg pathway.
 
-  
+\
 
 #### Enrichment map customization
 
@@ -650,7 +663,7 @@ colors.](enrichViewNet_files/figure-html/runCreateEmap03-1.png)
 
 An enrichment map with personalized colors.
 
-  
+\
 
 ### Create an enrichment map in an `igraph` format
 
@@ -717,7 +730,7 @@ seed.](enrichViewNet_files/figure-html/runCreateEmapIgraph02-1.png)
 
 An enrichment map with a different seed.
 
-  
+\
 
 #### Enrichment map customization
 
@@ -769,10 +782,10 @@ options.](enrichViewNet_files/figure-html/runCreateEmapIgraph03-1.png)
 
 An enrichment map with personalized visualization options.
 
-  
-  
+\
+\
 
-## Transforming enrichment results into an enrichment map with groups from different enrichment analyses
+## Enrichment map with groups from different enrichment analyses
 
 The following workflow gives an overview of the steps associated to the
 creation of an enrichment map with groups. Groups can be created from
@@ -796,11 +809,11 @@ function or in an `igraph` format with the
 [`createEnrichMapMultiComplexAsIgraph()`](../reference/createEnrichMapMultiComplexAsIgraph.md)
 function.
 
-  
+\
 
 The first step has been presented in the previous section.
 
-  
+\
 
 ### Create an enrichment map using multiple enrichment analyses in a `ggplot` format
 
@@ -845,13 +858,13 @@ experiments.](enrichViewNet_files/figure-html/emapMulti01-1.png)
 An enrichment map containing Kegg enrichment results for 2 different
 experiments.
 
-  
+\
 
 There are 4 KEGG enrichment terms that are shared by the 2 experiments.
 In additions, the *Viral carinogenesis* term is the only term that is
 not related to the other KEGG terms.
 
-  
+\
 
 #### Enrichment map customization
 
@@ -882,7 +895,7 @@ legend.](enrichViewNet_files/figure-html/emapMultiCustom-1.png)
 An enrichment map using KEGG terms from two enrichment analyses with
 personalized colors and legend.
 
-  
+\
 
 ### Create an enrichment map using multiple enrichment analyses in an `igraph` format
 
@@ -932,7 +945,7 @@ experiments.](enrichViewNet_files/figure-html/emapMultiAsIgraph01-1.png)
 An enrichment map containing GO Molecular Function enrichment results
 (top 10) for 2 different experiments.
 
-  
+\
 
 #### Enrichment map customization
 
@@ -991,10 +1004,10 @@ legend.](enrichViewNet_files/figure-html/emapMultiAsIgraph02-1.png)
 An enrichment map using GO Molecular Function terms from two enrichment
 analyses with personalized colors and legend.
 
-  
-  
+\
+\
 
-## Transforming enrichment results into an enrichment map with groups from same enrichment analysis or from complex designs
+## Enrichment map with groups from same enrichment analysis or from complex designs
 
 The following workflow gives an overview of the steps associated to the
 creation of an enrichment map with groups. Groups can be created from
@@ -1018,11 +1031,11 @@ function or in an `igraph` format with the
 [`createEnrichMapMultiComplexAsIgraph()`](../reference/createEnrichMapMultiComplexAsIgraph.md)
 function.
 
-  
+\
 
 The first step has been presented in the previous section.
 
-  
+\
 
 ### Create an enrichment map using mutliple subsections of one enrichment analysis in a `ggplot` format
 
@@ -1082,13 +1095,13 @@ analysis.](enrichViewNet_files/figure-html/emapMultiComplex01-1.png)
 An enrichment map containing Kegg and Reactome results from the rosa
 Napa vs DMSO analysis.
 
-  
+\
 
 The significant genes are overlapping between the Kegg and Reactome
 pathways as shown by the connections between the pathways. The only
 isolated term is the Kegg Viral carcinogenesis pathway.
 
-  
+\
 
 #### Create an enrichment map using a complex design
 
@@ -1172,7 +1185,7 @@ interleukin in two different experiments.
 While the two experiments have a lot of similar enriched terms, there
 are still terms that are unique to each experiment.
 
-  
+\
 
 ### Create an enrichment map using mutliple subsections of one enrichment analysis in a `igraph` format
 
@@ -1246,7 +1259,7 @@ In this situation, the default output from the `igraph` library doesn’t
 create a scatter pie graph. Enrichment map customization is required to
 generate a scatter pie graph. This is covered in the next topic.
 
-  
+\
 
 #### Effect of *seed* value
 
@@ -1275,7 +1288,7 @@ seed.](enrichViewNet_files/figure-html/changeSeedIgraph02-1.png)
 An enrichment map containing Kegg and Reactome results from the rosa
 Napa vs DMSO analysis with a different seed.
 
-  
+\
 
 #### Enrichment map customization
 
@@ -1335,7 +1348,7 @@ graph.](enrichViewNet_files/figure-html/personalizedIgraph01-1.png)
 An enrichment map containing Kegg and Reactome results from the rosa
 Napa vs DMSO and parental vs DMSO analyses as a ggplot graph.
 
-  
+\
 
 ### Create an enrichment map using mutliple subsections of multiple enrichment analyses in a `igraph` format
 
@@ -1415,7 +1428,7 @@ In this situation, the default output from the `igraph` library doesn’t
 create a scatter pie graph. Enrichment map customization is required to
 generate a scatter pie graph. This is covered in the next topic.
 
-  
+\
 
 #### Enrichment map customization
 
@@ -1520,8 +1533,15 @@ graph.](enrichViewNet_files/figure-html/personalized01-1.png)
 An enrichment map containing Kegg and Reactome results from the rosa
 Napa vs DMSO and parental vs DMSO analyses as a ggplot graph.
 
-  
-  
+\
+\
+
+## Code Ocean Capsule
+
+A Code Ocean capsule showcasing the creation of an complex enrichment
+map from functional enrichment results is now publicly available:
+
+<https://doi.org/10.24433/CO.2493140.v1>
 
 ## Acknowledgments
 
@@ -1538,17 +1558,17 @@ AACR.
 Robert L. Faure is also supported by the National Sciences Engineering
 Research Council of Canada (NSERCC): 155751-1501.
 
-  
-  
+\
+\
 
 ## Session info
 
 Here is the output of sessionInfo() on the system on which this document
 was compiled:
 
-    ## R Under development (unstable) (2025-12-31 r89265)
+    ## R Under development (unstable) (2026-04-19 r89916)
     ## Platform: x86_64-pc-linux-gnu
-    ## Running under: Ubuntu 24.04.3 LTS
+    ## Running under: Ubuntu 24.04.4 LTS
     ## 
     ## Matrix products: default
     ## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
@@ -1569,57 +1589,57 @@ was compiled:
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## other attached packages:
-    ## [1] scatterpie_0.2.6    ggrepel_0.9.6       ggtangle_0.0.9     
-    ## [4] igraph_2.2.1        ggplot2_4.0.1       gprofiler2_0.2.4   
+    ## [1] scatterpie_0.2.6    ggrepel_0.9.8       ggtangle_0.1.1     
+    ## [4] igraph_2.2.3        ggplot2_4.0.2       gprofiler2_0.2.4   
     ## [7] enrichViewNet_1.9.1 knitr_1.51          BiocStyle_2.39.0   
     ## 
     ## loaded via a namespace (and not attached):
     ##   [1] RColorBrewer_1.1-3      jsonlite_2.0.0          tidydr_0.0.6           
-    ##   [4] magrittr_2.0.4          farver_2.1.2            rmarkdown_2.30         
-    ##   [7] fs_1.6.6                ragg_1.5.0              vctrs_0.6.5            
-    ##  [10] memoise_2.0.1           RCurl_1.98-1.17         ggtree_4.1.1           
-    ##  [13] base64enc_0.1-3         htmltools_0.5.9         curl_7.0.0             
+    ##   [4] magrittr_2.0.5          farver_2.1.2            rmarkdown_2.31         
+    ##   [7] fs_2.1.0                ragg_1.5.2              vctrs_0.7.3            
+    ##  [10] memoise_2.0.1           RCurl_1.98-1.18         ggtree_4.1.2           
+    ##  [13] base64enc_0.1-6         htmltools_0.5.9         curl_7.0.0             
     ##  [16] gridGraphics_0.5-1      strex_2.0.1             sass_0.4.10            
-    ##  [19] KernSmooth_2.23-26      bslib_0.9.0             htmlwidgets_1.6.4      
-    ##  [22] desc_1.4.3              plyr_1.8.9              plotly_4.11.0          
-    ##  [25] cachem_1.1.0            uuid_1.2-1              lifecycle_1.0.4        
+    ##  [19] KernSmooth_2.23-26      bslib_0.10.0            htmlwidgets_1.6.4      
+    ##  [22] desc_1.4.3              plyr_1.8.9              plotly_4.12.0          
+    ##  [25] cachem_1.1.0            uuid_1.2-2              lifecycle_1.0.5        
     ##  [28] pkgconfig_2.0.3         R6_2.6.1                fastmap_1.2.0          
-    ##  [31] digest_0.6.39           aplot_0.2.9             enrichplot_1.31.3      
-    ##  [34] ggnewscale_0.5.2        patchwork_1.3.2         AnnotationDbi_1.73.0   
-    ##  [37] S4Vectors_0.49.0        textshaping_1.0.4       RSQLite_2.4.5          
+    ##  [31] digest_0.6.39           aplot_0.2.9             enrichplot_1.31.5      
+    ##  [34] ggnewscale_0.5.2        patchwork_1.3.2         AnnotationDbi_1.73.1   
+    ##  [37] S4Vectors_0.49.2        textshaping_1.0.5       RSQLite_2.4.6          
     ##  [40] base64url_1.4           labeling_0.4.3          RJSONIO_2.0.0          
-    ##  [43] httr_1.4.7              polyclip_1.10-7         compiler_4.6.0         
+    ##  [43] httr_1.4.8              polyclip_1.10-7         compiler_4.7.0         
     ##  [46] bit64_4.6.0-1           fontquiver_0.2.1        withr_3.0.2            
-    ##  [49] S7_0.2.1                backports_1.5.0         RCy3_2.31.1            
-    ##  [52] DBI_1.2.3               ggforce_0.5.0           gplots_3.3.0           
-    ##  [55] MASS_7.3-65             rappdirs_0.3.3          gtools_3.9.5           
-    ##  [58] caTools_1.18.3          tools_4.6.0             otel_0.2.0             
-    ##  [61] ape_5.8-1               glue_1.8.0              nlme_3.1-168           
-    ##  [64] GOSemSim_2.37.1         grid_4.6.0              checkmate_2.3.3        
-    ##  [67] pbdZMQ_0.3-14           cluster_2.1.8.1         reshape2_1.4.5         
+    ##  [49] S7_0.2.1-1              backports_1.5.1         RCy3_2.31.1            
+    ##  [52] DBI_1.3.0               ggforce_0.5.0           gplots_3.3.0           
+    ##  [55] MASS_7.3-65             rappdirs_0.3.4          gtools_3.9.5           
+    ##  [58] caTools_1.18.3          tools_4.7.0             otel_0.2.0             
+    ##  [61] ape_5.8-1               glue_1.8.1              nlme_3.1-169           
+    ##  [64] GOSemSim_2.37.2         grid_4.7.0              checkmate_2.3.4        
+    ##  [67] pbdZMQ_0.3-14           cluster_2.1.8.2         reshape2_1.4.5         
     ##  [70] generics_0.1.4          gtable_0.3.6            tidyr_1.3.2            
-    ##  [73] data.table_1.18.0       XVector_0.51.0          BiocGenerics_0.57.0    
-    ##  [76] pillar_1.11.1           stringr_1.6.0           yulab.utils_0.2.3      
-    ##  [79] IRdisplay_1.1           dplyr_1.1.4             tweenr_2.0.3           
-    ##  [82] treeio_1.35.0           lattice_0.22-7          bit_4.6.0              
-    ##  [85] tidyselect_1.2.1        fontLiberation_0.1.0    GO.db_3.22.0           
-    ##  [88] Biostrings_2.79.3       fontBitstreamVera_0.1.1 bookdown_0.46          
-    ##  [91] IRanges_2.45.0          Seqinfo_1.1.0           stats4_4.6.0           
-    ##  [94] xfun_0.55               Biobase_2.71.0          stringi_1.8.7          
-    ##  [97] lazyeval_0.2.2          ggfun_0.2.0             yaml_2.3.12            
-    ## [100] evaluate_1.0.5          gdtools_0.4.4           tibble_3.3.0           
+    ##  [73] data.table_1.18.2.1     XVector_0.51.0          BiocGenerics_0.57.1    
+    ##  [76] pillar_1.11.1           stringr_1.6.0           yulab.utils_0.2.4      
+    ##  [79] IRdisplay_1.1           dplyr_1.2.1             tweenr_2.0.3           
+    ##  [82] treeio_1.35.0           lattice_0.22-9          bit_4.6.0              
+    ##  [85] tidyselect_1.2.1        fontLiberation_0.1.0    GO.db_3.23.1           
+    ##  [88] Biostrings_2.79.5       fontBitstreamVera_0.1.1 bookdown_0.46          
+    ##  [91] IRanges_2.45.0          Seqinfo_1.1.0           stats4_4.7.0           
+    ##  [94] xfun_0.57               Biobase_2.71.0          stringi_1.8.7          
+    ##  [97] lazyeval_0.2.3          ggfun_0.2.0             yaml_2.3.12            
+    ## [100] evaluate_1.0.5          gdtools_0.5.0           tibble_3.3.1           
     ## [103] BiocManager_1.30.27     graph_1.89.1            ggplotify_0.1.3        
-    ## [106] cli_3.6.5               IRkernel_1.3.2          systemfonts_1.3.1      
-    ## [109] repr_1.1.7              jquerylib_0.1.4         Rcpp_1.1.0.8.1         
-    ## [112] png_0.1-8               XML_3.99-0.20           parallel_4.6.0         
-    ## [115] pkgdown_2.2.0           blob_1.2.4              DOSE_4.5.1             
-    ## [118] bitops_1.0-9            viridisLite_0.4.2       tidytree_0.4.6         
-    ## [121] ggiraph_0.9.2           enrichit_0.0.8          scales_1.4.0           
-    ## [124] purrr_1.2.0             crayon_1.5.3            rlang_1.1.6            
+    ## [106] cli_3.6.6               IRkernel_1.3.2          systemfonts_1.3.2      
+    ## [109] repr_1.1.7              jquerylib_0.1.4         Rcpp_1.1.1-1           
+    ## [112] png_0.1-9               XML_3.99-0.23           parallel_4.7.0         
+    ## [115] pkgdown_2.2.0           blob_1.3.0              DOSE_4.5.1             
+    ## [118] bitops_1.0-9            viridisLite_0.4.3       tidytree_0.4.7         
+    ## [121] ggiraph_0.9.6           enrichit_0.1.4          scales_1.4.0           
+    ## [124] purrr_1.2.2             crayon_1.5.3            rlang_1.2.0            
     ## [127] KEGGREST_1.51.1
 
-  
-  
+\
+\
 
 ## References
 
