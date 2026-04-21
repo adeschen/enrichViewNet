@@ -24,13 +24,13 @@ Source:
 
 Deschênes A, Belleau P, Faure R, Fernandes M, Krasnitz A, Tuveson D
 (2026). *enrichViewNet: From functional enrichment results to biological
-networks*. R package version 1.9.2,
+networks*. R package version 1.9.3,
 <https://github.com/adeschen/enrichViewNet>.
 
     @Manual{,
       title = {enrichViewNet: From functional enrichment results to biological networks},
       author = {Astrid Deschênes and Pascal Belleau and Robert L. Faure and Maria J. Fernandes and Alexander Krasnitz and David A. Tuveson},
       year = {2026},
-      note = {R package version 1.9.2},
+      note = {R package version 1.9.3},
       url = {https://github.com/adeschen/enrichViewNet},
     }

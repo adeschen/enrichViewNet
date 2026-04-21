@@ -69,10 +69,10 @@ backgroundGenes <- meta$query_metadata$queries[["parental_napa_vs_DMSO"]]
 enrichViewNet:::createBasicEmapAsIgraph(gostResults=gostResults, 
     backgroundGenes=backgroundGenes, showCategory=30L, 
     similarityCutOff=0.2)
-#> IGRAPH 2776554 UNW- 26 53 -- 
+#> IGRAPH 4eacae7 UNW- 26 53 -- 
 #> + attr: name (v/c), size (v/n), similarity (e/n), width (e/n), weight
 #> | (e/n)
-#> + edges from 2776554 (vertex names):
+#> + edges from 4eacae7 (vertex names):
 #> [1] Photodynamic therapy-induced unfolded protein response--Unfolded protein response                                       
 #> [2] Photodynamic therapy-induced unfolded protein response--Nonalcoholic fatty liver disease                                
 #> [3] Unfolded protein response                             --Chromosomal and microsatellite instability in colorectal cancer 
