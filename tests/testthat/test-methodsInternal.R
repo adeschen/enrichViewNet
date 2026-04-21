@@ -1,6 +1,7 @@
 ### Unit tests for methodsInternal.R functions
 
 library(enrichViewNet)
+library(stringr)
 
 data(demoGOST)
 data(parentalNapaVsDMSOEnrichment)
@@ -360,8 +361,20 @@ test_that("extractInformationWhenNoIntersection() must return expected text", {
     
     set.seed(121)
     gprofiler2::set_base_url("https://biit.cs.ut.ee/gprofiler_archive3/e111_eg58_p18")
-    result <- enrichViewNet:::extractInformationWhenNoIntersection(
+    
+    
+    tryCatch({
+        result <- enrichViewNet:::extractInformationWhenNoIntersection(
                     gostResults=mirnaData, gostObject=mirnaDemo)
+    }, error = function(msg) {
+        if (stringr::str_detect(msg, "Request to g:Profiler failed (HTTP 500)")) {
+            testthat::skip("Request to g:Profiler failed (HTTP 500). ", 
+                           "The service may be temporarily unavailable.")
+        } else {
+            # Re-throw the original error object 
+            stop(msg)
+        }
+    })
     
     expected <- list()
     
@@ -411,9 +424,19 @@ test_that("createCXJSONForCytoscape() must return expected text", {
     mirnaData <- demoGOST$result[demoGOST$result$source == "MIRNA", ]
     
     set.seed(121)
+    tryCatch({
+        info <- enrichViewNet:::extractNodesAndEdgesInformation(
+                        gostResults=mirnaData, gostObject=mirnaDemo)
+    }, error = function(msg) {
+        if (stringr::str_detect(msg, "Request to g:Profiler failed (HTTP 500)")) {
+            testthat::skip("Request to g:Profiler failed (HTTP 500). ", 
+                                "The service may be temporarily unavailable.")
+        } else {
+            # Re-throw the original error object 
+            stop(msg)
+        }
+    })
     
-    info <- enrichViewNet:::extractNodesAndEdgesInformation(gostResults=mirnaData, 
-                                                gostObject=mirnaDemo)
     result <- enrichViewNet:::createCXJSONForCytoscape(
         nodeEdgeInfo=info, title = "MIRNA")
     
