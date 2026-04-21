@@ -53,7 +53,7 @@ createNetwork(gostObject=demoGOST, source="WP", title="Wikipathways",
 #> Unable to connect to Cytoscape. 
 #> CX JSON file will be created.
 #> Preparing information for generating CX JSON file.
-#> CX JSON file "/tmp/RtmpaSxvxr/Wikipathways_Demo.cx" has been created.
+#> CX JSON file "/tmp/RtmpX6W16e/Wikipathways_Demo.cx" has been created.
 #> [1] TRUE
 
 ```

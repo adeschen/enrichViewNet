@@ -10,7 +10,7 @@
 Krasnitz \[aut\], David A. Tuveson \[aut\] (ORCID:
 <https://orcid.org/0000-0002-8017-2712>)\
 **Version**: 1.9.2\
-**Compiled date**: 2026-04-20\
+**Compiled date**: 2026-04-21\
 **License**: Artistic-2.0\
 
 ## Licensing
@@ -1593,7 +1593,7 @@ was compiled:
     ## 
     ## other attached packages:
     ## [1] scatterpie_0.2.6    ggrepel_0.9.8       ggtangle_0.1.1     
-    ## [4] igraph_2.2.3        ggplot2_4.0.2       gprofiler2_0.2.4   
+    ## [4] igraph_2.3.0        ggplot2_4.0.2       gprofiler2_0.2.4   
     ## [7] enrichViewNet_1.9.2 knitr_1.51          BiocStyle_2.39.0   
     ## 
     ## loaded via a namespace (and not attached):
@@ -1612,7 +1612,7 @@ was compiled:
     ##  [37] S4Vectors_0.49.2        textshaping_1.0.5       RSQLite_2.4.6          
     ##  [40] base64url_1.4           labeling_0.4.3          RJSONIO_2.0.0          
     ##  [43] httr_1.4.8              polyclip_1.10-7         compiler_4.7.0         
-    ##  [46] bit64_4.6.0-1           fontquiver_0.2.1        withr_3.0.2            
+    ##  [46] bit64_4.8.0             fontquiver_0.2.1        withr_3.0.2            
     ##  [49] S7_0.2.1-1              backports_1.5.1         RCy3_2.31.1            
     ##  [52] DBI_1.3.0               ggforce_0.5.0           gplots_3.3.0           
     ##  [55] MASS_7.3-65             rappdirs_0.3.4          gtools_3.9.5           
