@@ -1,3 +1,10 @@
+CHANGES IN VERSION 1.9.3
+------------------------
+
+BUG FIXES AND IMPROVEMENTS
+
+    o The tests are skipped when the g:profiler server is down.
+
 CHANGES IN VERSION 1.9.2
 ------------------------
 
