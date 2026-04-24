@@ -9,7 +9,7 @@
 \[aut\] (ORCID: <https://orcid.org/0000-0002-3973-025X>), Alexander
 Krasnitz \[aut\], David A. Tuveson \[aut\] (ORCID:
 <https://orcid.org/0000-0002-8017-2712>)\
-**Version**: 1.9.3\
+**Version**: 1.9.4\
 **Compiled date**: 2026-04-24\
 **License**: Artistic-2.0\
 
@@ -1569,7 +1569,7 @@ Research Council of Canada (NSERCC): 155751-1501.
 Here is the output of sessionInfo() on the system on which this document
 was compiled:
 
-    ## R Under development (unstable) (2026-04-22 r89950)
+    ## R Under development (unstable) (2026-04-23 r89955)
     ## Platform: x86_64-pc-linux-gnu
     ## Running under: Ubuntu 24.04.4 LTS
     ## 
@@ -1594,7 +1594,7 @@ was compiled:
     ## other attached packages:
     ## [1] scatterpie_0.2.6    ggrepel_0.9.8       ggtangle_0.1.2     
     ## [4] igraph_2.3.0        ggplot2_4.0.3       gprofiler2_0.2.4   
-    ## [7] enrichViewNet_1.9.3 knitr_1.51          BiocStyle_2.39.0   
+    ## [7] enrichViewNet_1.9.4 knitr_1.51          BiocStyle_2.39.0   
     ## 
     ## loaded via a namespace (and not attached):
     ##   [1] RColorBrewer_1.1-3      jsonlite_2.0.0          tidydr_0.0.6           
