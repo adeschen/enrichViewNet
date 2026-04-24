@@ -1,4 +1,11 @@
-CHANGES IN VERSION 1.9.3
+CHANGES IN VERSION 1.9.4
+------------------------
+
+BUG FIXES AND IMPROVEMENTS
+
+    o The unit tests are updated to better manager g:profiler server maintenance.
+
+HANGES IN VERSION 1.9.3
 ------------------------
 
 BUG FIXES AND IMPROVEMENTS
