@@ -367,9 +367,9 @@ test_that("extractInformationWhenNoIntersection() must return expected text", {
         result <- enrichViewNet:::extractInformationWhenNoIntersection(
                     gostResults=mirnaData, gostObject=mirnaDemo)
     }, error = function(msg) {
-        if (stringr::str_detect(msg, "Request to g:Profiler failed (HTTP 500)")) {
-            testthat::skip("Request to g:Profiler failed (HTTP 500). ", 
-                           "The service may be temporarily unavailable.")
+        if (stringr::str_detect(msg$message, "HTTP 500")) {
+            skip("Request to g:Profiler failed (HTTP 500). ", 
+                "The service may be temporarily unavailable.")
         } else {
             # Re-throw the original error object 
             stop(msg)
@@ -428,9 +428,9 @@ test_that("createCXJSONForCytoscape() must return expected text", {
         info <- enrichViewNet:::extractNodesAndEdgesInformation(
                         gostResults=mirnaData, gostObject=mirnaDemo)
     }, error = function(msg) {
-        if (stringr::str_detect(msg, "Request to g:Profiler failed (HTTP 500)")) {
-            testthat::skip("Request to g:Profiler failed (HTTP 500). ", 
-                                "The service may be temporarily unavailable.")
+        if (stringr::str_detect(msg$message, "HTTP 500")) {
+            skip("Request to g:Profiler failed (HTTP 500). ", 
+                "The service may be temporarily unavailable.")
         } else {
             # Re-throw the original error object 
             stop(msg)
