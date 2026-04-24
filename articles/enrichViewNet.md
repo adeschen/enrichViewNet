@@ -10,7 +10,7 @@
 Krasnitz \[aut\], David A. Tuveson \[aut\] (ORCID:
 <https://orcid.org/0000-0002-8017-2712>)\
 **Version**: 1.9.3\
-**Compiled date**: 2026-04-21\
+**Compiled date**: 2026-04-24\
 **License**: Artistic-2.0\
 
 ## Licensing
@@ -276,10 +276,10 @@ gostres$result[1:4, c("query", "p_value", "term_size",
 ```
 
     ##                   query      p_value term_size query_size intersection_size
-    ## 1 parental_napa_vs_DMSO 3.527365e-08        25        157                 7
-    ## 2 parental_napa_vs_DMSO 1.172428e-06        23        157                 6
-    ## 3 parental_napa_vs_DMSO 1.294450e-06       391        157                16
-    ## 4 parental_napa_vs_DMSO 2.454227e-06        13        157                 5
+    ## 1 parental_napa_vs_DMSO 3.679642e-08        25        157                 7
+    ## 2 parental_napa_vs_DMSO 1.222837e-06        23        157                 6
+    ## 3 parental_napa_vs_DMSO 1.351921e-06       391        157                16
+    ## 4 parental_napa_vs_DMSO 2.559339e-06        13        157                 5
     ##     term_id
     ## 1 WP:WP3613
     ## 2 WP:WP4925
@@ -295,8 +295,8 @@ gostres$result[19:22, c("term_id", "source", "term_name")]
     ##      term_id source                                   term_name
     ## 19 WP:WP2877     WP                  Vitamin D receptor pathway
     ## 20 WP:WP5373     WP      Osteoarthritic chondrocyte hypertrophy
-    ## 21  WP:WP516     WP Exercise and hypertrophy in skeletal muscle
-    ## 22 WP:WP1742     WP                                TP53 network
+    ## 21 WP:WP1742     WP                                TP53 network
+    ## 22  WP:WP516     WP Exercise and hypertrophy in skeletal muscle
 
 \
 
@@ -529,10 +529,10 @@ gostres$result[1:4, c("query", "p_value", "term_size",
 ```
 
     ##                   query      p_value term_size query_size intersection_size
-    ## 1 parental_napa_vs_DMSO 3.527365e-08        25        157                 7
-    ## 2 parental_napa_vs_DMSO 1.172428e-06        23        157                 6
-    ## 3 parental_napa_vs_DMSO 1.294450e-06       391        157                16
-    ## 4 parental_napa_vs_DMSO 2.454227e-06        13        157                 5
+    ## 1 parental_napa_vs_DMSO 3.679642e-08        25        157                 7
+    ## 2 parental_napa_vs_DMSO 1.222837e-06        23        157                 6
+    ## 3 parental_napa_vs_DMSO 1.351921e-06       391        157                16
+    ## 4 parental_napa_vs_DMSO 2.559339e-06        13        157                 5
     ##     term_id
     ## 1 WP:WP3613
     ## 2 WP:WP4925
@@ -548,8 +548,8 @@ gostres$result[19:22, c("term_id", "source", "term_name")]
     ##      term_id source                                   term_name
     ## 19 WP:WP2877     WP                  Vitamin D receptor pathway
     ## 20 WP:WP5373     WP      Osteoarthritic chondrocyte hypertrophy
-    ## 21  WP:WP516     WP Exercise and hypertrophy in skeletal muscle
-    ## 22 WP:WP1742     WP                                TP53 network
+    ## 21 WP:WP1742     WP                                TP53 network
+    ## 22  WP:WP516     WP Exercise and hypertrophy in skeletal muscle
 
 \
 
@@ -1569,7 +1569,7 @@ Research Council of Canada (NSERCC): 155751-1501.
 Here is the output of sessionInfo() on the system on which this document
 was compiled:
 
-    ## R Under development (unstable) (2026-04-20 r89923)
+    ## R Under development (unstable) (2026-04-22 r89950)
     ## Platform: x86_64-pc-linux-gnu
     ## Running under: Ubuntu 24.04.4 LTS
     ## 
@@ -1592,8 +1592,8 @@ was compiled:
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## other attached packages:
-    ## [1] scatterpie_0.2.6    ggrepel_0.9.8       ggtangle_0.1.1     
-    ## [4] igraph_2.3.0        ggplot2_4.0.2       gprofiler2_0.2.4   
+    ## [1] scatterpie_0.2.6    ggrepel_0.9.8       ggtangle_0.1.2     
+    ## [4] igraph_2.3.0        ggplot2_4.0.3       gprofiler2_0.2.4   
     ## [7] enrichViewNet_1.9.3 knitr_1.51          BiocStyle_2.39.0   
     ## 
     ## loaded via a namespace (and not attached):
@@ -1601,7 +1601,7 @@ was compiled:
     ##   [4] magrittr_2.0.5          farver_2.1.2            rmarkdown_2.31         
     ##   [7] fs_2.1.0                ragg_1.5.2              vctrs_0.7.3            
     ##  [10] memoise_2.0.1           RCurl_1.98-1.18         ggtree_4.1.2           
-    ##  [13] base64enc_0.1-6         htmltools_0.5.9         curl_7.0.0             
+    ##  [13] base64enc_0.1-6         htmltools_0.5.9         curl_7.1.0             
     ##  [16] gridGraphics_0.5-1      strex_2.0.1             sass_0.4.10            
     ##  [19] KernSmooth_2.23-26      bslib_0.10.0            htmlwidgets_1.6.4      
     ##  [22] desc_1.4.3              plyr_1.8.9              plotly_4.12.0          
@@ -1613,7 +1613,7 @@ was compiled:
     ##  [40] base64url_1.4           labeling_0.4.3          RJSONIO_2.0.0          
     ##  [43] httr_1.4.8              polyclip_1.10-7         compiler_4.7.0         
     ##  [46] bit64_4.8.0             fontquiver_0.2.1        withr_3.0.2            
-    ##  [49] S7_0.2.1-1              backports_1.5.1         RCy3_2.31.1            
+    ##  [49] S7_0.2.2                backports_1.5.1         RCy3_2.31.1            
     ##  [52] DBI_1.3.0               ggforce_0.5.0           gplots_3.3.0           
     ##  [55] MASS_7.3-65             rappdirs_0.3.4          gtools_3.9.5           
     ##  [58] caTools_1.18.3          tools_4.7.0             otel_0.2.0             

@@ -132,7 +132,7 @@ if (requireNamespace("ggplot2", quietly=TRUE) &&
 #> Registered S3 method overwritten by 'ggnetwork':
 #>   method         from  
 #>   fortify.igraph ggtree
-#> ggtangle v0.1.1 Learn more at https://yulab-smu.top/
+#> ggtangle v0.1.2 Learn more at https://yulab-smu.top/
 #> 
 
 ```
